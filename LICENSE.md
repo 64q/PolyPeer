@@ -1,3 +1,6 @@
+LICENSE
+=======
+
 PolyPeer - A P2P Software designed to deploy VirtualBox images
 Copyright (C) 2012  PolyPeer Team
 
