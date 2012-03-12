@@ -39,7 +39,7 @@ L'application devra gérer la reprise sur erreur pour permettre à tout moment d
 
 La gestion des erreurs devra être fine, et chaque bloc reçu devra être vérifié à l'aide d'un code CRC. Un vérification globale sera également appliquée à la fin du téléchargement sur le fichier entier.
 
-Le client devra vérifier que son disque dur dispose de suffisemment de place pour héberger le fichier et si oui réserver cette place.
+Le client devra vérifier que son disque dur dispose de suffisamment de place pour héberger le fichier et si oui réserver cette place.
 
 Mise en place d'un déploiement
 ------------------------------
