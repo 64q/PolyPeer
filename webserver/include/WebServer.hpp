@@ -2,8 +2,7 @@
 #define __H__PPWEBSERVER__
 
 // Spécifique pour les sockets
-#include <sys/types.h>  
-#include <sys/socket.h>
+#include <arpa/inet.h> // nécessaire pour les sockaddr
 
 class WebServer
 {
