@@ -1,0 +1,74 @@
+README Projet de protocole réseau
+=================================
+
+1. Compilation
+--------------
+
+Pour compiler, il faudra entrer `make` à la racine du projet.
+
+	$ make [all]
+
+Pour nettoyer les fichiers objets, if faudra entrer `clean`.
+
+	$ make clean	
+	
+Pour nettoyer entièrement le projet il faudra enter `mrproper`.
+
+	$ make mrproper
+
+
+2. Lancement
+------------
+
+Le programme requiert deux arguments obligatoires :
+
+* IP de la machine suivant dans le token ring ;
+* Le nom de l'hôte qui vous voulez (un caractère seulement !).
+
+Exemple de lancement :
+
+	./tokenring 192.168.0.5 a
+
+Pour lancer le programme en mode master (c'est à dire celui qui
+sera chargé d'émettre le premier jeton sur le tokenring)
+
+Exemple de lancement en master :
+
+	./tokenring @ip_hôte_suivant hostname master
+
+/!\ Le master est à lancer en dernier. /!\
+
+Pour toute aide, entrez `./tokenring` sans arguments.
+
+
+3. Utilisation
+--------------
+
+Le programme permet d'envoyer des message sur le réseau créé.
+
+Pour envoyer un message à un hôte :
+
+	prompt> send cible message
+	
+Où cible est le nom de l'hôte à qui on désire envoyer le message.
+
+/!\ Un caractère seulement de la table ASCII pour la cible. /!\
+
+Pour quitter le programme :
+
+	prompt> exit
+	
+Ferme les sockets et quitte le programme.
+
+
+4. Crédits
+----------
+
+Réalisé par :
+
+* BISIAUX Alexandre
+* DAUXAIS Yann
+* MATRAT Erwan
+* LEBOURGEOIS Quentin
+
+INFO 3 - G3 - 2012
