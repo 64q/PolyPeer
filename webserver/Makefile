@@ -14,12 +14,18 @@ INC=include/
 
 all: webserver
 
-webserver: WebServer.o server.o
+webserver: WebServer.o WebResponse.o WebRequest.o server.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 	
 WebServer.o: $(SRC)WebServer.cpp
 	$(CC) -c $^ $(CFLAGS)
+
+WebResponse.o: $(SRC)WebResponse.cpp
+	$(CC) -c $^ $(CFLAGS)
 	
+WebRequest.o: $(SRC)WebRequest.cpp
+	$(CC) -c $^ $(CFLAGS)
+
 server.o: $(SRC)server.cpp
 	$(CC) -c $^ $(CFLAGS)
 	

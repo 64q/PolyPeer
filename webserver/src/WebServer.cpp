@@ -9,6 +9,7 @@
 #include <unistd.h>
 
 #include "../include/WebServer.hpp"
+#include "../include/WebRequest.hpp"
 
 using namespace std;
 
@@ -17,6 +18,9 @@ WebServer* WebServer::instance = NULL;
 
 WebServer::WebServer(const int port)
 {
+	// Init générale
+	this->isRunning = true;
+
 	// Init de la socket
 	this->port = port;
 	this->socket = ::socket(AF_INET, SOCK_STREAM, 0);
@@ -57,7 +61,6 @@ WebServer::WebServer(const int port)
 	
 	// Init des routes
 	this->routes.insert(pair<string, route_handler>("/", default_route));
-	this->routes.insert(pair<string, route_handler>("/login", login_route));
 }
 
 WebServer::~WebServer()
@@ -89,7 +92,7 @@ void WebServer::run()
 	char message[475];
 	unsigned int size = sizeof(struct sockaddr);
 	
-	for(;;)
+	while (this->isRunning)
 	{
 		/* acceptation connexion */
 		nsock = accept(this->socket, (struct sockaddr *) &this->cli_addr, &size);
@@ -108,31 +111,40 @@ void WebServer::run()
 			cerr << "Erreur lors de la lecture du contenu..." << endl;
 		}
 		
-		// Récupération de la route
-		map<string, route_handler>::iterator it;
+		WebRequest request(message);
+		string toReturn;
 		
-		string toReturn(routes["/login"]("empty", "empty"));
+		// Vérifie que la route existe
+		map<string, route_handler>::iterator it;
+		if (this->routes.find(request.getTarget()) == routes.end())
+		{
+			// Redirection vers page d'erreur
+			toReturn = notfound_route(request);
+		}
+		else
+		{
+			toReturn = routes[request.getTarget()](request);
+		}
 		
 		write(nsock, toReturn.c_str(), toReturn.length() * sizeof(char));
 		
 		close(nsock);
-
-		cout << "> Contenu : " << message << endl;
-		cout << "> Envoi de : " << toReturn << endl;
 	}
 }
 
 void WebServer::stop()
 {
-
+	this->isRunning = false;
 }
 
-string default_route(std::string get, std::string post)
+string default_route(WebRequest& request)
 {
 	// Contenu
 	ostringstream content(ostringstream::out);
 	content << "<h1>PolyPeer WebServer</h1>\n";
-	content << "Powered by Quentin\n";
+	content << "<h2>Powered by Quentin</h2>\n";
+	content << "<p>Bienvenue "; content << request.getParam("username");
+	content << " !</p>\n";
 	content << "<a href=\"/login\">Se connecter</a>\n";
 	
 	// Header
@@ -151,18 +163,15 @@ string default_route(std::string get, std::string post)
 	return str_response;
 }
 
-string login_route(string get, string post)
+string notfound_route(WebRequest& request)
 {
 	// Contenu
 	ostringstream content(ostringstream::out);
-	content << "<h1>PolyPeer WebServer Login</h1>\n";
-	content << "Powered by Quentin\n";
-	content << "<form action=\"/login\" method=\"post\">\n";
-	content << "<input type=\"text\" name=\"username\" />\n";
-	content << "<input type=\"password\" name=\"passwd\" />\n";
-	content << "<input type=\"submit\" value=\"Connexion\" />\n";
-	content << "</form>\n";
-
+	content << "<h1>Page introuvable</h1>\n";
+	content << "<h2>Powered by Quentin</h2>\n";
+	content << "<p>La page que vous avez demandé n'existe pas.</p>";
+	content << "<a href=\"/\">Retour index</a>\n";
+	
 	// Header
 	ostringstream response(ostringstream::out);
 	response << "HTTP/1.0 200 OK\n";

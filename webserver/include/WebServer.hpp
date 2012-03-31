@@ -7,7 +7,12 @@
 // Spécifique pour les sockets
 #include <arpa/inet.h> // nécessaire pour les sockaddr
 
-typedef std::string (*route_handler)(std::string, std::string);
+#include "WebRequest.hpp"
+
+/**
+ * typedef permettant d'avoir un ptr sur une fonction de handler de route
+ */
+typedef std::string (*route_handler)(WebRequest&);
 
 class WebServer
 {
@@ -59,11 +64,25 @@ private:
 	 */
 	int port;
 	
+	/**
+	 * Booléen nécessaire pour controler le serveur web
+	 */
+	bool isRunning;
+	
+	/**
+	 * Map stockant les routes http
+	 */
 	std::map<std::string, route_handler> routes;
 };
 
+/**
+ * Route par défaut
+ */
+std::string default_route(WebRequest& request);
 
-std::string default_route(std::string get, std::string post);
-std::string login_route(std::string get, std::string post);
+/**
+ * Route not found
+ */
+std::string notfound_route(WebRequest& request);
 
 #endif
