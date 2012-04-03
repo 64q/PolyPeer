@@ -15,7 +15,7 @@ INC=include/
 all: webserver
 
 # Edition des liens
-webserver: WebServer.o WebResponse.o WebRequest.o TinyParser.o server.o utils.o
+webserver: WebServer.o WebResponse.o WebRequest.o TinyParser.o server.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 # Compilation du server
