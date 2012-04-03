@@ -10,6 +10,8 @@
 
 #include "../include/WebServer.hpp"
 #include "../include/WebRequest.hpp"
+#include "../include/WebResponse.hpp"
+#include "../include/TinyParser.hpp"
 
 using namespace std;
 
@@ -61,6 +63,7 @@ WebServer::WebServer(const int port)
 	
 	// Init des routes
 	this->routes.insert(pair<string, route_handler>("/", default_route));
+	this->routes.insert(pair<string, route_handler>("/deployment", deployment_route));
 }
 
 WebServer::~WebServer()
@@ -115,15 +118,15 @@ void WebServer::run()
 		string toReturn;
 		
 		// Vérifie que la route existe
-		map<string, route_handler>::iterator it;
-		if (this->routes.find(request.getTarget()) == routes.end())
+		map<string, route_handler>::iterator it = this->routes.find(request.getTarget());
+		if (it == routes.end())
 		{
 			// Redirection vers page d'erreur
 			toReturn = notfound_route(request);
 		}
 		else
 		{
-			toReturn = routes[request.getTarget()](request);
+			toReturn = (*it).second(request);
 		}
 		
 		write(nsock, toReturn.c_str(), toReturn.length() * sizeof(char));
@@ -139,51 +142,27 @@ void WebServer::stop()
 
 string default_route(WebRequest& request)
 {
-	// Contenu
-	ostringstream content(ostringstream::out);
-	content << "<h1>PolyPeer WebServer</h1>\n";
-	content << "<h2>Powered by Quentin</h2>\n";
-	content << "<p>Bienvenue "; content << request.getParam("username");
-	content << " !</p>\n";
-	content << "<a href=\"/login\">Se connecter</a>\n";
+	TinyParser parser("webpages/default.html");
 	
-	// Header
-	ostringstream response(ostringstream::out);
-	response << "HTTP/1.0 200 OK\n";
-	response << "Content-Type: text/html; charset=utf-8\n";
-	response << "Content-Length: ";
-	response << content.str().length(); response << "\n";
-	response << "Connection: close\n\n";
+	WebResponse response(200, parser.render());
+	return response.getRawData();
+}
+
+string deployment_route(WebRequest& request)
+{
+	TinyParser parser("webpages/deployment.html");
 	
-	string str_response(response.str());
-	string str_content(content.str());
+	parser.inject("deploy", request.getParam("deploy"));
+	parser.inject("state", "actif");
 	
-	str_response += str_content;
-	
-	return str_response;
+	WebResponse response(200, parser.render());
+	return response.getRawData();
 }
 
 string notfound_route(WebRequest& request)
 {
-	// Contenu
-	ostringstream content(ostringstream::out);
-	content << "<h1>Page introuvable</h1>\n";
-	content << "<h2>Powered by Quentin</h2>\n";
-	content << "<p>La page que vous avez demandé n'existe pas.</p>";
-	content << "<a href=\"/\">Retour index</a>\n";
+	TinyParser parser("webpages/error404.html");
 	
-	// Header
-	ostringstream response(ostringstream::out);
-	response << "HTTP/1.0 200 OK\n";
-	response << "Content-Type: text/html; charset=utf-8\n";
-	response << "Content-Length: ";
-	response << content.str().length(); response << "\n";
-	response << "Connection: close\n\n";
-	
-	string str_response(response.str());
-	string str_content(content.str());
-	
-	str_response += str_content;
-	
-	return str_response;
+	WebResponse response(404, parser.render());
+	return response.getRawData();
 }

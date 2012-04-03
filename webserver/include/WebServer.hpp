@@ -85,4 +85,6 @@ std::string default_route(WebRequest& request);
  */
 std::string notfound_route(WebRequest& request);
 
+std::string deployment_route(WebRequest& request);
+
 #endif

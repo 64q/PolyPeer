@@ -26,11 +26,8 @@ WebRequest::WebRequest(char* raw)
 	while (prms != NULL)
 	{
 		string tmp = string(prms);
-		size_t pos = tmp.find("=");
-		string key = tmp.substr(0, pos);
-		string value = tmp.substr(pos + 1);
-		
-		this->params.insert(pair<string, string>(key, value));
+		unsigned int pos = tmp.find("=");
+		this->params.insert(pair<string, string>(tmp.substr(0, pos), tmp.substr(pos + 1)));
 		
 		prms = strtok(NULL, "&");
 	}
@@ -63,12 +60,15 @@ string WebRequest::getTarget()
 
 string WebRequest::getParam(string key)
 {
-	if (this->params.find(key) != this->params.end())
+	map<string, string>::iterator it = this->params.find(key);
+	
+	if (it != this->params.end())
 	{
-		return this->params[key];
+		return (*it).second;
 	}
 	else
 	{
 		return string("undefined");
 	}
 }
+
