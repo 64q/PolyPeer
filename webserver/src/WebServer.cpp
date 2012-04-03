@@ -29,11 +29,11 @@ WebServer::WebServer(const int port)
 	
 	if (this->socket < 0)
 	{
-		cerr << "Erreur d'ouverture de la socket..." << endl;
+		cerr << "(server) Erreur d'ouverture de la socket..." << endl;
 	}
 	else
 	{
-		cout << "Création de la socket réussie." << endl;
+		cout << "(server) Création de la socket réussie." << endl;
 	}
 	
 	bzero((char *) &this->serv_addr, sizeof(this->serv_addr));
@@ -44,21 +44,21 @@ WebServer::WebServer(const int port)
 	
 	if (bind(this->socket, (struct sockaddr *) &this->serv_addr, sizeof(this->serv_addr)) < 0)
 	{
-		cerr << "Erreur, impossible de binder la socket..." << endl;
+		cerr << "(server) Erreur, impossible de binder la socket..." << endl;
 	}
 	else
 	{
-		cout << "Binding de la socket réussie." << endl;
+		cout << "(server) Binding de la socket réussie." << endl;
 	}
 	
 	// Listen avec un tampon de 5
 	if (listen(this->socket, 5) < 0)
 	{
-		cerr << "Erreur, impossible de faire écouter la socket..." << endl;
+		cerr << "(server) Erreur, impossible de faire écouter la socket..." << endl;
 	}
 	else
 	{
-		cout << "Listen de la socket réussi." << endl;
+		cout << "(server) Listen de la socket réussi." << endl;
 	}
 	
 	// Init des routes
@@ -70,11 +70,11 @@ WebServer::~WebServer()
 {
 	if (close(this->socket) < 0)
 	{
-		cerr << "Erreur lors de la fermeture du descripteur de fichier." << endl;
+		cerr << "(server) Erreur lors de la fermeture du descripteur de fichier." << endl;
 	}
 	else
 	{
-		cout << "Socket détruite." << endl;
+		cout << "(server) Socket détruite." << endl;
 	}
 	
 }
@@ -101,17 +101,17 @@ void WebServer::run()
 		nsock = accept(this->socket, (struct sockaddr *) &this->cli_addr, &size);
 		if (nsock < 0)
 		{
-			cerr << "Erreur lors de l'acceptation de la connexion d'un client..." << endl;
+			cerr << "(server) Erreur lors de l'acceptation de la connexion d'un client..." << endl;
 		}
 		else
 		{
-			cout << "Acceptation du client réussie." << endl;
+			cout << "(server) Acceptation du client réussie." << endl;
 		}
 
 		/* lecture */
 		if (read(nsock, message, 475*sizeof(char)) < 0)
 		{
-			cerr << "Erreur lors de la lecture du contenu..." << endl;
+			cerr << "(server) Erreur lors de la lecture du contenu..." << endl;
 		}
 		
 		WebRequest request(message);
