@@ -6,7 +6,7 @@
 #
 
 CC=g++
-CFLAGS=-Wall
+CFLAGS=-Wall -ggdb
 LDFLAGS=
 EXEC=webserver
 SRC=src/
@@ -14,9 +14,11 @@ INC=include/
 
 all: webserver
 
-webserver: WebServer.o WebResponse.o WebRequest.o server.o
+# Edition des liens
+webserver: WebServer.o WebResponse.o WebRequest.o TinyParser.o server.o utils.o
 	$(CC) -o $@ $^ $(LDFLAGS)
-	
+
+# Compilation du server
 WebServer.o: $(SRC)WebServer.cpp
 	$(CC) -c $^ $(CFLAGS)
 
@@ -26,9 +28,14 @@ WebResponse.o: $(SRC)WebResponse.cpp
 WebRequest.o: $(SRC)WebRequest.cpp
 	$(CC) -c $^ $(CFLAGS)
 
+# Compilation du Parser
+TinyParser.o: $(SRC)TinyParser.cpp
+	$(CC) -c $^ $(CFLAGS)
+
+# Compilation du fichier de main
 server.o: $(SRC)server.cpp
 	$(CC) -c $^ $(CFLAGS)
-	
+
 clean:
 	rm -f *.o
 	
