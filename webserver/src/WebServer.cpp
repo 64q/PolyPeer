@@ -103,10 +103,6 @@ void WebServer::run()
 		{
 			cerr << "(server) Erreur lors de l'acceptation de la connexion d'un client..." << endl;
 		}
-		else
-		{
-			cout << "(server) Acceptation du client réussie." << endl;
-		}
 
 		/* lecture */
 		if (read(nsock, message, 475*sizeof(char)) < 0)
@@ -123,10 +119,12 @@ void WebServer::run()
 		{
 			// Redirection vers page d'erreur
 			toReturn = notfound_route(request);
+			cout << "(server) Le client a demandé une page qui n'existe pas. (TARGET=" << request.getTarget() << ")" << endl;
 		}
 		else
 		{
 			toReturn = (*it).second(request);
+			cout << "(server) Le client a demandé la page : "<< request.getTarget() << endl;
 		}
 		
 		write(nsock, toReturn.c_str(), toReturn.length() * sizeof(char));
