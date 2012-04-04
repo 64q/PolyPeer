@@ -59,8 +59,8 @@ void TinyParser::parsePrint()
 
 void TinyParser::parseInclude()
 {
-	unsigned int pos;
-	unsigned int start, end;
+	size_t pos;
+	size_t start, end;
 	
 	// Les patterns utilisés pour un include
 	string pattern = "<!# include(";
