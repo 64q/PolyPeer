@@ -64,7 +64,17 @@ string WebRequest::getParam(string key)
 	
 	if (it != this->params.end())
 	{
-		return (*it).second;
+		// Fix escape de certains chars
+		string& second((*it).second);
+		unsigned int pos = second.find("%20");
+		
+		while (pos != string::npos) 
+		{
+			second.replace(pos, 3, " ");
+			pos = second.find("%20", pos);
+		}
+		
+		return second;
 	}
 	else
 	{
