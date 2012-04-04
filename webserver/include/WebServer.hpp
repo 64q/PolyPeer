@@ -78,11 +78,6 @@ private:
 	int serv_socket;
 	
 	/**
-	 * Socket du client
-	 */
-	int cli_socket;
-	
-	/**
 	 * sockaddr client et server
 	 */
 	struct sockaddr_in serv_addr;
