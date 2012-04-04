@@ -72,6 +72,9 @@ private:
 	 */
 	int serv_socket;
 	
+	/**
+	 * Socket du client
+	 */
 	int cli_socket;
 	
 	/**
