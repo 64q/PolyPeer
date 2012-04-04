@@ -70,7 +70,9 @@ private:
 	/**
 	 * Socket du server
 	 */
-	int socket;
+	int serv_socket;
+	
+	int cli_socket;
 	
 	/**
 	 * sockaddr client et server

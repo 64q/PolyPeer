@@ -24,9 +24,9 @@ WebServer::WebServer(const int port)
 
 	// Init de la socket
 	this->port = port;
-	this->socket = ::socket(AF_INET, SOCK_STREAM, 0);
+	this->serv_socket = ::socket(AF_INET, SOCK_STREAM, 0);
 	
-	if (this->socket < 0)
+	if (this->serv_socket < 0)
 	{
 		cerr << "(server) Erreur d'ouverture de la socket..." << endl;
 	}
@@ -41,7 +41,7 @@ WebServer::WebServer(const int port)
 	this->serv_addr.sin_addr.s_addr = INADDR_ANY;
 	this->serv_addr.sin_port = htons(this->port);
 	
-	if (bind(this->socket, (struct sockaddr *) &this->serv_addr, sizeof(this->serv_addr)) < 0)
+	if (bind(this->serv_socket, (struct sockaddr *) &this->serv_addr, sizeof(this->serv_addr)) < 0)
 	{
 		cerr << "(server) Erreur, impossible de binder la socket..." << endl;
 	}
@@ -51,7 +51,7 @@ WebServer::WebServer(const int port)
 	}
 	
 	// Listen avec un tampon de 5
-	if (listen(this->socket, 5) < 0)
+	if (listen(this->serv_socket, 5) < 0)
 	{
 		cerr << "(server) Erreur, impossible de faire écouter la socket..." << endl;
 	}
@@ -71,13 +71,22 @@ WebServer::WebServer(const int port)
 
 WebServer::~WebServer()
 {
-	if (shutdown(this->socket, 2) < 0)
+	if (shutdown(this->serv_socket, 2) < 0)
 	{
-		cerr << "(server) Erreur lors de la fermeture du descripteur de fichier." << endl;
+		cerr << "(server) Erreur lors de la fermeture de la socket serveur." << endl;
 	}
 	else
 	{
-		cout << "(server) Socket détruite." << endl;
+		cout << "(server) Socket serveur détruite." << endl;
+	}
+	
+	if (shutdown(this->cli_socket, 2) < 0)
+	{
+		cerr << "(server) Erreur lors de la fermeture de la socket client." << endl;
+	}
+	else
+	{
+		cout << "(server) Socket client détruite." << endl;
 	}
 }
 
@@ -93,21 +102,20 @@ WebServer* WebServer::getInstance()
 
 void WebServer::run()
 {
-	int nsock;
 	char message[475];
 	unsigned int size = sizeof(struct sockaddr);
 	
 	while (this->isRunning)
 	{
 		/* acceptation connexion */
-		nsock = accept(this->socket, (struct sockaddr *) &this->cli_addr, &size);
-		if (nsock < 0)
+		this->cli_socket = accept(this->serv_socket, (struct sockaddr *) &this->cli_addr, &size);
+		if (this->cli_socket < 0)
 		{
 			cerr << "(server) Erreur lors de l'acceptation de la connexion d'un client..." << endl;
 		}
 
 		/* lecture */
-		if (read(nsock, message, 475*sizeof(char)) < 0)
+		if (read(this->cli_socket, message, 475*sizeof(char)) < 0)
 		{
 			cerr << "(server) Erreur lors de la lecture du contenu..." << endl;
 		}
@@ -129,12 +137,10 @@ void WebServer::run()
 			cout << "(server) Le client a demandé la page : "<< request.getTarget() << endl;
 		}
 		
-		write(nsock, toReturn.c_str(), toReturn.length() * sizeof(char));
+		write(this->cli_socket, toReturn.c_str(), toReturn.length() * sizeof(char));
 		
-		close(nsock);
+		close(this->cli_socket);
 	}
-	
-	close(nsock);
 }
 
 void WebServer::stop()
