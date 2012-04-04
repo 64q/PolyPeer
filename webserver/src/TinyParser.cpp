@@ -4,6 +4,7 @@
 #include <exception>
 
 #include "../include/TinyParser.hpp"
+#include "../include/WebServer.hpp" // Nécessaire pour le WebServer Root
 
 using namespace std;
 
@@ -58,11 +59,13 @@ void TinyParser::parsePrint()
 
 void TinyParser::parseInclude()
 {
-	map<string, string>::iterator it;
 	unsigned int pos;
 	unsigned int start, end;
+	
+	// Les patterns utilisés pour un include
 	string pattern = "<!# include(";
 	string closure = ") #!>";
+	
 	pos = this->content.find(pattern);
 	
 	while (pos != string::npos) 
@@ -71,12 +74,11 @@ void TinyParser::parseInclude()
 		start = this->content.find(closure, end);
 		
 		string include(this->content.substr(end, start - end));
-		
-		TinyParser parser("webpages/" + include);
-		
-		if (it != this->vars.end()) {
-			this->content.replace(pos, pattern.length() + include.length() + closure.length(), parser.render());
-		}
+	
+		this->content.replace(pos
+			, pattern.length() + include.length() + closure.length()
+			, TinyParser(WEBSERVER_ROOT + "/" + include).render()
+		);
 		
 		pos = this->content.find(pattern, pos + pattern.length());
 	}

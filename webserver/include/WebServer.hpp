@@ -15,6 +15,11 @@
 const int WEBSERVER_PORT = 6969;
 
 /**
+ * Dossier de base du contenu du serveur web
+ */
+const std::string WEBSERVER_ROOT = "webpages";
+
+/**
  * typedef permettant d'avoir un ptr sur une fonction de handler de route
  * @param WebRequest
  * 	requête récupérée depuis le client

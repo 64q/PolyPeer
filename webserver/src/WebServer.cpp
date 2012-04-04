@@ -127,9 +127,7 @@ void WebServer::run()
 		map<string, route_handler>::iterator it = this->routes.find(request.getTarget());
 		if (it == routes.end())
 		{
-			// Redirection vers page d'erreur
-			toReturn = notfound_route(request);
-			cout << "(server) Le client a demandé une page qui n'existe pas. (TARGET=" << request.getTarget() << ")" << endl;
+			toReturn = ressource_route(request);
 		}
 		else
 		{
