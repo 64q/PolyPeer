@@ -2,24 +2,19 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>PolyPeer WebServer</title>
+		<title>Accueil PolyPeer WebServer</title>
+		<link rel="stylesheet" href="design/style.css" />
 	</head>
 	<body>
+		<!# include(header.html) #!>
 		<h1>Liste des déploiements</h1>
-		<ul>
-			<li>[ <a href="/">Accueil</a> ]</li>
-			<li>[ <a href="/deployments">Déploiements</a> ]</li>
-			<li>[ <a href="/server">Administration</a> ]</li>
-		</ul>
-		<p>
-			Liste des déploiements avec leur état.
-		</p>
-		<table>
+		<!# include(navbar.html) #!>
+		<div id="content">
+			<p>
+				Retrouvez tous les déploiements d'images actuellement actifs sur le serveur.
+			</p>
 			<!# print(list) #!>
-		</table>
-		<hr />
-		<p>
-			<em>Page générée par PolyPeer WebServer &ndash; PolyPeer Team &ndash; &copy; 2012</em>
-		</p>
+		</div>
+		<!# include(footer.html) #!>
 	</body>
 </html>

@@ -1,0 +1,40 @@
+body {
+	font-family: Monospace;
+}
+
+body a {
+	color: blue;
+}
+
+body a:active {
+	color: red;
+}
+
+body header {
+	color: white;
+	font-weight: bold;
+	font-size: large;
+	padding: 10px 10px 25px 10px;
+	background: #171717;
+}
+
+body nav {
+	
+}
+
+body nav ul {
+	margin: 0px;
+	padding: 0px;
+}
+
+body nav ul li {
+	display: inline;
+}
+
+body div#content h1 {
+
+}
+
+body div#content h2 {
+
+}

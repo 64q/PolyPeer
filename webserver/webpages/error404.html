@@ -3,18 +3,20 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>Erreur 404: Page introuvable</title>
+		<link rel="stylesheet" href="design/style.css" />
 	</head>
 	<body>
+		<!# include(header.html) #!>
 		<h1>Erreur 404: Page introuvable</h1>
-		<p>
-			La page que vous avez demandé est introuvable.
-		</p>
-		<p>
-			Revenez à <a href="/">l'index</a>. Si le problème persiste, veuillez contacter l'administrateur de la plateforme.
-		</p>
-		<hr />
-		<p>
-			<em>Page générée par PolyPeer WebServer &ndash; PolyPeer Team &ndash; &copy; 2012</em>
-		</p>
+		<!# include(navbar.html) #!>
+		<div id="content">
+			<p>
+				La page que vous avez demandé est introuvable.
+			</p>
+			<p>
+				Revenez à <a href="/">l'index</a>. Si le problème persiste, veuillez contacter l'administrateur de la plateforme.
+			</p>
+		</div>
+		<!# include(footer.html) #!>
 	</body>
 </html>
