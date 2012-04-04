@@ -36,10 +36,20 @@ public:
 	std::string render();
 	
 	/**
-	 * Parse les variables contenues dans le fichier et les remplace
+	 * Parse les fonctions du langage de mini template
 	 * dans l'attribut content
 	 */
 	void parse();
+	
+	/**
+	 * S'occupe particulièrement du parsage des print()
+	 */
+	void parsePrint();
+	
+	/**
+	 * S'occupe particulièrement du parsage des include()
+	 */
+	void parseInclude();
 
 private:
 	/**

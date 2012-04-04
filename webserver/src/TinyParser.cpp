@@ -32,21 +32,60 @@ void TinyParser::inject(std::string key, std::string value)
 	this->vars.insert(pair<string, string>(key, value));
 }
 
-void TinyParser::parse()
+void TinyParser::parsePrint()
 {
 	map<string, string>::iterator it;
 	unsigned int pos;
+	unsigned int start, end;
+	string pattern = "<!# print(";
+	string closure = ") #!>";
+	pos = this->content.find(pattern);
 	
-	for (it = this->vars.begin(); it != this->vars.end(); ++it)
+	while (pos != string::npos) 
 	{
-		string pattern = "<!" + (*it).first + "!>";
-		pos = this->content.find(pattern);
+		end = pos + pattern.length();
+		start = this->content.find(closure, end);
 		
-		if (pos != string::npos)
-		{
-			this->content.replace(pos, pattern.length(), (*it).second);
+		it  = this->vars.find(this->content.substr(end, start - end));
+		
+		if (it != this->vars.end()) {
+			this->content.replace(pos, pattern.length() + (*it).first.length() + closure.length(), (*it).second);
 		}
+		
+		pos = this->content.find(pattern, pos + pattern.length());
 	}
+}
+
+void TinyParser::parseInclude()
+{
+	map<string, string>::iterator it;
+	unsigned int pos;
+	unsigned int start, end;
+	string pattern = "<!# include(";
+	string closure = ") #!>";
+	pos = this->content.find(pattern);
+	
+	while (pos != string::npos) 
+	{
+		end = pos + pattern.length();
+		start = this->content.find(closure, end);
+		
+		string include(this->content.substr(end, start - end));
+		
+		TinyParser parser("webpages/" + include);
+		
+		if (it != this->vars.end()) {
+			this->content.replace(pos, pattern.length() + include.length() + closure.length(), parser.render());
+		}
+		
+		pos = this->content.find(pattern, pos + pattern.length());
+	}
+}
+
+void TinyParser::parse()
+{
+	parsePrint();
+	parseInclude();
 }
 
 string TinyParser::render()

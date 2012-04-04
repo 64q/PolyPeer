@@ -5,17 +5,24 @@
 		<title>PolyPeer Déploiement</title>
 	</head>
 	<body>
-		<h1>Déploiement "<!# deploy #!>"</h1>
+		<h1>Déploiement "<!# print(deploy) #!>"</h1>
 		<ul>
 			<li>[ <a href="/">Accueil</a> ]</li>
 			<li>[ <a href="/deployments">Déploiements</a> ]</li>
 			<li>[ <a href="/server">Administration</a> ]</li>
 		</ul>
 		<h2>
-			Gestion du déploiement <strong><!# deploy #!></strong>.
+			Gestion du déploiement <strong><!# print(deploy) #!></strong>.
 		</h2>
 		<p>
-			Ce déploiement est actuellement <strong><!# state #!></strong>.
+			Ce déploiement est actuellement <strong><!# print(state) #!></strong>.
+		</p>
+		<p>
+			Test avec la directive print : <!# print(state) #!>.
+		</p>
+		
+		<p>
+			J'affiche encore la variable "state" : <!# print(state) #!>.
 		</p>
 		<hr />
 		<p>
