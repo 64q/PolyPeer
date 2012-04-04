@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <sstream>
+#include <fstream>
 
 #include "../include/routes.hpp"
 #include "../include/WebServer.hpp"
@@ -11,7 +13,7 @@ using namespace std;
 
 string default_route(WebRequest& request)
 {
-	TinyParser parser("webpages/default.html");
+	TinyParser parser(WEBSERVER_ROOT + "/default.html");
 	
 	WebResponse response(200, parser.render());
 	return response.getRawData();
@@ -19,10 +21,9 @@ string default_route(WebRequest& request)
 
 string deployment_route(WebRequest& request)
 {
-	TinyParser parser("webpages/deployment.html");
+	TinyParser parser(WEBSERVER_ROOT + "/deployment.html");
 	
-	parser.inject("deploy", request.getParam("deploy"));
-	parser.inject("state", "actif");
+	parser.inject("id", request.getParam("id"));
 	
 	WebResponse response(200, parser.render());
 	return response.getRawData();
@@ -30,7 +31,7 @@ string deployment_route(WebRequest& request)
 
 string server_route(WebRequest& request)
 {
-	TinyParser parser("webpages/server.html");
+	TinyParser parser(WEBSERVER_ROOT + "/server.html");
 	
 	WebResponse response(200, parser.render());
 	return response.getRawData();
@@ -38,7 +39,7 @@ string server_route(WebRequest& request)
 
 string stop_route(WebRequest& request)
 {
-	TinyParser parser("webpages/stop.html");
+	TinyParser parser(WEBSERVER_ROOT + "/stop.html");
 	
 	// Arrêt du serveur
 	WebServer::getInstance()->stop();
@@ -49,7 +50,7 @@ string stop_route(WebRequest& request)
 
 string restart_route(WebRequest& request)
 {
-	TinyParser parser("webpages/restart.html");
+	TinyParser parser(WEBSERVER_ROOT + "/restart.html");
 	
 	// Restart du serveur
 	WebServer::getInstance()->restart();
@@ -60,9 +61,16 @@ string restart_route(WebRequest& request)
 
 string deployments_route(WebRequest& request)
 {
-	TinyParser parser("webpages/deployments.html");
+	TinyParser parser(WEBSERVER_ROOT + "/deployments.html");
 	
-	parser.inject("list", "<tr><td>Test</td><td>Value</td></tr>");
+	ostringstream oss;
+	
+	oss << "<table>";
+	oss << "<tr><th>#</th><th>Lien d'accès</th><th>Etat</th></tr>";
+	oss << "<tr><td>1</td><td><a href=\"deployment?id=1\">Deploiement #1</a></td><td style=\"color: green;\">Actif</td></tr>";
+	oss << "</table>";
+	
+	parser.inject("list", oss.str());
 	
 	WebResponse response(200, parser.render());
 	return response.getRawData();
@@ -70,7 +78,7 @@ string deployments_route(WebRequest& request)
 
 string notfound_route(WebRequest& request)
 {
-	TinyParser parser("webpages/error404.html");
+	TinyParser parser(WEBSERVER_ROOT + "/error404.html");
 	
 	WebResponse response(404, parser.render());
 	return response.getRawData();
@@ -78,8 +86,32 @@ string notfound_route(WebRequest& request)
 
 string internalerror_route(WebRequest& request)
 {
-	TinyParser parser("webpages/error500.html");
+	TinyParser parser(WEBSERVER_ROOT + "/error500.html");
 	
 	WebResponse response(500, parser.render());
 	return response.getRawData();
+}
+
+std::string ressource_route(WebRequest& request)
+{
+	// Test de ressource
+	// Ouverture du fichier de template
+	ifstream file(string(WEBSERVER_ROOT + request.getTarget()).c_str(), ifstream::in); 
+
+	if(file)
+	{      
+		// copier l'intégralité du fichier dans le buffer
+		stringstream buffer;
+		buffer << file.rdbuf();
+		file.close();  // on ferme le fichier
+		
+		return buffer.str();
+	}
+	else  
+	{
+		cerr << "(server) Erreur, impossible d'ouvrir le fichier " << request.getTarget() << "... " << endl;
+		cout << "(server) Le client a demandé une page qui n'existe pas. (TARGET=" << request.getTarget() << ")" << endl;
+		// Redirection vers page d'erreur
+		return notfound_route(request);
+	}
 }

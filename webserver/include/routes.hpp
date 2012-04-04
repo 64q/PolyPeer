@@ -59,4 +59,12 @@ std::string stop_route(WebRequest& request);
  */
 std::string restart_route(WebRequest& request);
 
+/**
+ * Route pour tout accès a autre chose qu'une route connue
+ * Permet en autre de récupérer les scripts CSS, JS et les Images.
+ * @param WebRequest
+ * 	la requête fournie par le navigateur
+ */
+std::string ressource_route(WebRequest& request);
+
 #endif
