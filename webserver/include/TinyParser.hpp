@@ -3,7 +3,6 @@
 
 #include <fstream>
 #include <map>
-#include <sstream>
 
 /**
  * Classe gérant un petit parseur de page html spéciales
