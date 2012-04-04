@@ -36,8 +36,8 @@ void TinyParser::inject(std::string key, std::string value)
 void TinyParser::parsePrint()
 {
 	map<string, string>::iterator it;
-	unsigned int pos;
-	unsigned int start, end;
+	size_t pos;
+	size_t start, end;
 	string pattern = "<!# print(";
 	string closure = ") #!>";
 	pos = this->content.find(pattern);
