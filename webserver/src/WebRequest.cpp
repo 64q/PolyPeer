@@ -26,7 +26,7 @@ WebRequest::WebRequest(char* raw)
 	while (prms != NULL)
 	{
 		string tmp = string(prms);
-		unsigned int pos = tmp.find("=");
+		size_t pos = tmp.find("=");
 		this->params.insert(pair<string, string>(tmp.substr(0, pos), tmp.substr(pos + 1)));
 		
 		prms = strtok(NULL, "&");
@@ -66,7 +66,7 @@ string WebRequest::getParam(string key)
 	{
 		// Fix escape de certains chars
 		string& second((*it).second);
-		unsigned int pos = second.find("%20");
+		size_t pos = second.find("%20");
 		
 		while (pos != string::npos) 
 		{
