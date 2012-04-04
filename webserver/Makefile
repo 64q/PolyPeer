@@ -15,7 +15,7 @@ INC=include/
 all: webserver
 
 # Edition des liens
-webserver: WebServer.o WebResponse.o WebRequest.o TinyParser.o server.o
+webserver: WebServer.o WebResponse.o WebRequest.o TinyParser.o routes.o server.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 # Compilation du server
@@ -26,6 +26,10 @@ WebResponse.o: $(SRC)WebResponse.cpp
 	$(CC) -c $^ $(CFLAGS)
 	
 WebRequest.o: $(SRC)WebRequest.cpp
+	$(CC) -c $^ $(CFLAGS)
+
+# Compilation des routes
+routes.o: $(SRC)routes.cpp
 	$(CC) -c $^ $(CFLAGS)
 
 # Compilation du Parser

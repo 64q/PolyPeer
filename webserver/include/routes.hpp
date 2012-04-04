@@ -1,6 +1,8 @@
 #ifndef __H_ROUTES__
 #define __H_ROUTES__
 
+#include "WebRequest.hpp"
+
 /**
  * Route par défaut
  * @param WebRequest
@@ -22,25 +24,32 @@ std::string notfound_route(WebRequest& request);
  */
 std::string deployment_route(WebRequest& request);
 
+/** 
+ * Route des déploiements
+ * @param WebRequest
+ * 	la requête fournie par le navigateur
+ */
+std::string deployments_route(WebRequest& request);
+
 /**
  * Route de l'admin serveur
  * @param WebRequest
  * 	la requête fournie par le navigateur
  */
-string server_route(WebRequest& request);
+std::string server_route(WebRequest& request);
 
 /**
  * Route vers le stop du server
  * @param WebRequest
  * 	la requête fournie par le navigateur
  */
-string stop_route(WebRequest& request);
+std::string stop_route(WebRequest& request);
 
 /**
  * Route vers le restart du server
  * @param WebRequest
  * 	la requête fournie par le navigateur
  */
-string restart_route(WebRequest& request);
+std::string restart_route(WebRequest& request);
 
 #endif

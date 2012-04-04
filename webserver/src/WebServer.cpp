@@ -10,6 +10,7 @@
 
 #include "../include/WebServer.hpp"
 #include "../include/WebRequest.hpp"
+#include "../include/routes.hpp"
 
 using namespace std;
 

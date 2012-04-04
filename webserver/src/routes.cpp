@@ -1,10 +1,13 @@
 #include <iostream>
+#include <string>
 
 #include "../include/routes.hpp"
 #include "../include/WebServer.hpp"
 #include "../include/WebRequest.hpp"
 #include "../include/WebResponse.hpp"
 #include "../include/TinyParser.hpp"
+
+using namespace std;
 
 string default_route(WebRequest& request)
 {
