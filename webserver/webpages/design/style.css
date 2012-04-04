@@ -36,5 +36,5 @@ body div#content h1 {
 }
 
 body div#content h2 {
-
+	border-bottom: 1px dotted #171717;
 }
