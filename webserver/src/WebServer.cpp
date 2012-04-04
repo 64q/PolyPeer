@@ -79,8 +79,6 @@ WebServer::~WebServer()
 	{
 		cout << "(server) Socket détruite." << endl;
 	}
-	
-	this->socket = NULL;
 }
 
 WebServer* WebServer::getInstance()
@@ -135,6 +133,8 @@ void WebServer::run()
 		
 		close(nsock);
 	}
+	
+	close(nsock);
 }
 
 void WebServer::stop()

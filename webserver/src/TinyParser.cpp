@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <exception>
 
 #include "../include/TinyParser.hpp"
 
@@ -22,6 +23,7 @@ TinyParser::TinyParser(std::string filename)
 	else  
 	{
 		cerr << "Erreur, impossible d'ouvrir le fichier " << filename << "... " << endl;
+		throw new std::exception;
 	}
 }
 	

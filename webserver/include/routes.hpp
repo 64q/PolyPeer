@@ -17,6 +17,13 @@ std::string default_route(WebRequest& request);
  */
 std::string notfound_route(WebRequest& request);
 
+/**
+ * Route d'erreur interne
+ * @param WebRequest
+ * 	la requête fournie par le navigateur
+ */
+std::string internalerror_route(WebRequest& request);
+
 /** 
  * Route de déploiement
  * @param WebRequest

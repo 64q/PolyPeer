@@ -75,3 +75,11 @@ string notfound_route(WebRequest& request)
 	WebResponse response(404, parser.render());
 	return response.getRawData();
 }
+
+string internalerror_route(WebRequest& request)
+{
+	TinyParser parser("webpages/error500.html");
+	
+	WebResponse response(500, parser.render());
+	return response.getRawData();
+}
