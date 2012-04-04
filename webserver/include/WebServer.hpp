@@ -10,10 +10,24 @@
 #include "WebRequest.hpp"
 
 /**
+ * Port du serveur Web
+ */
+const int WEBSERVER_PORT = 6969;
+
+/**
  * typedef permettant d'avoir un ptr sur une fonction de handler de route
+ * @param WebRequest
+ * 	requête récupérée depuis le client
+ * @return
+ * 	contenu à envoyer au navigateur client
  */
 typedef std::string (*route_handler)(WebRequest&);
 
+/**
+ * Le web server permet de gérer intégralement l'interface web de controle
+ * du programme PolyPeer. Il donne acccès à des pages web et à des controles
+ * via les routes définies.
+ */
 class WebServer
 {
 public:
@@ -26,6 +40,11 @@ public:
 	 * Arrêt du serveur Web
 	 */
 	void stop();
+	
+	/**
+	 * Restart du serveur Web
+	 */
+	void restart();
 	
 	/**
 	 * Accès au singleton du serveur Web
@@ -74,17 +93,5 @@ private:
 	 */
 	std::map<std::string, route_handler> routes;
 };
-
-/**
- * Route par défaut
- */
-std::string default_route(WebRequest& request);
-
-/**
- * Route not found
- */
-std::string notfound_route(WebRequest& request);
-
-std::string deployment_route(WebRequest& request);
 
 #endif

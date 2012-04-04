@@ -10,8 +10,6 @@
 
 #include "../include/WebServer.hpp"
 #include "../include/WebRequest.hpp"
-#include "../include/WebResponse.hpp"
-#include "../include/TinyParser.hpp"
 
 using namespace std;
 
@@ -64,11 +62,15 @@ WebServer::WebServer(const int port)
 	// Init des routes
 	this->routes.insert(pair<string, route_handler>("/", default_route));
 	this->routes.insert(pair<string, route_handler>("/deployment", deployment_route));
+	this->routes.insert(pair<string, route_handler>("/deployments", deployments_route));
+	this->routes.insert(pair<string, route_handler>("/server", server_route));
+	this->routes.insert(pair<string, route_handler>("/stop", stop_route));
+	this->routes.insert(pair<string, route_handler>("/restart", restart_route));
 }
 
 WebServer::~WebServer()
 {
-	if (close(this->socket) < 0)
+	if (shutdown(this->socket, 2) < 0)
 	{
 		cerr << "(server) Erreur lors de la fermeture du descripteur de fichier." << endl;
 	}
@@ -77,13 +79,14 @@ WebServer::~WebServer()
 		cout << "(server) Socket détruite." << endl;
 	}
 	
+	this->socket = NULL;
 }
 
 WebServer* WebServer::getInstance()
 {
 	if (instance == NULL)
 	{
-		instance = new WebServer(6969);
+		instance = new WebServer(WEBSERVER_PORT);
 	}
 	
 	return instance;
@@ -138,29 +141,8 @@ void WebServer::stop()
 	this->isRunning = false;
 }
 
-string default_route(WebRequest& request)
+void WebServer::restart()
 {
-	TinyParser parser("webpages/default.html");
-	
-	WebResponse response(200, parser.render());
-	return response.getRawData();
+	// Pas implémentée
 }
 
-string deployment_route(WebRequest& request)
-{
-	TinyParser parser("webpages/deployment.html");
-	
-	parser.inject("deploy", request.getParam("deploy"));
-	parser.inject("state", "actif");
-	
-	WebResponse response(200, parser.render());
-	return response.getRawData();
-}
-
-string notfound_route(WebRequest& request)
-{
-	TinyParser parser("webpages/error404.html");
-	
-	WebResponse response(404, parser.render());
-	return response.getRawData();
-}
