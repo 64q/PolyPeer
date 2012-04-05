@@ -1,45 +1,44 @@
 #ifndef FILEMANAGER_H
 #define FILEMANAGER_H
-#include "../include/Chunk.hpp"
+
 #include <string>
 #include <fstream>
 #include <iostream>
 
+#include "../include/Chunk.hpp"
+
 class FileManager
 {
-    public:
-        //path: chemin d'accès du fichier
-        //sizeChunk: taille de chaque Chunk dans lesquels vont être placés les morceaux du fichier
-        FileManager(char* path, long size, long sizeChunk);
-        virtual ~FileManager();
+public:
+	//path: chemin d'accès du fichier
+	//sizeChunk: taille de chaque Chunk dans lesquels vont être placés les morceaux du fichier
+	FileManager(char* path, long size, long sizeChunk);
+	virtual ~FileManager();
 
-        //on récupère le Chunk correspondant au number
-        Chunk getChunk(long number);
+	//on récupère le Chunk correspondant au number
+	Chunk getChunk(long number);
 
-        //on enregistre le Chunk dans le fichier avec les vérifications nécessaires
-        bool saveChunk(Chunk &chunk);
+	//on enregistre le Chunk dans le fichier avec les vérifications nécessaires
+	bool saveChunk(Chunk &chunk);
 
-        //renvoie le nombre de Chunk nécessaires pour récupérer le fichier entier
-        long getNumberChunk();
+	//renvoie le nombre de Chunk nécessaires pour récupérer le fichier entier
+	long getNumberChunk();
 
-        //renvoie la taille du fichier chargé
-        long getFileSize();
+	//renvoie la taille du fichier chargé
+	long getFileSize();
 
-    protected:
+protected:
+	std::fstream file;
+	std::string pathFileState;
+	char* currentData;
+	long currentChunk;
+	long sizeFile;
+	long sizeChunk;
 
-        std::fstream file;
-        std::string pathFileState;
-        char* currentData;
-        long currentChunk;
-        long sizeFile;
-        long sizeChunk;
-
-        long getState();
-        void saveState();
-        bool existFile(char* path);
-        void reserveFile(char* path, long size);
-
-    private:
+	long getState();
+	void saveState();
+	bool existFile(char* path);
+	void reserveFile(char* path, long size);
 };
 
 #endif // FILEMANAGER_H
