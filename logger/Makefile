@@ -1,4 +1,4 @@
-# Makefile du tcp
+# Makefile du logger
 #
 # Auteur: LEBOURGEOIS Quentin
 # Date: jeu. 5 avril 2012
