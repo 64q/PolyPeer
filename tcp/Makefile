@@ -1,7 +1,7 @@
-# Makefile du webserver
+# Makefile du tcp
 #
 # Auteur: LEBOURGEOIS Quentin
-# Date: jeu. 29 mars 2012
+# Date: jeu. 5 avril 2012
 # Version: 
 #
 
