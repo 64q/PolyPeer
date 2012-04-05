@@ -1,6 +1,6 @@
 
 #include <iostream>
-#include "include/ServerSocket.hPP"
+#include "include/ServerSocket.hpp"
 using namespace std;
 
 int main()
@@ -15,7 +15,9 @@ int main()
         while(true)
         {
             sock = server.accept();
+            cout<<"connexion"<<endl;
             sock.send("crotte");
+
             sock.close();
 
         }
