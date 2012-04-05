@@ -34,13 +34,12 @@ typedef struct in_addr IN_ADDR;
 
 class BaseSocket
 {
-    public:
+    protected:
         BaseSocket();
         virtual ~BaseSocket();
-        void close();
-    protected:
         int descripteur;
-    private:
+    public:
+        void close();
 };
 
 #endif // BASESOCKET_H
