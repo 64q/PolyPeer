@@ -1,7 +1,6 @@
 #ifndef BASESOCKET_H
 #define BASESOCKET_H
 
-
 #ifdef WIN32 /* si vous êtes sous Windows */
 
 #include <winsock2.h>
@@ -17,9 +16,11 @@ typedef int socklen_t;
 #include <arpa/inet.h>
 #include <unistd.h> /* close */
 #include <netdb.h> /* gethostbyname */
+
 #define INVALID_SOCKET -1
 #define SOCKET_ERROR -1
 #define closesocket(s) ::close(s)
+
 typedef int SOCKET;
 typedef struct sockaddr_in SOCKADDR_IN;
 typedef struct sockaddr SOCKADDR;
@@ -34,12 +35,13 @@ typedef struct in_addr IN_ADDR;
 
 class BaseSocket
 {
-    protected:
-        BaseSocket();
-        virtual ~BaseSocket();
-        int descripteur;
-    public:
-        void close();
+protected:
+	BaseSocket();
+	virtual ~BaseSocket();
+	
+	int descripteur;
+public:
+	void close();
 };
 
 #endif // BASESOCKET_H

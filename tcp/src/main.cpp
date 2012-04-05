@@ -6,12 +6,11 @@ using namespace std;
 
 int main()
 {
-
 	ServerSocket server(5556);
 	cout << "en attente" << endl;
 	
 	Socket sock;
-	while(true)
+	while (true)
 	{
 		sock = server.accept();
 		sock.send("crotte");

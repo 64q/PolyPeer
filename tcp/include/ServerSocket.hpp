@@ -4,19 +4,15 @@
 #include "BaseSocket.hpp"
 #include "Socket.hpp"
 
-class ServerSocket : public BaseSocket{
+class ServerSocket : public BaseSocket
+{
+private:
+	int port;
 
-	private:
-		int port;
-
-
-	public:
-		ServerSocket(int port);
-		~ServerSocket();
-		Socket& accept();
-
-
-
+public:
+	ServerSocket(int port);
+	~ServerSocket();
+	Socket& accept();
 };
 
 #endif // SERVERSOCKET_H
