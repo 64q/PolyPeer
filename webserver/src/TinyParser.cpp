@@ -20,11 +20,11 @@ TinyParser::TinyParser(std::string filename)
 		// copier l'intégralité du fichier dans le buffer
 		buffer << this->file.rdbuf();
 		this->content = string(buffer.str());
-		this->file.close();  // on ferme le fichier
+		this->file.close();
 	}
 	else  
 	{
-		buffer << "impossible d'ouvrir le fichier demandé : " << filename << ".";
+		buffer << "impossible d'ouvrir le fichier de template demandé : " << filename << ".";
 		WebServer::getInstance()->logger.put("error", buffer.str());
 	}
 }
