@@ -7,9 +7,10 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	cout << "+--------------------+" << endl;
-	cout << "| WebServer PolyPeer |" << endl;
-	cout << "+--------------------+" << endl;
+	cout << "+--------------------------------+" << endl;
+	cout << "|       WebServer PolyPeer       |" << endl;
+	cout << "+----------------------------(c)-+" << endl;
+	cout << "Serveur intégré au projet PolyPeer" << endl;
 	
 	// Récupération du serveur web
 	WebServer* server = WebServer::getInstance();

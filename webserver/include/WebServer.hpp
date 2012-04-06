@@ -100,6 +100,11 @@ private:
 	bool isRunning;
 	
 	/**
+	 * Mode debug (active le tracage des requêtes HTTP)
+	 */
+	bool debug;
+	
+	/**
 	 * Map stockant les routes http
 	 */
 	std::map<std::string, route_handler> routes;
