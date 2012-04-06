@@ -7,7 +7,8 @@
 // Spécifique pour les sockets
 #include <arpa/inet.h> // nécessaire pour les sockaddr
 
-#include "WebRequest.hpp"
+#include <WebRequest.hpp>
+#include <Logger.hpp>
 
 /**
  * Port du serveur Web
@@ -55,6 +56,11 @@ public:
 	 * Accès au singleton du serveur Web
 	 */
 	static WebServer* getInstance();
+		
+	/**
+	 * Logger du webserver
+	 */
+	Logger logger;
 	
 	/**
 	 * Destructeur

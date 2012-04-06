@@ -3,11 +3,11 @@
 #include <sstream>
 #include <fstream>
 
-#include "../include/routes.hpp"
-#include "../include/WebServer.hpp"
-#include "../include/WebRequest.hpp"
-#include "../include/WebResponse.hpp"
-#include "../include/TinyParser.hpp"
+#include <routes.hpp>
+#include <WebServer.hpp>
+#include <WebRequest.hpp>
+#include <WebResponse.hpp>
+#include <TinyParser.hpp>
 
 using namespace std;
 
@@ -97,11 +97,12 @@ std::string ressource_route(WebRequest& request)
 	// Test de ressource
 	// Ouverture du fichier de template
 	ifstream file(string(WEBSERVER_ROOT + request.getTarget()).c_str(), ifstream::in); 
-
+	
+	stringstream buffer;
+	
 	if(file)
 	{      
 		// copier l'intégralité du fichier dans le buffer
-		stringstream buffer;
 		buffer << file.rdbuf();
 		file.close();  // on ferme le fichier
 		
@@ -109,8 +110,8 @@ std::string ressource_route(WebRequest& request)
 	}
 	else  
 	{
-		cerr << "(server) Erreur, impossible d'ouvrir le fichier " << request.getTarget() << "... " << endl;
-		cout << "(server) Le client a demandé une page qui n'existe pas. (TARGET=" << request.getTarget() << ")" << endl;
+		buffer << "impossible d'ouvrir le fichier demandé : " << request.getTarget() << ".";
+		WebServer::getInstance()->logger.put("error", buffer.str());
 		// Redirection vers page d'erreur
 		return notfound_route(request);
 	}

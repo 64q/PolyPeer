@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
 {
 	cout << "Test du logger" << endl;
 	
-	Logger logger("log/webserver.log");
+	Logger logger("log/example.log");
 	
 	logger.put("notice", "a small insert was detected...");
 	logger.put("error", "hacking attempt.");

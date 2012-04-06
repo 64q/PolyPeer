@@ -11,9 +11,9 @@
 
 using namespace std;
 
-Logger::Logger(const char* path)
+Logger::Logger(const string& path)
 {
-	this->file.open(path, fstream::app);
+	this->file.open(path.c_str(), fstream::app);
 	
 	if (!this->file.is_open()) 
 	{
@@ -26,7 +26,7 @@ Logger::~Logger()
 	this->file.close();
 }
 
-void Logger::put(const char* type, const char* content)
+void Logger::put(const string& type, const string& content)
 {
 	char buffer[256];
 	time_t timestamp = time(NULL);
@@ -38,9 +38,5 @@ void Logger::put(const char* type, const char* content)
 
 string Logger::getContent()
 {
-	// copier l'intégralité du fichier dans le buffer
-	stringstream buffer;
-	buffer << this->file.rdbuf();
-	
-	return buffer.str();
+	return string("unimplemented");
 }

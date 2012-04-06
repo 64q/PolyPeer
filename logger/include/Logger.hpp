@@ -16,7 +16,7 @@ public:
 	 * 	chemin vers le fichier de log (créé s'il n'existe pas, sinon
 	 * 	il écrit à la suite dedans)
 	 */
-	Logger(const char* path);
+	Logger(const std::string&);
 	
 	/**
 	 * Destructeur de logger (ferme le fichier)
@@ -30,7 +30,7 @@ public:
 	 * @param char*
 	 * 	le contenu à enregister
 	 */
-	void put(const char* type, const char* content);
+	void put(const std::string& type, const std::string& content);
 	
 	/**
 	 * Récupère le contenu du fichier de log dans une chaine

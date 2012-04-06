@@ -2,7 +2,7 @@
 #include <cstring>
 #include <map>
 
-#include "../include/WebRequest.hpp"
+#include <WebRequest.hpp>
 
 using namespace std;
 

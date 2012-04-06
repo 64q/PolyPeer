@@ -1,7 +1,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "../include/WebResponse.hpp"
+#include <WebResponse.hpp>
 
 using namespace std;
 

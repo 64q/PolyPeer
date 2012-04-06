@@ -1,6 +1,7 @@
 #include <iostream>
 
-#include "../include/WebServer.hpp"
+#include <WebServer.hpp>
+#include <Logger.hpp>
 
 using namespace std;
 
