@@ -1,7 +1,9 @@
 #include <iostream>
+#include <sstream>
 #include <cstring>
 #include <map>
 
+#include <WebServer.hpp>
 #include <WebRequest.hpp>
 
 using namespace std;
@@ -32,15 +34,13 @@ WebRequest::WebRequest(char* raw)
 		prms = strtok(NULL, "&");
 	}
 	
-	/*
-	map<string, string>::iterator it;
-	cout << "-- MAP --" << endl;
-	for (it = this->params.begin(); it != this->params.end(); ++it)
+	// Le mode debug active un logging des requêtes client
+	if (WebServer::getInstance()->isDebug())
 	{
-		cout << "key = " << (*it).first << ", value = " << (*it).second << endl;
+		stringstream buffer;
+		buffer << "requête " << this->method << " client sur " << this->target << ". Paramètres GET = " << trg << ".";
+		WebServer::getInstance()->logger.put("debug", buffer.str());
 	}
-	cout << "----" << endl;
-	*/
 }
 
 WebRequest::~WebRequest()

@@ -92,7 +92,32 @@ string internalerror_route(WebRequest& request)
 	return response.getRawData();
 }
 
-std::string ressource_route(WebRequest& request)
+string debug_route(WebRequest& request)
+{
+	TinyParser parser(WEBSERVER_ROOT + "/debug.html");
+
+	if (WebServer::getInstance()->isDebug()) 
+	{
+		parser.inject("debug", "<span style=\"color: green;\">activé</span>");
+		parser.inject("link", "<a href=\"/toggledebug\">Désactiver debug</a>");
+	}
+	else 
+	{
+		parser.inject("debug", "<span style=\"color: red;\">inactif</span>");
+		parser.inject("link", "<a href=\"/toggledebug\">Activer debug</a>");
+	}
+	
+	WebResponse response(200, parser.render());
+	return response.getRawData();
+}
+
+string toggledebug_route(WebRequest& request)
+{
+	WebServer::getInstance()->toggleDebug();
+	return debug_route(request);
+}
+
+string ressource_route(WebRequest& request)
 {
 	// Test de ressource
 	// Ouverture du fichier de template

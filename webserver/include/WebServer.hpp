@@ -24,7 +24,7 @@ const std::string WEBSERVER_ROOT = "webpages";
  * typedef permettant d'avoir un ptr sur une fonction de handler de route
  * @param WebRequest
  * 	requête récupérée depuis le client
- * @return
+ * @return string
  * 	contenu à envoyer au navigateur client
  */
 typedef std::string (*route_handler)(WebRequest&);
@@ -51,6 +51,16 @@ public:
 	 * Restart du serveur Web
 	 */
 	void restart();
+	
+	/**
+	 * Permet de passer en mode debug et inversement
+	 */
+	void toggleDebug();
+	
+	/**
+	 * Renvoie l'état du serveur (en debug ou pas)
+	 */
+	bool isDebug();
 	
 	/**
 	 * Accès au singleton du serveur Web
@@ -101,6 +111,8 @@ private:
 	
 	/**
 	 * Mode debug (active le tracage des requêtes HTTP)
+	 * Si actif, il va écrire dans log/webserver.log des infos supplémentaires
+	 * utiles pour le développeur désirant plus d'infos sur le trafic.
 	 */
 	bool debug;
 	

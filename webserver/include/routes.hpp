@@ -60,6 +60,20 @@ std::string stop_route(WebRequest& request);
 std::string restart_route(WebRequest& request);
 
 /**
+ * Route pour activer/desactiver le debug mode
+ * @param WebRequest
+ * 	la requête fournie par le navigateur
+ */
+std::string toggledebug_route(WebRequest& request);
+
+/**
+ * Route de contrôle & d'affichage du debug mode
+ * @param WebRequest
+ * 	la requête fournie par le navigateur
+ */
+std::string debug_route(WebRequest& request);
+
+/**
  * Route pour tout accès a autre chose qu'une route connue
  * Permet en autre de récupérer les scripts CSS, JS et les Images.
  * @param WebRequest

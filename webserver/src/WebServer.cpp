@@ -21,7 +21,7 @@ WebServer* WebServer::instance = NULL;
 WebServer::WebServer(const int port) :
 	logger("log/webserver.log")
 {
-	// Init générale
+	this->debug = false;
 	this->isRunning = true;
 
 	// Init de la socket
@@ -57,6 +57,8 @@ WebServer::WebServer(const int port) :
 	this->routes.insert(pair<string, route_handler>("/server", server_route));
 	this->routes.insert(pair<string, route_handler>("/stop", stop_route));
 	this->routes.insert(pair<string, route_handler>("/restart", restart_route));
+	this->routes.insert(pair<string, route_handler>("/debug", debug_route));
+	this->routes.insert(pair<string, route_handler>("/toggledebug", toggledebug_route));
 }
 
 WebServer::~WebServer()
@@ -127,5 +129,22 @@ void WebServer::stop()
 void WebServer::restart()
 {
 	this->logger.put("notice", "le serveur a été redémarré.");
+}
+
+void WebServer::toggleDebug()
+{
+	if (this->debug)
+	{
+		this->debug = false;
+	}
+	else
+	{
+		this->debug = true;
+	}
+}
+
+bool WebServer::isDebug()
+{
+	return this->debug;
 }
 
