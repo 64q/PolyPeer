@@ -101,20 +101,20 @@ void WebServer::run()
 		}
 		
 		WebRequest request(message);
-		string toReturn;
+		string sent;
 		
 		// Vérifie que la route existe
 		map<string, route_handler>::iterator it = this->routes.find(request.getTarget());
 		if (it == routes.end())
 		{
-			toReturn = ressource_route(request);
+			sent = ressource_route(request);
 		}
 		else
 		{
-			toReturn = (*it).second(request);
+			sent = (*it).second(request);
 		}
 		
-		write(nsock, toReturn.c_str(), toReturn.length() * sizeof(char));
+		write(nsock, sent.c_str(), sent.length() * sizeof(char));
 		
 		close(nsock);
 	}
