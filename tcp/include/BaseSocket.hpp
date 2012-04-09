@@ -32,15 +32,35 @@ typedef struct in_addr IN_ADDR;
 
 #endif
 
+/**
+ * Classe de base des sockets.
+ * Ne peut pas être instancié.
+**/
 
 class BaseSocket
 {
 protected:
+
+	/**
+	 * Constructeur qui initialise sans connecter la socket.
+	 */
 	BaseSocket();
+
+	/**
+	 * Destructeur de BseSocket (ferme la socket). Fait appel à la méthode close().
+	 */
 	virtual ~BaseSocket();
-	
+
+	/**
+	 * Contient l'identifient de la socket.
+	 */
 	int descripteur;
+
+
 public:
+	/**
+	 * Ferme la socket proprement.
+	 */
 	void close();
 };
 
