@@ -8,18 +8,20 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#include "../include/WebServer.hpp"
-#include "../include/WebRequest.hpp"
-#include "../include/routes.hpp"
+// Includes du projet
+#include <WebServer.hpp>
+#include <WebRequest.hpp>
+#include <routes.hpp>
 
 using namespace std;
 
 // Important à faire quand on fait du patern singleton en C++
 WebServer* WebServer::instance = NULL;
 
-WebServer::WebServer(const int port)
+WebServer::WebServer(const int port) :
+	logger("log/webserver.log")
 {
-	// Init générale
+	this->debug = false;
 	this->isRunning = true;
 
 	// Init de la socket
@@ -28,11 +30,7 @@ WebServer::WebServer(const int port)
 	
 	if (this->serv_socket < 0)
 	{
-		cerr << "(server) Erreur d'ouverture de la socket..." << endl;
-	}
-	else
-	{
-		cout << "(server) Création de la socket réussie." << endl;
+		this->logger.put("error", "impossible d'ouvrir la socket.");
 	}
 	
 	bzero((char *) &this->serv_addr, sizeof(this->serv_addr));
@@ -43,21 +41,13 @@ WebServer::WebServer(const int port)
 	
 	if (bind(this->serv_socket, (struct sockaddr *) &this->serv_addr, sizeof(this->serv_addr)) < 0)
 	{
-		cerr << "(server) Erreur, impossible de binder la socket..." << endl;
-	}
-	else
-	{
-		cout << "(server) Binding de la socket réussie." << endl;
+		this->logger.put("error", "impossible de binder la socket.");
 	}
 	
 	// Listen avec un tampon de 5
 	if (listen(this->serv_socket, 5) < 0)
 	{
-		cerr << "(server) Erreur, impossible de faire écouter la socket..." << endl;
-	}
-	else
-	{
-		cout << "(server) Listen de la socket réussi." << endl;
+		this->logger.put("error", "impossible d'écouter sur le port demandé.");
 	}
 	
 	// Init des routes
@@ -67,17 +57,15 @@ WebServer::WebServer(const int port)
 	this->routes.insert(pair<string, route_handler>("/server", server_route));
 	this->routes.insert(pair<string, route_handler>("/stop", stop_route));
 	this->routes.insert(pair<string, route_handler>("/restart", restart_route));
+	this->routes.insert(pair<string, route_handler>("/debug", debug_route));
+	this->routes.insert(pair<string, route_handler>("/toggledebug", toggledebug_route));
 }
 
 WebServer::~WebServer()
 {
 	if (shutdown(this->serv_socket, 2) < 0)
 	{
-		cerr << "(server) Erreur lors de la fermeture de la socket serveur." << endl;
-	}
-	else
-	{
-		cout << "(server) Socket serveur détruite." << endl;
+		this->logger.put("error", "impossible de fermer la socket du server.");
 	}
 }
 
@@ -103,13 +91,13 @@ void WebServer::run()
 		nsock = accept(this->serv_socket, (struct sockaddr *) &this->cli_addr, &size);
 		if (nsock < 0)
 		{
-			cerr << "(server) Erreur lors de l'acceptation de la connexion d'un client..." << endl;
+			this->logger.put("error", "impossible d'accepter le client.");
 		}
 
 		/* lecture */
 		if (read(nsock, message, 475*sizeof(char)) < 0)
 		{
-			cerr << "(server) Erreur lors de la lecture du contenu..." << endl;
+			this->logger.put("error", "impossible de lire le contenu de la socket.");
 		}
 		
 		WebRequest request(message);
@@ -124,7 +112,6 @@ void WebServer::run()
 		else
 		{
 			toReturn = (*it).second(request);
-			cout << "(server) Le client a demandé la page : "<< request.getTarget() << endl;
 		}
 		
 		write(nsock, toReturn.c_str(), toReturn.length() * sizeof(char));
@@ -136,10 +123,28 @@ void WebServer::run()
 void WebServer::stop()
 {
 	this->isRunning = false;
+	this->logger.put("notice", "le serveur a été arrêté.");
 }
 
 void WebServer::restart()
 {
-	// Pas implémentée
+	this->logger.put("notice", "le serveur a été redémarré.");
+}
+
+void WebServer::toggleDebug()
+{
+	if (this->debug)
+	{
+		this->debug = false;
+	}
+	else
+	{
+		this->debug = true;
+	}
+}
+
+bool WebServer::isDebug()
+{
+	return this->debug;
 }
 

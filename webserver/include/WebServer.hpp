@@ -7,7 +7,8 @@
 // Spécifique pour les sockets
 #include <arpa/inet.h> // nécessaire pour les sockaddr
 
-#include "WebRequest.hpp"
+#include <WebRequest.hpp>
+#include <Logger.hpp>
 
 /**
  * Port du serveur Web
@@ -23,7 +24,7 @@ const std::string WEBSERVER_ROOT = "webpages";
  * typedef permettant d'avoir un ptr sur une fonction de handler de route
  * @param WebRequest
  * 	requête récupérée depuis le client
- * @return
+ * @return string
  * 	contenu à envoyer au navigateur client
  */
 typedef std::string (*route_handler)(WebRequest&);
@@ -52,9 +53,24 @@ public:
 	void restart();
 	
 	/**
+	 * Permet de passer en mode debug et inversement
+	 */
+	void toggleDebug();
+	
+	/**
+	 * Renvoie l'état du serveur (en debug ou pas)
+	 */
+	bool isDebug();
+	
+	/**
 	 * Accès au singleton du serveur Web
 	 */
 	static WebServer* getInstance();
+		
+	/**
+	 * Logger du webserver
+	 */
+	Logger logger;
 	
 	/**
 	 * Destructeur
@@ -92,6 +108,13 @@ private:
 	 * Booléen nécessaire pour controler le serveur web
 	 */
 	bool isRunning;
+	
+	/**
+	 * Mode debug (active le tracage des requêtes HTTP)
+	 * Si actif, il va écrire dans log/webserver.log des infos supplémentaires
+	 * utiles pour le développeur désirant plus d'infos sur le trafic.
+	 */
+	bool debug;
 	
 	/**
 	 * Map stockant les routes http

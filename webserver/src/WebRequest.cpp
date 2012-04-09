@@ -1,8 +1,10 @@
 #include <iostream>
+#include <sstream>
 #include <cstring>
 #include <map>
 
-#include "../include/WebRequest.hpp"
+#include <WebServer.hpp>
+#include <WebRequest.hpp>
 
 using namespace std;
 
@@ -26,21 +28,19 @@ WebRequest::WebRequest(char* raw)
 	while (prms != NULL)
 	{
 		string tmp = string(prms);
-		unsigned int pos = tmp.find("=");
+		size_t pos = tmp.find("=");
 		this->params.insert(pair<string, string>(tmp.substr(0, pos), tmp.substr(pos + 1)));
 		
 		prms = strtok(NULL, "&");
 	}
 	
-	/*
-	map<string, string>::iterator it;
-	cout << "-- MAP --" << endl;
-	for (it = this->params.begin(); it != this->params.end(); ++it)
+	// Le mode debug active un logging des requêtes client
+	if (WebServer::getInstance()->isDebug())
 	{
-		cout << "key = " << (*it).first << ", value = " << (*it).second << endl;
+		stringstream buffer;
+		buffer << "requête " << this->method << " client sur " << this->target << ". Paramètres GET = " << trg << ".";
+		WebServer::getInstance()->logger.put("debug", buffer.str());
 	}
-	cout << "----" << endl;
-	*/
 }
 
 WebRequest::~WebRequest()
@@ -66,7 +66,7 @@ string WebRequest::getParam(string key)
 	{
 		// Fix escape de certains chars
 		string& second((*it).second);
-		unsigned int pos = second.find("%20");
+		size_t pos = second.find("%20");
 		
 		while (pos != string::npos) 
 		{

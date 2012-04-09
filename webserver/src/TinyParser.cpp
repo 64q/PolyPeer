@@ -3,8 +3,8 @@
 #include <sstream>
 #include <exception>
 
-#include "../include/TinyParser.hpp"
-#include "../include/WebServer.hpp" // Nécessaire pour le WebServer Root
+#include <TinyParser.hpp>
+#include <WebServer.hpp> // Nécessaire pour le WebServer Root
 
 using namespace std;
 
@@ -13,18 +13,19 @@ TinyParser::TinyParser(std::string filename)
 	// Ouverture du fichier de template
 	this->file.open(filename.c_str(), ifstream::in); 
 
+	stringstream buffer;
+
 	if(this->file.is_open())
 	{      
 		// copier l'intégralité du fichier dans le buffer
-		stringstream buffer;
 		buffer << this->file.rdbuf();
 		this->content = string(buffer.str());
-		this->file.close();  // on ferme le fichier
+		this->file.close();
 	}
 	else  
 	{
-		cerr << "Erreur, impossible d'ouvrir le fichier " << filename << "... " << endl;
-		throw new std::exception;
+		buffer << "impossible d'ouvrir le fichier de template demandé : " << filename << ".";
+		WebServer::getInstance()->logger.put("error", buffer.str());
 	}
 }
 	
@@ -59,8 +60,8 @@ void TinyParser::parsePrint()
 
 void TinyParser::parseInclude()
 {
-	unsigned int pos;
-	unsigned int start, end;
+	size_t pos;
+	size_t start, end;
 	
 	// Les patterns utilisés pour un include
 	string pattern = "<!# include(";

@@ -1,7 +1,7 @@
 #ifndef __H_ROUTES__
 #define __H_ROUTES__
 
-#include "WebRequest.hpp"
+#include <WebRequest.hpp>
 
 /**
  * Route par défaut
@@ -58,6 +58,20 @@ std::string stop_route(WebRequest& request);
  * 	la requête fournie par le navigateur
  */
 std::string restart_route(WebRequest& request);
+
+/**
+ * Route pour activer/desactiver le debug mode
+ * @param WebRequest
+ * 	la requête fournie par le navigateur
+ */
+std::string toggledebug_route(WebRequest& request);
+
+/**
+ * Route de contrôle & d'affichage du debug mode
+ * @param WebRequest
+ * 	la requête fournie par le navigateur
+ */
+std::string debug_route(WebRequest& request);
 
 /**
  * Route pour tout accès a autre chose qu'une route connue

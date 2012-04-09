@@ -1,0 +1,4 @@
+*.o
+*.STATE
+test.png
+filemanager

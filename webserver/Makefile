@@ -6,16 +6,20 @@
 #
 
 CC=g++
-CFLAGS=-Wall -ggdb
+CFLAGS=-Wall -ggdb -I../tcp/include/ -I../logger/include/ -Iinclude/
 LDFLAGS=
 EXEC=webserver
 SRC=src/
 INC=include/
 
+# les autres où chercher les fichiers
+TCP=../tcp/
+LOGGER=../logger/
+
 all: webserver
 
 # Edition des liens
-webserver: WebServer.o WebResponse.o WebRequest.o TinyParser.o routes.o server.o
+webserver: WebServer.o WebResponse.o WebRequest.o TinyParser.o BaseSocket.o ServerSocket.o Socket.o Logger.o routes.o server.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 # Compilation du server
@@ -34,6 +38,22 @@ routes.o: $(SRC)routes.cpp
 
 # Compilation du Parser
 TinyParser.o: $(SRC)TinyParser.cpp
+	$(CC) -c $^ $(CFLAGS)
+
+# Compilation du BaseSocket
+BaseSocket.o: $(TCP)$(SRC)BaseSocket.cpp
+	$(CC) -c $^ $(CFLAGS)
+
+# Compilation du ServerSocket
+ServerSocket.o: $(TCP)$(SRC)ServerSocket.cpp
+	$(CC) -c $^ $(CFLAGS)
+
+# Compilation du Socket
+Socket.o: $(TCP)$(SRC)Socket.cpp
+	$(CC) -c $^ $(CFLAGS)
+
+# Compilation du Logger
+Logger.o: $(LOGGER)$(SRC)Logger.cpp
 	$(CC) -c $^ $(CFLAGS)
 
 # Compilation du fichier de main
