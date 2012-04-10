@@ -34,9 +34,8 @@ BaseSocket::~BaseSocket()
 void BaseSocket::close()
 {
 
-	#ifdef WIN32
-	WSACleanup();
-	#endif
 
+
+	//fermeture propre de la socket
 	closesocket(descripteur);
 }
