@@ -56,7 +56,6 @@ Socket* ServerSocket::accept()
 	if (csock == INVALID_SOCKET)
 	{
 		cout << "accept()" << endl;
-		cout << WSAGetLastError() << endl;
 		exit(errno);
 	}
 	else

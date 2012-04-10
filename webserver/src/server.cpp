@@ -11,9 +11,8 @@ int main(int argc, char* argv[])
 	cout << "|        WebServer PolyPeer        |" << endl;
 	cout << "+----------------------------------+" << endl;
 	cout << "Serveur intégré au projet PolyPeer" << endl;
-	cout << "Pour les modalités d'utilisation des" << endl;
-	cout << "sources, veuillez lire le fichier" << endl;
-	cout << "LICENSE, inclu dans le projet." << endl;
+	cout << "Pour les modalités d'utilisation des sources, veuillez lire" << endl;
+	cout << "le fichier LICENSE, inclu dans le projet." << endl;
 	
 	// Récupération du serveur web
 	WebServer* server = WebServer::getInstance();
