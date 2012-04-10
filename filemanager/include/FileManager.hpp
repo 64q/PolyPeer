@@ -12,7 +12,8 @@ class FileManager
 public:
 	//path: chemin d'accès du fichier
 	//sizeChunk: taille de chaque Chunk dans lesquels vont être placés les morceaux du fichier
-	FileManager(char* path, long size, long sizeChunk);
+	FileManager(char* path, long size, long sizeChunk, int idfile);
+
 	virtual ~FileManager();
 
 	//on récupère le Chunk correspondant au number
@@ -27,8 +28,11 @@ public:
 	//renvoie la taille du fichier chargé
 	long getFileSize();
 
+
+
 protected:
 	std::fstream file;
+	int idFile;
 	std::string pathFileState;
 	char* currentData;
 	long currentChunk;
