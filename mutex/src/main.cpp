@@ -1,18 +1,18 @@
 #include <iostream>
 #include <pthread.h>
 
-#include "../include/Mutex.hpp"
+#include <Mutex.hpp>
 
 using namespace std;
 
-//structure permettant de passer des paramètres à la fonction pthread_create()
+//structure permettant de passer des paramÃ¨tres Ã  la fonction pthread_create()
 typedef struct {
    Mutex* mut;
    int i;
 } threadParams;
 
 
-//fonction lancée dans le thread
+//fonction lancÃ©e dans le thread
 void* start(void* tp)
 {
 	//lock()
@@ -30,7 +30,7 @@ void* start(void* tp)
 
 int main()
 {
-	//on déclare le même utex pour tous les threads
+	//on dÃ©clare le mÃªme utex pour tous les threads
 	Mutex mut;
 
 	threadParams tp1;
@@ -46,7 +46,7 @@ int main()
 	tp3.mut = & mut;
 
 
-	//on lance les 3 thread avec le même mutex mais la variable i différentes pour pouvoir les différencier
+	//on lance les 3 thread avec le mÃªme mutex mais la variable i diffÃ©rentes pour pouvoir les diffÃ©rencier
 	pthread_t thread1, thread2, thread3;
 	pthread_create(&thread1, NULL, start, &tp1);
 

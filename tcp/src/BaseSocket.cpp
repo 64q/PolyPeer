@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../include/BaseSocket.hpp"
+#include <BaseSocket.hpp>
 
 using namespace std;
 

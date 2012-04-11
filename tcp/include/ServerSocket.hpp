@@ -1,22 +1,22 @@
 #ifndef SERVERSOCKET_H
 #define SERVERSOCKET_H
 
-#include "BaseSocket.hpp"
-#include "Socket.hpp"
+#include <BaseSocket.hpp>
+#include <Socket.hpp>
 
 /**
- * Classe qui permet l'écoute de connexions tcp entrantes.
- * On choisit un port d'écoute grace au constructeur puis on récupère les connexions entrantes
- * grace à la fonction accept() qui va renvoyer une socket permettant de communiquer avec l'ordinateur connecté.
+ * Classe qui permet l'Ã©coute de connexions tcp entrantes.
+ * On choisit un port d'Ã©coute grace au constructeur puis on rÃ©cupÃ¨re les connexions entrantes
+ * grace Ã  la fonction accept() qui va renvoyer une socket permettant de communiquer avec l'ordinateur connectÃ©.
  *
- * Hérite de BaseSocket.
+ * HÃ©rite de BaseSocket.
 **/
 
 class ServerSocket : public BaseSocket
 {
 private:
 	/**
-	 * le port d'écoute du Serversocket
+	 * le port d'Ã©coute du Serversocket
 	 */
 	int port;
 
@@ -24,7 +24,7 @@ public:
 	/**
 	 * Constructeur de ServerSocket
 	 * @param port
-	 * initialisation de l'écoute sur le port concerné
+	 * initialisation de l'Ã©coute sur le port concernÃ©
 	 */
 	ServerSocket(int port);
 
@@ -34,11 +34,11 @@ public:
 	~ServerSocket();
 
 	/**
-	 * Méthode bloquante permettant la réception des connexions entrantes.
-	 * La méthode bloquera l'exécution du reste du code jusqu'à ce qu'elle reçoive une connexion.
-	 * Elle renverra alors une socket permettant de recevoir des données et renvoyer des données à l'entité qui a demandé la connexion.
+	 * MÃ©thode bloquante permettant la rÃ©ception des connexions entrantes.
+	 * La mÃ©thode bloquera l'exÃ©cution du reste du code jusqu'Ã  ce qu'elle reÃ§oive une connexion.
+	 * Elle renverra alors une socket permettant de recevoir des donnÃ©es et renvoyer des donnÃ©es Ã  l'entitÃ© qui a demandÃ© la connexion.
 	 * @return Socket
-	 * objet permetant de communiquer avec l'entité qui a demandé la connexion.(voir Socket)
+	 * objet permetant de communiquer avec l'entitÃ© qui a demandÃ© la connexion.(voir Socket)
 	 */
 	Socket* accept();
 };

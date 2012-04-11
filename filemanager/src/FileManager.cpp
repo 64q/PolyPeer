@@ -3,13 +3,13 @@
 #include <fstream>
 #include <sstream>
 
-#include "../include/FileManager.hpp"
+#include <FileManager.hpp>
 
 using namespace std;
 
 FileManager::FileManager(char* path, long size, long sizeChunk, int idFile):sizeChunk(sizeChunk), idFile(idFile)
 {
-	//on rÈserve l'emplacement du fichier sur le disque dur si il n'existe pas encore
+	//on r√©serve l'emplacement du fichier sur le disque dur si il n'existe pas encore
 	if (!existFile(path))
 	{
 		reserveFile(path, size);
@@ -19,10 +19,10 @@ FileManager::FileManager(char* path, long size, long sizeChunk, int idFile):size
 	file.open(path,ios::binary|ios::in|ios::out|ios::ate);
 	if (!file)
 	{
-		cout<<"problËme fichier "<<path<<endl;
+		cout<<"probl√®me fichier "<<path<<endl;
 	}
 
-	//le curseur est ‡ la fin donc la position du curseur donne la taille du fichier
+	//le curseur est √† la fin donc la position du curseur donne la taille du fichier
 	sizeFile = file.tellp();
 
 	string pathStr(path);
@@ -30,11 +30,11 @@ FileManager::FileManager(char* path, long size, long sizeChunk, int idFile):size
 
 	pathFileState.assign(pathStr);
 
-	//on vÈrifi si le fichier d'enregistrement de l'Ètat existe
+	//on v√©rifi si le fichier d'enregistrement de l'√©tat existe
 	ifstream test(pathStr.c_str());
 	if (test.fail())
 	{
-		//si non, on le crÈe et on l'initialise ‡ 0
+		//si non, on le cr√©e et on l'initialise √† 0
 		ofstream tmp(pathStr.c_str());
 		tmp << 0;
 		tmp.close();
@@ -53,7 +53,7 @@ void FileManager::reserveFile(char* path, long size)
 {
 	ofstream create(path, ios::out|ios::app);
 
-	//on remplie le fichier avec des '6' => un caractËre = 1 octet
+	//on remplie le fichier avec des '6' => un caract√®re = 1 octet
 	for (int i = 0; i < size; i++)
 	{
 		create<<'6';
@@ -104,7 +104,7 @@ bool FileManager::saveChunk(Chunk &chunk)
 
 long FileManager::getNumberChunk()
 {
-	//formule de la division arrondie ‡ l'entier supÈrieur
+	//formule de la division arrondie √† l'entier sup√©rieur
 	return (sizeFile+sizeChunk-1)/sizeChunk;
 }
 

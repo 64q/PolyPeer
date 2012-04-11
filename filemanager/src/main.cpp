@@ -2,8 +2,9 @@
 #include <fstream>
 #include <string>
 
-#include "../include/md5.hpp"
-#include "../include/FileManager.hpp"
+#include <md5.hpp>
+#include <FileManager.hpp>
+
 
 using namespace std;
 
