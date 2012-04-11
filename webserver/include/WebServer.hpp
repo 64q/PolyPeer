@@ -7,6 +7,7 @@
 // Spécifique pour les sockets
 #include <arpa/inet.h> // nécessaire pour les sockaddr
 
+#include <ServerSocket.hpp>
 #include <WebRequest.hpp>
 #include <Logger.hpp>
 
@@ -89,15 +90,9 @@ private:
 	static WebServer* instance;
 	
 	/**
-	 * Socket du server
+	 * SocketServer
 	 */
-	int serv_socket;
-	
-	/**
-	 * sockaddr client et server
-	 */
-	struct sockaddr_in serv_addr;
-	struct sockaddr_in cli_addr;
+	ServerSocket socket;
 	
 	/**
 	 * Port d'écoute du serveur web

@@ -7,7 +7,7 @@
 
 using namespace std;
 
-FileManager::FileManager(char* path, long size, long sizeChunk):sizeChunk(sizeChunk)
+FileManager::FileManager(char* path, long size, long sizeChunk, int idFile):sizeChunk(sizeChunk), idFile(idFile)
 {
 	//on réserve l'emplacement du fichier sur le disque dur si il n'existe pas encore
 	if (!existFile(path))
@@ -52,7 +52,7 @@ bool FileManager::existFile(char* path)
 void FileManager::reserveFile(char* path, long size)
 {
 	ofstream create(path, ios::out|ios::app);
-	
+
 	//on remplie le fichier avec des '6' => un caractère = 1 octet
 	for (int i = 0; i < size; i++)
 	{
@@ -75,11 +75,11 @@ Chunk FileManager::getChunk(long number)
 
 	if (getNumberChunk()-1==number)
 	{
-		return Chunk(number, sizeFile-number*sizeChunk, currentData);
+		return Chunk(number, sizeFile-number*sizeChunk, currentData, idFile);
 	}
 	else
 	{
-		return Chunk(number, sizeChunk, currentData);
+		return Chunk(number, sizeChunk, currentData, idFile);
 	}
 }
 bool FileManager::saveChunk(Chunk &chunk)
@@ -90,10 +90,10 @@ bool FileManager::saveChunk(Chunk &chunk)
 	{
 		file.seekp(currentChunk*sizeChunk, ios::beg);
 		file.write(chunk.getData(), chunk.getSize());
-		
+
 		currentChunk++;
 		saveState();
-		
+
 		return true;
 	}
 	else
@@ -129,3 +129,16 @@ long FileManager::getFileSize()
 {
     return sizeFile;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

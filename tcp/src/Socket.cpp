@@ -71,9 +71,9 @@ int Socket::read(char* buffer, int sizeBuffer)
 	if ((size = recv(descripteur, buffer, sizeBuffer, 0)) < 0)
 	{
 		cout << "recv()" << endl;
+		cout << strerror(errno) << endl;
 		exit(errno);
 	}
-
-	buffer[size] = '\0';
+	
 	return size;
 }

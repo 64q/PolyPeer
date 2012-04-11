@@ -1,6 +1,7 @@
 #ifndef CHUNK_H
 #define CHUNK_H
-
+#include <sstream>
+#include <string>
 #include "md5.hpp"
 
 class Chunk
@@ -11,8 +12,9 @@ public:
 	//data: donnée du chunk
 	//crc: code md5 correspondant normalement à data
 	//(valeur testée par rapport à la valeur théorique-> résultat avec isIntegrate() )
-	Chunk(long number, long size, char* data, char* crc);
-	Chunk(long number, long size, char* data);
+	Chunk(long number, long size, char* data, int idFile, char* crc);
+	Chunk(long number, long size, char* data, int idFile);
+	Chunk(char* serializedChunk, int);
 	virtual ~Chunk();
 
 	//récupérer les données du chunk
@@ -31,16 +33,22 @@ public:
 	//si false est renvoyé, le chunk est faux et doit être redemandé au serveur
 	bool isIntegrate();
 
+	int getIdFile();
+
+	char* serialize(int& size);
+
 protected:
 	long number;
 	long size;
 	char *data;
 	char *md5;
 	bool chunkIntegrity;
+	int idFile;
 
 private:
 	static MD5 encoder;
-	void initialiser(long number, long size, char* data);
+	void initialiser(long number, long size, char* data, int idFile);
+	void checkIntegrity(char* crc);
 
 };
 
