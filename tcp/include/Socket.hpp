@@ -1,25 +1,25 @@
 #ifndef SOCKET_H
 #define SOCKET_H
-#include "BaseSocket.hpp"
+#include <BaseSocket.hpp>
 
 
 
 /**
  * Classe Socket
- * Permet de se connecter à un serveur tcp pour communiquer.
- * Hérite de BaseSocket
+ * Permet de se connecter Ã  un serveur tcp pour communiquer.
+ * HÃ©rite de BaseSocket
  */
 class Socket: public BaseSocket
 {
 public:
 
 	/**
-	 * Constructeur d'une Socket vierge qu'il faudra connecter avec la méthode connect()
+	 * Constructeur d'une Socket vierge qu'il faudra connecter avec la mÃ©thode connect()
 	 */
 	Socket();
 
 	/**
-	 * Constructeur qui connecte automatiquement à l'adresse ip et au port concerné
+	 * Constructeur qui connecte automatiquement Ã  l'adresse ip et au port concernÃ©
 	 * @param char*
 	 * addresse ip de la machine cible forma: "192.168.1.1"
 	 * @param int
@@ -28,19 +28,19 @@ public:
 	Socket(char* address, int port);
 
 	/**
-	 * Contructeur d'une socket déjà connecté grâce à l'identifiant (système) de cette socket
+	 * Contructeur d'une socket dÃ©jÃ  connectÃ© grÃ¢ce Ã  l'identifiant (systÃ¨me) de cette socket
 	 * @param int
-	 * identifiant de la socket dont on veut créer un objet Socket
+	 * identifiant de la socket dont on veut crÃ©er un objet Socket
 	 */
 	Socket(int descripteur);
 	/**
 	 * Destructeur de Socket
-	 * Déconnecte la socket (voir destructeur BaseSocket)
+	 * DÃ©connecte la socket (voir destructeur BaseSocket)
 	 */
 	~Socket();
 
 	/**
-	 * Permet de se connecrer à une cible si cele n'a pas té fait à la création ou si on veut changer de cible (penser à utiliser close() avant pour le dernier cas)
+	 * Permet de se connecrer Ã  une cible si cele n'a pas tÃ© fait Ã  la crÃ©ation ou si on veut changer de cible (penser Ã  utiliser close() avant pour le dernier cas)
 	 * @param char*
 	 * addresse ip de la machine cible forma: "192.168.1.1"
 	 * @param int
@@ -49,18 +49,20 @@ public:
 	void connect(char* address, int port);
 
 	/**
-	 * Pour envoyer des données par la Socket. La Socket doit être connecté avant.
+	 * Pour envoyer des donnÃ©es par la Socket. La Socket doit Ãªtre connectÃ© avant.
 	 * @param char*
-	 * chaîne de caractères à envoyer à la cible
+	 * chaÃ®ne de caractÃ¨res Ã  envoyer Ã  la cible
+	 * @param int
+	 * taille de la chaine de caractÃ¨re
 	 */
-	void send(const char* data);
+	void send(const char* data, int size);
 
 	/**
-	 * Permet de lire des données reçues. Fonction bloquante.
+	 * Permet de lire des donnÃ©es reÃ§ues. Fonction bloquante.
 	 * @param char*
-	 * tableau de caractère déjà alloué de taille sizeBuffer qui va recevoir les données envoyé par l'entité connectée.
+	 * tableau de caractÃ¨re dÃ©jÃ  allouÃ© de taille sizeBuffer qui va recevoir les donnÃ©es envoyÃ© par l'entitÃ© connectÃ©e.
 	 * @param int
-	 * taille maximal de donnée à lire (taille du tableau allouer en 1er paramètre)
+	 * taille maximal de donnÃ©e Ã  lire (taille du tableau allouer en 1er paramÃ¨tre)
 	 */
 	int read(char* buffer, int sizeBuffer);
 };

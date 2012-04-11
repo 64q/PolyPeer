@@ -1,20 +1,20 @@
 #include <iostream>
 
-#include "../include/ServerSocket.hpp"
-#include "../include/Socket.hpp"
+#include <ServerSocket.hpp>
+#include <Socket.hpp>
 
 using namespace std;
 
 ServerSocket::ServerSocket(int port) :
 	port(port)
 {
-	//initialisation du serveur d'écoute
+	//initialisation du serveur d'Ã©coute
 	SOCKADDR_IN sin = {0};
 
 	sin.sin_addr.s_addr = htonl(INADDR_ANY); /* nous sommes un serveur, nous acceptons n'importe quelle adresse */
 	sin.sin_family = AF_INET;
 
-	// On écoute le port défini en paramètre
+	// On Ã©coute le port dÃ©fini en paramÃ¨tre
 	sin.sin_port = htons(port);
 
 	// liaison avec le port
@@ -24,7 +24,7 @@ ServerSocket::ServerSocket(int port) :
 		exit(errno);
 	}
 
-	// On permet la connexion avec un nombre illimité de socket (sinon changer le deuxième paramètre de listen() )
+	// On permet la connexion avec un nombre illimitÃ© de socket (sinon changer le deuxiÃ¨me paramÃ¨tre de listen() )
 	if (listen(descripteur, 0) == SOCKET_ERROR)
 	{
 		cout <<"listen()" << endl;
@@ -34,7 +34,7 @@ ServerSocket::ServerSocket(int port) :
 
 ServerSocket::~ServerSocket()
 {
-	//voir si il faut laisser ça ici
+	//voir si il faut laisser Ã§a ici
 	#ifdef WIN32
 	WSACleanup();
 	#endif
@@ -49,8 +49,8 @@ Socket* ServerSocket::accept()
 
 	socklen_t sinsize = sizeof csin;
 
-	//on récupère le descripteur de la socket de la demande reçue
-	//(on fait appel à la fonction accept() système, il faut donc sortir de l'espace de nommage de la méthode avec :: )
+	//on rÃ©cupÃ¨re le descripteur de la socket de la demande reÃ§ue
+	//(on fait appel Ã  la fonction accept() systÃ¨me, il faut donc sortir de l'espace de nommage de la mÃ©thode avec :: )
 	csock = ::accept(descripteur, (SOCKADDR *)&csin, &sinsize);
 
 	if (csock == INVALID_SOCKET)

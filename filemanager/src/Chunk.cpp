@@ -1,8 +1,8 @@
 #include <string>
 #include <sstream>
 #include <iostream>
-#include "../include/Chunk.hpp"
-#include "../include/md5.hpp"
+#include <Chunk.hpp>
+#include <md5.hpp>
 
 using namespace std;
 MD5 Chunk::encoder;
@@ -22,7 +22,7 @@ Chunk::Chunk(long number, long size, char* data, int idfile, char* crc)
 
 void Chunk::checkIntegrity(char* crc)
 {
-	//vérification de l'égalité entre le crc calculé dans initaliser() et celui passé en paramètre
+	//vÃ©rification de l'Ã©galitÃ© entre le crc calculÃ© dans initaliser() et celui passÃ© en paramÃ¨tre
 	bool equal = true;
 	for (int i = 0; i < 32; i++)
 	{
@@ -63,7 +63,7 @@ void Chunk::initialiser(long number, long size, char* data, int idFile)
 		this->data[i] = data[i];
 	}
 
-	//calcul du code correspondant à data
+	//calcul du code correspondant Ã  data
 	this->md5 = encoder.digestString(data, size);
 }
 
@@ -153,7 +153,7 @@ Chunk::Chunk(char* serializedChunk, int sizeString)
 	//cout.write(data, size)<<endl;
 
 
-	//calcul du code correspondant à data
+	//calcul du code correspondant Ã  data
 	this->md5 = encoder.digestString(data, size);
 	checkIntegrity(crc);
 }

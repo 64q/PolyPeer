@@ -11,17 +11,17 @@ class Mutex
 {
 	public:
 		/**
-		 * Constructeur initialisant à 1 le mutex.
+		 * Constructeur initialisant Ã  1 le mutex.
 		 */
 		Mutex();
 
 		/**
-		 * Similaire à pthread_mutex_lock() de pthread.
+		 * Similaire Ã  pthread_mutex_lock() de pthread.
 		 */
 		void lock();
 
 		/**
-		 * Similaire à pthread_mutex_unlock() de pthread.
+		 * Similaire Ã  pthread_mutex_unlock() de pthread.
 		 */
 		void unlock();
 

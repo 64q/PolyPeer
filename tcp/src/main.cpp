@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../include/ServerSocket.hpp"
+#include <ServerSocket.hpp>
 
 using namespace std;
 
@@ -14,7 +14,7 @@ int main()
 	while (true)
 	{
 		sock = server.accept();
-		sock->send("crotte");
+		sock->send("crotte", strlen("crotte"));
 		sock->close();
 		delete sock;
 

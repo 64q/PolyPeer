@@ -1,8 +1,8 @@
 #include <iostream>
 #include <cstring>
 
-#include "../include/Socket.hpp"
-#include "../include/BaseSocket.hpp"
+#include <Socket.hpp>
+#include <BaseSocket.hpp>
 
 using namespace std;
 
@@ -34,8 +34,8 @@ void Socket::connect(char* address, int port)
 	SOCKADDR_IN sin = { 0 }; /* initialise la structure avec des 0 */
 	const char *hostname = address;
 
-	hostinfo = gethostbyname(hostname); /* on récupère les informations de l'hôte auquel on veut se connecter */
-	if (hostinfo == NULL) /* l'hôte n'existe pas */
+	hostinfo = gethostbyname(hostname); /* on rÃ©cupÃ¨re les informations de l'hÃ´te auquel on veut se connecter */
+	if (hostinfo == NULL) /* l'hÃ´te n'existe pas */
 	{
 		cout << "Unknown host "  << hostname << endl;
 		exit(EXIT_FAILURE);
@@ -55,9 +55,9 @@ void Socket::connect(char* address, int port)
 
 }
 
-void Socket::send(const char* data)
+void Socket::send(const char* data, int size)
 {
-	if (::send(descripteur, data, strlen(data), 0) < 0)
+	if (::send(descripteur, data, size, 0) < 0)
 	{
 		cout << "send()" << endl;
 		exit(errno);
@@ -74,6 +74,6 @@ int Socket::read(char* buffer, int sizeBuffer)
 		cout << strerror(errno) << endl;
 		exit(errno);
 	}
-	
+
 	return size;
 }

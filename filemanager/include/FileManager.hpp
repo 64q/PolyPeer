@@ -5,27 +5,27 @@
 #include <fstream>
 #include <iostream>
 
-#include "../include/Chunk.hpp"
+#include <Chunk.hpp>
 
 class FileManager
 {
 public:
-	//path: chemin d'accès du fichier
-	//sizeChunk: taille de chaque Chunk dans lesquels vont être placés les morceaux du fichier
+	//path: chemin d'accÃ¨s du fichier
+	//sizeChunk: taille de chaque Chunk dans lesquels vont Ãªtre placÃ©s les morceaux du fichier
 	FileManager(char* path, long size, long sizeChunk, int idfile);
 
 	virtual ~FileManager();
 
-	//on récupère le Chunk correspondant au number
+	//on rÃ©cupÃ¨re le Chunk correspondant au number
 	Chunk getChunk(long number);
 
-	//on enregistre le Chunk dans le fichier avec les vérifications nécessaires
+	//on enregistre le Chunk dans le fichier avec les vÃ©rifications nÃ©cessaires
 	bool saveChunk(Chunk &chunk);
 
-	//renvoie le nombre de Chunk nécessaires pour récupérer le fichier entier
+	//renvoie le nombre de Chunk nÃ©cessaires pour rÃ©cupÃ©rer le fichier entier
 	long getNumberChunk();
 
-	//renvoie la taille du fichier chargé
+	//renvoie la taille du fichier chargÃ©
 	long getFileSize();
 
 
