@@ -19,36 +19,11 @@ using namespace std;
 WebServer* WebServer::instance = NULL;
 
 WebServer::WebServer(const int port) :
-	logger("log/webserver.log")
+	logger("log/webserver.log"), socket(port)
 {
 	this->debug = false;
 	this->isRunning = true;
-
-	// Init de la socket
 	this->port = port;
-	this->serv_socket = ::socket(AF_INET, SOCK_STREAM, 0);
-	
-	if (this->serv_socket < 0)
-	{
-		this->logger.put("error", "impossible d'ouvrir la socket.");
-	}
-	
-	bzero((char *) &this->serv_addr, sizeof(this->serv_addr));
-	
-	this->serv_addr.sin_family = AF_INET;
-	this->serv_addr.sin_addr.s_addr = INADDR_ANY;
-	this->serv_addr.sin_port = htons(this->port);
-	
-	if (bind(this->serv_socket, (struct sockaddr *) &this->serv_addr, sizeof(this->serv_addr)) < 0)
-	{
-		this->logger.put("error", "impossible de binder la socket.");
-	}
-	
-	// Listen avec un tampon de 5
-	if (listen(this->serv_socket, 5) < 0)
-	{
-		this->logger.put("error", "impossible d'écouter sur le port demandé.");
-	}
 	
 	// Init des routes
 	this->routes.insert(pair<string, route_handler>("/", default_route));
@@ -63,10 +38,7 @@ WebServer::WebServer(const int port) :
 
 WebServer::~WebServer()
 {
-	if (shutdown(this->serv_socket, 2) < 0)
-	{
-		this->logger.put("error", "impossible de fermer la socket du server.");
-	}
+	this->socket.close();
 }
 
 WebServer* WebServer::getInstance()
@@ -82,23 +54,15 @@ WebServer* WebServer::getInstance()
 void WebServer::run()
 {
 	char message[475];
-	unsigned int size = sizeof(struct sockaddr);
-	int nsock;
+	Socket* nsock;
 	
 	while (this->isRunning)
 	{
 		/* acceptation connexion */
-		nsock = accept(this->serv_socket, (struct sockaddr *) &this->cli_addr, &size);
-		if (nsock < 0)
-		{
-			this->logger.put("error", "impossible d'accepter le client.");
-		}
+		nsock = this->socket.accept();
 
 		/* lecture */
-		if (read(nsock, message, 475*sizeof(char)) < 0)
-		{
-			this->logger.put("error", "impossible de lire le contenu de la socket.");
-		}
+		nsock->read(message, 475*sizeof(char));
 		
 		WebRequest request(message);
 		string sent;
@@ -114,9 +78,9 @@ void WebServer::run()
 			sent = (*it).second(request);
 		}
 		
-		write(nsock, sent.c_str(), sent.length() * sizeof(char));
+		nsock->send(sent.c_str());
 		
-		close(nsock);
+		nsock->close();
 	}
 }
 
