@@ -78,7 +78,7 @@ void WebServer::run()
 			sent = (*it).second(request);
 		}
 		
-		nsock->send(sent.c_str());
+		nsock->send(sent.c_str(), sent.length() * sizeof(char));
 		
 		nsock->close();
 	}
