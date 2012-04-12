@@ -1,4 +1,4 @@
-# Makefile du filemanager
+# Makefile des packets
 #
 # Auteur: LEBOURGEOIS Quentin et réutilisé par Olivier !
 # Date: jeu. 5 avril 2012
@@ -6,7 +6,7 @@
 #
 
 CC=g++
-CFLAGS=-Wall -ggdb -I../tcp/include/ -I../webserver/include/ -I../filemanager/include/ -I../logger/include/ -Iinclude/
+CFLAGS=-Wall -ggdb -I../tcp/include/ -I../filemanager/include/ -I../logger/include/ -Iinclude/
 LDFLAGS=
 EXEC=packet
 SRC=src/
