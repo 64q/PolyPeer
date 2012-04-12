@@ -10,15 +10,11 @@ Technologies utilisées
 ----------------------
 PolyPeer utilise les technologies suivantes :
 
-* En cours de rédaction ...
+* La STL de C++
 
 Cahier des charges
 ------------------
-Dès que le projet sera lancé par le client, un cahier des charges sera rédigé et mis à disposition pour consultation.
-
-Conception objet
-----------------
-Disponible dès que la phase d'établissement du cahier des charges sera finie.
+Le cahier des charges est disponible sur le wiki du projet : https://github.com/KenTiN/PolyPeer/wiki .
 
 Développement de PolyPeer
 -------------------------
