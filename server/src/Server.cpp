@@ -15,6 +15,8 @@ Server::Server(const int port) :
 	this->isRunning = true;
 	
 	this->logger.put("notice", "démarrage du serveur sur le port 9696.");
+	
+	this->webserver->setResourcesPath("../webserver/webpages");
 }
 
 Server* Server::getInstance(const int port)
