@@ -1,4 +1,4 @@
-#include "../include/Packet.h"
+#include "../include/Packet.hpp"
 
 
 Packet::Packet(char* packet, unsigned int size) : destination(""), type (undefined), data(""), error(none)

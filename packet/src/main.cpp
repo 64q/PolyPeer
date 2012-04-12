@@ -1,12 +1,10 @@
 #include <iostream>
 #include <string>
 
+#include "../include/Data.hpp"
+#include "../include/Packet.hpp"
+
 using namespace std;
-
-#include "../include/Data.h"
-#include "../include/Packet.h"
-
-
 
 int main ()
 {

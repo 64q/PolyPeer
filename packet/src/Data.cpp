@@ -1,4 +1,4 @@
-#include "../include/Data.h"
+#include "../include/Data.hpp"
 
 Data::Data (const Data& other) : data(0), size(other.size), realSize(other.realSize)
 {
