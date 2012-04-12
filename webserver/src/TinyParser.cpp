@@ -78,7 +78,7 @@ void TinyParser::parseInclude()
 	
 		this->content.replace(pos
 			, pattern.length() + include.length() + closure.length()
-			, TinyParser(WEBSERVER_ROOT + "/" + include).render()
+			, TinyParser(WebServer::getInstance()->getResourcesPath() + "/" + include).render()
 		);
 		
 		pos = this->content.find(pattern, pos + pattern.length());

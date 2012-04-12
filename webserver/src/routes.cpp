@@ -13,7 +13,7 @@ using namespace std;
 
 string default_route(WebRequest& request)
 {
-	TinyParser parser(WEBSERVER_ROOT + "/default.html");
+	TinyParser parser(WebServer::getInstance()->getResourcesPath() + "/default.html");
 	
 	WebResponse response(200, parser.render());
 	return response.getRawData();
@@ -21,7 +21,7 @@ string default_route(WebRequest& request)
 
 string deployment_route(WebRequest& request)
 {
-	TinyParser parser(WEBSERVER_ROOT + "/deployment.html");
+	TinyParser parser(WebServer::getInstance()->getResourcesPath() + "/deployment.html");
 	
 	parser.inject("id", request.getParam("id"));
 	
@@ -31,7 +31,7 @@ string deployment_route(WebRequest& request)
 
 string server_route(WebRequest& request)
 {
-	TinyParser parser(WEBSERVER_ROOT + "/server.html");
+	TinyParser parser(WebServer::getInstance()->getResourcesPath() + "/server.html");
 	
 	WebResponse response(200, parser.render());
 	return response.getRawData();
@@ -39,7 +39,7 @@ string server_route(WebRequest& request)
 
 string stop_route(WebRequest& request)
 {
-	TinyParser parser(WEBSERVER_ROOT + "/stop.html");
+	TinyParser parser(WebServer::getInstance()->getResourcesPath() + "/stop.html");
 	
 	// Arrêt du serveur
 	WebServer::getInstance()->stop();
@@ -50,7 +50,7 @@ string stop_route(WebRequest& request)
 
 string restart_route(WebRequest& request)
 {
-	TinyParser parser(WEBSERVER_ROOT + "/restart.html");
+	TinyParser parser(WebServer::getInstance()->getResourcesPath() + "/restart.html");
 	
 	// Restart du serveur
 	WebServer::getInstance()->restart();
@@ -61,7 +61,7 @@ string restart_route(WebRequest& request)
 
 string deployments_route(WebRequest& request)
 {
-	TinyParser parser(WEBSERVER_ROOT + "/deployments.html");
+	TinyParser parser(WebServer::getInstance()->getResourcesPath() + "/deployments.html");
 	
 	ostringstream oss;
 	
@@ -78,7 +78,7 @@ string deployments_route(WebRequest& request)
 
 string notfound_route(WebRequest& request)
 {
-	TinyParser parser(WEBSERVER_ROOT + "/error404.html");
+	TinyParser parser(WebServer::getInstance()->getResourcesPath() + "/error404.html");
 	
 	WebResponse response(404, parser.render());
 	return response.getRawData();
@@ -86,7 +86,7 @@ string notfound_route(WebRequest& request)
 
 string internalerror_route(WebRequest& request)
 {
-	TinyParser parser(WEBSERVER_ROOT + "/error500.html");
+	TinyParser parser(WebServer::getInstance()->getResourcesPath() + "/error500.html");
 	
 	WebResponse response(500, parser.render());
 	return response.getRawData();
@@ -94,7 +94,7 @@ string internalerror_route(WebRequest& request)
 
 string debug_route(WebRequest& request)
 {
-	TinyParser parser(WEBSERVER_ROOT + "/debug.html");
+	TinyParser parser(WebServer::getInstance()->getResourcesPath() + "/debug.html");
 
 	if (WebServer::getInstance()->isDebug()) 
 	{
@@ -121,7 +121,7 @@ string ressource_route(WebRequest& request)
 {
 	// Test de ressource
 	// Ouverture du fichier de template
-	ifstream file(string(WEBSERVER_ROOT + request.getTarget()).c_str(), ifstream::in); 
+	ifstream file(string(WebServer::getInstance()->getResourcesPath() + request.getTarget()).c_str(), ifstream::in); 
 	
 	stringstream buffer;
 	

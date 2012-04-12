@@ -14,12 +14,7 @@
 /**
  * Port du serveur Web
  */
-const int WEBSERVER_PORT = 6969;
-
-/**
- * Dossier de base du contenu du serveur web
- */
-const std::string WEBSERVER_ROOT = "webpages";
+static const int WEBSERVER_PORT = 6969;
 
 /**
  * typedef permettant d'avoir un ptr sur une fonction de handler de route
@@ -64,6 +59,16 @@ public:
 	bool isDebug();
 	
 	/**
+	 * Retourne le chemin vers les ressources web
+	 */
+	std::string getResourcesPath();
+	
+	/**
+	 * Défini le chemin d'accès aux ressources web
+	 */
+	void setResourcesPath(const std::string path);
+	
+	/**
 	 * Accès au singleton du serveur Web
 	 */
 	static WebServer* getInstance();
@@ -82,12 +87,17 @@ private:
 	/**
 	 * Constructeur d'un WebServer
 	 */
-	WebServer(const int port);
+	WebServer(const int port, const std::string path);
 	
 	/**
 	 * Instance du WebServer
 	 */
 	static WebServer* instance;
+	
+	/**
+	 * Dossier de base du contenu du serveur web
+	 */
+	std::string resourcesPath;
 	
 	/**
 	 * SocketServer

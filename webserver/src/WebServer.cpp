@@ -18,12 +18,13 @@ using namespace std;
 // Important à faire quand on fait du patern singleton en C++
 WebServer* WebServer::instance = NULL;
 
-WebServer::WebServer(const int port) :
+WebServer::WebServer(const int port, const string path) :
 	logger("log/webserver.log"), socket(port)
 {
 	this->debug = false;
 	this->isRunning = true;
 	this->port = port;
+	this->resourcesPath = path;
 	
 	// Init des routes
 	this->routes.insert(pair<string, route_handler>("/", default_route));
@@ -45,7 +46,7 @@ WebServer* WebServer::getInstance()
 {
 	if (instance == NULL)
 	{
-		instance = new WebServer(WEBSERVER_PORT);
+		instance = new WebServer(WEBSERVER_PORT, "webpages");
 	}
 	
 	return instance;
@@ -110,5 +111,15 @@ void WebServer::toggleDebug()
 bool WebServer::isDebug()
 {
 	return this->debug;
+}
+
+void WebServer::setResourcesPath(const std::string path)
+{
+	this->resourcesPath = path;
+}
+
+string WebServer::getResourcesPath()
+{
+	 return this->resourcesPath;
 }
 
