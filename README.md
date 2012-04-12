@@ -25,6 +25,14 @@ Disponible dès que la phase d'implémentation sera lancée.
 Chaque sous projet doit être placé à la racine du projet principal.
 Le sous projet doit être un dossier sans majuscules.
 
+```
+projet1/
+	include/		-- Contient les headers
+	src/			-- Contient les sources
+	Makefile		-- Nécessaire à la compilation de l'exemple
+	.gitignore	-- Nécessaire pour éviter de push les .o et l'executable
+```
+
 Dans chaque sous projet :
 
 * Un dossier src/ avec les sources
