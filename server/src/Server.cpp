@@ -1,8 +1,11 @@
 #include <iostream>
+#include <exception>
+#include <map>
 
 #include <Server.hpp>
 #include <WebServer.hpp>
 #include <Logger.hpp>
+#include <Host.hpp>
 
 using namespace std;
 
@@ -50,4 +53,18 @@ void Server::stop()
 void Server::restart()
 {
 	this->logger.put("notice", "le serveur a été redémarré.");
+}
+
+Host Server::getHost(string name)
+{
+	map<string, Host>::iterator it = hosts.find(name);
+	
+	if (it  != hosts.end())
+	{
+		return (*it).second;
+	}
+	else
+	{
+		throw new exception;
+	}
 }

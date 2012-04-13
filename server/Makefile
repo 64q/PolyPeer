@@ -20,11 +20,17 @@ FM=../filemanager/
 all: $(EXEC)
 
 # Edition des liens
-server: Server.o WebServer.o WebResponse.o WebRequest.o TinyParser.o BaseSocket.o ServerSocket.o Socket.o Logger.o routes.o server.o
+server: Server.o WebServer.o WebResponse.o WebRequest.o TinyParser.o BaseSocket.o ServerSocket.o Socket.o Logger.o Host.o DeploymentState.o routes.o server.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 # Compilation du server
 Server.o: $(SRC)Server.cpp
+	$(CC) -c $^ $(CFLAGS)
+	
+Host.o: $(SRC)Host.cpp
+	$(CC) -c $^ $(CFLAGS)
+	
+DeploymentState.o: $(SRC)DeploymentState.cpp
 	$(CC) -c $^ $(CFLAGS)
 
 # Compilation du webserver
