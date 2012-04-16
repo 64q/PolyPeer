@@ -20,8 +20,7 @@ ServerSocket::ServerSocket(int port) :
 	// liaison avec le port
 	if (bind (descripteur, (SOCKADDR *) &sin, sizeof sin) == SOCKET_ERROR)
 	{
-		cout << "error bind" << endl;
-		exit(errno);
+		throw BindException();
 	}
 
 	// On permet la connexion avec un nombre illimité de socket (sinon changer le deuxième paramètre de listen() )
@@ -34,10 +33,8 @@ ServerSocket::ServerSocket(int port) :
 
 ServerSocket::~ServerSocket()
 {
-	//voir si il faut laisser ça ici
-	#ifdef WIN32
-	WSACleanup();
-	#endif
+
+
 }
 
 Socket* ServerSocket::accept()
@@ -55,8 +52,7 @@ Socket* ServerSocket::accept()
 
 	if (csock == INVALID_SOCKET)
 	{
-		cout << "accept()" << endl;
-		exit(errno);
+		throw AcceptException();
 	}
 	else
 	{
