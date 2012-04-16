@@ -3,6 +3,7 @@
 #include <map>
 
 #include <Server.hpp>
+#include <Entity.hpp>
 #include <WebServer.hpp>
 #include <Logger.hpp>
 #include <Host.hpp>
@@ -60,11 +61,11 @@ void Server::restart()
 	this->logger.put("notice", "le serveur a été redémarré.");
 }
 
-Host Server::getHost(string name)
+Entity Server::getEntity(string name)
 {
-	map<string, Host>::iterator it = hosts.find(name);
+	map<string, Entity>::iterator it = entities.find(name);
 	
-	if (it  != hosts.end())
+	if (it  != entities.end())
 	{
 		return (*it).second;
 	}

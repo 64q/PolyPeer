@@ -1,6 +1,8 @@
 #ifndef __H_ZONE__
 #define __H_ZONE__
 
+#include <map>
+
 #include <Entity.hpp>
 
 class Zone : public Entity

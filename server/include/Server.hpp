@@ -40,11 +40,11 @@ public:
 	static Server* getInstance();
 	
 	/**
-	 * Récupère un host via son nom
+	 * Récupère une entité via son nom
 	 * @param string name
-	 * 	nom de l'hote à récupérer
+	 * 	nom de l'entité à récupérer
 	 */
-	Host getHost(std::string name);
+	Entity getEntity(std::string name);
 	
 	/**
 	 * Destructeur du server

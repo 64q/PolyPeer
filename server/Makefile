@@ -20,7 +20,7 @@ FM=../filemanager/
 all: $(EXEC)
 
 # Edition des liens
-server: Server.o BaseServer.o Entity.o Zone.o WebServer.o WebResponse.o WebRequest.o TinyParser.o BaseSocket.o ServerSocket.o Socket.o Logger.o Host.o DeploymentState.o routes.o server.o
+server: Server.o BaseServer.o Entity.o Zone.o WebServer.o WebResponse.o WebRequest.o TinyParser.o BaseSocket.o ServerSocket.o Socket.o Logger.o Host.o DeploymentState.o routes.o main.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 # Compilation du BaseServer
@@ -86,7 +86,7 @@ FileManager.o: $(FM)$(SRC)FileManager.cpp
 	$(CC) -c $^ $(CFLAGS)
 
 # Compilation du fichier de main
-server.o: $(SRC)server.cpp
+main.o: $(SRC)main.cpp
 	$(CC) -c $^ $(CFLAGS)
 
 clean:
