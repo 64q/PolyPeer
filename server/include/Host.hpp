@@ -3,18 +3,18 @@
 
 #include <vector>
 
+#include <Entity.hpp>
 #include <DeploymentState.hpp>
 
-class Host
+class Host : public Entity
 {
 private:
-	std::string name;
 	std::string ip;
 	
 	std::vector<DeploymentState> deploys;
 	
 public:
-	Host(std::string name, std::string ip);
+	Host(const std::string& name, const std::string& ip);
 	void addDeploymentState(const int, const int, const std::string);
 };
 

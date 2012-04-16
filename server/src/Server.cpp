@@ -11,22 +11,22 @@ using namespace std;
 
 Server* Server::instance = NULL;
 
-Server::Server(const int port) :
-	logger("log/server.log")
+Server::Server() :
+	BaseServer("log/server.log")
 {
 	this->webserver = WebServer::getInstance();
-	this->isRunning = true;
+	this->running = true;
 	
 	this->logger.put("notice", "démarrage du serveur sur le port 9696.");
 	
 	this->webserver->setResourcesPath("../webserver/webpages");
 }
 
-Server* Server::getInstance(const int port)
+Server* Server::getInstance()
 {
 	if (instance == NULL)
 	{
-		instance = new Server(port);
+		instance = new Server();
 	}
 	
 	return instance;
@@ -35,6 +35,11 @@ Server* Server::getInstance(const int port)
 Server::~Server()
 {
 	delete webserver;
+}
+
+void Server::start(const int port)
+{
+	this->port = port;
 }
 
 void Server::run()
@@ -46,7 +51,7 @@ void Server::run()
 
 void Server::stop()
 {
-	this->isRunning = false;
+	this->running = false;
 	this->logger.put("notice", "le serveur a été arrêté.");
 }
 
