@@ -20,6 +20,8 @@
   *
   * structure d'un paquet : (sauf pour le WOL)
   *
+  * Voir les descriptifs de fonction
+  *
   */
 
 
@@ -32,11 +34,10 @@
 
 using namespace std;
 
-// pointeur sur les opérations
 
-
-
-// liste des différents types de paquets
+/**
+ * liste des différents types de paquets
+ */
 typedef enum
 {
     undefined = 0,
@@ -51,27 +52,48 @@ typedef enum
     End_PaquetType, // Doit rester en derniere position, pour avoir la taille du tableau
 } PacketType;
 
+/**
+ * Definition du type des fonctions de callback
+ */
 typedef int (*pOperation) (Packet& p);
+
 
 class PacketManager
 {
 private:
+	/**
+	 * Pour avoir une classe en mode singleton
+	 */
 	static PacketManager* instance;
-
+	
+	/**
+	 * Redefinition des constructeur en privé pour empecher l'instanciation de la classe
+	 */
 	PacketManager()	{ listOperations.resize ( int (End_PaquetType), NULL); }
 	PacketManager(const PacketManager& pm)	{ }
 	
+	/**
+	 * liste des fonctions de callback
+	 */
 	vector<pOperation> listOperations;
     
 	
 public:
+	/**
+	 * Fonction de Classe
+	 * Récupérer l'instance de la classe
+	 */
 	static PacketManager* getPacketManager()
 	{
 		if (PacketManager::instance == NULL)
 			PacketManager::instance = new PacketManager();
 		return PacketManager::instance;
 	}
-
+	
+	/**
+	 * Fonction de classe
+	 * Détruire l'instance de la classe
+	 */
 	static void quit()
 	{
 		if (PacketManager::instance != NULL)
@@ -81,23 +103,80 @@ public:
 		}
 	}
 	
+	/**
+	 * Ajouter la fonction de callback correspondant à un type de paquet
+	 * @param PacketType
+	 *	type du paquet
+	 * @param int (*pOperation) (Packet& p);
+	 *  fonction associée
+	 */
 	void addOperation (PacketType type, pOperation);
 
-// Création de paquet
-    // paquets du serveur
+	/**
+	 * Ajouter la fonction de callback correspondant à un type de paquet
+	 * @param Packet&
+	 *	paquet à traiter
+	 * @return int
+	 *  -1 pour un probleme d'appel
+	 *  sinon c'est le retour de la fonctiuon associée
+	 */
+	int packetOperation (Packet& p);
+
+    /**
+	 * Création d'un paquet areYouReady
+	 * @return Packet
+	 *	le paquet créé
+	 */
     Packet newPacket_areYouReady ();
+    
+ 	/**
+	 * Création d'un paquet sendOperation
+	 * @param string
+	 *	adresse deuxieme PC client qui doit recevoir le chunk
+	 * @param chunk
+	 *	le contenu du fichier à faire passer
+	 * @return Packet
+	 *	le paquet créé
+	 */
     Packet newPacket_sendOperation (string secondDest, Chunk& chunk);
 
-    // paquets serveur et client
-    Packet newPacket_sendChunk (string dest, Chunk& chunk);
+    /**
+	 * Création d'un paquet sendChunk
+	 * @param chunk
+	 *	le contenu du fichier à envoyer
+	 * @return Packet
+	 *	le paquet créé
+	 */
+    Packet newPacket_sendChunk (Chunk& chunk);
 
-    // paquets client (réponse)
+    /**
+	 * Création d'un paquet readyToWork
+	 * @return Packet
+	 *	le paquet créé
+	 */
     Packet newPacket_readyToWork ();
+    
+    /**
+	 * Création d'un paquet chunkReceived
+	 * @param int
+	 *	id du fichier qui a été recu
+	 * @param int
+	 *	chaunk du fichier recu
+	 * @return Packet
+	 *	le paquet créé
+	 */
     Packet newPacket_chunkReceived (int idFile, int numChunk);
-    Packet newPacket_md5Error (int idFile);
-
-// Lecture et interprétation du paquet
-	int packetOperation (Packet& p);
+    
+   /**
+	 * Création d'un paquet md5Error
+	 * @param int
+	 *	id du fichier qui a été recu
+	 * @param int
+	 *	chaunk du fichier recu
+	 * @return Packet
+	 *	le paquet créé
+	 */
+    Packet newPacket_md5Error (int idFile, int numChunk);
 
 };
 

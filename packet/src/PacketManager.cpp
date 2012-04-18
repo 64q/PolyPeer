@@ -30,7 +30,7 @@ Packet PacketManager::newPacket_sendOperation (string secondDest, Chunk& chunk)
 	return p;
 }
 
-Packet PacketManager::newPacket_sendChunk (string dest, Chunk& chunk)
+Packet PacketManager::newPacket_sendChunk (Chunk& chunk)
 {
 	Packet p;
 	p<< int(sendChunk);
@@ -58,11 +58,12 @@ Packet PacketManager::newPacket_chunkReceived (int idFile, int numChunk)
 	return p;
 }
 
-Packet PacketManager::newPacket_md5Error (int idFile)
+Packet PacketManager::newPacket_md5Error (int idFile, int numChunk)
 {
 	Packet p;
 	p<< int(md5Error);
 	p<< idFile;
+	p<< numChunk;
 	
 	return p;
 }
@@ -74,7 +75,8 @@ int PacketManager::packetOperation (Packet& p)
 	p >> type;
 	if ( type > int(undefined) && type < int(End_PaquetType))
 	{
-		return listOperations[type](p);
+		if (listOperations[type] != NULL)
+			return listOperations[type](p);
 	}
 	return -1;
 }
