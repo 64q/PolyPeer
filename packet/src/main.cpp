@@ -1,42 +1,48 @@
 #include <iostream>
+
+
+/*
+
+#include <iostream>
+#include <istream>
+#include <ostream>
+#include <sstream>
 #include <string>
+*/
 
 #include "../include/Data.hpp"
 #include "../include/Packet.hpp"
+#include "../include/PacketManager.hpp"
+
 
 using namespace std;
 
-int main ()
+int maFonction (Packet& p)
 {
-	Data data;
-
-	char fin[] = "jour !";
-	string tttt(" HAHAHA - !");
+	cout << " operation areYouReady " << endl;
 	
-	data+='B';
-	data+='o';
-	data+='n';
-	
-	data.add (fin, 6);
-	data+=tttt;
-
-	
-
-	//data+='\0';
-	
-	char *tmp = new char [data.length()];
-	data.serialize (tmp);
-	cout << tmp << endl;
-	
-	delete [] tmp;
-	
-	uint32_t z = 0x41;
-	char a = 'a';
-	char b = 'a';
-	z = 0x0;
-	z = b & a;
-	
-	cout << dec << a << " : " << z << endl;
-
+	string tmp;
+	p >> tmp;
+	cout << "val : " << tmp << endl;
+	p >> tmp;
+	cout << "val : " << tmp << endl;
 	return 0;
 }
+
+
+int main ()
+{
+	PacketManager* pm = PacketManager::getPacketManager ();
+
+	pm->addOperation (areYouReady, maFonction);
+
+	Packet p2 =	pm->newPacket_areYouReady ();
+	
+	pm->packetOperation (p2);
+	
+	PacketManager::quit ();
+	
+	return 0;
+}
+
+

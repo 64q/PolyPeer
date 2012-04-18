@@ -1,11 +1,30 @@
 #include "../include/Data.hpp"
 
+
+Data::Data () 
+{ 
+	data = 0;
+	size = 0;
+	realSize = 8;
+	data = new char [realSize]; 
+}
+
+Data::~Data () 
+{
+	if (data != 0) delete [] data;
+}
+
 Data::Data (const Data& other) : data(0), size(other.size), realSize(other.realSize)
 {
 	data = new char [realSize];
+	
+	memcpy (data, other.data, size);	
+}
 
-	for (unsigned int i = 0; i < size; i++)
-		data[i] = other.data[i];	
+Data::Data ( const char* s, unsigned int size ) : data(0), size(0), realSize(8)
+{
+	data = new char [realSize];
+	add (s, size);
 }
 
 Data& Data::operator=(const Data& other)
@@ -17,36 +36,40 @@ Data& Data::operator=(const Data& other)
 		delete [] data;
 	data = new char [realSize];
 
-	for (unsigned int i = 0; i < size; i++)
-		data[i] = other.data[i];	
+	memcpy (data, other.data, size);
 
 	return *this;
 }
 
-char Data::operator[] ( unsigned int i ) const
+const char& Data::operator[] ( unsigned int pos ) const
 {
-	if (i >= 0 && i < size)
-		return data[i];
-	else
-		return ' ';
+	return data[pos];
+}
+
+char& Data::operator[] ( unsigned int pos )
+{
+	return data[pos];
 }
 
 
-int Data::resize ( unsigned int size )
+void Data::resize ( unsigned int size )
 {
-	if ( this->realSize < size)
-	{
+	unsigned int tmpS = realSize;
+	realSize = 8;
+	while (realSize < size)
 		realSize *= 2; // doubler la capacité de stockage
-		
+
+	//cout << "taille demandé : " << size<< " taille actuelle : " << this->size << " nvll actu : " << realSize << " min : " << min (this->size, size) << endl;
+	if (realSize != tmpS)
+	{
 		char* tmp = new char [realSize];
-		for (unsigned int i = 0; i < size-1; i++)
-			tmp[i] = data[i];
-		// utiliser memcpy () ! memcpy (tmp, data, size);
-		delete [] data;
+		memcpy (tmp, data, min (this->size, size));
+		if (data != 0)
+			delete [] data;
 		data = tmp;
 	}
+
 	this->size = size;
-	return 1;
 }
 
 void Data::clear ()
@@ -60,7 +83,7 @@ void Data::clear ()
 	size = 0;
 }
 
-int Data::empty () const
+bool Data::empty () const
 {
 	return (size == 0);
 }
@@ -70,6 +93,7 @@ Data& Data::add ( const char* s, unsigned int size )
 	resize (this->size + size);
 	for (unsigned int i = 0; i < size; i++)
 		data[this->size-size+i] = s[i];
+	
 	return *this;
 }
 
@@ -82,41 +106,43 @@ Data& Data::add ( char c )
 
 Data& Data::add ( const string& s )
 {
-	int length = s.size();
+	int length = s.length();
 	resize (this->size + length);
-	for (unsigned int i = 0; i < size; i++)
-		data[this->size-length+i] = s[i];
+	for (int i = 0; i < length; i++)
+		data[this->size-length+i] = s.at(i);
+
 	return *this;
 }
 
 Data& Data::add ( const Data& d )
 {
-	int length = d.length();
+	int length = d.getSize();
 	resize (this->size + length);
-	for (unsigned int i = 0; i < size; i++)
+	for (int i = 0; i < length; i++)
 		data[this->size-length+i] = d[i];
+	
 	return *this;
 }
 
-/*
-Data& Data::insert ( const char* s, unsigned int size, unsigned int pos )
+
+void Data::c_str ( char* s ) const
 {
-	return *this;
+	memcpy (s, data, size);
 }
 
-Data& Data::insert ( char c, unsigned int pos )
+const char* Data::c_str () const
 {
-	return *this;
-}*/
-
-void Data::serialize ( char* s )
-{
-	if (s != 0)
-	{
-		for (unsigned int i = 0; i < size; i++)
-			s[i] = data[i];
-	}
+	return data;
 }
 
+string Data::getString () const
+{
+	return (string (c_str(), getSize()));
+}
+
+void Data::print ()
+{
+	std::cout << data << std::endl;
+}
 
 

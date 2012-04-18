@@ -5,123 +5,158 @@
 /*
  * Classe Packet
  *
- * Permet de stocker le contenu d'un paquet
- * Sérialiser un paquet pour l'envoi par socket
- * Création d'un paquet
- * Création de paquet pour le WOL
- *
- * Sécurité :
- * pas de plantage possible sur un mauvais paquet
- *
- * ToDo :
- * vérifier que le paquet est bien destiné à l'application
+ * Permet de stocker de manière organisé et rapide les données
+ * Le but étant de stocker ces données afin de pouvoir les sérialiser
+ * 	ou les désérialiser facilement
  *
  * par Olivier
  */
 
- /* PROTOCOLE
-  *
-  * structure d'un paquet : (sauf pour le WOL)
-  *
-  * taille du paquet    -> 4 octets
-  * type du paquet      -> 1 octet
-  * data du paquet      -> 0 à n octets selon le type
-  *
-  *
-  *
-  */
-
 
 // Entêtes
 #include <iostream>
-#include <stdint.h>	// pour les types spéciaux
 #include <cstring>
 #include <string>
+#include <vector>
+#include <sstream>
+
+#ifdef _MSC_VER
+typedef __int8 int8_t;
+typedef unsigned __int8 uint8_t;
+typedef __int16 int16_t;
+typedef unsigned __int16 uint16_t;
+typedef __int32 int32_t;
+typedef unsigned __int32 uint32_t;
+typedef __int64 int64_t;
+typedef unsigned __int64 uint64_t;
+#else
+#include <stdint.h>
+#endif
 
 #include "Data.hpp"	// pour gérer le conteneur
 
 using namespace std;
 
-// liste des différents types de paquets
-typedef enum
-{
-    undefined = 0,
-    wakeUp,
-    areYouReady,
-    sendOperation,
-    sendChunk,
-    readyToWoark,
-    chunkReceived,
-    error,
-} ETypePacket;
-
-
-// liste des erreurs possibles (pour le protocol)
-typedef enum
-{
-    none,
-    addrMacError,
-} ETypeError;
-
 
 class Packet
 {
-    private:
-        // adresse de destination
-        string destination;
-        // type du paquet
-        ETypePacket type;
-        // contenu du paquet
-        Data data;
+private:
+    // données du packet
+    vector<Data> listData;
+    
+    // position d'extraction
+	unsigned int readingPosition;
+	
 
+public:
+	/**
+	* Constructeur de Packet
+	*/
+	Packet();
+	
+	/**
+	* Constructeur de Packet
+	*/
+	Packet(const Data& d);
+	
+	/**
+	* Constructeur de Packet
+	*/
+	Packet(const char* s, unsigned int size);
+	
+	/**
+	* Destructeur de Data
+	*/
+	virtual ~Packet();
+	
+	/**
+	 * Récupérer le contenu du Packet sous forme de Data
+	 * @return Data
+	 *	contenu sérialisé du paquet 
+	 */
+	Data serialize ();
+	
+	/**
+	 * Recréer le paquet avec un contenu sérialisé
+	 * @return int
+	 *	retourne 0 si il y a une erreur sur l'extraction du paquet 
+	 */
+	int unserialize (const Data& d);
+	
+	/**
+	 * Retourne s'il reste des infos à extraire du paquet
+	 * @return bool
+	 *	retourne 0 s'il n'y a plus d'argument
+	 */
+	bool endOfPacket () const;
+	
+	/**
+	 * Retourne la taille du paquet
+	 * @return unsigned int
+	 *	taille
+	 * Méthode à ne pas trop utiliser... calculs lourds
+	 */
+	unsigned int getSize ();
+	
+	/**
+	 * Remet à zéro la position de lecture des arguments
+	 *  le premier argument est la première information entrée dans le paquet.
+	 */
+	void resetPosition ();
+	
+	/**
+	 * Insérer une donnée dans le paquet
+	 * @param const Data d
+	 *  Une Data à insérer
+	 * @return Packet&
+	 *	ref sur le paquet traité
+	 */
+	Packet & operator<< (const Data d);
+	
+	/**
+	 * Recupérer une donnée dans le paquet
+	 * @param Data& d
+	 *  la Data a remplir
+	 * @return Packet&
+	 *	ref sur le paquet traité
+	 */
+	Packet & operator>> (Data& d);
+	
+	// idem pour le reste
+	
+	Packet & operator<< (const string s);
+	Packet & operator>> (string& s);
+	
+	Packet & operator<< (const int);
+	Packet & operator>> (int& i);
+	
+	/*
+	Packet & 	operator>> (float &Data)
+	Packet & 	operator>> (double &Data)
+	*/
 
-    public:
-        Packet() : destination(""), type (undefined), data() {}
-        virtual ~Packet();
-
-
-        Packet(char* packet, unsigned int size);
-
-    // changer le contenu ou ajouter des infos
-        void setDestination (string dest);
-
-
-    // Récupérer le contenu
-        unsigned int getSize () const;
-        void getChar (char* packet) const;
-        ETypePacket getType () const;
-        string getDestination () const;
-
-    // Création de paquet
-        // paquet spécial
-        void create_wakeUp (string addrMac);
-
-        // paquets du serveur
-        void create_areYouReady (string dest);
-        void create_sendOperation (string dest, string secondDest, void * chunk);
-
-        // paquets serveur et client
-        void create_sendChunk (string dest, void* chunk);
-
-        // paquets client (réponse)
-        void create_readyToWork (string dest);
-        void create_chunkReceived (string dest);
-        void create_error (unsigned int numError);
-
-    private:
-        // reserver de la place dans le
-        void allocData (unsigned int size);
-        // récupérer le code hexa d'un caractere
-        uint32_t charToHexa (char c);
-
-    // remplir correctement un paquet
-        void protocol_writeSize (unsigned int size);
-        void protocol_writeAddr (string addr, int position);
-        void protocol_writeType (ETypePacket type);
-        void protocol_writeChunkNbr (uint32_t number, int position);
-        void protocol_writeData (char* data, int size, int position);
-    // lire correctement un paquet
-        void protocol_extrat ();
+private:
+	
+	string extract (unsigned int startPos, const Data& d);
+	
+	template<class Type> std::string typeToString(Type source)
+	{
+		// créer un flux de sortie
+		std::ostringstream ossValue;
+		ossValue << source;
+		// récupérer une chaîne de caractères
+		return ossValue.str();
+	}
+	
+	template<class Type> Type stringToType(std::string source)
+	{
+		// creer le flux
+		istringstream iss(source);
+		// affecter les nouvelles valeurs
+		Type tmp;
+		iss>>tmp;
+		return tmp;
+	}
 
 
 };
