@@ -24,6 +24,7 @@ public:
 	 * addresse ip de la machine cible forma: "192.168.1.1"
 	 * @param int
 	 * port sur lequel la socket va essayer de se connecter
+	 * @throw HostNotFoundException, ConnectionException
 	 */
 	Socket(char* address, int port);
 
@@ -45,6 +46,7 @@ public:
 	 * addresse ip de la machine cible forma: "192.168.1.1"
 	 * @param int
 	 * port sur lequel la socket va essayer de se connecter
+	 * @throw HostNotFoundException, ConnectionException
 	 */
 	void connect(char* address, int port);
 
@@ -54,8 +56,10 @@ public:
 	 * chaîne de caractères à envoyer à la cible
 	 * @param int
 	 * taille de la chaine de caractère
+	 * @return bool
+	 * true si l'envoie s'est bien passé, false sinon
 	 */
-	void send(const char* data, int size);
+	bool send(const char* data, int size);
 
 	/**
 	 * Permet de lire des données reçues. Fonction bloquante.
@@ -63,6 +67,8 @@ public:
 	 * tableau de caractère déjà alloué de taille sizeBuffer qui va recevoir les données envoyé par l'entité connectée.
 	 * @param int
 	 * taille maximal de donnée à lire (taille du tableau allouer en 1er paramètre)
+	 * @return int
+	 * taille de la chaîne de caractères lue. -1 si la lecture s'est mal passée.
 	 */
 	int read(char* buffer, int sizeBuffer);
 };

@@ -1,11 +1,12 @@
 #include <iostream>
 
+#include <Entity.hpp>
 #include <Host.hpp>
 
 using namespace std;
 
-Host::Host(std::string name, std::string ip):
-	name(name), ip(ip)
+Host::Host(const std::string& name, const std::string& ip):
+	Entity(name), ip(ip)
 {
 
 }

@@ -1,8 +1,9 @@
 #include <iostream>
 #include <cstring>
 
-#include <Socket.hpp>
 #include <BaseSocket.hpp>
+#include <Socket.hpp>
+#include <TcpExceptions.hpp>
 
 using namespace std;
 
@@ -37,8 +38,7 @@ void Socket::connect(char* address, int port)
 	hostinfo = gethostbyname(hostname); /* on récupère les informations de l'hôte auquel on veut se connecter */
 	if (hostinfo == NULL) /* l'hôte n'existe pas */
 	{
-		cout << "Unknown host "  << hostname << endl;
-		exit(EXIT_FAILURE);
+		throw HostNotFoundException();
 	}
 
 	sin.sin_addr = *(IN_ADDR *) hostinfo->h_addr; /* l'adresse se trouve dans le champ h_addr de la structure hostinfo */
@@ -48,32 +48,27 @@ void Socket::connect(char* address, int port)
 
 	if (::connect(descripteur,(SOCKADDR *) &sin, sizeof(SOCKADDR)) == SOCKET_ERROR)
 	{
-		cout << "connect()" << endl;
-		exit(errno);
+		throw ConnectionException();
 	}
 
 
 }
 
-void Socket::send(const char* data, int size)
+bool Socket::send(const char* data, int size)
 {
 	if (::send(descripteur, data, size, 0) < 0)
 	{
-		cout << "send()" << endl;
-		exit(errno);
+		return false;
 	}
+	return true;
 }
 
 int Socket::read(char* buffer, int sizeBuffer)
 {
 	int size = 0;
 
-	if ((size = recv(descripteur, buffer, sizeBuffer, 0)) < 0)
-	{
-		cout << "recv()" << endl;
-		cout << strerror(errno) << endl;
-		exit(errno);
-	}
+	size = recv(descripteur, buffer, sizeBuffer, 0);
+
 
 	return size;
 }

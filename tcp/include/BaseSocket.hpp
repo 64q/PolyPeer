@@ -32,6 +32,8 @@ typedef struct in_addr IN_ADDR;
 
 #endif
 
+#include <TcpExceptions.hpp>
+
 /**
  * Classe de base des sockets.
  * Ne peut pas être instancié.
@@ -39,29 +41,34 @@ typedef struct in_addr IN_ADDR;
 
 class BaseSocket
 {
-protected:
+	protected:
 
-	/**
-	 * Constructeur qui initialise sans connecter la socket.
-	 */
-	BaseSocket();
+		/**
+		 * Constructeur qui initialise sans connecter la socket.
+		 */
+		BaseSocket();
 
-	/**
-	 * Destructeur de BseSocket (ferme la socket). Fait appel à la méthode close().
-	 */
-	virtual ~BaseSocket();
+		/**
+		 * Destructeur de BseSocket (ferme la socket). Fait appel à la méthode close().
+		 */
+		virtual ~BaseSocket();
 
-	/**
-	 * Contient l'identifient de la socket.
-	 */
-	int descripteur;
+		/**
+		 * Contient l'identifient de la socket.
+		 */
+		int descripteur;
 
+		/**
+		 * Contient le nombre d'instanciation des sockets (utile pour le WSA sous windows)
+		 */
+		static int nbInstance;
 
-public:
-	/**
-	 * Ferme la socket proprement.
-	 */
-	void close();
+	public:
+		/**
+		 * Ferme la socket proprement.
+		 */
+		void close();
+
 };
 
 #endif // BASESOCKET_H

@@ -25,6 +25,7 @@ public:
 	 * Constructeur de ServerSocket
 	 * @param port
 	 * initialisation de l'écoute sur le port concerné
+	 * @throw BindException
 	 */
 	ServerSocket(int port);
 
@@ -39,6 +40,7 @@ public:
 	 * Elle renverra alors une socket permettant de recevoir des données et renvoyer des données à l'entité qui a demandé la connexion.
 	 * @return Socket
 	 * objet permetant de communiquer avec l'entité qui a demandé la connexion.(voir Socket)
+	 * @throw AcceptException
 	 */
 	Socket* accept();
 };

@@ -3,39 +3,74 @@
 
 #include <map>
 
+#include <BaseServer.hpp>
 #include <WebServer.hpp>
-#include <Logger.hpp>
 #include <Host.hpp>
 
-class Server
+/**
+ * Le serveur principal de l'application PolyPeer. Il s'occupe de gérer les
+ * clients et les déploiements.
+ */
+class Server : public BaseServer
 {
 public:
-	void run();
+	/**
+	 * @see BaseServer
+	 */
+	void start(const int port);
 	
+	/**
+	 * @see BaseServer
+	 */
 	void stop();
 	
+	/**
+	 * @see BaseServer
+	 */
 	void restart();
 	
-	Host getHost(std::string name);
+	/**
+	 * @see BaseServer
+	 */
+	void run();
 	
-	static Server* getInstance(const int port = 9696);
-
+	/**
+	 * Méthode statique pour récupérer l'instance du Singleton
+	 */
+	static Server* getInstance();
+	
+	/**
+	 * Récupère une entité via son nom
+	 * @param string name
+	 * 	nom de l'entité à récupérer
+	 */
+	Entity getEntity(std::string name);
+	
+	/**
+	 * Destructeur du server
+	 */
 	virtual ~Server();
 
 private:
-	Server(const int port);
+	/**
+	 * Constructeur du serveur privé (singleton)
+	 */
+	Server();
 	
-	bool isRunning;
-	
-	bool debug;
-	
+	/**
+	 * Instance du serveur
+	 */
 	static Server* instance;
 	
+	/**
+	 * Pointeur vers le WebServer (singleton)
+	 */
 	WebServer* webserver;
 	
-	Logger logger;
-	
-	std::map<std::string, Host> hosts;
+	/**
+	 * Map contenant l'ensemble des entitées du réseau
+	 */
+	std::map<std::string, Entity> entities;
 };
 
 #endif
