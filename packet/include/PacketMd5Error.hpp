@@ -1,9 +1,9 @@
-#ifndef PACKETREADY_H
-#define PACKETREADY_H
+#ifndef PACKETMD5ERROR_H
+#define PACKETMD5ERROR_H
 
 
 /*
- * Classe PacketReady
+ * Classe PacketMd5Error
  *
  * Hérite de la classe Packet
  * Gérer un type de packet spécifique
@@ -22,36 +22,41 @@
 
 using namespace std;
 
-class PacketReady : public Packet
+
+class PacketMd5Error : public Packet
 {
 private:
-	
+
 
 public:
 	/**
-	* Création d'un PacketReady pret à être envoyé
+	* Création d'un PacketMd5Error pret à être envoyé
 	* 
 	*/
-	PacketReady(int idFile, int numChunk);
+	PacketMd5Error(int idFile, int numChunk);
 	
 	/**
 	* Constructeur sur un Packet (une maniere de caster un Packet)
 	*/
-	PacketReady(const Packet& p);
+	PacketMd5Error(const Packet& p);
 	
 	/**
 	* Destructeur
 	*/
-	virtual ~PacketReady();
+	virtual ~PacketMd5Error();
+	
 	
 	int getIdFile ();
-
+	
 	int getChunkNumber ();
 	
 
 private:
-	PacketReady() {}
+	/**
+	* 
+	*/
+	PacketMd5Error() {}
 
 };
 
-#endif // PACKETREADY_H
+#endif // PACKETMD5ERROR_H

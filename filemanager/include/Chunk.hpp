@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string>
 #include <md5.hpp>
+#include <Data.hpp>
 
 class Chunk
 {
@@ -15,6 +16,7 @@ public:
 	Chunk(long number, long size, char* data, int idFile, char* crc);
 	Chunk(long number, long size, char* data, int idFile);
 	Chunk(char* serializedChunk, int);
+	Chunk(Data& d);
 	virtual ~Chunk();
 
 	//récupérer les données du chunk
@@ -37,6 +39,8 @@ public:
 
 
 	char* serialize(int& size);
+	
+	Data serialize();
 
 protected:
 	long number;

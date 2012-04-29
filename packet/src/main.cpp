@@ -10,10 +10,10 @@
 #include <string>
 */
 
-#include "../include/Data.hpp"
-#include "../include/Packet.hpp"
-#include "../include/PacketAreYouReady.hpp"
-#include "../include/PacketCallback.hpp"
+#include <Data.hpp>
+#include <Packet.hpp>
+#include <PacketAreYouReady.hpp>
+#include <PacketCallback.hpp>
 
 using namespace std;
 
@@ -21,7 +21,7 @@ int callbackAreYouReady (Packet& p)
 {
 	PacketAreYouReady pp(p);
 	
-	cout << pp.getMessage() << endl;
+	cout << pp.getIdFile() << endl;
 	
 	return 1;
 }
@@ -35,7 +35,7 @@ int main ()
 	pm->addOperation (areYouReady, callbackAreYouReady);
 	
 	// création d'un paquet
-	PacketAreYouReady payr = PacketAreYouReady ("Salut !");
+	PacketAreYouReady payr = PacketAreYouReady (5);
 	
 	
 	

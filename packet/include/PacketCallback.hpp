@@ -3,32 +3,19 @@
 
 
 /*
- * Classe PacketFactory
+ * Classe PacketCallback
  *
- * Permet de construire un paquet à partir de règles
- * 	Création d'un paquet
- * 	Création de paquet pour le WOL
- * Lecture d'un paquet et application de l'opération associée
  *
- * ToDo :
- * vérifier que le paquet est bien destiné à l'application
+ * Associer un callback pour traiter un paquet
  *
  * par Olivier
  */
-
- /* PROTOCOLE
-  *
-  * structure d'un paquet : (sauf pour le WOL)
-  *
-  * Voir les descriptifs de fonction
-  *
-  */
 
 
 // Entêtes
 #include <iostream>
 #include <vector>
-#include <Chunk.hpp>
+
 
 #include "Packet.hpp"	// pour gérer le conteneur
 

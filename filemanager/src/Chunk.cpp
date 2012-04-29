@@ -118,6 +118,14 @@ char* Chunk::serialize(int& length)
 	return serializedChunk;
 }
 
+Data Chunk::serialize()
+{
+	int size;
+	char* chaine;
+	chaine = serialize(size);
+	return Data (chaine, size);
+}
+
 Chunk::Chunk(char* serializedChunk, int sizeString)
 {
 
@@ -158,7 +166,54 @@ Chunk::Chunk(char* serializedChunk, int sizeString)
 	checkIntegrity(crc);
 }
 
+Chunk::Chunk(Data& d)
+{
+	//convertion
+	
+	int sizeString = int(d.getSize());
+	char* serializedChunk = new char[sizeString];
+	
+	d.c_str (serializedChunk);
 
+	stringstream in(stringstream::in | stringstream::out| stringstream::binary);
+	in.write(serializedChunk, sizeString);
+
+	in>>idFile;
+	//cout<<idFile<<endl;
+	int p = in.tellg();
+	in.seekg(p+1, ios::beg);
+	in>>number;
+	//cout<<number<<endl;
+
+	p = in.tellg();
+	in.seekg(p+1, ios::beg);
+	char* crc = new char[32];
+	in.read(crc, 32);
+	//cout.write(crc, 32)<<endl;
+
+
+
+
+	p = in.tellg();
+	in.seekg(p+1, ios::beg);
+	in>>size;
+	//cout<<size<<endl;
+
+
+	p = in.tellg();
+	in.seekg(p+1, ios::beg);
+	data = new char[size];
+	in.read(data, size);
+	//cout.write(data, size)<<endl;
+
+
+	//calcul du code correspondant à data
+	this->md5 = encoder.digestString(data, size);
+	checkIntegrity(crc);
+	
+	// vidage
+	delete [] serializedChunk;
+}
 
 
 

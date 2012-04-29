@@ -33,7 +33,7 @@ typedef unsigned __int64 uint64_t;
 #include <stdint.h>
 #endif
 
-#include "Data.hpp"	// pour gérer le conteneur
+#include <Data.hpp>	// pour gérer le conteneur
 
 using namespace std;
 
@@ -48,7 +48,7 @@ typedef enum
     areYouReady,
     sendOperation,
     sendChunk,
-    readyToWork,
+    isReady,
     chunkReceived,
     md5Error,
     
@@ -137,6 +137,13 @@ protected:
 	void setType (PacketType p);
 	
 	/**
+	 * Récupérer une valeur précise dans le paquet
+	 * Réservé aux sous classes
+	 * un Data vide est retourné si la position n'existe pas
+	 */
+	Data getDataPos (unsigned int i);
+	
+	/**
 	 * Retourne la taille du paquet
 	 * @return unsigned int
 	 *	taille
@@ -148,9 +155,13 @@ protected:
 	/**
 	 * Remet à zéro la position de lecture des arguments
 	 *  le premier argument est la première information entrée dans le paquet.
-
 	 */
 	void resetPosition ();
+	
+	/**
+	 * positionne le pointeur de lecture
+	 */
+	void setPosition (unsigned int i);
 	
 	/**
 	 * Insérer une donnée dans le paquet

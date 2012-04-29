@@ -19,20 +19,20 @@
 #include <iostream>
 #include <string>
 
-#include "Packet.hpp"
+#include <Packet.hpp>
+#include <Data.hpp>
 
 using namespace std;
 
 class PacketAreYouReady : public Packet
 {
 private:
-	string msg;
 
 public:
 	/**
 	* Constructeur de Packet
 	*/
-	PacketAreYouReady(string m);
+	PacketAreYouReady(int idFile);
 	
 	/**
 	* Constructeur sur un Packet (une maniere de caster un Packet)
@@ -46,10 +46,10 @@ public:
 	virtual ~PacketAreYouReady();
 	
 	
-	string getMessage ();
+	int getIdFile ();
 
 private:
-
+	PacketAreYouReady() {}
 
 };
 

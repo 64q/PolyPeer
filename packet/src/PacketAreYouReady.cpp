@@ -1,26 +1,27 @@
-#include "../include/PacketAreYouReady.hpp"
+#include <PacketAreYouReady.hpp>
 
 
-PacketAreYouReady::PacketAreYouReady(string m) : Packet()
+PacketAreYouReady::PacketAreYouReady(int idFile) : Packet()
 {
 	setType (areYouReady);
 	
-	msg = m;	
-	
-	(*this) << msg;
+	(*this) << idFile;
 }
 
 PacketAreYouReady::PacketAreYouReady(const Packet& p) : Packet(p)
 {
-	(*this) >> msg;
+	
 }
 
 PacketAreYouReady::~PacketAreYouReady()
 {
-
+	
 }
 
-string PacketAreYouReady::getMessage ()
+int PacketAreYouReady::getIdFile ()
 {
-	return msg;
+	setPosition (0);
+	int id;
+	(*this) >> id;
+	return id;
 }

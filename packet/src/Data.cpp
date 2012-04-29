@@ -1,4 +1,4 @@
-#include "../include/Data.hpp"
+#include <Data.hpp>
 
 
 Data::Data () 

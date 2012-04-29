@@ -1,4 +1,4 @@
-#include "../include/Packet.hpp"
+#include <Packet.hpp>
 
 
 Packet::Packet() : myType(undefined), myReadingPosition(0), valid(true)
@@ -103,9 +103,31 @@ unsigned int Packet::getSize ()
 	return (serialize()).getSize();
 }
 
+Data Packet::getDataPos (unsigned int i)
+{
+	if (i < myListData.size())
+	{
+		return myListData.at(i);
+	}else
+	{
+		return Data ();
+	}
+}
+
 void Packet::resetPosition ()
 {
 	myReadingPosition = 0;
+}
+
+void Packet::setPosition (unsigned int i)
+{
+	if (i < myListData.size())
+	{
+		myReadingPosition = i;
+	} else
+	{
+		myReadingPosition = myListData.size();
+	}
 }
 
 bool 	Packet::endOfPacket () const
