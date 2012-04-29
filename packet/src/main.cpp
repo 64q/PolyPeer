@@ -12,35 +12,43 @@
 
 #include "../include/Data.hpp"
 #include "../include/Packet.hpp"
-#include "../include/PacketManager.hpp"
-
+#include "../include/PacketAreYouReady.hpp"
+#include "../include/PacketCallback.hpp"
 
 using namespace std;
 
-int maFonction (Packet& p)
+int callbackAreYouReady (Packet& p)
 {
-	cout << " operation areYouReady " << endl;
+	PacketAreYouReady pp(p);
 	
-	string tmp;
-	p >> tmp;
-	cout << "val : " << tmp << endl;
-	p >> tmp;
-	cout << "val : " << tmp << endl;
-	return 0;
+	cout << pp.getMessage() << endl;
+	
+	return 1;
 }
 
 
 int main ()
 {
-	PacketManager* pm = PacketManager::getPacketManager ();
-
-	pm->addOperation (areYouReady, maFonction);
-
-	Packet p2 =	pm->newPacket_areYouReady ();
+	// Création du manager
+	PacketCallback* pm = PacketCallback::getPacketCallback ();
+	// Configuration des callback
+	pm->addOperation (areYouReady, callbackAreYouReady);
 	
-	pm->packetOperation (p2);
+	// création d'un paquet
+	PacketAreYouReady payr = PacketAreYouReady ("Salut !");
 	
-	PacketManager::quit ();
+	
+	
+	// Analyse du paquet
+	pm->packetOperation (payr);
+	
+	// Destruction du manager
+	PacketCallback::quit ();
+	
+	
+	
+	
+	
 	
 	return 0;
 }

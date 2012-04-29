@@ -38,14 +38,37 @@ typedef unsigned __int64 uint64_t;
 using namespace std;
 
 
+/**
+ * liste des différents types de paquets
+ */
+typedef enum
+{
+    undefined = 0,
+    wakeUp,
+    areYouReady,
+    sendOperation,
+    sendChunk,
+    readyToWork,
+    chunkReceived,
+    md5Error,
+    
+    End_PaquetType, // Doit rester en derniere position, pour avoir la taille du tableau
+} PacketType;
+
+
 class Packet
 {
 private:
     // données du packet
-    vector<Data> listData;
+    vector<Data> myListData;
+	// type du paquet
+    PacketType myType;
     
     // position d'extraction
-	unsigned int readingPosition;
+	unsigned int myReadingPosition;
+	
+	// validité du paquet
+	bool valid;
 	
 
 public:
@@ -55,17 +78,17 @@ public:
 	Packet();
 	
 	/**
-	* Constructeur de Packet
+	* Constructeur avec désérialisation d'un data
 	*/
 	Packet(const Data& d);
 	
 	/**
-	* Constructeur de Packet
+	* Constructeur avec désérialisation d'un char*
 	*/
 	Packet(const char* s, unsigned int size);
 	
 	/**
-	* Destructeur de Data
+	* Destructeur
 	*/
 	virtual ~Packet();
 	
@@ -84,6 +107,23 @@ public:
 	int unserialize (const Data& d);
 	
 	/**
+	 * Récupérer le type du paquet
+	 * @return PacketType
+	 *	le type du paquet stocké (undefined si inconnu)
+	 */
+	PacketType getType ();
+	
+	/**
+	 * Recréer le paquet avec un contenu sérialisé
+	 * @return bool
+	 *	vrai su le paquet est utilisable
+	 */
+	 bool isValid ();
+	
+	
+protected:
+	
+	/**
 	 * Retourne s'il reste des infos à extraire du paquet
 	 * @return bool
 	 *	retourne 0 s'il n'y a plus d'argument
@@ -91,21 +131,30 @@ public:
 	bool endOfPacket () const;
 	
 	/**
+	 * afffecter la valeur de type de paquet
+	 * Réservé aux sous classes
+	 */
+	void setType (PacketType p);
+	
+	/**
 	 * Retourne la taille du paquet
 	 * @return unsigned int
 	 *	taille
 	 * Méthode à ne pas trop utiliser... calculs lourds
+	 * Utiliser la méthode de la classe Data
 	 */
 	unsigned int getSize ();
 	
 	/**
 	 * Remet à zéro la position de lecture des arguments
 	 *  le premier argument est la première information entrée dans le paquet.
+
 	 */
 	void resetPosition ();
 	
 	/**
 	 * Insérer une donnée dans le paquet
+
 	 * @param const Data d
 	 *  Une Data à insérer
 	 * @return Packet&
@@ -117,6 +166,7 @@ public:
 	 * Recupérer une donnée dans le paquet
 	 * @param Data& d
 	 *  la Data a remplir
+
 	 * @return Packet&
 	 *	ref sur le paquet traité
 	 */
@@ -131,11 +181,11 @@ public:
 	Packet & operator>> (int& i);
 	
 	/*
+
 	Packet & 	operator>> (float &Data)
 	Packet & 	operator>> (double &Data)
 	*/
-
-private:
+	
 	
 	string extract (unsigned int startPos, const Data& d);
 	

@@ -17,19 +17,27 @@ FM=../filemanager/
 all: protocol
 
 # Edition des liens
-protocol: Data.o Packet.o PacketManager.o Chunk.o main.o
+protocol: Data.o Packet.o PacketReady.o PacketAreYouReady.o PacketCallback.o Chunk.o main.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 # Compilation du conteneur Data
 Data.o: $(SRC)Data.cpp
 	$(CC) -c $^ $(CFLAGS)
 
-# Compilation du FileManager
+# Compilation du Packet
 Packet.o: $(SRC)Packet.cpp
 	$(CC) -c $^ $(CFLAGS)
+	
+# Compilation du PacketReady
+PacketReady.o: $(SRC)PacketReady.cpp
+	$(CC) -c $^ $(CFLAGS)
 
-# Compilation du PacketFactory
-PacketManager.o:  $(SRC)PacketManager.cpp
+# Compilation du PacketReady
+PacketAreYouReady.o: $(SRC)PacketAreYouReady.cpp
+	$(CC) -c $^ $(CFLAGS)
+
+# Compilation du PacketManager
+PacketCallback.o:  $(SRC)PacketCallback.cpp
 	$(CC) -c $^ $(CFLAGS)
 
 # Compilation du Chunk

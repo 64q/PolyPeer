@@ -1,18 +1,17 @@
 #include "../include/Packet.hpp"
 
 
-Packet::Packet() : readingPosition(0)
+Packet::Packet() : myType(undefined), myReadingPosition(0), valid(true)
 {
 
 }
 
-Packet::Packet(const Data& d)
+Packet::Packet(const Data& d) : myType(undefined), myReadingPosition(0), valid(true)
 {
-	
 	unserialize (d);
 }
 
-Packet::Packet(const char* s, unsigned int size) : readingPosition(0)
+Packet::Packet(const char* s, unsigned int size) : myType(undefined), myReadingPosition(0), valid(true)
 {
 	Data d (s, size);
 	unserialize (d);
@@ -25,13 +24,15 @@ Packet::~Packet()
 Data Packet::serialize ()
 {
 	Data data;
-	data << typeToString(listData.size());
+	data << typeToString(myListData.size());
 	data << '/';
-	for (unsigned int i = 0; i < listData.size(); i++)
+	data << int(myType);
+	data << '/';
+	for (unsigned int i = 0; i < myListData.size(); i++)
 	{
-		data << typeToString(listData[i].getSize());
+		data << typeToString(myListData[i].getSize());
 		data << '/';
-		data << listData[i];
+		data << myListData[i];
 	}
 	return data;
 }
@@ -39,36 +40,62 @@ Data Packet::serialize ()
 int Packet::unserialize (const Data& d)
 {
 	// init
-	readingPosition = 0;
-	listData.clear ();
+	myReadingPosition = 0;
+	myListData.clear ();
 	
 	// var
-	string value;
-	unsigned int pos = 0;
-	int numExtraction = 0;
-	int nbValue;
-	int taille;
+	string extractString; // extraction de valeur
+	unsigned int posInData = 0;
+	int nbExtraction = 0;
+	int nbData;
+	int size;
+	int tmpVal;
 	
-	// extraction de la premiere valeur qui correspond au nombre
-	value = extract (pos, d);
-	pos += (value.size()+1);
-	nbValue = stringToType<int>(value);
+	// extraction de la premiere valeur qui correspond au nombre de parametre
+	extractString = extract (posInData, d);
+	posInData += (extractString.size()+1);
+	nbData = stringToType<int>(extractString);
 	
-	while (pos < d.getSize())
+	// extraction du type de paquet
+	extractString = extract (posInData, d);
+	posInData += (extractString.size()+1);
+	tmpVal = stringToType<int>(extractString);
+	if ( tmpVal >= int(undefined) && tmpVal < int(End_PaquetType))
 	{
-		value = extract (pos, d);
-		pos += (value.size()+1);
-		numExtraction++;
-		taille = stringToType<int>(value);
-		
-		listData.push_back (Data (d.c_str()+pos, taille));
-		pos += taille;
+		myType = PacketType(tmpVal);
 	}
 	
-	if ((numExtraction < 2) && (numExtraction == nbValue))
+	// extraction des autres valeurs
+	while (posInData < d.getSize())
+	{
+		extractString = extract (posInData, d);
+		posInData += (extractString.size()+1);
+		nbExtraction++;
+		size = stringToType<int>(extractString);
+		
+		myListData.push_back (Data (d.c_str()+posInData, size));
+		posInData += size;
+	}
+	
+	if ((nbExtraction < 2) && (nbExtraction == nbData))
 		return 0;
 	else
 		return 1;
+}
+
+PacketType Packet::getType ()
+{
+	return myType;
+}
+
+void Packet::setType (PacketType p)
+{
+	myType = p;
+}
+
+bool Packet::isValid ()
+{
+	return valid;
 }
 
 unsigned int Packet::getSize ()
@@ -78,12 +105,12 @@ unsigned int Packet::getSize ()
 
 void Packet::resetPosition ()
 {
-	readingPosition = 0;
+	myReadingPosition = 0;
 }
 
 bool 	Packet::endOfPacket () const
 {
-	return !(readingPosition < listData.size());
+	return !(myReadingPosition < myListData.size());
 }
 
 string Packet::extract (unsigned int startPos, const Data& d)
@@ -101,7 +128,7 @@ string Packet::extract (unsigned int startPos, const Data& d)
 
 Packet & Packet::operator<< (const Data d)
 {
-	listData.push_back (Data (d));
+	myListData.push_back (Data (d));
 	return *this;
 }
 
@@ -109,8 +136,8 @@ Packet & Packet::operator>> (Data& d)
 {
 	if (!endOfPacket())
 	{
-		d = listData[readingPosition];
-		readingPosition++;
+		d = myListData[myReadingPosition];
+		myReadingPosition++;
 	}
 	return *this;
 }
@@ -120,7 +147,7 @@ Packet & Packet::operator<< (const string s)
 	Data d;
 	d<<s;
 	
-	listData.push_back (Data (d));
+	myListData.push_back (Data (d));
 	return *this;
 }
 
@@ -128,8 +155,8 @@ Packet & Packet::operator>> (string& s)
 {
 	if (!endOfPacket())
 	{
-		s = listData[readingPosition].getString();
-		readingPosition++;
+		s = myListData[myReadingPosition].getString();
+		myReadingPosition++;
 	}
 	return *this;
 }
@@ -145,8 +172,8 @@ Packet & Packet::operator>> (int& i)
 {
 	if (!endOfPacket())
 	{
-		i = stringToType<int>(listData[readingPosition].getString());
-		readingPosition++;
+		i = stringToType<int>(myListData[myReadingPosition].getString());
+		myReadingPosition++;
 	}
 	return *this;
 }
