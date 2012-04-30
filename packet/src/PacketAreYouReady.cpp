@@ -4,7 +4,6 @@
 PacketAreYouReady::PacketAreYouReady(int idFile) : Packet()
 {
 	setType (areYouReady);
-	
 	(*this) << idFile;
 }
 

@@ -26,7 +26,7 @@ Data Packet::serialize ()
 	Data data;
 	data << typeToString(myListData.size());
 	data << '/';
-	data << int(myType);
+	data << typeToString(int(myType));
 	data << '/';
 	for (unsigned int i = 0; i < myListData.size(); i++)
 	{
@@ -63,16 +63,19 @@ int Packet::unserialize (const Data& d)
 	if ( tmpVal >= int(undefined) && tmpVal < int(End_PaquetType))
 	{
 		myType = PacketType(tmpVal);
+	}else
+	{
+		myType = undefined;
 	}
-	
+
 	// extraction des autres valeurs
 	while (posInData < d.getSize())
 	{
 		extractString = extract (posInData, d);
+		
 		posInData += (extractString.size()+1);
 		nbExtraction++;
 		size = stringToType<int>(extractString);
-		
 		myListData.push_back (Data (d.c_str()+posInData, size));
 		posInData += size;
 	}
@@ -140,7 +143,7 @@ string Packet::extract (unsigned int startPos, const Data& d)
 	string tmp;
 	unsigned int pos = startPos;
 	
-	while ((startPos + pos) < d.getSize() && d[pos] != '/')
+	while ((pos < d.getSize()) && (d[pos] != '/'))
 	{
 		tmp.push_back (d[pos]);
 		pos++;
@@ -168,7 +171,6 @@ Packet & Packet::operator<< (const string s)
 {
 	Data d;
 	d<<s;
-	
 	myListData.push_back (Data (d));
 	return *this;
 }
@@ -186,7 +188,6 @@ Packet & Packet::operator>> (string& s)
 Packet & Packet::operator<< (const int i)
 {
 	string s = typeToString(i);
-
 	return *this<<s;
 }
 
