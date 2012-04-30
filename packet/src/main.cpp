@@ -5,13 +5,23 @@
 #include <Packet.hpp>
 #include <PacketAreYouReady.hpp>
 #include <PacketSendOperation.hpp>
-#include <PacketMd5Error.hpp>
-
+#include <PacketSendChunk.hpp>
 #include <PacketCallback.hpp>
 
+#include <FileManager.hpp>
 #include <Chunk.hpp>
+#include <md5.hpp>
 
 using namespace std;
+
+
+// contenu dans la structure globale du prog
+char file1[] = "a.png";
+char file2[] = "output.png";
+FileManager* cible;
+
+
+
 
 int callbackAreYouReady (Packet& p)
 {
@@ -26,7 +36,28 @@ int callbackSendOperation (Packet& p)
 {
 	PacketSendOperation pp (p);
 	
+	
+	
 	cout << "Incomming Target : " << pp.getTarget() << endl;
+	
+	
+	return 1;
+}
+
+int callbackSendChunk (Packet& p)
+{
+	PacketSendChunk pp (p);
+	
+	
+	Chunk tmp2 = pp.getChunk();
+    if(tmp2.isIntegrate())
+    {
+        cible->saveChunk(tmp2);
+    }
+    else
+    {
+        cout<<"le CRC ne correspond pas!!"<<endl;
+    }
 	
 	return 1;
 }
@@ -40,32 +71,54 @@ int main ()
 	// Configuration des callback
 	pm->addOperation (areYouReady, callbackAreYouReady);
 	pm->addOperation (sendOperation, callbackSendOperation);
-	
-// création d'un paquet
-	PacketAreYouReady p (5);	
-	//PacketSendOperation p ("192.168.0.2", Chunk());
-	
-	
-	// préparation envoie
-	Data d = p.serialize ();
-	
-	cout << "taille du packet : " << d.getSize () << endl;
-	//cout << "Contenu du packet : " << d.getString () << endl;
-	
-	cout << "ENVOI" << endl;
-	
-//reception
-	Packet pp(d);
-	
-// Analyse du paquet
-	pm->packetOperation (pp);
-	
+	pm->addOperation (sendChunk, callbackSendChunk);
+
+
+
+
+// FICHIER
+
+    FileManager fmanager(file1,0, 1024, 2312);
+
+    cible = new FileManager(file2,fmanager.getFileSize(), 30, 1);
+
+    MD5 md5;
+    string tmpStr;
+    ofstream file;
+
+
+    for(int i=0; i<fmanager.getNumberChunk() ; i++)
+    {
+        Chunk tmp = fmanager.getChunk(i);
+        
+        // création d'un paquet
+			//PacketAreYouReady p (5);	
+			//PacketSendOperation p ("192.168.0.2", Chunk());
+			PacketSendChunk p (tmp);
+
+			// préparation envoie
+			Data d = p.serialize ();
+
+			//cout << "ENVOI (taille packet : " << d.getSize () << ")" << endl;
+			//cout << "Contenu du packet : " << d.getString () << endl;
+
+
+		//reception
+			Packet pp(d);
+
+		// Analyse du paquet
+			pm->packetOperation (pp);
+        
+    }
+    
+    cout << "Nombre de paquets nécessaires : " << fmanager.getNumberChunk() << endl;
+
+// destruction de la cible qui est en variable globale
+	//delete cible;
+
 // Destruction du manager
 	PacketCallback::quit ();
-	
-	
-	
-	
+
 	return 0;
 }
 

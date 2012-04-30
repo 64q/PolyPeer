@@ -7,7 +7,7 @@
 
 using namespace std;
 
-FileManager::FileManager(char* path, long size, long sizeChunk, int idFile):sizeChunk(sizeChunk), idFile(idFile)
+FileManager::FileManager(char* path, long size, long sizeChunk, int idFile):idFile(idFile), sizeChunk(sizeChunk)
 {
 	//on réserve l'emplacement du fichier sur le disque dur si il n'existe pas encore
 	if (!existFile(path))

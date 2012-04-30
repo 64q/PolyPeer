@@ -17,7 +17,7 @@ FM=../filemanager/
 all: protocol
 
 # Edition des liens
-protocol: Data.o Packet.o PacketReady.o PacketAreYouReady.o PacketMd5Error.o PacketSendChunk.o PacketSendOperation.o PacketNewFile.o PacketChunkReceived.o PacketCallback.o Chunk.o main.o
+protocol: Data.o Packet.o PacketReady.o PacketAreYouReady.o PacketMd5Error.o PacketSendChunk.o PacketSendOperation.o PacketNewFile.o PacketChunkReceived.o PacketCallback.o Chunk.o FileManager.o main.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 # Compilation du conteneur Data
@@ -62,6 +62,10 @@ PacketCallback.o:  $(SRC)PacketCallback.cpp
 
 # Compilation du Chunk
 Chunk.o: $(FM)$(SRC)Chunk.cpp
+	$(CC) -c $^ $(CFLAGS)
+
+# Compilation du FileManager
+FileManager.o: $(FM)$(SRC)FileManager.cpp
 	$(CC) -c $^ $(CFLAGS)
 	
 # Compilation du main
