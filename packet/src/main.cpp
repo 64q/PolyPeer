@@ -42,7 +42,8 @@ int main ()
 	
 	// création d'un paquet
 	//Packet p = PacketAreYouReady (5);
-	Packet p = PacketMd5Error(5, 14545);
+	Chunk chunk ("Hello", 5);
+	Packet p = PacketSendOperation("192.168.0.2", chunk);
 	
 	// préparation envoie
 	Data d = p.serialize ();
