@@ -1,5 +1,8 @@
 #include <iostream>
 
+#include <FileManager.hpp>
+#include <Chunk.hpp>
+#include <md5.hpp>
 
 #include <Data.hpp>
 #include <Packet.hpp>
@@ -8,16 +11,14 @@
 #include <PacketSendChunk.hpp>
 #include <PacketCallback.hpp>
 
-#include <FileManager.hpp>
-#include <Chunk.hpp>
-#include <md5.hpp>
+
 
 using namespace std;
 
 
 // contenu dans la structure globale du prog
-char file1[] = "a.png";
-char file2[] = "output.png";
+char file1[] = "a.avi";
+char file2[] = "output.avi";
 FileManager* cible;
 
 
@@ -26,30 +27,31 @@ FileManager* cible;
 int callbackAreYouReady (Packet& p)
 {
 	PacketAreYouReady pp(p);
-	
+
 	cout << "Incomming Value : " << pp.getIdFile() << endl;
-	
+
 	return 1;
 }
 
 int callbackSendOperation (Packet& p)
 {
 	PacketSendOperation pp (p);
-	
-	
-	
+
+
+
 	cout << "Incomming Target : " << pp.getTarget() << endl;
-	
-	
+
+
 	return 1;
 }
 
 int callbackSendChunk (Packet& p)
 {
 	PacketSendChunk pp (p);
-	
-	
+
+
 	Chunk tmp2 = pp.getChunk();
+
     if(tmp2.isIntegrate())
     {
         cible->saveChunk(tmp2);
@@ -58,7 +60,7 @@ int callbackSendChunk (Packet& p)
     {
         cout<<"le CRC ne correspond pas!!"<<endl;
     }
-	
+
 	return 1;
 }
 
@@ -78,21 +80,21 @@ int main ()
 
 // FICHIER
 
-    FileManager fmanager(file1,0, 1024, 2312);
+    FileManager fmanager(file1,0, 1000000, 2312);
 
-    cible = new FileManager(file2,fmanager.getFileSize(), 30, 1);
+    cible = new FileManager(file2,fmanager.getFileSize(), 1000000, 2312);
 
-    MD5 md5;
+
     string tmpStr;
-    ofstream file;
+
 
 
     for(int i=0; i<fmanager.getNumberChunk() ; i++)
     {
         Chunk tmp = fmanager.getChunk(i);
-        
+
         // création d'un paquet
-			//PacketAreYouReady p (5);	
+			//PacketAreYouReady p (5);
 			//PacketSendOperation p ("192.168.0.2", Chunk());
 			PacketSendChunk p (tmp);
 
@@ -108,9 +110,9 @@ int main ()
 
 		// Analyse du paquet
 			pm->packetOperation (pp);
-        
+
     }
-    
+
     cout << "Nombre de paquets nécessaires : " << fmanager.getNumberChunk() << endl;
 
 // destruction de la cible qui est en variable globale

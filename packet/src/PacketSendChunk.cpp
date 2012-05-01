@@ -4,7 +4,7 @@
 PacketSendChunk::PacketSendChunk(Chunk& chunk) : Packet()
 {
 	setType (sendChunk);
-	
+
 	(*this) << chunk.serialize();
 }
 

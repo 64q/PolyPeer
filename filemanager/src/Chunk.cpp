@@ -169,10 +169,10 @@ Chunk::Chunk(char* serializedChunk, int sizeString)
 Chunk::Chunk(Data& d)
 {
 	//convertion
-	
+
 	int sizeString = int(d.getSize());
 	char* serializedChunk = new char[sizeString];
-	
+
 	d.c_str (serializedChunk);
 
 	stringstream in(stringstream::in | stringstream::out| stringstream::binary);
@@ -210,7 +210,7 @@ Chunk::Chunk(Data& d)
 	//calcul du code correspondant à data
 	this->md5 = encoder.digestString(data, size);
 	checkIntegrity(crc);
-	
+
 	// vidage
 	delete [] serializedChunk;
 }

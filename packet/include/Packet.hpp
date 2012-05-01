@@ -35,6 +35,8 @@ typedef unsigned __int64 uint64_t;
 
 #include <Data.hpp>	// pour gérer le conteneur
 
+
+
 using namespace std;
 
 
@@ -51,7 +53,7 @@ typedef enum
     isReady,
     chunkReceived,
     md5Error,
-    
+
     End_PaquetType, // Doit rester en derniere position, pour avoir la taille du tableau
 } PacketType;
 
@@ -63,86 +65,86 @@ private:
     vector<Data> myListData;
 	// type du paquet
     PacketType myType;
-    
+
     // position d'extraction
 	unsigned int myReadingPosition;
-	
+
 	// validité du paquet
 	bool valid;
-	
+
 
 public:
 	/**
 	* Constructeur de Packet
 	*/
 	Packet();
-	
+
 	/**
 	* Constructeur avec désérialisation d'un data
 	*/
 	Packet(const Data& d);
-	
+
 	/**
 	* Constructeur avec désérialisation d'un char*
 	*/
 	Packet(const char* s, unsigned int size);
-	
+
 	/**
 	* Destructeur
 	*/
 	virtual ~Packet();
-	
+
 	/**
 	 * Récupérer le contenu du Packet sous forme de Data
 	 * @return Data
-	 *	contenu sérialisé du paquet 
+	 *	contenu sérialisé du paquet
 	 */
 	Data serialize ();
-	
+
 	/**
 	 * Recréer le paquet avec un contenu sérialisé
 	 * @return int
-	 *	retourne 0 si il y a une erreur sur l'extraction du paquet 
+	 *	retourne 0 si il y a une erreur sur l'extraction du paquet
 	 */
 	int unserialize (const Data& d);
-	
+
 	/**
 	 * Récupérer le type du paquet
 	 * @return PacketType
 	 *	le type du paquet stocké (undefined si inconnu)
 	 */
 	PacketType getType ();
-	
+
 	/**
 	 * Recréer le paquet avec un contenu sérialisé
 	 * @return bool
 	 *	vrai su le paquet est utilisable
 	 */
 	 bool isValid ();
-	
-	
+
+
 protected:
-	
+
 	/**
 	 * Retourne s'il reste des infos à extraire du paquet
 	 * @return bool
 	 *	retourne 0 s'il n'y a plus d'argument
 	 */
 	bool endOfPacket () const;
-	
+
 	/**
 	 * afffecter la valeur de type de paquet
 	 * Réservé aux sous classes
 	 */
 	void setType (PacketType p);
-	
+
 	/**
 	 * Récupérer une valeur précise dans le paquet
 	 * Réservé aux sous classes
 	 * un Data vide est retourné si la position n'existe pas
 	 */
 	Data getDataPos (unsigned int i);
-	
+
 	/**
 	 * Retourne la taille du paquet
 	 * @return unsigned int
@@ -151,18 +153,18 @@ protected:
 	 * Utiliser la méthode de la classe Data
 	 */
 	unsigned int getSize ();
-	
+
 	/**
 	 * Remet à zéro la position de lecture des arguments
 	 *  le premier argument est la première information entrée dans le paquet.
 	 */
 	void resetPosition ();
-	
+
 	/**
 	 * positionne le pointeur de lecture
 	 */
 	void setPosition (unsigned int i);
-	
+
 	/**
 	 * Insérer une donnée dans le paquet
 
@@ -172,7 +174,7 @@ protected:
 	 *	ref sur le paquet traité
 	 */
 	Packet & operator<< (const Data d);
-	
+
 	/**
 	 * Recupérer une donnée dans le paquet
 	 * @param Data& d
@@ -182,24 +184,24 @@ protected:
 	 *	ref sur le paquet traité
 	 */
 	Packet & operator>> (Data& d);
-	
+
 	// idem pour le reste
-	
+
 	Packet & operator<< (const string s);
 	Packet & operator>> (string& s);
-	
+
 	Packet & operator<< (const int);
 	Packet & operator>> (int& i);
-	
+
 	/*
 
 	Packet & 	operator>> (float &Data)
 	Packet & 	operator>> (double &Data)
 	*/
-	
-	
+
+
 	string extract (unsigned int startPos, const Data& d);
-	
+
 	template<class Type> std::string typeToString(Type source)
 	{
 		// créer un flux de sortie
@@ -208,7 +210,7 @@ protected:
 		// récupérer une chaîne de caractères
 		return ossValue.str();
 	}
-	
+
 	template<class Type> Type stringToType(std::string source)
 	{
 		// creer le flux

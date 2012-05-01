@@ -4,7 +4,7 @@
 PacketSendOperation::PacketSendOperation(string target, Chunk& chunk) : Packet()
 {
 	setType (sendOperation);
-	
+
 	(*this) << target;
 	(*this) << chunk.serialize();
 }
@@ -26,7 +26,7 @@ string PacketSendOperation::getTarget ()
 	(*this) >> chaine;
 	return chaine;
 }
-	
+
 Chunk PacketSendOperation::getChunk ()
 {
 	setPosition (0);

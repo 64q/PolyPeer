@@ -39,7 +39,7 @@ public:
 
 
 	char* serialize(int& size);
-	
+
 	Data serialize();
 
 protected:
