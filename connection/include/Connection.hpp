@@ -4,26 +4,29 @@
 #include <pthread.h>
 #include <vector>
 
+#include <WaitingPackets.hpp>
+
 class Connection
 {
 	public:
-		Connection(Socket* socket, std::vector<char*>* waitingMessage);
+		Connection(Socket* socket, WaitingPackets* cm);
 		virtual ~Connection();
 
 		void start();
 		void stop();
 
-	protected:
+		Socket* getSocket();
+
 	private:
 		Socket* socket;
 		std::string name;
 		pthread_t thread;
 		bool run;
-		std::vector<char*>* waitingMessage;
+		WaitingPackets* waitingPackets;
 
 		friend void* listenSocket(void* connection);
 
-		//void* listen(void* connection);
+
 };
 
 #endif // CONNECTION_H

@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-Connection::Connection(Socket* socket, std::vector<char*>* waitingMessage): socket(socket), waitingMessage(waitingMessage)
+Connection::Connection(Socket* socket, WaitingPackets* waitingPackets): socket(socket), waitingPackets(waitingPackets)
 {
 	//ctor
 }
@@ -15,26 +15,32 @@ Connection::~Connection()
 
 void* listenSocket(void* connection)
 {
+
 	Connection* connectionTmp = (Connection*)connection;
 	connectionTmp->run = true;
-	char buffer [300];
+	char buffer [20000];
 	int size;
 
 	while(connectionTmp->run)
 	{
-		size = connectionTmp->socket->read(buffer, 300);
+
+		size = connectionTmp->socket->read(buffer, 20000);
+
 		if (size > 0)
 		{
 			// on stocke le message reçu dans la file d'attente de traitement du deployer
 			//	deployer->addMessage(buffer, size);
-			connectionTmp->waitingMessage->push_back(buffer);
+			connectionTmp->waitingPackets->push(buffer, size);
+		}
+		else
+		{
+			connectionTmp->stop();
 		}
 	}
 }
 void Connection::start()
 {
 	// On crée un thread
-
     pthread_create(&thread, NULL, listenSocket, this);
 }
 
@@ -45,6 +51,10 @@ void Connection::stop()
 }
 
 
+Socket* Connection::getSocket()
+{
+	return socket;
+}
 
 
 

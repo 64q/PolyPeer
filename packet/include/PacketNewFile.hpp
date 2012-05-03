@@ -31,25 +31,27 @@ private:
 public:
 	/**
 	* Création d'un PacketNewFile pret à être envoyé
-	* 
+	*
 	*/
-	PacketNewFile(int idFile, string fileName, int size);
-	
+	PacketNewFile(int idFile, string fileName, int size, int sizeChunk);
+
 	/**
 	* Constructeur sur un Packet (une maniere de caster un Packet)
 	*/
 	PacketNewFile(const Packet& p);
-	
+
 	/**
 	* Destructeur
 	*/
 	virtual ~PacketNewFile();
-	
+
 	int getIdFile ();
-	
+
 	string getFileName ();
-	
+
 	int getFileSize ();
+
+	int getChunkSize();
 
 private:
 	PacketNewFile() {}

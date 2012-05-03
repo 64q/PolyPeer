@@ -1,13 +1,14 @@
 #include <PacketNewFile.hpp>
 
 
-PacketNewFile::PacketNewFile(int idFile, string fileName, int size) : Packet()
+PacketNewFile::PacketNewFile(int idFile, string fileName, int size, int sizeChunk) : Packet()
 {
 	setType (sendOperation);
-	
+
 	(*this) << idFile;
 	(*this) << fileName;
 	(*this) << size;
+	(*this) << sizeChunk;
 }
 
 PacketNewFile::PacketNewFile(const Packet& p) : Packet(p)
@@ -42,4 +43,12 @@ int PacketNewFile::getFileSize ()
 	int size;
 	(*this) >> size;
 	return size;
+}
+
+int PacketNewFile::getChunkSize()
+{
+	setPosition (3);
+	int sizeChunk;
+	(*this) >> sizeChunk;
+	return sizeChunk;
 }

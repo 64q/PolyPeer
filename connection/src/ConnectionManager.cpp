@@ -3,7 +3,7 @@
 
 #include <ConnectionManager.hpp>
 
-ConnectionManager::ConnectionManager(std::vector<char*>* waitingMessage):waitingMessage(waitingMessage)
+ConnectionManager::ConnectionManager(WaitingPackets* waitingPackets):waitingPackets(waitingPackets)
 {
 	//ctor
 }
@@ -15,8 +15,15 @@ ConnectionManager::~ConnectionManager()
 
 void ConnectionManager::addConnection(std::string name, Socket* socket)
 {
-	Connection* tmp = new Connection(socket, waitingMessage);
+
+	Connection* tmp = new Connection(socket, waitingPackets);
 	listConnections[name] = tmp;
 	tmp->start();
 }
+
+Connection* ConnectionManager::getConnection(std::string name)
+{
+	return listConnections[name];
+}
+
 

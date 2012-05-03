@@ -7,7 +7,7 @@
 
 using namespace std;
 
-FileManager::FileManager(char* path, long size, long sizeChunk, int idFile):idFile(idFile), sizeChunk(sizeChunk)
+FileManager::FileManager(const char* path, long size, long sizeChunk, int idFile):idFile(idFile), sizeChunk(sizeChunk)
 {
 	//on réserve l'emplacement du fichier sur le disque dur si il n'existe pas encore
 	if (!existFile(path))
@@ -43,13 +43,13 @@ FileManager::FileManager(char* path, long size, long sizeChunk, int idFile):idFi
 	currentData = new char[sizeChunk];
 }
 
-bool FileManager::existFile(char* path)
+bool FileManager::existFile(const char* path)
 {
 	ifstream fichier(path);
 	return !fichier.fail();
 }
 
-void FileManager::reserveFile(char* path, long size)
+void FileManager::reserveFile(const char* path, long size)
 {
 	ofstream create(path, ios::out|ios::app);
 
@@ -131,9 +131,29 @@ long FileManager::getFileSize()
 }
 
 
+int FileManager::getIdFile()
+{
+	return idFile;
+}
 
+std::string FileManager::getFileName()
+{
+	int last = pathFileState.find_last_of("/");
 
+	if(last > 0)
+	{
+		//le 6 correspond au .STATE
+		return pathFileState.substr( last,pathFileState.size() - last - 6);
+	}
 
+	return pathFileState.substr( 0,pathFileState.size() - 6);
+
+}
+
+long FileManager::getChunkSize()
+{
+	return sizeChunk;
+}
 
 
 
