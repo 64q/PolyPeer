@@ -26,7 +26,7 @@ BaseSocket::BaseSocket()
 
 	// initialisation de la socket
 	descripteur = socket(AF_INET, SOCK_STREAM, 0);
-	if (descripteur == INVALID_SOCKET)
+	if (descripteur == (int)INVALID_SOCKET)
 	{
 		cout << "socket()" << endl;
 		exit(EXIT_FAILURE);

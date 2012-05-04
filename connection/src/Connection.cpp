@@ -37,6 +37,7 @@ void* listenSocket(void* connection)
 			connectionTmp->stop();
 		}
 	}
+	return NULL;
 }
 void Connection::start()
 {

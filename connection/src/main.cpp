@@ -30,7 +30,7 @@ int main()
 		cm.getConnection("IRC009-11")->getSocket()->send(packet->serialize().c_str(), packet->serialize().getSize());
 	cout << "premier packet recu" << endl;
 		delete packet;
-		char data[20000];
+
 		while(wp.empty());
 
 

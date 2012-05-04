@@ -7,17 +7,17 @@
 using namespace std;
 MD5 Chunk::encoder;
 
-Chunk::Chunk(long number, long size, char* data, int idFile)
-{
-	initialiser(number, size, data, idFile);
-	chunkIntegrity = true;
-}
-
 Chunk::Chunk(long number, long size, char* data, int idfile, char* crc)
 {
 	initialiser(number, size, data, idFile);
 	checkIntegrity(crc);
 
+}
+
+Chunk::Chunk(long number, long size, char* data, int idFile)
+{
+	initialiser(number, size, data, idFile);
+	chunkIntegrity = true;
 }
 
 void Chunk::checkIntegrity(char* crc)
