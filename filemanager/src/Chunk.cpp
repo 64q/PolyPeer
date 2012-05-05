@@ -123,7 +123,9 @@ Data Chunk::serialize()
 	int size;
 	char* chaine;
 	chaine = serialize(size);
-	return Data (chaine, size);
+	Data tmp(chaine, size);
+	delete chaine;
+	return tmp;
 }
 
 Chunk::Chunk(char* serializedChunk, int sizeString)

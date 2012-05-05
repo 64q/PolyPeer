@@ -61,8 +61,11 @@ cout << "premier packet recu" << endl;
 			{
 				//si le paquet reçu est un paquet de donné Chunk
 				PacketSendChunk* packetChunk = new PacketSendChunk(*packet);
+
+				delete packet;
 				//on récupère le paquet
 				Chunk chunk = packetChunk->getChunk();
+				delete packetChunk;
 				//on vérifie qu'il est complet
 				if(chunk.isIntegrate())
 				{
@@ -72,6 +75,7 @@ cout << "premier packet recu" << endl;
 					//on répond au serveur
 					PacketChunkReceived* packetReceived = new PacketChunkReceived(fm.getIdFile(), i);
 					sock.send(packetReceived->serialize().c_str(), packetReceived->serialize().getSize());
+					delete packetReceived;
 				}else
 				{
 					cout << "chunk corrompu" << endl;
@@ -88,7 +92,7 @@ cout << "premier packet recu" << endl;
 
     }
 	cout << "fini" << endl;
-
+	system("pause");
 
     return 0;
 
