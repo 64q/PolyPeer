@@ -1,6 +1,7 @@
 #ifndef SOCKET_H
 #define SOCKET_H
 #include <BaseSocket.hpp>
+#include <Data.hpp>
 
 
 
@@ -60,6 +61,15 @@ public:
 	 * true si l'envoie s'est bien passé, false sinon
 	 */
 	bool send(const char* data, int size);
+
+	/**
+	 * Pour envoyer des données par la Socket. La Socket doit être connecté avant.
+	 * @param const Data&
+	 * Data contenant les données à envoyer.
+	 * @return bool
+	 * true si l'envoie s'est bien passé, false sinon
+	 */
+	bool send(const Data& data);
 
 	/**
 	 * Permet de lire des données reçues. Fonction bloquante.

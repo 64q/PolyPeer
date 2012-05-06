@@ -63,6 +63,11 @@ bool Socket::send(const char* data, int size)
 	return true;
 }
 
+bool Socket::send(const Data& data)
+{
+	return send(data.c_str(), data.getSize());
+}
+
 int Socket::read(char* buffer, int sizeBuffer)
 {
 	int size = 0;
