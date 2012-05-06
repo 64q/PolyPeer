@@ -9,7 +9,7 @@
 
 /**
  * Classe gérant les sockets d'écoute. Quand un socket est ajouté au connectionManager, il lance l'écoute dans un thread.
- * la classe permet de récupérer les socket qu'il contient par le nom du PC corrrspondant.
+ * la classe permet de récupérer les socket qu'il contient par le nom du PC corespondant.
  */
 
 

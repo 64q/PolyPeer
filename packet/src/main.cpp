@@ -17,8 +17,8 @@ using namespace std;
 
 
 // contenu dans la structure globale du prog
-char file1[] = "a.avi";
-char file2[] = "output.avi";
+char file1[] = "vid.flv";
+char file2[] = "output.flv";
 FileManager* cible;
 
 
