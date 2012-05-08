@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-Connection::Connection(Socket* socket, WaitingPackets* waitingPackets): socket(socket), waitingPackets(waitingPackets)
+Connection::Connection(Socket* socket): socket(socket)
 {
 	//ctor
 }
@@ -28,9 +28,8 @@ void* listenSocket(void* connection)
 
 		if (size > 0)
 		{
-			// on stocke le message reçu dans la file d'attente de traitement du deployer
-			//	deployer->addMessage(buffer, size);
-			connectionTmp->waitingPackets->push(buffer, size);
+			// on réagit en fonction du type de paquet
+
 		}
 		else
 		{

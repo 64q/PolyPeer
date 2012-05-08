@@ -1,11 +1,29 @@
 #include <string>
+#ifdef WIN32 /* si vous êtes sous Windows */
+	#define sleep(t) Sleep(t)
+#endif
 
 
 #include <ConnectionManager.hpp>
 
-ConnectionManager::ConnectionManager(WaitingPackets* waitingPackets):waitingPackets(waitingPackets)
+ConnectionManager::ConnectionManager(int port)
 {
-	serverSocket = new ServerSocket(5555);
+	bool bind = false;
+	while(!bind)
+	{
+		try
+		{
+			serverSocket = new ServerSocket(port);
+			bind = true;
+		}catch(BindException)
+		{
+			cout << "impossible de lier le port du serveur numéro :" << port << endl;
+			cout << "tentative de reconnexion dans 5 secondes" << endl;
+			sleep(5000);
+		}
+	}
+
+
 }
 
 ConnectionManager::~ConnectionManager()
@@ -16,7 +34,7 @@ ConnectionManager::~ConnectionManager()
 void ConnectionManager::addConnection(std::string name, Socket* socket)
 {
 
-	Connection* tmp = new Connection(socket, waitingPackets);
+	Connection* tmp = new Connection(socket);
 	listConnections[name] = tmp;
 	tmp->start();
 }
@@ -35,7 +53,7 @@ void* runFct(void* connectionManager)
 	{
 		sockTmp = connectionManagerTmp->serverSocket->accept();
 		connectionManagerTmp->addConnection(sockTmp->getIpAdress(), sockTmp);
-		cout << "conect ajouté"<<endl;
+
 	}
 	return NULL;
 }

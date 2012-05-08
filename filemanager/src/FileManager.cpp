@@ -155,6 +155,11 @@ long FileManager::getChunkSize()
 	return sizeChunk;
 }
 
+long FileManager::getCurrentNumberChunk()
+{
+	return currentChunk;
+}
+
 
 
 

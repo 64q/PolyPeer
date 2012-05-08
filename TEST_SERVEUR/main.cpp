@@ -11,13 +11,13 @@ using namespace std;
 
 int main()
 {
-	WaitingPackets wp;
-	ConnectionManager cm(&wp);
+
+	ConnectionManager cm(5555);
 	cm.start();
 
 	for(;;);
+/*
 
-	/*
 	try
 	{
 		//lancement du serveur

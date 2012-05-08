@@ -83,7 +83,7 @@ public:
 	 */
 	long getChunkSize();
 
-
+	long getCurrentNumberChunk();
 
 protected:
 	std::fstream file;
