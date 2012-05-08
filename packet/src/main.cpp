@@ -9,7 +9,7 @@
 #include <PacketCallback.hpp>
 #include <includePacket.hpp>
 
-#include <callbackFunction.hpp>
+
 
 
 using namespace std;
@@ -29,15 +29,9 @@ int main ()
 
 // Création du manager
 	PacketCallback* pm = PacketCallback::getPacketCallback ();
-	// Configuration des callback
-	pm->addOperation (EAreYouReady, callbackAreYouReady);
-	pm->addOperation (ESendOperation, callbackSendOperation);
-	pm->addOperation (ESendChunk, callbackSendChunk);
-	pm->addOperation (EReady, callbackReady);
-	pm->addOperation (EChunkReceived, callbackChunkReceived);
-	pm->addOperation (EMd5Error, callbackMd5Error);
+	
 
-
+/*
 // FICHIER
 
     FileManager fmanager(file1,0, 1000000, 2312);
@@ -77,7 +71,7 @@ int main ()
 
 // destruction de la cible qui est en variable globale
 	//delete cible;
-
+*/
 // Destruction du manager
 	PacketCallback::quit ();
 

@@ -15,8 +15,6 @@
 
 using namespace std;
 
-int callbackAreYouReady (Packet& p);
-
 int callbackSendOperation (Packet& p);
 
 int callbackSendChunk (Packet& p);
@@ -28,6 +26,11 @@ int callbackChunkReceived (Packet& p);
 int callbackMd5Error (Packet& p);
 
 int callbackNewFile (Packet& p);
+
+int callbackPacketDiskFull (Packet& p);
+
+int callbackPacketSendOperationFinished (Packet& p);
+
 
 
 #endif // CALLBACKFUNCTION_H

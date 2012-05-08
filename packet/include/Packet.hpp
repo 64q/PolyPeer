@@ -47,13 +47,14 @@ typedef enum
 {
     EUndefined = 0,
     EWakeUp,
-    EAreYouReady,
+    ENewFile,
     ESendOperation,
     ESendChunk,
     EReady,
     EChunkReceived,
     EMd5Error,
-    ENewFile,
+    EDiskFull,
+    ESendOperationFinished,
 
     End_PaquetType, // Doit rester en derniere position, pour avoir la taille du tableau
 } PacketType;
@@ -72,6 +73,9 @@ private:
 
 	// validité du paquet
 	bool valid;
+	
+	// adresse de la source
+	string address;
 
 
 public:
@@ -122,6 +126,18 @@ public:
 	 *	vrai su le paquet est utilisable
 	 */
 	 bool isValid ();
+	 
+	 /**
+	 * affecter l'adresse
+	 */
+	 void setAddress (string addr);
+	 
+	 /**
+	 * Récupérer l'adresse
+	 * @return string
+	 *	address
+	 */
+	 string getAddress () const;
 
 
 protected:

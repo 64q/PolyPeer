@@ -1,17 +1,17 @@
 #include <Packet.hpp>
 
 
-Packet::Packet() : myType(EUndefined), myReadingPosition(0), valid(true)
+Packet::Packet() : myType(EUndefined), myReadingPosition(0), valid(true), address("255.255.255.255")
 {
 
 }
 
-Packet::Packet(const Data& d) : myType(EUndefined), myReadingPosition(0), valid(true)
+Packet::Packet(const Data& d) : myType(EUndefined), myReadingPosition(0), valid(true), address("255.255.255.255")
 {
 	unserialize (d);
 }
 
-Packet::Packet(const char* s, unsigned int size) : myType(EUndefined), myReadingPosition(0), valid(true)
+Packet::Packet(const char* s, unsigned int size) : myType(EUndefined), myReadingPosition(0), valid(true), address("255.255.255.255")
 {
 	Data d (s, size);
 	unserialize (d);
@@ -91,6 +91,16 @@ PacketType Packet::getType ()
 	return myType;
 }
 
+void Packet::setAddress (string addr)
+{
+	address = addr;
+}
+
+string Packet::getAddress () const
+{
+	return address;
+}
+
 void Packet::setType (PacketType p)
 {
 	myType = p;
@@ -105,6 +115,8 @@ unsigned int Packet::getSize ()
 {
 	return (serialize()).getSize();
 }
+
+
 
 Data Packet::getDataPos (unsigned int i)
 {
