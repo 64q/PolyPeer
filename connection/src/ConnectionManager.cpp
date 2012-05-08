@@ -79,5 +79,16 @@ void ConnectionManager::stop()
 	serverSocket->close();
 }
 
+void ConnectionManager::sendTo(std::string dest, Packet packet)
+{
+	Connection* connection = listConnections[dest];
+	if(connection != NULL)
+	{
+		connection->getSocket()->send(packet.serialize());
+	}else
+	{
+		cout << "l'adresse ip est inconnu dans le ConnectionManager" << endl;
+	}
+}
 
 

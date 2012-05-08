@@ -1,6 +1,7 @@
 #include <Connection.hpp>
-
+#include <PacketCallBack.hpp>
 #include <iostream>
+
 using namespace std;
 
 Connection::Connection(Socket* socket): socket(socket)
@@ -28,8 +29,12 @@ void* listenSocket(void* connection)
 
 		if (size > 0)
 		{
-			// on réagit en fonction du type de paquet
+			Packet tmp(buffer, size);
+			//on ajoute l'adresse ip d'où provient le paquet
+			tmp.setAddress(connectionTmp->socket->getIpAdress());
 
+			//on agit suivant le paquet
+			PacketCallback::getPacketCallback()->packetOperation(tmp);
 		}
 		else
 		{

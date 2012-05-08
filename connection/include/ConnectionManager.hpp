@@ -8,6 +8,7 @@
 
 #include <Connection.hpp>
 #include <ServerSocket.hpp>
+#include <Packet.hpp>
 
 /**
  * Classe gérant les sockets d'écoute. Quand un socket est ajouté au connectionManager, il lance l'écoute dans un thread.
@@ -52,6 +53,9 @@ class ConnectionManager
 		 * A n'utiliser qu'à la fermeture du programme!
 		 */
 		void stop();
+
+
+		void sendTo(std::string dest, Packet packet);
 
 
 	private:

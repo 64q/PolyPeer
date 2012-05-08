@@ -7,7 +7,7 @@
  *
  * par Olivier
  */
- 
+
 // Entêtes
 #include <iostream>
 #include <Packet.hpp>
