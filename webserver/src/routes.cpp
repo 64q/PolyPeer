@@ -117,7 +117,7 @@ string toggledebug_route(WebRequest& request)
 	return debug_route(request);
 }
 
-string ressource_route(WebRequest& request)
+string resource_route(WebRequest& request)
 {
 	// Test de ressource
 	// Ouverture du fichier de template
@@ -136,7 +136,7 @@ string ressource_route(WebRequest& request)
 	else  
 	{
 		buffer << "impossible d'ouvrir la ressource demandée : " << request.getTarget() << ".";
-		WebServer::getInstance()->logger.put("error", buffer.str());
+		WebServer::getInstance()->getLogger().put("error", buffer.str());
 		// Redirection vers page d'erreur
 		return notfound_route(request);
 	}

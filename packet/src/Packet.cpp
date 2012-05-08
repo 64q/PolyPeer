@@ -1,17 +1,17 @@
 #include <Packet.hpp>
 
 
-Packet::Packet() : myType(undefined), myReadingPosition(0), valid(true)
+Packet::Packet() : myType(EUndefined), myReadingPosition(0), valid(true)
 {
 
 }
 
-Packet::Packet(const Data& d) : myType(undefined), myReadingPosition(0), valid(true)
+Packet::Packet(const Data& d) : myType(EUndefined), myReadingPosition(0), valid(true)
 {
 	unserialize (d);
 }
 
-Packet::Packet(const char* s, unsigned int size) : myType(undefined), myReadingPosition(0), valid(true)
+Packet::Packet(const char* s, unsigned int size) : myType(EUndefined), myReadingPosition(0), valid(true)
 {
 	Data d (s, size);
 	unserialize (d);
@@ -60,12 +60,12 @@ int Packet::unserialize (const Data& d)
 	extractString = extract (posInData, d);
 	posInData += (extractString.size()+1);
 	tmpVal = stringToType<int>(extractString);
-	if ( tmpVal >= int(undefined) && tmpVal < int(End_PaquetType))
+	if ( tmpVal >= int(EUndefined) && tmpVal < int(End_PaquetType))
 	{
 		myType = PacketType(tmpVal);
 	}else
 	{
-		myType = undefined;
+		myType = EUndefined;
 	}
 
 	// extraction des autres valeurs

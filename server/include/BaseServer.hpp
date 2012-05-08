@@ -12,10 +12,8 @@ class BaseServer
 public:
 	/**
 	 * Méthode permettant de démarrer le serveur
-	 * @param int port
-	 * 	le port sur lequel le serveur va écouter
 	 */
-	virtual void start(const int port) = 0;
+	virtual void start() = 0;
 	
 	/**
 	 * Méthode permettant de stopper le serveur sans toutefois
@@ -29,9 +27,9 @@ public:
 	virtual void restart() = 0;
 	
 	/**
-	 * Méthode permettant de faire tourner le serveur
+	 * Méthode pour récupérer le logger du serveur
 	 */
-	virtual void run() = 0;
+	Logger& getLogger();
 	
 	/**
 	 * Destructeur de BaseServer
@@ -46,6 +44,11 @@ protected:
 	BaseServer(const std::string);
 	BaseServer(const BaseServer&);
 	BaseServer& operator=(const BaseServer&);
+	
+	/**
+	 * Méthode permettant de faire tourner le serveur
+	 */
+	virtual void run() = 0;
 	
 	/**
 	 * Logger du server, sert à stocker dans un fichier texte les actions du serv.
