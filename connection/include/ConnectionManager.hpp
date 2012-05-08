@@ -4,8 +4,11 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <pthread.h>
+
 #include <Connection.hpp>
 #include <WaitingPackets.hpp>
+#include <ServerSocket.hpp>
 
 /**
  * Classe gérant les sockets d'écoute. Quand un socket est ajouté au connectionManager, il lance l'écoute dans un thread.
@@ -42,10 +45,27 @@ class ConnectionManager
 		 */
 		Connection* getConnection(std::string name);
 
+		/**
+		 * Lance l'écoute des connexions entrantes et l'jout de ces connexions dans le tableau de Conection dans un thread
+		 */
+		void start();
+
+		/**
+		 * Arrête le thread d'écoute des connexions entrantes et coupe toutes les connexions en cours.
+		 * A n'utiliser qu'à la fermeture du programme!
+		 */
+		void stop();
+
 
 	private:
 		std::map<std::string, Connection*> listConnections;
 		WaitingPackets* waitingPackets;
+
+		pthread_t thread;
+		bool run;
+		ServerSocket* serverSocket;
+
+		friend void* runFct(void* connectionManager);
 };
 
 #endif // CONNECTIONMANAGER_H

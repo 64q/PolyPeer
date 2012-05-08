@@ -3,6 +3,7 @@
 #include <ConnectionManager.hpp>
 #include <FileManager.hpp>
 
+
 #include <PacketNewFile.hpp>
 #include <PacketSendChunk.hpp>
 #include <PacketChunkReceived.hpp>
@@ -10,10 +11,18 @@ using namespace std;
 
 int main()
 {
+	WaitingPackets wp;
+	ConnectionManager cm(&wp);
+	cm.start();
+
+	for(;;);
+
+	/*
 	try
 	{
 		//lancement du serveur
 		ServerSocket server(5555);
+
 
 		//initialisation de le liste d'attente des messages
 		WaitingPackets wp;
@@ -90,7 +99,7 @@ int main()
 
 
 
-
+*/
 
 
 }

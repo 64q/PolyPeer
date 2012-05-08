@@ -42,7 +42,7 @@ class Connection
 		 * Permet de récupérer la Socket qui est en écoute (pour envpyer un paquet par exemple.
 		 * Ne pas utiliser pour écouter la socket, les messages reçus sont stocké dans WaitingPacket.
 		 * @return Socket*
-		 * Lea socket en écoute.
+		 * La socket en écoute.
 		 */
 		Socket* getSocket();
 

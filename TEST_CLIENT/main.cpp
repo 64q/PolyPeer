@@ -1,11 +1,9 @@
 #include <iostream>
+#include <string>
+
 #include <ServerSocket.hpp>
-#include <pthread.h>
-
 #include <FileManager.hpp>
-
 #include <TcpExceptions.hpp>
-
 #include <Packet.hpp>
 #include <PacketNewFile.hpp>
 #include <PacketSendChunk.hpp>
@@ -17,9 +15,15 @@ void* start(void* data);
 
 int main()
 {
+
+
+
 	//connection u serveur
+
     Socket sock("localhost",5555);
 cout << "connecte" << endl;
+/*
+
     char data[100000];
 
     //on récupère le paquet d'initialisation
@@ -95,7 +99,7 @@ cout << "premier packet recu" << endl;
 	system("pause");
 
     return 0;
-
+*/
 
 
 }

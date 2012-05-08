@@ -3,6 +3,8 @@
 #include <BaseSocket.hpp>
 #include <Data.hpp>
 
+#include <string>
+
 
 
 /**
@@ -27,14 +29,16 @@ public:
 	 * port sur lequel la socket va essayer de se connecter
 	 * @throw HostNotFoundException, ConnectionException
 	 */
-	Socket(char* address, int port);
+	Socket(std::string adress, int port);
 
 	/**
 	 * Contructeur d'une socket déjà connecté grâce à l'identifiant (système) de cette socket
 	 * @param int
 	 * identifiant de la socket dont on veut créer un objet Socket
+	 * @param std::string
+	 * adresse ip de la Socket sous forme de chaîne de cractère
 	 */
-	Socket(int descripteur);
+	Socket(int descripteur, std::string ipAdress);
 	/**
 	 * Destructeur de Socket
 	 * Déconnecte la socket (voir destructeur BaseSocket)
@@ -49,7 +53,7 @@ public:
 	 * port sur lequel la socket va essayer de se connecter
 	 * @throw HostNotFoundException, ConnectionException
 	 */
-	void connect(char* address, int port);
+	void connect(std::string address, int port);
 
 	/**
 	 * Pour envoyer des données par la Socket. La Socket doit être connecté avant.
@@ -81,6 +85,13 @@ public:
 	 * taille de la chaîne de caractères lue. -1 si la lecture s'est mal passée.
 	 */
 	int read(char* buffer, int sizeBuffer);
+
+	std::string getIpAdress();
+
+
+
+protected:
+	std::string ipAdress;
 };
 
 

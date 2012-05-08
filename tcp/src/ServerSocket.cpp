@@ -50,13 +50,15 @@ Socket* ServerSocket::accept()
 	//(on fait appel à la fonction accept() système, il faut donc sortir de l'espace de nommage de la méthode avec :: )
 	csock = ::accept(descripteur, (SOCKADDR *)&csin, &sinsize);
 
+
 	if (csock == INVALID_SOCKET)
 	{
 		throw AcceptException();
 	}
 	else
 	{
-		return new Socket(csock);
+		//on retourne la nouvelle Socket avec l'adresse ip en deuxième paramètre
+		return new Socket(csock, inet_ntoa(csin.sin_addr));
 	}
 }
 

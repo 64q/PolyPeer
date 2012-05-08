@@ -10,7 +10,7 @@ Connection::Connection(Socket* socket, WaitingPackets* waitingPackets): socket(s
 
 Connection::~Connection()
 {
-	//dtor
+	stop();
 }
 
 void* listenSocket(void* connection)

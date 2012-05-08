@@ -7,14 +7,15 @@
 
 using namespace std;
 
-Socket::Socket(char* address, int port)
+Socket::Socket(std::string address, int port)
 {
 	connect(address, port);
 }
 
-Socket::Socket(int descripteur)
+Socket::Socket(int descripteur, std::string ipAdress):ipAdress(ipAdress)
 {
 	this->descripteur = descripteur;
+
 }
 
 Socket::Socket()
@@ -25,15 +26,15 @@ Socket::Socket()
 Socket::~Socket()
 {
 
-	cout<<"client closed"<<endl;
+	//cout<<"client closed"<<endl;
 
 }
 
-void Socket::connect(char* address, int port)
+void Socket::connect(std::string address, int port)
 {
 	struct hostent *hostinfo = NULL;
 	SOCKADDR_IN sin = { 0 }; /* initialise la structure avec des 0 */
-	const char *hostname = address;
+	const char *hostname = address.c_str();
 
 	hostinfo = gethostbyname(hostname); /* on récupère les informations de l'hôte auquel on veut se connecter */
 	if (hostinfo == NULL) /* l'hôte n'existe pas */
@@ -76,4 +77,9 @@ int Socket::read(char* buffer, int sizeBuffer)
 
 
 	return size;
+}
+
+std::string Socket::getIpAdress()
+{
+	return ipAdress;
 }
