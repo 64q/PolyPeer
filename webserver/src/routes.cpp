@@ -117,7 +117,7 @@ string toggledebug_route(WebRequest& request)
 	return debug_route(request);
 }
 
-string ressource_route(WebRequest& request)
+string resource_route(WebRequest& request)
 {
 	// Test de ressource
 	// Ouverture du fichier de template

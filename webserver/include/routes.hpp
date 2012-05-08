@@ -79,6 +79,6 @@ std::string debug_route(WebRequest& request);
  * @param WebRequest
  * 	la requête fournie par le navigateur
  */
-std::string ressource_route(WebRequest& request);
+std::string resource_route(WebRequest& request);
 
 #endif

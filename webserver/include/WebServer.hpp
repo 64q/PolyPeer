@@ -65,6 +65,8 @@ public:
 	
 	/**
 	 * Défini le chemin d'accès aux ressources web
+	 * @param string path
+	 * 	chemin d'accès aux templates
 	 */
 	void setResourcesPath(const std::string path);
 	
@@ -86,6 +88,10 @@ public:
 private:
 	/**
 	 * Constructeur d'un WebServer
+	 * @param int port
+	 * 	le port d'écoute du serveur
+	 * @param string path
+	 * 	chemin d'accès aux templates
 	 */
 	WebServer(const int port, const std::string path);
 	

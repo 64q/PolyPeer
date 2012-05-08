@@ -21,10 +21,10 @@ WebServer* WebServer::instance = NULL;
 WebServer::WebServer(const int port, const string path) :
 	logger("log/webserver.log"), socket(port)
 {
-	this->debug = false;
-	this->isRunning = true;
-	this->port = port;
-	this->resourcesPath = path;
+	this->debug				= false;
+	this->isRunning		= true;
+	this->port				= port;
+	this->resourcesPath	= path;
 	
 	// Init des routes
 	this->routes.insert(pair<string, route_handler>("/", default_route));
@@ -72,7 +72,7 @@ void WebServer::run()
 		map<string, route_handler>::iterator it = this->routes.find(request.getTarget());
 		if (it == routes.end())
 		{
-			sent = ressource_route(request);
+			sent = resource_route(request);
 		}
 		else
 		{

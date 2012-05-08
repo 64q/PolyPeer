@@ -15,7 +15,7 @@ TinyParser::TinyParser(std::string filename)
 
 	stringstream buffer;
 
-	if(this->file.is_open())
+	if (this->file.is_open())
 	{      
 		// copier l'intégralité du fichier dans le buffer
 		buffer << this->file.rdbuf();
@@ -37,10 +37,12 @@ void TinyParser::inject(std::string key, std::string value)
 void TinyParser::parsePrint()
 {
 	map<string, string>::iterator it;
-	size_t pos;
-	size_t start, end;
+	size_t pos, start, end;
+	
+	// Les patterns utilisés pour un print
 	string pattern = "<!# print(";
 	string closure = ") #!>";
+	
 	pos = this->content.find(pattern);
 	
 	while (pos != string::npos) 
@@ -50,7 +52,8 @@ void TinyParser::parsePrint()
 		
 		it  = this->vars.find(this->content.substr(end, start - end));
 		
-		if (it != this->vars.end()) {
+		if (it != this->vars.end()) 
+		{
 			this->content.replace(pos, pattern.length() + (*it).first.length() + closure.length(), (*it).second);
 		}
 		
@@ -60,8 +63,7 @@ void TinyParser::parsePrint()
 
 void TinyParser::parseInclude()
 {
-	size_t pos;
-	size_t start, end;
+	size_t pos, start, end;
 	
 	// Les patterns utilisés pour un include
 	string pattern = "<!# include(";

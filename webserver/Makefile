@@ -6,7 +6,7 @@
 #
 
 CC=g++
-CFLAGS=-Wall -ggdb -I../tcp/include/ -I../logger/include/ -Iinclude/
+CFLAGS=-Wall -ggdb -I../tcp/include/ -I../logger/include/ -Iinclude/ -I../tcp/include/Exceptions/
 LDFLAGS=
 EXEC=webserver
 SRC=src/
