@@ -62,6 +62,8 @@ class ConnectionManager
 		bool run;
 		ServerSocket* serverSocket;
 
+		//static ConnectionManager* instance;
+
 		friend void* runFct(void* connectionManager);
 };
 
