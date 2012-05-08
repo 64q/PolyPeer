@@ -3,7 +3,7 @@
 
 PacketReady::PacketReady(int idFile, int numChunk) : Packet()
 {
-	setType (isReady);
+	setType (EReady);
 	
 	(*this) << idFile;
 	(*this) << numChunk;

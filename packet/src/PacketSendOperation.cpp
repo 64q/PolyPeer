@@ -3,7 +3,7 @@
 
 PacketSendOperation::PacketSendOperation(string target, Chunk& chunk) : Packet()
 {
-	setType (sendOperation);
+	setType (ESendOperation);
 
 	(*this) << target;
 	(*this) << chunk.serialize();

@@ -3,7 +3,7 @@
 
 PacketChunkReceived::PacketChunkReceived(int idFile, int numChunk) : Packet()
 {
-	setType (chunkReceived);
+	setType (EChunkReceived);
 	
 	(*this) << idFile;
 	(*this) << numChunk;
