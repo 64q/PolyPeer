@@ -1,11 +1,29 @@
 #include <string>
+#ifdef WIN32 /* si vous êtes sous Windows */
+	#define sleep(t) Sleep(t)
+#endif
 
 
 #include <ConnectionManager.hpp>
 
-ConnectionManager::ConnectionManager()
+ConnectionManager::ConnectionManager(int port)
 {
-	serverSocket = new ServerSocket(5555);
+	bool bind = false;
+	while(!bind)
+	{
+		try
+		{
+			serverSocket = new ServerSocket(port);
+			bind = true;
+		}catch(BindException)
+		{
+			cout << "impossible de lier le port du serveur numéro :" << port << endl;
+			cout << "tentative de reconnexion dans 5 secondes" << endl;
+			sleep(5000);
+		}
+	}
+
+
 }
 
 ConnectionManager::~ConnectionManager()

@@ -21,7 +21,7 @@ class ConnectionManager
 		/**
 		 * Constructeur
 		 */
-		ConnectionManager();
+		ConnectionManager(int port);
 		virtual ~ConnectionManager();
 
 		/**

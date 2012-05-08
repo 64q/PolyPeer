@@ -12,7 +12,7 @@ using namespace std;
 int main()
 {
 
-	ConnectionManager cm;
+	ConnectionManager cm(5555);
 	cm.start();
 
 	for(;;);
