@@ -3,7 +3,7 @@
 
 #include <ConnectionManager.hpp>
 
-ConnectionManager::ConnectionManager(WaitingPackets* waitingPackets):waitingPackets(waitingPackets)
+ConnectionManager::ConnectionManager()
 {
 	serverSocket = new ServerSocket(5555);
 }
@@ -16,7 +16,7 @@ ConnectionManager::~ConnectionManager()
 void ConnectionManager::addConnection(std::string name, Socket* socket)
 {
 
-	Connection* tmp = new Connection(socket, waitingPackets);
+	Connection* tmp = new Connection(socket);
 	listConnections[name] = tmp;
 	tmp->start();
 }
@@ -35,7 +35,7 @@ void* runFct(void* connectionManager)
 	{
 		sockTmp = connectionManagerTmp->serverSocket->accept();
 		connectionManagerTmp->addConnection(sockTmp->getIpAdress(), sockTmp);
-		cout << "conect ajouté"<<endl;
+
 	}
 	return NULL;
 }
