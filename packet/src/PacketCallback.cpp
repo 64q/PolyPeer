@@ -1,4 +1,4 @@
-#include "../include/PacketCallback.hpp"
+#include <PacketCallback.hpp>
 
 PacketCallback* PacketCallback::instance = 0;
 
