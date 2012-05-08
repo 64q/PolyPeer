@@ -45,14 +45,15 @@ using namespace std;
  */
 typedef enum
 {
-    undefined = 0,
-    wakeUp,
-    areYouReady,
-    sendOperation,
-    sendChunk,
-    isReady,
-    chunkReceived,
-    md5Error,
+    EUndefined = 0,
+    EWakeUp,
+    EAreYouReady,
+    ESendOperation,
+    ESendChunk,
+    EReady,
+    EChunkReceived,
+    EMd5Error,
+    ENewFile,
 
     End_PaquetType, // Doit rester en derniere position, pour avoir la taille du tableau
 } PacketType;

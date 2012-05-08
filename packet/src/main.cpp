@@ -6,11 +6,10 @@
 
 #include <Data.hpp>
 #include <Packet.hpp>
-#include <PacketAreYouReady.hpp>
-#include <PacketSendOperation.hpp>
-#include <PacketSendChunk.hpp>
 #include <PacketCallback.hpp>
+#include <includePacket.hpp>
 
+#include <callbackFunction.hpp>
 
 
 using namespace std;
@@ -24,46 +23,6 @@ FileManager* cible;
 
 
 
-int callbackAreYouReady (Packet& p)
-{
-	PacketAreYouReady pp(p);
-
-	cout << "Incomming Value : " << pp.getIdFile() << endl;
-
-	return 1;
-}
-
-int callbackSendOperation (Packet& p)
-{
-	PacketSendOperation pp (p);
-
-
-
-	cout << "Incomming Target : " << pp.getTarget() << endl;
-
-
-	return 1;
-}
-
-int callbackSendChunk (Packet& p)
-{
-	PacketSendChunk pp (p);
-
-
-	Chunk tmp2 = pp.getChunk();
-
-    if(tmp2.isIntegrate())
-    {
-        cible->saveChunk(tmp2);
-    }
-    else
-    {
-        cout<<"le CRC ne correspond pas!!"<<endl;
-    }
-
-	return 1;
-}
-
 
 int main ()
 {
@@ -71,11 +30,12 @@ int main ()
 // Création du manager
 	PacketCallback* pm = PacketCallback::getPacketCallback ();
 	// Configuration des callback
-	pm->addOperation (areYouReady, callbackAreYouReady);
-	pm->addOperation (sendOperation, callbackSendOperation);
-	pm->addOperation (sendChunk, callbackSendChunk);
-
-
+	pm->addOperation (EAreYouReady, callbackAreYouReady);
+	pm->addOperation (ESendOperation, callbackSendOperation);
+	pm->addOperation (ESendChunk, callbackSendChunk);
+	pm->addOperation (EReady, callbackReady);
+	pm->addOperation (EChunkReceived, callbackChunkReceived);
+	pm->addOperation (EMd5Error, callbackMd5Error);
 
 
 // FICHIER

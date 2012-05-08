@@ -3,7 +3,7 @@
 
 PacketNewFile::PacketNewFile(int idFile, string fileName, int size, int sizeChunk) : Packet()
 {
-	setType (sendOperation);
+	setType (ENewFile);
 
 	(*this) << idFile;
 	(*this) << fileName;

@@ -3,7 +3,7 @@
 
 PacketMd5Error::PacketMd5Error(int idFile, int numChunk) : Packet()
 {
-	setType (md5Error);
+	setType (EMd5Error);
 	
 	(*this) << idFile;
 	(*this) << numChunk;

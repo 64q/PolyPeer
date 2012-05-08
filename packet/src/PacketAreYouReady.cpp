@@ -3,7 +3,7 @@
 
 PacketAreYouReady::PacketAreYouReady(int idFile) : Packet()
 {
-	setType (areYouReady);
+	setType (EAreYouReady);
 	(*this) << idFile;
 }
 
