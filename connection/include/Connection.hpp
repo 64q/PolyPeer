@@ -4,7 +4,7 @@
 #include <pthread.h>
 #include <vector>
 
-#include <WaitingPackets.hpp>
+
 
 /**
  * Classe servant à lancer dans un thread qui va écouter la socket pour ajouter les paquets reçus
@@ -24,7 +24,7 @@ class Connection
 		 * @param WaitingPacket*
 		 * Pointeur vers l'instance de WaitingPacket où les paquets reçus vont être stockés.
 		 */
-		Connection(Socket* socket, WaitingPackets* cm);
+		Connection(Socket* socket);
 
 		virtual ~Connection();
 
@@ -51,7 +51,7 @@ class Connection
 		std::string name;
 		pthread_t thread;
 		bool run;
-		WaitingPackets* waitingPackets;
+
 
 		//les pthreads ne peuvent pas prendre une méthode en paramètre.
 		//obligé d'utiliser une fonction extérieur

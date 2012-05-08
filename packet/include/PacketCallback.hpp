@@ -17,7 +17,8 @@
 #include <vector>
 
 
-#include "Packet.hpp"	// pour gérer le conteneur
+#include <Packet.hpp>	// pour gérer le conteneur
+#include <callbackFunction.hpp>
 
 using namespace std;
 
@@ -39,7 +40,7 @@ private:
 	/**
 	 * Redefinition des constructeur en privé pour empecher l'instanciation de la classe
 	 */
-	PacketCallback()	{ listOperations.resize ( int (End_PaquetType), NULL); }
+	PacketCallback();
 	PacketCallback(const PacketCallback& pm)	{ }
 	
 	/**

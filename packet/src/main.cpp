@@ -6,10 +6,9 @@
 
 #include <Data.hpp>
 #include <Packet.hpp>
-#include <PacketAreYouReady.hpp>
-#include <PacketSendOperation.hpp>
-#include <PacketSendChunk.hpp>
 #include <PacketCallback.hpp>
+#include <includePacket.hpp>
+
 
 
 
@@ -24,60 +23,15 @@ FileManager* cible;
 
 
 
-int callbackAreYouReady (Packet& p)
-{
-	PacketAreYouReady pp(p);
-
-	cout << "Incomming Value : " << pp.getIdFile() << endl;
-
-	return 1;
-}
-
-int callbackSendOperation (Packet& p)
-{
-	PacketSendOperation pp (p);
-
-
-
-	cout << "Incomming Target : " << pp.getTarget() << endl;
-
-
-	return 1;
-}
-
-int callbackSendChunk (Packet& p)
-{
-	PacketSendChunk pp (p);
-
-
-	Chunk tmp2 = pp.getChunk();
-
-    if(tmp2.isIntegrate())
-    {
-        cible->saveChunk(tmp2);
-    }
-    else
-    {
-        cout<<"le CRC ne correspond pas!!"<<endl;
-    }
-
-	return 1;
-}
-
 
 int main ()
 {
 
 // Création du manager
 	PacketCallback* pm = PacketCallback::getPacketCallback ();
-	// Configuration des callback
-	pm->addOperation (areYouReady, callbackAreYouReady);
-	pm->addOperation (sendOperation, callbackSendOperation);
-	pm->addOperation (sendChunk, callbackSendChunk);
+	
 
-
-
-
+/*
 // FICHIER
 
     FileManager fmanager(file1,0, 1000000, 2312);
@@ -117,7 +71,7 @@ int main ()
 
 // destruction de la cible qui est en variable globale
 	//delete cible;
-
+*/
 // Destruction du manager
 	PacketCallback::quit ();
 

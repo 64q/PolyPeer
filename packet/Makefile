@@ -17,11 +17,15 @@ FM=../filemanager/
 all: protocol
 
 # Edition des liens
-protocol: Data.o Packet.o PacketReady.o PacketAreYouReady.o PacketMd5Error.o PacketSendChunk.o PacketSendOperation.o PacketNewFile.o PacketChunkReceived.o PacketCallback.o Chunk.o FileManager.o main.o
+protocol: Data.o callbackFunction.o Packet.o PacketReady.o PacketDiskFull.o PacketSendOperationFinished.o PacketMd5Error.o PacketSendChunk.o PacketSendOperation.o PacketNewFile.o PacketChunkReceived.o PacketCallback.o Chunk.o FileManager.o main.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 # Compilation du conteneur Data
 Data.o: $(SRC)Data.cpp
+	$(CC) -c $^ $(CFLAGS)
+
+# Compilation du callbackFunction
+callbackFunction.o: $(SRC)callbackFunction.cpp
 	$(CC) -c $^ $(CFLAGS)
 
 # Compilation du Packet
@@ -32,8 +36,12 @@ Packet.o: $(SRC)Packet.cpp
 PacketReady.o: $(SRC)PacketReady.cpp
 	$(CC) -c $^ $(CFLAGS)
 
-# Compilation du PacketReady
-PacketAreYouReady.o: $(SRC)PacketAreYouReady.cpp
+# Compilation du PacketDiskFull
+PacketDiskFull.o: $(SRC)PacketDiskFull.cpp
+	$(CC) -c $^ $(CFLAGS)
+
+# Compilation du PacketSendOperationFinished
+PacketSendOperationFinished.o: $(SRC)PacketSendOperationFinished.cpp
 	$(CC) -c $^ $(CFLAGS)
 	
 # Compilation du PacketMd5Error

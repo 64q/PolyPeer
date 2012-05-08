@@ -7,8 +7,8 @@
 #include <pthread.h>
 
 #include <Connection.hpp>
-#include <WaitingPackets.hpp>
 #include <ServerSocket.hpp>
+#include <Packet.hpp>
 
 /**
  * Classe gérant les sockets d'écoute. Quand un socket est ajouté au connectionManager, il lance l'écoute dans un thread.
@@ -21,10 +21,8 @@ class ConnectionManager
 	public:
 		/**
 		 * Constructeur
-		 * @param WaitingPacket*
-		 * Pointeur vers l'instance de la liste des messages reçus. Ces sont les Connections contenus qui vont la mettre à jour.
 		 */
-		ConnectionManager(WaitingPackets* waitingPackets);
+		ConnectionManager(int port);
 		virtual ~ConnectionManager();
 
 		/**
@@ -46,7 +44,7 @@ class ConnectionManager
 		Connection* getConnection(std::string name);
 
 		/**
-		 * Lance l'écoute des connexions entrantes et l'jout de ces connexions dans le tableau de Conection dans un thread
+		 * Lance l'écoute des connexions entrantes et l'ajout de ces connexions dans le tableau de Conection dans un thread
 		 */
 		void start();
 
@@ -57,13 +55,18 @@ class ConnectionManager
 		void stop();
 
 
+		void sendTo(std::string dest, Packet packet);
+
+
 	private:
 		std::map<std::string, Connection*> listConnections;
-		WaitingPackets* waitingPackets;
+
 
 		pthread_t thread;
 		bool run;
 		ServerSocket* serverSocket;
+
+		//static ConnectionManager* instance;
 
 		friend void* runFct(void* connectionManager);
 };

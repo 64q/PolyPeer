@@ -1,9 +1,10 @@
 #include <Connection.hpp>
-
+#include <PacketCallBack.hpp>
 #include <iostream>
+
 using namespace std;
 
-Connection::Connection(Socket* socket, WaitingPackets* waitingPackets): socket(socket), waitingPackets(waitingPackets)
+Connection::Connection(Socket* socket): socket(socket)
 {
 	//ctor
 }
@@ -28,9 +29,12 @@ void* listenSocket(void* connection)
 
 		if (size > 0)
 		{
-			// on stocke le message reçu dans la file d'attente de traitement du deployer
-			//	deployer->addMessage(buffer, size);
-			connectionTmp->waitingPackets->push(buffer, size);
+			Packet tmp(buffer, size);
+			//on ajoute l'adresse ip d'où provient le paquet
+			tmp.setAddress(connectionTmp->socket->getIpAdress());
+
+			//on agit suivant le paquet
+			PacketCallback::getPacketCallback()->packetOperation(tmp);
 		}
 		else
 		{

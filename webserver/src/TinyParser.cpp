@@ -25,7 +25,7 @@ TinyParser::TinyParser(std::string filename)
 	else  
 	{
 		buffer << "impossible d'ouvrir le fichier de template demandé : " << filename << ".";
-		WebServer::getInstance()->logger.put("error", buffer.str());
+		WebServer::getInstance()->getLogger().put("error", buffer.str());
 	}
 }
 	

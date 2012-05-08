@@ -1,9 +1,9 @@
-#ifndef PACKETAREYOUREADY_H
-#define PACKETAREYOUREADY_H
+#ifndef PacketDiskFull_H
+#define PacketDiskFull_H
 
 
 /*
- * Classe PacketAreYouReady
+ * Classe PacketDiskFull
  *
  * Hérite de la classe Packet
  * Gérer un type de packet spécifique
@@ -24,7 +24,7 @@
 
 using namespace std;
 
-class PacketAreYouReady : public Packet
+class PacketDiskFull : public Packet
 {
 private:
 
@@ -32,25 +32,25 @@ public:
 	/**
 	* Constructeur de Packet
 	*/
-	PacketAreYouReady(int idFile);
+	PacketDiskFull(int idFile);
 	
 	/**
 	* Constructeur sur un Packet (une maniere de caster un Packet)
 	*/
-	PacketAreYouReady(const Packet& p);
+	PacketDiskFull(const Packet& p);
 	
 	
 	/**
 	* Destructeur de Data
 	*/
-	virtual ~PacketAreYouReady();
+	virtual ~PacketDiskFull();
 	
 	
 	int getIdFile ();
 
 private:
-	PacketAreYouReady() {}
+	PacketDiskFull() {}
 
 };
 
-#endif // PACKETAREYOUREADY_H
+#endif // PacketDiskFull_H
