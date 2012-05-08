@@ -29,11 +29,6 @@ public:
 	virtual void restart() = 0;
 	
 	/**
-	 * Méthode permettant de faire tourner le serveur
-	 */
-	virtual void run() = 0;
-	
-	/**
 	 * Destructeur de BaseServer
 	 */
 	virtual ~BaseServer();
@@ -46,6 +41,11 @@ protected:
 	BaseServer(const std::string);
 	BaseServer(const BaseServer&);
 	BaseServer& operator=(const BaseServer&);
+	
+	/**
+	 * Méthode permettant de faire tourner le serveur
+	 */
+	virtual void run() = 0;
 	
 	/**
 	 * Logger du server, sert à stocker dans un fichier texte les actions du serv.
