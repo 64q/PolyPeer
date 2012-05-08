@@ -12,10 +12,8 @@ class BaseServer
 public:
 	/**
 	 * Méthode permettant de démarrer le serveur
-	 * @param int port
-	 * 	le port sur lequel le serveur va écouter
 	 */
-	virtual void start(const int port) = 0;
+	virtual void start() = 0;
 	
 	/**
 	 * Méthode permettant de stopper le serveur sans toutefois
@@ -27,6 +25,11 @@ public:
 	 * Méthode permettant de redémarrer le serveur
 	 */
 	virtual void restart() = 0;
+	
+	/**
+	 * Méthode pour récupérer le logger du serveur
+	 */
+	Logger& getLogger();
 	
 	/**
 	 * Destructeur de BaseServer

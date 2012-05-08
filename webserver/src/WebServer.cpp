@@ -1,14 +1,6 @@
 #include <iostream>
 #include <sstream>
 
-// Spécifique pour les sockets
-#include <sys/types.h>  
-#include <sys/socket.h>
-#include <sys/un.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-
-// Includes du projet
 #include <WebServer.hpp>
 #include <WebRequest.hpp>
 #include <routes.hpp>
@@ -18,13 +10,12 @@ using namespace std;
 // Important à faire quand on fait du patern singleton en C++
 WebServer* WebServer::instance = NULL;
 
-WebServer::WebServer(const int port, const string path) :
-	logger("log/webserver.log"), socket(port)
+WebServer::WebServer() :
+	BaseServer("log/webserver.log"), resourcesPath("webpages")
 {
-	this->debug				= false;
-	this->isRunning		= true;
-	this->port				= port;
-	this->resourcesPath	= path;
+	this->port = 6969;
+	this->debug	= false;
+	this->running = true;
 	
 	// Init des routes
 	this->routes.insert(pair<string, route_handler>("/", default_route));
@@ -39,17 +30,27 @@ WebServer::WebServer(const int port, const string path) :
 
 WebServer::~WebServer()
 {
-	this->socket.close();
+	this->socket->close();
+	
+	delete socket;
 }
 
 WebServer* WebServer::getInstance()
 {
 	if (instance == NULL)
 	{
-		instance = new WebServer(WEBSERVER_PORT, "webpages");
+		instance = new WebServer();
 	}
 	
 	return instance;
+}
+
+void WebServer::start()
+{
+	this->socket = new ServerSocket(this->port);
+	
+	// Lancement du serveur
+	this->run();
 }
 
 void WebServer::run()
@@ -57,10 +58,10 @@ void WebServer::run()
 	char message[475];
 	Socket* nsock;
 	
-	while (this->isRunning)
+	while (this->running)
 	{
 		/* acceptation connexion */
-		nsock = this->socket.accept();
+		nsock = this->socket->accept();
 
 		/* lecture */
 		nsock->read(message, 475*sizeof(char));
@@ -87,7 +88,8 @@ void WebServer::run()
 
 void WebServer::stop()
 {
-	this->isRunning = false;
+	this->running = false;
+	this->socket->close();
 	this->logger.put("notice", "le serveur a été arrêté.");
 }
 
@@ -113,7 +115,7 @@ bool WebServer::isDebug()
 	return this->debug;
 }
 
-void WebServer::setResourcesPath(const std::string path)
+void WebServer::setResourcesPath(const std::string& path)
 {
 	this->resourcesPath = path;
 }

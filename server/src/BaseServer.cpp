@@ -10,4 +10,9 @@ BaseServer::BaseServer(const std::string logPath) :
 
 }
 
+Logger& BaseServer::getLogger() 
+{ 
+	return this->logger; 
+}
+
 BaseServer::~BaseServer() {}

@@ -39,7 +39,7 @@ WebRequest::WebRequest(char* raw)
 	{
 		stringstream buffer;
 		buffer << "requête " << this->method << " client sur " << this->target << ". Paramètres GET = " << trg << ".";
-		WebServer::getInstance()->logger.put("debug", buffer.str());
+		WebServer::getInstance()->getLogger().put("debug", buffer.str());
 	}
 }
 

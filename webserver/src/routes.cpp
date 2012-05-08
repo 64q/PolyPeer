@@ -136,7 +136,7 @@ string resource_route(WebRequest& request)
 	else  
 	{
 		buffer << "impossible d'ouvrir la ressource demandée : " << request.getTarget() << ".";
-		WebServer::getInstance()->logger.put("error", buffer.str());
+		WebServer::getInstance()->getLogger().put("error", buffer.str());
 		// Redirection vers page d'erreur
 		return notfound_route(request);
 	}
