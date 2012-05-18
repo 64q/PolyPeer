@@ -21,7 +21,7 @@ int callbackNewFile (Packet& p)
 		// création du fileManager
 		try
 		{
-			fm = sd->addFileManager(pp.getIdFile(), pp.getFileName(), pp.getFileSize(), pp.getChunkSize());
+			fm = sd->addFile(pp.getIdFile(), pp.getFileName(), pp.getFileSize(), pp.getChunkSize());
 		} catch (ExceptionDiskFull)
 		{
 			// Création du paquet d'erreur

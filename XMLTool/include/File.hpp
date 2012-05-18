@@ -2,8 +2,9 @@
 #define __H__FILE__
 
 #include <set>
-#include "Entity.hpp"
+#include <Entity.hpp>
 #include <iostream>
+#include <FileManager.hpp>
 
 class Entity;
 
@@ -15,18 +16,16 @@ class File
 public :
 	File(int id, string path, int size, int chunkSize);
 	~File();
-	int getId() { return id; }
-	string getFilePath() { return filePath; }
-	int getSize() { return size; }
-	int getChunkSize() { return chunkSize; }
+	FileManager* getFileManager() { return fileM; }
+	int getId() { return fileM->getIdFile(); }
+	string getFilePath() { return fileM->getFileName(); }
+	int getSize() { return fileM->getFileSize(); }
+	int getChunkSize() { return fileM->getChunkSize(); };
 	vector<Entity*>* getDeploysOn() { return &deploysOn; }
 	void addEntity(Entity* entity);
 	
 protected :
-	int id;
-	string filePath;
-	int size;
-	int chunkSize;
+	FileManager* fileM;
 	vector<Entity*> deploysOn;
 	
 };

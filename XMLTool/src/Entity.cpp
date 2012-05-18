@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../include/Entity.hpp"
+#include <Entity.hpp>
 
 using namespace std;
 

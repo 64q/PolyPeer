@@ -1,15 +1,18 @@
-#include "../include/XMLTool.hpp"
+#include <XMLTool.hpp>
+#include <ServerData.hpp>
 
 int main()
 {
 	list<string> list;
-	Entity* entity;
-
-	XMLTool t = XMLTool("topology.xml", "deployments.xml");
-	t.public_displayTopology();
-	t.public_displayEntities();
+	ServerData* sData = ServerData::getInstance();
+	XMLTool* t = XMLTool::getInstance();
+	sData->updateHost(string("132.34.67.10"), 23, 15);
+	sData->updateHost(string("132.34.67.10"), 23, FINISH);
 	
-	t.public_fillAddressList("batiment_D", list);
+	t->public_displayTopology();
+	sData->public_displayEntities();
+	
+	sData->public_fillAddressList("batiment_D", list);
 	//Affichage de la liste
 	std::list<string>::const_iterator
 	lit (list.begin()),
@@ -18,12 +21,12 @@ int main()
 		std::cout << std::endl;
 		
 	//Affichage du vecteur de fichier
-	vector<File*>* vFile = t.getDeployFiles();
+	vector<File*>* vFile = sData->getDeployFiles();
 	vector<Entity*>* vEntity;
 	Entity* entity2;
 	vector<DeploymentState>* deploys;
 	
-	int i, j, k;
+	unsigned int i, j, k;
 	cout << endl;
 	for (i=0; i < vFile->size(); i++)
 	{
@@ -45,5 +48,14 @@ int main()
 			}
 		}
 	}
+	
+	vector<Entity*>* hosts = sData->getHosts();
+	for (i=0;i < hosts->size(); i++)
+	{
+		cout << ((*hosts)[i])->getName() << endl;
+	}
+	
+	delete t;
+	delete sData;
 		
 }

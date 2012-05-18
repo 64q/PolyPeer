@@ -7,9 +7,9 @@
 #include <map>
 #include <vector>
 #include <string>
-#include "DeploymentState.hpp"
-#include "State.hpp"
-#include "File.hpp"
+#include <DeploymentState.hpp>
+#include <State.hpp>
+#include <File.hpp>
 
 class DeploymentState;
 class File;
@@ -29,6 +29,8 @@ public:
 	virtual std::vector<DeploymentState>* getDeploys() = 0;
 	virtual std::string* getIP() = 0;
 	virtual void addDeploymentState(const int, File*, State) = 0;
+	virtual State getHostState() = 0;
+	virtual void setHostState(State) = 0;
 	
 protected:
 	/**

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../include/Zone.hpp"
+#include <Zone.hpp>
 
 using namespace std;
 
@@ -32,6 +32,15 @@ std::vector<DeploymentState>* Zone::getDeploys()
 std::string* Zone::getIP()
 {
 	return NULL;
+}
+
+State Zone::getHostState()
+{
+	return WAIT;
+}
+
+void Zone::setHostState(State)
+{
 }
 
 

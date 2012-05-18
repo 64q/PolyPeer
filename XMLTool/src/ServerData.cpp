@@ -1,0 +1,343 @@
+#include <ServerData.hpp>
+
+using namespace std;
+
+ServerData* ServerData::instance = NULL;
+
+ServerData::ServerData()
+{
+	cM = new ConnectionManager(6666);
+	addressServ = "192.168.0.1";
+}
+
+ServerData* ServerData::getInstance()
+{
+	if (instance == NULL)
+	{
+		instance = new ServerData();
+	}
+	
+	return instance;
+}
+
+ServerData::~ServerData()
+{
+	delete cM;
+	vector <string> alreadyDelete;
+	deleteDeployFiles();
+	//deleteHosts();
+	//deleteMap(this->getEntities(), alreadyDelete);
+
+}
+
+/*void ServerData::deleteMap(map<string, Entity*>* entities, vector<string> &alreadyDelete)
+{
+	map<std::string,Entity*>::iterator
+	mit (entities->begin()),
+	mend(entities->end());
+	map<std::string,Entity*>::iterator tmpIt;
+	
+	while (mit != mend)
+	{
+		if (mit->second != NULL)	
+		{	
+			if (alreadyDelete.(mit->first) == -1)
+			{
+				if (mit->second->getEntities() != NULL)
+				{
+					deleteMap(mit->second->getEntities(), alreadyDelete);
+					delete(mit->second);
+					alreadyDelete.push_back(mit->first);
+					entities->erase(mit);
+				}
+				mit++;
+			}
+		}		
+	}
+}*/
+
+void ServerData::deleteDeployFiles()
+{
+	unsigned int i;
+	for (i=0;i<hosts.size();i++)
+	{
+		delete hosts[i];
+	}
+}
+
+map<string, Entity*>* ServerData::getEntities()
+{
+	return &entities;
+}
+
+vector<File*>* ServerData::getDeployFiles()
+{
+	return &deployFiles;
+}
+
+ConnectionManager* ServerData::getConnectionManager()
+{
+	return cM;
+}
+
+string ServerData::getAddressServ()
+{
+	return addressServ;
+}
+
+void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
+{
+	unsigned int i=0;
+	bool find = false;
+	Entity* host = getHostByAddress(addressHost);
+	vector<DeploymentState>* dState = host->getDeploys();
+	
+	while( (i < dState->size()) && (find == false) )
+	{
+		if (((*dState)[i]).getId() == fileID )
+		{
+			find = true;
+			((*dState)[i]).setCurrentIdChunk(nbChunk);
+		}
+		i++;
+	}	
+}
+
+void ServerData::updateHost(string addressHost, int fileID, State s)
+{
+	unsigned int i=0;
+	bool find = false;
+	Entity* host = getHostByAddress(addressHost);
+	vector<DeploymentState>* dState = host->getDeploys();
+	
+	host->setHostState(s);
+	
+	while( (i < dState->size()) && (find == false) )
+	{
+		if (((*dState)[i]).getId() == fileID )
+		{
+			find = true;
+			((*dState)[i]).setCurrentState(s);
+		}
+		i++;
+	}
+}
+
+void ServerData::addFile(int id, string path, int size, int chunkSize)
+{
+	deployFiles.push_back(new File(id,path,size,chunkSize));
+}
+
+File* ServerData::getFile(int id)
+{
+	unsigned int i=0;
+	bool find = false;
+	File* toReturn = NULL;
+
+	while( (i < deployFiles.size()) && (find == false) )
+	{
+		if (deployFiles[i]->getId() == id )
+		{
+			find = true;
+			toReturn = deployFiles[i];
+		}
+		i++;
+	}
+	return toReturn;	
+}
+
+Entity* ServerData::addHost(string name, string address)
+{
+	Entity* host = new Host(name, address);
+	hosts.push_back(host);
+	return host;
+}
+
+vector<Entity*>* ServerData::getHosts()
+{
+	return &hosts;
+}
+
+Entity* ServerData::getHostByAddress(string address)
+{
+	unsigned int i=0;
+	bool find = false;
+	Entity* toReturn = NULL;
+
+	while( (i < hosts.size()) && (find == false) )
+	{
+		if (!((*(hosts[i]->getIP())).compare(address)))
+		{
+			find = true;
+			toReturn = hosts[i];
+		}
+		i++;
+	}
+	return toReturn;		
+}
+
+Entity* ServerData::getHostByName(string name)
+{
+	unsigned int i=0;
+	bool find = false;
+	Entity* toReturn = NULL;
+
+	while( (i < hosts.size()) && (find == false) )
+	{
+		if (!((hosts[i]->getName()).compare(name)))
+		{
+			find = true;
+			toReturn = hosts[i];
+		}
+		i++;
+	}
+	return toReturn;		
+}
+
+FileManager* ServerData::getFileManager(int id)
+{
+	unsigned int i=0;
+	bool find = false;
+	FileManager* toReturn = NULL;
+
+	while( (i < deployFiles.size()) && (find == false) )
+	{
+		if (deployFiles[i]->getId() == id )
+		{
+			find = true;
+			toReturn = deployFiles[i]->getFileManager();
+		}
+		i++;
+	}
+	return toReturn;		
+}
+	
+void ServerData::displayEntities(map<string, Entity*>* entities, int level)
+{
+	unsigned int i;
+	map<std::string,Entity*>::const_iterator
+	mit (entities->begin()),
+	mend(entities->end());
+		
+	for(; mit!=mend; ++mit) 
+	{
+		cout << string( level*3, ' ' ) << mit->first << " ";		
+		if (mit->second->getEntities() != NULL)
+		{
+			cout << endl;
+			displayEntities(mit->second->getEntities(), level + 1);
+		}
+		if (mit->second->getDeploys() != NULL)
+		{
+			if (!((mit->second->getDeploys())->empty()))
+			{
+				for (i=0; i < (mit->second->getDeploys())->size(); i++)
+				{
+					cout << " | fID : " << (((*(mit->second->getDeploys()))[i]).getRefFile())->getId();
+					cout << " | cID : " << (*(mit->second->getDeploys()))[i].getCurrentIdChunk();
+					cout << " | fPath : " << ((*(mit->second->getDeploys()))[i].getRefFile())->getFilePath();
+					cout << " | hState : " << (*(mit->second->getDeploys()))[i].getCurrentState();
+					cout << endl;
+					cout << string( level*3 + (mit->first).size(), ' ' ) << " " ;
+				}
+			}
+		}
+		cout << endl;
+		
+	}
+}
+
+Entity* ServerData::getEntity(map<string, Entity*>* entities, string entityName)
+{
+	Entity* toReturn = NULL;
+	map<std::string,Entity*>::const_iterator
+	mit (entities->begin()),
+	mend(entities->end());
+	
+	for(; mit!=mend; ++mit) 
+	{	
+		if (toReturn == NULL)
+		{
+			if (!((mit->second->getName()).compare(entityName)))
+				toReturn = mit->second;
+			else if (mit->second->getEntities() != NULL)	
+				toReturn = getEntity(mit->second->getEntities(), entityName);
+		}
+	}
+
+	return toReturn;
+}
+
+void ServerData::fillDeployFiles(Entity* entity, int fileID)
+{
+	map<string, Entity*>* entities;
+	File* file;
+	
+	if (entity != NULL)
+	{
+		entities = entity->getEntities();
+		if ( entities != NULL)
+		{
+			map<std::string,Entity*>::const_iterator
+			mit (entities->begin()),
+			mend(entities->end());
+			for(; mit!=mend; ++mit) 
+			{	
+				if (mit->second->getIP() != NULL)
+				{
+					file = getFile(fileID);
+					file->addEntity(mit->second);
+					mit->second->addDeploymentState(0, file, OFFLINE);
+				}
+				if (mit->second->getEntities() != NULL)
+					fillDeployFiles(mit->second, fileID);
+			}
+		} else 
+		{
+			file = getFile(fileID);
+			file->addEntity(entity);
+			entity->addDeploymentState(0, file, OFFLINE);
+		}
+	}
+}
+
+void ServerData::fillAddressList(Entity* entity, list<string> &list)
+{ 
+	map<string, Entity*>* entities;
+	if (entity != NULL)
+	{
+		entities = entity->getEntities();
+		if ( entities != NULL)
+		{
+			map<std::string,Entity*>::const_iterator
+			mit (entities->begin()),
+			mend(entities->end());
+			for(; mit!=mend; ++mit) 
+			{	
+				if (mit->second->getIP() != NULL)
+					list.push_back(*(mit->second->getIP()));
+				if (mit->second->getEntities() != NULL)
+					fillAddressList(mit->second, list);
+			}
+		} else 
+			list.push_back(*(entity->getIP()));
+	}
+}
+
+void ServerData::public_displayEntities() 
+{ 
+	displayEntities(getEntities()); 
+}
+
+Entity* ServerData::public_getEntity(string entityName) 
+{ 
+	return getEntity(&entities, entityName); 
+}
+
+void ServerData::public_fillAddressList(string entityName, list<string> &list) 
+{
+	Entity* entity;
+	entity = getEntity(&entities, entityName);
+	fillAddressList(entity, list); 
+}
+

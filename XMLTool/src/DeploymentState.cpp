@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../include/DeploymentState.hpp"
+#include <DeploymentState.hpp>
 
 using namespace std;
 
