@@ -1,12 +1,29 @@
 #ifndef __H_LOGGER__
 #define __H_LOGGER__
 
+#include <sstream>
 #include <fstream>
 
 /**
  * Le logger permet d'enregistrer dans un fichier toute trace textuelle émise par
  * les serveurs afin de pouvoir traiter les éventuelles erreurs/informations.
  */
+ 
+typedef enum
+{
+	endLog,
+	endLine,
+}ELogAction;
+
+typedef enum
+{
+	normal=0,
+	alert,
+	error,
+	critical,
+}ELogImportance;
+ 
+ 
 class Logger
 {
 public:
@@ -33,6 +50,38 @@ public:
 	void put(const std::string& type, const std::string& content);
 	
 	/**
+	 * Insertion par flux dans le logger
+	 */
+	template<class T>Logger& operator<<(const T& value)
+	{
+		std::ostringstream oss;
+		oss << value;
+		stringSave += oss.str();
+		return *this;
+	}
+	
+	/**
+	 * Actions spéciales sur le flux logger
+	 */
+	Logger& operator<<(const ELogAction logAct);
+	
+	/**
+	 * Type de log
+	 */
+	Logger& operator<<(const ELogImportance logType);
+
+	/**
+	 * Récupérer la chaine de caracteres correspondant au type
+	 */
+	std::string getType (const ELogImportance logType);
+	
+	/**
+	 * gestion du mode verbose
+	 */
+	void setVerboseMode(bool mode){verbose=mode;}
+	bool getVerboseMode() const {return verbose;}
+	
+	/**
 	 * Récupère le contenu du fichier de log dans une chaine
 	 * @return string
 	 * 	contenu du fichier de log
@@ -51,6 +100,21 @@ private:
 	 * ofstream sur le fichier où l'on enregistre
 	 */
 	std::ofstream file;
+	
+	/**
+	 * Chaine temporaire de sauvegarde pour le flux
+	 */
+	 std::string stringSave;
+	 
+	 /**
+	 * sauvegarde du type temporaire
+	 */
+	 ELogImportance typeSave;
+	 
+	 /**
+	  * Mode du débugger
+	  */
+	  bool verbose;
 };
 
 #endif
