@@ -30,6 +30,10 @@ typedef std::string (*route_handler)(WebRequest&);
  */
 class WebServer : public BaseServer
 {
+private:
+	// lancement du serveur
+	bool running;
+
 public:
 	/**
 	 * Démarrage du serveur
