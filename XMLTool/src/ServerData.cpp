@@ -123,9 +123,19 @@ void ServerData::updateHost(string addressHost, int fileID, State s)
 	}
 }
 
-void ServerData::addFile(int id, string path, int size, int chunkSize)
+
+void ServerData::updateHost(string addressHost, State s)
 {
-	deployFiles.push_back(new File(id,path,size,chunkSize));
+	Entity* host = getHostByAddress(addressHost);
+	host->setHostState(s);
+}
+
+
+FileManager* ServerData::addFile(int id, string path, int size, int chunkSize)
+{
+	File *f = new File(id,path,size,chunkSize);
+	deployFiles.push_back(f);
+	return f->getFileManager();
 }
 
 File* ServerData::getFile(int id)

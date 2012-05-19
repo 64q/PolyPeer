@@ -57,7 +57,7 @@ public :
 	* @param chunkSize
 	*	taille des morceaux de fichier envoyés
 	*/
-	void addFile(int id, string path, int size, int chunkSize);
+	FileManager* addFile(int id, string path, int size, int chunkSize);
 	
 	/**
 	* Cherche un fichier de déploiement dans DeployFiles en fonction de son id et
@@ -136,6 +136,16 @@ public :
 	*	nouvel état
 	*/
 	void updateHost(string addressHost, int fileID, State s);
+	
+	/**
+	* Met à jour l'état de l'Host passé en paramètre
+	* Spécifique à l'action envoie d'opération
+	* @param addressHost
+	*	host à mettre à jour
+	* @param s
+	*	nouvel état -> WAIT
+	*/
+	void updateHost(string addressHost, State s);
 	
 	/**
 	* Affichage de la structure contenant la topologie du réseau

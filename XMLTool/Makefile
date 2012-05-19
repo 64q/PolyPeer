@@ -84,10 +84,6 @@ FileManager.o: $(FM)$(SRC)FileManager.cpp
 Data.o: $(P)$(SRC)Data.cpp
 	$(CC) -c $^ $(CFLAGS)
 
-# Compilation du callbackFunction
-callbackFunction.o: $(P)$(SRC)callbackFunction.cpp
-	$(CC) -c $^ $(CFLAGS)
-
 # Compilation du Packet
 Packet.o: $(P)$(SRC)Packet.cpp
 	$(CC) -c $^ $(CFLAGS)
@@ -146,6 +142,10 @@ ServerSocket.o: $(T)$(SRC)ServerSocket.cpp
 
 # Compilation du Socket
 Socket.o: $(T)$(SRC)Socket.cpp
+	$(CC) -c $^ $(CFLAGS)
+			
+# Compilation du callbackFunction
+callbackFunction.o: $(P)$(SRC)callbackFunction.cpp
 	$(CC) -c $^ $(CFLAGS)
 				
 clean:
