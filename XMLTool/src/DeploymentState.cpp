@@ -10,3 +10,8 @@ DeploymentState::DeploymentState(const int currentIdChunk, File* file, State s):
 	refFile = file;
 }
 
+int DeploymentState::getId() 
+{ 
+	return refFile->getId(); 
+}
+

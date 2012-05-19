@@ -3,14 +3,14 @@
 
 
 int callbackNewFile (Packet& p)
-{/*
+{
 	PacketNewFile pp (p);
 
 	cout << "callbackNewFile" << endl;
 
 
 	Packet pReturn;
-
+/*
 	// récupérer singleton serveur
 	ServerData* sd = ServerData.getInstance();
 

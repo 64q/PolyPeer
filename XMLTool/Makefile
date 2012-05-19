@@ -6,8 +6,8 @@
 #
 
 CC=g++
-CFLAGS=-Wall -ggdb -Iinclude/ -Iinclude/tinyxml -I../filemanager/include/ -I../packet/include/ -I../connection/include/ -I../tcp/include/ -I../tcp/include/Exceptions -D TIXML_USE_STL -lpthread
-LDFLAGS=
+CFLAGS=-Wall -ggdb -Iinclude/ -Iinclude/tinyxml -I../filemanager/include/ -I../packet/include/ -I../connection/include/ -I../tcp/include/ -I../tcp/include/Exceptions -D TIXML_USE_STL
+LDFLAGS=-lpthread
 EXEC=xml
 SRC=src/
 INC=include/

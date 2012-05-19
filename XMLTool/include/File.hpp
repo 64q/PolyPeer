@@ -2,8 +2,9 @@
 #define __H__FILE__
 
 #include <set>
-#include <Entity.hpp>
 #include <iostream>
+
+#include <Entity.hpp>
 #include <FileManager.hpp>
 
 class Entity;

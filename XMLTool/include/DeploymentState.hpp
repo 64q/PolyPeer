@@ -13,7 +13,7 @@ public:
 	
 	DeploymentState(const int currentIdChunk, File* file, State s);
 	int getCurrentIdChunk() { return currentIdChunk; }
-	int getId() { return refFile->getId(); }
+	int getId();
 	File* getRefFile() { return refFile; }
 	State getCurrentState() { return currentState; }
 	void setCurrentIdChunk(int id) { currentIdChunk = id; }

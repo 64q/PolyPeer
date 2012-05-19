@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <string>
+
 #include <Entity.hpp>
 
 class Host : public Entity
