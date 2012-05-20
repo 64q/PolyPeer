@@ -1,38 +1,35 @@
 #include <iostream>
 #include <sstream>
+#include <exception>
+#include <cstring>
+
+#include <mongoose.h>
 
 #include <WebServer.hpp>
-#include <WebRequest.hpp>
-#include <routes.hpp>
 
 using namespace std;
+
+static const char *mg_options[] = {
+  "document_root", "html",
+  "listening_ports", "6969",
+  "num_threads", "5",
+  NULL
+};
 
 // Important à faire quand on fait du patern singleton en C++
 WebServer* WebServer::instance = NULL;
 
 WebServer::WebServer() :
-	BaseServer("log/webserver.log"), resourcesPath("webpages")
+	BaseServer("log/webserver.log")
 {
 	this->port = 6969;
 	this->debug	= false;
 	this->running = true;
-	
-	// Init des routes
-	this->routes.insert(pair<string, route_handler>("/", default_route));
-	this->routes.insert(pair<string, route_handler>("/deployment", deployment_route));
-	this->routes.insert(pair<string, route_handler>("/deployments", deployments_route));
-	this->routes.insert(pair<string, route_handler>("/server", server_route));
-	this->routes.insert(pair<string, route_handler>("/stop", stop_route));
-	this->routes.insert(pair<string, route_handler>("/restart", restart_route));
-	this->routes.insert(pair<string, route_handler>("/debug", debug_route));
-	this->routes.insert(pair<string, route_handler>("/toggledebug", toggledebug_route));
 }
 
 WebServer::~WebServer()
 {
-	this->socket->close();
-	
-	delete socket;
+
 }
 
 WebServer* WebServer::getInstance()
@@ -47,49 +44,43 @@ WebServer* WebServer::getInstance()
 
 void WebServer::start()
 {
-	this->socket = new ServerSocket(this->port);
-	
 	// Lancement du serveur
-	this->run();
+	this->context = mg_start(eventHandler, NULL, mg_options);
+	
+	if (this->context == NULL)
+	{
+		throw exception();
+	}
 }
 
 void WebServer::run()
 {
-	char message[475];
-	Socket* nsock;
-	
-	while (this->running)
-	{
-		/* acceptation connexion */
-		nsock = this->socket->accept();
+	// not implemented
+}
 
-		/* lecture */
-		nsock->read(message, 475*sizeof(char));
-		
-		WebRequest request(message);
-		string sent;
-		
-		// Vérifie que la route existe
-		map<string, route_handler>::iterator it = this->routes.find(request.getTarget());
-		if (it == routes.end())
-		{
-			sent = resource_route(request);
+void* eventHandler(mg_event event, mg_connection *conn, const mg_request_info *request_info)
+{
+	const void *processed = "yes";
+
+	if (event == MG_NEW_REQUEST) {
+		if (strcmp(request_info->uri, "/test") == 0) {
+			processed = NULL;
+		} else {
+			processed = NULL;
 		}
-		else
-		{
-			sent = (*it).second(request);
-		}
-		
-		nsock->send(sent.c_str(), sent.length() * sizeof(char));
-		
-		nsock->close();
+	} else {
+		processed = NULL;
 	}
+
+	return const_cast<void*> (processed);
 }
 
 void WebServer::stop()
 {
 	this->running = false;
-	this->socket->close();
+	
+	mg_stop(this->context);
+	
 	this->logger.put("notice", "le serveur a été arrêté.");
 }
 
@@ -113,15 +104,5 @@ void WebServer::toggleDebug()
 bool WebServer::isDebug()
 {
 	return this->debug;
-}
-
-void WebServer::setResourcesPath(const std::string& path)
-{
-	this->resourcesPath = path;
-}
-
-string WebServer::getResourcesPath()
-{
-	 return this->resourcesPath;
 }
 

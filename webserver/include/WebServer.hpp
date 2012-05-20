@@ -4,24 +4,10 @@
 // Spécifique map
 #include <map>
 
+#include <mongoose.h>
+
 #include <BaseServer.hpp>
-#include <ServerSocket.hpp>
-#include <WebRequest.hpp>
 #include <Logger.hpp>
-
-/**
- * Port du serveur Web
- */
-static const int WEBSERVER_PORT = 6969;
-
-/**
- * typedef permettant d'avoir un ptr sur une fonction de handler de route
- * @param WebRequest
- * 	requête récupérée depuis le client
- * @return string
- * 	contenu à envoyer au navigateur client
- */
-typedef std::string (*route_handler)(WebRequest&);
 
 /**
  * Le web server permet de gérer intégralement l'interface web de controle
@@ -57,18 +43,6 @@ public:
 	bool isDebug();
 	
 	/**
-	 * Retourne le chemin vers les ressources web
-	 */
-	std::string getResourcesPath();
-	
-	/**
-	 * Défini le chemin d'accès aux ressources web
-	 * @param string path
-	 * 	chemin d'accès aux templates
-	 */
-	void setResourcesPath(const std::string& path);
-	
-	/**
 	 * Accès au singleton du serveur Web
 	 */
 	static WebServer* getInstance();
@@ -93,25 +67,17 @@ protected:
 	 */
 	void run();
 	
+	mg_context* context;
+	
 	/**
 	 * Instance du WebServer
 	 */
 	static WebServer* instance;
-	
-	/**
-	 * Dossier de base du contenu du serveur web
-	 */
-	std::string resourcesPath;
-	
-	/**
-	 * SocketServer
-	 */
-	ServerSocket* socket;
-	
-	/**
-	 * Map stockant les routes http
-	 */
-	std::map<std::string, route_handler> routes;
 };
+
+/**
+ * Fonction d'handle des events sur le serveur web
+ */
+void* eventHandler(mg_event event, mg_connection *conn, const mg_request_info *request_info);
 
 #endif

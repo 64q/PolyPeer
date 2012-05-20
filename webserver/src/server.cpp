@@ -21,6 +21,8 @@ int main(int argc, char* argv[])
 	cout << "(server) Lancement du serveur sur le port 6969 ..." << endl;
 	server->start();
 	
+	getchar();
+	
 	// Suppression des allocations dynamiques
 	delete server;
 	
