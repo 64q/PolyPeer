@@ -3,7 +3,7 @@
 
 #include <map>
 
-#include "Entity.hpp"
+#include <Entity.hpp>
 
 class Zone : public Entity
 {
@@ -20,6 +20,8 @@ public:
 	
 	std::vector<DeploymentState>* getDeploys();
 	std::string* getIP();
+	State getHostState();
+	void setHostState(State);
 	
 private:
 	std::map<std::string, Entity*> entities;

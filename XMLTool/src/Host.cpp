@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "../include/Entity.hpp"
-#include "../include/Host.hpp"
+#include <Entity.hpp>
+#include <Host.hpp>
 
 
 using namespace std;
@@ -9,7 +9,7 @@ using namespace std;
 Host::Host(const std::string& name, const std::string& ip):
 	Entity(name), ip(ip)
 {
-
+	hostState = OFFLINE;
 }
 
 Host::~Host()
@@ -34,4 +34,14 @@ std::string* Host::getIP()
 map<std::string, Entity*>* Host::getEntities()
 {
 	return NULL;
+}
+
+State Host::getHostState()
+{
+	return hostState;
+}
+
+void Host::setHostState(State s)
+{
+	hostState = s;
 }

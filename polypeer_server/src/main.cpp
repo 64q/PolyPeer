@@ -1,8 +1,21 @@
+/**
+ *
+ * Serveur PolyPeer
+ *
+ * Fichier Main
+ *
+ *
+ */
+
+
+#include <iostream>
+
 #include <XMLTool.hpp>
 #include <ServerData.hpp>
 
 int main()
 {
+
 	list<string> list;
 	ServerData* sData = ServerData::getInstance();
 	XMLTool* t = XMLTool::getInstance();
@@ -57,5 +70,9 @@ int main()
 	
 	delete t;
 	delete sData;
-		
+	
+	
+	return 0;
 }
+
+

@@ -4,7 +4,8 @@
 #include <vector>
 #include <map>
 #include <string>
-#include "Entity.hpp"
+
+#include <Entity.hpp>
 
 class Host : public Entity
 {	
@@ -15,10 +16,12 @@ public:
 	void addDeploymentState(const int, File* file, State);
 	std::vector<DeploymentState>* getDeploys();
 	std::string* getIP();
-	
+	State getHostState();
+	void setHostState(State);
 	std::map<std::string, Entity*>* getEntities();
 
 private:
+	State hostState;
 	std::string ip;
 	std::vector<DeploymentState> deploys;
 
