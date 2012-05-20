@@ -16,10 +16,6 @@
  */
 class WebServer : public BaseServer
 {
-private:
-	// lancement du serveur
-	bool running;
-
 public:
 	/**
 	 * Démarrage du serveur
