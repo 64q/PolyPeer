@@ -10,7 +10,7 @@ using namespace std;
 
 int main()
 {
-	/*
+
     char file1[] = "a.png";
     char file2[] = "test.png";
 
@@ -41,8 +41,8 @@ int main()
         }
 
     }
-*/
-cout<<FileManager::getFreeDiskSpace()/(1)<<endl;
+
+//cout<<FileManager::getFreeDiskSpace()/(1)<<endl;
 
 
 

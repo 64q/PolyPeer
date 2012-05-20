@@ -9,12 +9,15 @@ using namespace std;
 
 FileManager::FileManager(const char* path, long size, long sizeChunk, int idFile):idFile(idFile), sizeChunk(sizeChunk)
 {
+	string pathStrTmp(path);
+	pathStrTmp+="";
+
 	//on réserve l'emplacement du fichier sur le disque dur si il n'existe pas encore
-	if (!existFile(path))
+	if (!existFile(pathStrTmp.c_str()))
 	{
 		if(getFreeDiskSpace() >= (unsigned)size)
 		{
-			reserveFile(path, size);
+			reserveFile(pathStrTmp.c_str(), size);
 		}else
 		{
 			//si il n'y a pas assez d'espace libre sur le dd on lance un exception
@@ -24,10 +27,10 @@ FileManager::FileManager(const char* path, long size, long sizeChunk, int idFile
 	}
 
 	//on ouvre le fichier en mode binaire
-	file.open(path,ios::binary|ios::in|ios::out|ios::ate);
+	file.open(pathStrTmp.c_str(),ios::binary|ios::in|ios::out|ios::ate);
 	if (!file)
 	{
-		cout<<"problème fichier "<<path<<endl;
+		cout<<"problème fichier "<<pathStrTmp<<endl;
 	}
 
 	//le curseur est à la fin donc la position du curseur donne la taille du fichier
