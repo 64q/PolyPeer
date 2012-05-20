@@ -6,6 +6,7 @@
 #include <mongoose.h>
 
 #include <WebServer.hpp>
+#include <routes.hpp>
 
 using namespace std;
 
@@ -13,6 +14,8 @@ static const char *mg_options[] = {
   "document_root", "html",
   "listening_ports", "6969",
   "num_threads", "5",
+  "global_passwords_file", "passwd",
+  "authentication_domain", "polypeer.polytech.prive",
   NULL
 };
 
@@ -25,6 +28,13 @@ WebServer::WebServer() :
 	this->port = 6969;
 	this->debug	= false;
 	this->running = true;
+	
+	// insertion des routes
+	routes.insert(pair<string, route_handler>("/ajax/error", error_route));
+	routes.insert(pair<string, route_handler>("/ajax/state", state_route));
+	routes.insert(pair<string, route_handler>("/ajax/home", home_route));
+	routes.insert(pair<string, route_handler>("/ajax/deployment", deployment_route));
+	routes.insert(pair<string, route_handler>("/ajax/deployments", deployments_route));
 }
 
 WebServer::~WebServer()
@@ -58,23 +68,6 @@ void WebServer::run()
 	// not implemented
 }
 
-void* eventHandler(mg_event event, mg_connection *conn, const mg_request_info *request_info)
-{
-	const void *processed = "yes";
-
-	if (event == MG_NEW_REQUEST) {
-		if (strcmp(request_info->uri, "/test") == 0) {
-			processed = NULL;
-		} else {
-			processed = NULL;
-		}
-	} else {
-		processed = NULL;
-	}
-
-	return const_cast<void*> (processed);
-}
-
 void WebServer::stop()
 {
 	this->running = false;
@@ -106,3 +99,40 @@ bool WebServer::isDebug()
 	return this->debug;
 }
 
+void WebServer::call(mg_connection *conn, const mg_request_info *request_info)
+{
+	map<string, route_handler>::iterator it = routes.find(request_info->uri);
+	
+	if (it != routes.end()) 
+	{
+		it->second(conn, request_info);
+	}
+	else
+	{
+		routes.find("/ajax/error")->second(conn, request_info);
+	}
+}
+
+void* eventHandler(mg_event event, mg_connection *conn, const mg_request_info *request_info)
+{
+	const void *processed = "yes";
+
+	WebServer* webserver	= WebServer::getInstance();
+	
+	if (event == MG_NEW_REQUEST) {
+		map<string, route_handler>::iterator it = webserver->routes.find(request_info->uri);
+
+		if (it != webserver->routes.end()) 
+		{
+			it->second(conn, request_info);
+		}
+		else
+		{
+			processed = NULL;
+		}
+	} else {
+		processed = NULL;
+	}
+
+	return const_cast<void*> (processed);
+}

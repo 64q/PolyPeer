@@ -2,25 +2,61 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>Accueil PolyPeer WebServer</title>
+		<title>PolyPeer WebServer</title>
 		<link rel="stylesheet" href="design/style.css" />
+		
+		<script src="js/json.js"></script>
+		<script src="js/ajax.js"></script>
+		<script src="js/main.js"></script>
 	</head>
 	<body>
-		<!# include(header.html) #!>
-		<h1>Accueil PolyPeer WebServer</h1>
-		<!# include(navbar.html) #!>
+		<header>
+			<div id="state">Chargement en cours...</div>
+			<h1>PolyPeer WebServer</h1>
+		</header>
+		<nav>
+			<ul>
+				<li><a href="#home" class="link">Accueil</a></li>
+				<li><a href="#deployments" class="link">Déploiements</a></li>
+				<li><a href="#topology" class="link">Topologie réseau</a></li>
+			</ul>
+		</nav>
 		<div id="content">
-			<p>
-				Bienvenue sur la page d'administration du serveur PolyPeer
-			</p>
-			<p>
-				Pilotez l'installation PolyPeer à partir de cette page web.
-			</p>
-			<h2>Informations utiles</h2>
-			<p>
-				Afin d'exploiter au maximum l'interface d'administration, veuillez vous référer à la page de documentation, <a href="/doc">disponible ici</a>.
-			</p>
+			<div id="home" class="tab default-tab">
+				<h1>Accueil</h1>
+				<p>
+					Bienvenue sur l'interface d'administration du serveur PolyPeer. 
+					Ce projet a été réalisé dans le cadre du projet de développement logiciel de 3ème année à Polytech Nantes.
+				</p>
+				<p>
+					Avant de commencer, veuillez prendre connaissance de <a href="#doc" class="link">la documentation</a>.
+				</p>
+				<h2>Statistiques du serveur</h2>
+				<p>
+					Voici un bref aperçu du serveur actuellement.
+				</p>
+			</div>
+			<div id="deployments" class="tab">
+				<h1>Liste des déploiements</h1>
+				<p>
+					Le tableau ci-dessous expose la liste des déploiements sur le serveur PolyPeer.
+				</p>
+				<table>
+				<tr>
+					<th>#id</th><th>Date de déploiement</th><th>Nom</th><th>Action</th>
+				</tr>
+			</table>
+			</div>
+			<div id="doc" class="tab">
+				<h1>Centre de documentation</h1>
+				<p>
+					Retrouvez toute l'aide nécessaire pour configurer et gérer votre serveur PolyPeer.
+				</p>
+			</div>
+			<div id="deployment" class="tab"></div>
 		</div>
-		<!# include(footer.html) #!>
+		<footer>
+			WebServer powered by Mongoose &ndash; PolyPeer 2012
+		</footer>
 	</body>
 </html>

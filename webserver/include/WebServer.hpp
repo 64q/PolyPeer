@@ -9,6 +9,8 @@
 #include <BaseServer.hpp>
 #include <Logger.hpp>
 
+typedef void (*route_handler)(mg_connection*, const mg_request_info*);
+
 /**
  * Le web server permet de gérer intégralement l'interface web de controle
  * du programme PolyPeer. Il donne acccès à des pages web et à des controles
@@ -31,6 +33,11 @@ public:
 	 * Restart du serveur Web
 	 */
 	void restart();
+	
+	/**
+	 * Appelle la route spécifiée
+	 */
+	void call(mg_connection*, const mg_request_info*);
 	
 	/**
 	 * Permet de passer en mode debug et inversement
@@ -67,12 +74,22 @@ protected:
 	 */
 	void run();
 	
+	/**
+	 * Contexte nécessaire pour mongoose
+	 */
 	mg_context* context;
+	
+	/**
+	 * Routes du serveur
+	 */
+	std::map<std::string, route_handler> routes;
 	
 	/**
 	 * Instance du WebServer
 	 */
 	static WebServer* instance;
+	
+	friend void* eventHandler(mg_event, mg_connection*, const mg_request_info*);
 };
 
 /**
