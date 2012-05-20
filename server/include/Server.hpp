@@ -30,11 +30,6 @@ public:
 	void restart();
 	
 	/**
-	 * @see BaseServer
-	 */
-	void run();
-	
-	/**
 	 * Méthode statique pour récupérer l'instance du Singleton
 	 */
 	static Server* getInstance();
@@ -56,6 +51,11 @@ private:
 	 * Constructeur du serveur privé (singleton)
 	 */
 	Server();
+	
+	/**
+	 * @see BaseServer
+	 */
+	void run();
 	
 	/**
 	 * Instance du serveur
