@@ -6,6 +6,22 @@
 #include <iostream>
 
 #include <Chunk.hpp>
+#include <DiskFullException.hpp>
+
+#ifdef WIN32 /* si vous êtes sous Windows */
+#include <windows.h>
+
+
+
+#elif defined (linux) /* si vous êtes sous Linux */
+#include <stdint.h>
+#include <sys/vfs.h>
+
+#else /* sinon vous êtes sur une plateforme non supportée */
+
+#error not defined for this platform
+
+#endif
 
 /**
  * Classe de gestion des fichiers à déployer
@@ -26,7 +42,7 @@ public:
 	 * @param long
 	 * taille de chaque Chunk dans lesquels vont être placés les morceaux du fichier
 	 * @param int
-	 * id du fichier (renseigné dans le fichier XML de déploiement)	 *
+	 * id du fichier (renseigné dans le fichier XML de déploiement)
 	 */
 	FileManager(const char* path, long size, long sizeChunk, int idfile);
 
@@ -83,7 +99,19 @@ public:
 	 */
 	long getChunkSize();
 
+	/**
+	 * Renvoie le numéro du Chunk qui est attendu.
+	 * @return long
+	 * numéro du Chunk qui doit être réceptionné
+	 */
 	long getCurrentNumberChunk();
+
+	/**
+	 * Renvoie la taille disponible sur le disque dur en octet.
+	 * @return long
+	 * taille disponible sur le disque dur en octet.
+	 */
+	static int64_t getFreeDiskSpace();
 
 protected:
 	std::fstream file;

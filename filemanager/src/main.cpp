@@ -10,13 +10,13 @@ using namespace std;
 
 int main()
 {
-
+	/*
     char file1[] = "a.png";
     char file2[] = "test.png";
 
-    FileManager fmanager(file1,0, 30, 2312);
+    FileManager fmanager(file1,0, 10000, 2312);
 
-    FileManager cible(file2,fmanager.getFileSize(), 30, 1);
+    FileManager cible(file2,fmanager.getFileSize(), fmanager.getChunkSize(), 1);
 
     MD5 md5;
     string tmpStr;
@@ -33,6 +33,7 @@ int main()
         if(tmp2.isIntegrate())
         {
             cible.saveChunk(tmp2);
+            cout << (float(i+1)/float(fmanager.getNumberChunk()))*100<<endl;
         }
         else
         {
@@ -40,6 +41,8 @@ int main()
         }
 
     }
+*/
+cout<<FileManager::getFreeDiskSpace()/(1)<<endl;
 
 
 

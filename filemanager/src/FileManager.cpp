@@ -12,7 +12,15 @@ FileManager::FileManager(const char* path, long size, long sizeChunk, int idFile
 	//on réserve l'emplacement du fichier sur le disque dur si il n'existe pas encore
 	if (!existFile(path))
 	{
-		reserveFile(path, size);
+		if(getFreeDiskSpace() >= (unsigned)size)
+		{
+			reserveFile(path, size);
+		}else
+		{
+			//si il n'y a pas assez d'espace libre sur le dd on lance un exception
+			throw DiskFullException();
+		}
+
 	}
 
 	//on ouvre le fichier en mode binaire
@@ -160,6 +168,20 @@ long FileManager::getCurrentNumberChunk()
 	return currentChunk;
 }
 
+int64_t FileManager::getFreeDiskSpace()
+{
+	 int64_t available;
+    #ifdef WIN32
+        GetDiskFreeSpaceEx(NULL,(PULARGE_INTEGER)&available,NULL,NULL);
+    #elif defined (linux)
+        struct statfs sf;
+        statfs("./", &sf);
+        //f_bavail contient le nombre de blocks disponibles, f_bsize contient la taille d'un block en octet
+        available=sf.f_bavail*sf.f_bsize;
+    #endif
+
+	return available;
+}
 
 
 
