@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 
 #include <mongoose.h>
 
@@ -11,6 +12,12 @@ static const char *ajax_reply_start =
   "Cache: no-cache\r\n"
   "Content-Type: application/x-javascript\r\n"
   "\r\n";
+
+static void get_qsvar(const struct mg_request_info *request_info,
+                      const char *name, char *dst, size_t dst_len) {
+  const char *qs = request_info->query_string;
+  mg_get_var(qs, strlen(qs == NULL ? "" : qs), name, dst, dst_len);
+}
 
 void deployments_route(mg_connection* conn, const mg_request_info* request_info)
 {
@@ -43,5 +50,29 @@ void deployment_route(mg_connection* conn, const mg_request_info* request_info)
 void home_route(mg_connection* conn, const mg_request_info* request_info)
 {
 	mg_printf(conn, "%s", ajax_reply_start);
-	mg_printf(conn, "{\"state\":\"online\", \"number_deployments\": 3}");
+	mg_printf(conn, "{\"state\":\"online\", \"count_deployments\": 3}");
+}
+
+void topology_route(mg_connection* conn, const mg_request_info* request_info)
+{
+	mg_printf(conn, "%s", ajax_reply_start);
+	mg_printf(conn, "[");
+	mg_printf(conn, "{\"id\":\"1\", \"name\":\"Zone1\", \"hosts\":[{\"name\":\"irc001-01\", \"state\": \"online\"}]},");
+	mg_printf(conn, "{\"id\":\"2\", \"name\":\"TPRESAU1\", \"hosts\":[{\"name\":\"irc002-01\", \"state\": \"online\"}, {\"name\":\"irc002-03\", \"state\": \"offline\"}]}");
+	mg_printf(conn, "]");
+}
+
+void new_deployment_route(mg_connection* conn, const mg_request_info* request_info)
+{
+	char name[32], path[64];
+	
+	get_qsvar(request_info, "name", name, sizeof(name));
+	get_qsvar(request_info, "path", path, sizeof(path));
+	
+	
+	cout << "sent: " << name << " = " << path << endl;
+	
+	
+	mg_printf(conn, "%s", ajax_reply_start);
+	mg_printf(conn, "{\"state\":\"done\"}");
 }

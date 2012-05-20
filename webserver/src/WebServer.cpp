@@ -35,6 +35,8 @@ WebServer::WebServer() :
 	routes.insert(pair<string, route_handler>("/ajax/home", home_route));
 	routes.insert(pair<string, route_handler>("/ajax/deployment", deployment_route));
 	routes.insert(pair<string, route_handler>("/ajax/deployments", deployments_route));
+	routes.insert(pair<string, route_handler>("/ajax/topology", topology_route));
+	routes.insert(pair<string, route_handler>("/ajax/new_deployment", new_deployment_route));
 }
 
 WebServer::~WebServer()

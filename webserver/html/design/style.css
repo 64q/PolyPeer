@@ -86,3 +86,7 @@ body div#content table tr th {
 body div#content table tr td {
 	border-bottom: 1px solid black;
 }
+
+.tiny-column {
+	width: 10%;
+}

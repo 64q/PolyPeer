@@ -19,6 +19,7 @@
 				<li><a href="#home" class="link">Accueil</a></li>
 				<li><a href="#deployments" class="link">Déploiements</a></li>
 				<li><a href="#topology" class="link">Topologie réseau</a></li>
+				<li><a href="#new" class="link">Nouveau déploiement</a></li>
 			</ul>
 		</nav>
 		<div id="content">
@@ -35,6 +36,7 @@
 				<p>
 					Voici un bref aperçu du serveur actuellement.
 				</p>
+				<div id="overview">Chargement en cours ...</div>
 			</div>
 			<div id="deployments" class="tab">
 				<h1>Liste des déploiements</h1>
@@ -42,18 +44,52 @@
 					Le tableau ci-dessous expose la liste des déploiements sur le serveur PolyPeer.
 				</p>
 				<table>
-				<tr>
-					<th>#id</th><th>Date de déploiement</th><th>Nom</th><th>Action</th>
-				</tr>
-			</table>
+				
+				</table>
 			</div>
 			<div id="doc" class="tab">
 				<h1>Centre de documentation</h1>
 				<p>
 					Retrouvez toute l'aide nécessaire pour configurer et gérer votre serveur PolyPeer.
 				</p>
+				<ul>
+					<li><a href="#doc_starting">Démarrer</a></li>
+					<li><a href="#doc_create">Créer un déploiement</a></li>
+					<li><a href="#doc_modify">Modifier un déploiement</a></li>
+				</ul>
+				<div id="doc_starting">
+					<h2>Démarrer</h2>
+					<p>
+						Pour bien démarrer avec le serveur PolyPeer, il faut s'assurer d'avoir la configuration minimale requise :
+					</p>
+				</div>
 			</div>
 			<div id="deployment" class="tab"></div>
+			<div id="topology" class="tab">
+				<h1>Topologie du réseau</h1>
+				<p>
+					Consulter l'état des hotes sur le réseau.
+				</p>
+				<div id="network"></div>
+			</div>
+			<div id="new" class="tab">
+				<h1>Nouveau déploiement</h1>
+				<div class="info"></div>
+				<p>
+					Pour créer un déploiement, merci de remplir le formulaire ci-dessous.
+				</p>
+				<form id="formnew">
+					<p>
+						<label>Nom du déploiement</label><input type="text" id="name" name="name" />
+					</p>
+					<p>
+						<label>Chemin du fichier</label><input type="text" id="path" name="path" />
+					</p>
+					<p>
+						<input type="submit" value="Créer un nouveau déploiement" />
+					</p>
+				</form>
+			</div>
 		</div>
 		<footer>
 			WebServer powered by Mongoose &ndash; PolyPeer 2012

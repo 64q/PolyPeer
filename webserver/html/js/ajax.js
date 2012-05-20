@@ -17,9 +17,8 @@ var Ajax = {
 			}
 		};
 
-		xhr.open("POST", "/ajax/" + target, true);
-		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.send(params);
+		xhr.open("GET", "/ajax/" + target + "?" + params, true);
+		xhr.send(null);
 	},
 
 	/**
