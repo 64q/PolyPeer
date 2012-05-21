@@ -19,15 +19,15 @@ int callbackNewFile (Packet& p)
 	if (fm == NULL)
 	{
 		// création du fileManager
-		//try
+		try
 		{
 			fm = sd->addFile(pp.getIdFile(), pp.getFileName(), pp.getFileSize(), pp.getChunkSize());
-		}/* catch (ExceptionDiskFull)
+		} catch (DiskFullException)
 		{
 			// Création du paquet d'erreur
 			pReturn = PacketDiskFull (pp.getIdFile());
 			return 0;
-		}*/
+		}
 	}
 
 	// -> récuppérer le chunk courant

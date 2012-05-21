@@ -5,7 +5,7 @@
 //#include <Logger.hpp>
 
 
-class PolypeerServer
+class PolypeerServer //: public BaseServer
 {
 public:
 	/**
@@ -14,17 +14,12 @@ public:
 	void start();
 	
 	/**
-	 * Lancement du serveur Web
-	 */
-	void run();
-	
-	/**
-	 * Arrêt du serveur Web
+	 * Arrêt du serveur
 	 */
 	void stop();
 	
 	/**
-	 * Restart du serveur Web
+	 * Restart du serveur
 	 */
 	void restart();
 	
@@ -48,6 +43,11 @@ public:
 private:
 	
 	PolypeerServer();
+	
+	/**
+	 * Lancement du serveur
+	 */
+	void run();
 	
 	/**
 	 * Instance du server

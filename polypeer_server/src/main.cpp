@@ -10,9 +10,32 @@
 
 #include <iostream>
 
-#include <XMLTool.hpp>
-#include <ServerData.hpp>
+#include <PolypeerServer.hpp>
 
+using namespace std;
+
+int main(int argc, char* argv[])
+{
+	cout << "+---------------------------------+" << endl;
+	cout << "|         Server PolyPeer         |" << endl;
+	cout << "+---------------------------------+" << endl;
+	cout << "Serveur de distribution de fichiers volumineux en réseau" << endl;
+	cout << "Pour les modalités d'utilisation des sources, veuillez lire" << endl;
+	cout << "le fichier LICENCE, inclu dans le projet." << endl;
+	
+	//PolypeerServer* server = PolypeerServer::getInstance();
+	
+	// Lancement du serveur
+	//cout << "(server) Lancement du serveur sur le port 9696." << endl;
+	//cout << "(server) Lancement du WebServer sur le port 6969." << endl;
+	//server->run();
+	
+	// Suppression des allocations dynamiques
+	//delete server;
+
+	return 0;
+}
+/*
 int main()
 {
 
@@ -73,6 +96,7 @@ int main()
 	
 	
 	return 0;
-}
+	
+}*/
 
 
