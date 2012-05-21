@@ -234,6 +234,6 @@ function notifySuccess(msg) {
 	$('#notifs').innerHTML = '<p class="success">' + msg + '</p>';
 }
 
-function notifySuccess(msg) {
+function notifyError(msg) {
 	$('#notifs').innerHTML = '<p class="error">' + msg + '</p>';
 }

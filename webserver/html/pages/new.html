@@ -1,10 +1,10 @@
 <div id="new" class="tab">
 	<h1>Nouveau déploiement</h1>
-	<div class="notifs"></div>
+	<div id="notifs"></div>
 	<p>
 		Pour créer un déploiement, merci de remplir le formulaire ci-dessous.
 	</p>
-	<form id="formnew">
+	<form id="new-deployment-form">
 		<h2>Informations</h2>
 		<p>
 			<label>Nom du déploiement</label><input type="text" id="name" name="name" />
@@ -14,7 +14,13 @@
 		</p>
 		<h2>Zones à sélectionner</h2>
 		<p>
-			<label>Zone1</label><input type="checkbox" value="qsf" />
+			<label>Zone1</label><input type="checkbox" value="zone1" />
+		</p>
+		<p>
+			<label>TPRESEAU</label><input type="checkbox" value="tpreseau" />
+		</p>
+		<p>
+			<label>Zone2</label><input type="checkbox" value="zone2" />
 		</p>
 		<p>
 			<input type="submit" value="Créer un nouveau déploiement" />
