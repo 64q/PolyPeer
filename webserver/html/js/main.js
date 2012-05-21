@@ -71,9 +71,9 @@ var PolyPeer = {
 	init: function(hash) {
 		// Gestion init des tabs
 		var tabs = document.querySelectorAll(".tab");
-		
-		for each (var item in tabs) {
-			item.style.display = "none";
+		alert(tabs.length);
+		for (var i = 0; i < tabs.length; i++) {
+			tabs[i].style.display = "none";
 		}
 		
 		var select;
