@@ -9,13 +9,35 @@
 
 
 #include <iostream>
+#include <string>
+#include <fstream>
+// include du C
+#include <signal.h>
 
 #include <PolypeerServer.hpp>
 
 using namespace std;
 
+// prototype
+void args(int argc, char* argv[], bool& deamon, bool& stop);
+void kill_handler(int sig);
+void writtePid();
+void defineHandleStop();
+
 int main(int argc, char* argv[])
 {
+	// variables
+	bool daemon = false;
+	bool stop	= false;
+	
+	// Récupération des paramètres
+	args(argc, argv, daemon, stop);
+	
+	// si demande d'arret sur les arguments
+	if (stop)
+		return 0;
+	
+	// programme principale
 	cout << "+---------------------------------+" << endl;
 	cout << "|         Server PolyPeer         |" << endl;
 	cout << "+---------------------------------+" << endl;
@@ -23,18 +45,93 @@ int main(int argc, char* argv[])
 	cout << "Pour les modalités d'utilisation des sources, veuillez lire" << endl;
 	cout << "le fichier LICENCE, inclu dans le projet." << endl;
 	
-	//PolypeerServer* server = PolypeerServer::getInstance();
+	cout << endl << "Fichier de log : ./log/PolypeerServer.log" << endl;
+	cout << "Fichier de pid : ./PolypeerServer.pid" << endl;
 	
-	// Lancement du serveur
-	//cout << "(server) Lancement du serveur sur le port 9696." << endl;
-	//cout << "(server) Lancement du WebServer sur le port 6969." << endl;
-	//server->run();
+	// pretraitement
+	writtePid(); // créer le fichier avec le pid du programme
+	defineHandleStop();	// mise en place de l'interception d'un signal
 	
-	// Suppression des allocations dynamiques
-	//delete server;
-
+	// gestion du mode demon
+	if(daemon)
+	{
+		
+	} else
+	{
+		PolypeerServer* server = PolypeerServer::getInstance();
+		
+		(server->getLogger())<< "Le main va lancer la boucle principale !"<<endLog;
+		
+		// Lancement du serveur
+		server->start();
+	
+		cout << "Serveur Polypeer terminé" << endl;
+	
+		// Suppression des allocations dynamiques
+		delete server;
+	}
+	
 	return 0;
 }
+
+
+
+void args(int argc, char* argv[], bool& daemon, bool& stop)
+{
+	int i = 1;
+	while(i < argc)
+	{
+		if(string(argv[i]).compare("--deamon") == 0)
+			daemon = true;
+		else if(string(argv[i]).compare("help") == 0)
+		{
+			cout << "Serveur Polypeer" << endl;
+			cout << "Options :" << endl;
+			cout << "\t--deamon : lancer en service" << endl;
+			//cout << "\t--verbose : mode verbeux" << endl;
+			cout << "\thelp     : cette aide" << endl;
+			stop = true;
+		}
+		i++;
+	}
+}
+
+void defineHandleStop()
+{
+	// Definition du catch d'arret
+	struct sigaction act, oact;
+	sigaction(SIGINT,NULL,&oact);
+	act.sa_handler=kill_handler;
+	act.sa_mask=oact.sa_mask;
+	act.sa_flags=SA_RESTART;
+	sigaction(SIGINT,&act, NULL);
+}
+
+void kill_handler(int sig)
+{
+	cout << endl << "Interception signal d'arret(" << sig << ")..." << endl;
+	PolypeerServer* server = PolypeerServer::getInstance();
+	server->stop();
+}
+
+void writtePid()
+{
+	ofstream file;
+	file.open("PolypeerServer.pid", fstream::trunc);
+	if (file.is_open()) 
+	{
+		file << getpid();
+		file.close();
+	}
+}
+
+
+
+
+
+
+
+
 /*
 int main()
 {

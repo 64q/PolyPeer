@@ -2,52 +2,54 @@
 #define POLYPEERSERVER_H
 
 
-//#include <Logger.hpp>
+#include <Logger.hpp>
+#include <ServerData.hpp>
 
-
-class PolypeerServer //: public BaseServer
+/**
+ * Serveur principale de Polypeer.
+ * gère le lancement de tous les threads de traitement
+ */
+class PolypeerServer
 {
 public:
 	/**
-	 * Démarrage du serveur
+	 * Lancement du seveur
 	 */
 	void start();
 	
 	/**
-	 * Arrêt du serveur
+	 * Arret du serveur
 	 */
 	void stop();
 	
 	/**
-	 * Restart du serveur
+	 * Redémarrage du serveur
 	 */
 	void restart();
 	
 	/**
-	 * Accès au singleton du serveur
-	 */
-	static PolypeerServer* getInstance()
-	{
-		if (PolypeerServer::instance == NULL)
-		{
-			PolypeerServer::instance = new PolypeerServer();
-		}
-		return PolypeerServer::instance;
-	}
-	
-	/**
-	 * Destructeur
+	 * Destructeur de PolypeerServer
 	 */
 	~PolypeerServer();
 	
-private:
-	
-	PolypeerServer();
+	/**
+	 * Accès au singleton du serveur
+	 */
+	static PolypeerServer* getInstance();
 	
 	/**
-	 * Lancement du serveur
+	 * Récupérer le logger du serveur
 	 */
-	void run();
+	Logger& getLogger();
+	
+	
+private:
+	/**
+	 * Respet du patern singleton
+	 */
+	PolypeerServer();
+	PolypeerServer(const PolypeerServer&);
+	PolypeerServer& operator=(const PolypeerServer&);
 	
 	/**
 	 * Instance du server
@@ -55,9 +57,29 @@ private:
 	static PolypeerServer* instance;
 	
 	/**
-	 * Permet de savoir si le serveur est en mode de fonctionnement ou pas.
+	 * Function contenant la boucle d'execution
+	 */
+	void run();
+	
+	/**
+	 * condition d'exécution
 	 */
 	bool running;
+	
+	/**
+	 * Port d'écoute du serveur
+	 */
+	int port;
+	
+	/**
+	 * Logger du server, sert à stocker dans un fichier texte les actions
+	 */
+	Logger logger;
+	
+	/**
+	 * Structure principale du programe
+	 */
+	ServerData* sData;
 	
 };
 
