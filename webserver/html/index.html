@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!-- headers standards -->
 		<meta charset="utf-8" />
 		<title>PolyPeer WebServer</title>
 		<link rel="stylesheet" href="design/style.css" />
-		
+		<!-- Scripts JS -->
 		<script src="js/json.js"></script>
-		<script src="js/ajax.js"></script>
+		<script src="js/utils.js"></script>
 		<script src="js/main.js"></script>
 	</head>
 	<body>
@@ -15,81 +16,18 @@
 			<h1>PolyPeer WebServer</h1>
 		</header>
 		<nav>
+			<ul style="float:right;">
+				<li><a href="#admin" class="link">Administration</a></li>
+			</ul>
 			<ul>
 				<li><a href="#home" class="link">Accueil</a></li>
 				<li><a href="#deployments" class="link">Déploiements</a></li>
-				<li><a href="#topology" class="link">Topologie réseau</a></li>
+				<li><a href="#network" class="link">Réseau</a></li>
 				<li><a href="#new" class="link">Nouveau déploiement</a></li>
 			</ul>
 		</nav>
 		<div id="content">
-			<div id="home" class="tab default-tab">
-				<h1>Accueil</h1>
-				<p>
-					Bienvenue sur l'interface d'administration du serveur PolyPeer. 
-					Ce projet a été réalisé dans le cadre du projet de développement logiciel de 3ème année à Polytech Nantes.
-				</p>
-				<p>
-					Avant de commencer, veuillez prendre connaissance de <a href="#doc" class="link">la documentation</a>.
-				</p>
-				<h2>Statistiques du serveur</h2>
-				<p>
-					Voici un bref aperçu du serveur actuellement.
-				</p>
-				<div id="overview">Chargement en cours ...</div>
-			</div>
-			<div id="deployments" class="tab">
-				<h1>Liste des déploiements</h1>
-				<p>
-					Le tableau ci-dessous expose la liste des déploiements sur le serveur PolyPeer.
-				</p>
-				<table>
-				
-				</table>
-			</div>
-			<div id="doc" class="tab">
-				<h1>Centre de documentation</h1>
-				<p>
-					Retrouvez toute l'aide nécessaire pour configurer et gérer votre serveur PolyPeer.
-				</p>
-				<ul>
-					<li><a href="#doc_starting">Démarrer</a></li>
-					<li><a href="#doc_create">Créer un déploiement</a></li>
-					<li><a href="#doc_modify">Modifier un déploiement</a></li>
-				</ul>
-				<div id="doc_starting">
-					<h2>Démarrer</h2>
-					<p>
-						Pour bien démarrer avec le serveur PolyPeer, il faut s'assurer d'avoir la configuration minimale requise :
-					</p>
-				</div>
-			</div>
-			<div id="deployment" class="tab"></div>
-			<div id="topology" class="tab">
-				<h1>Topologie du réseau</h1>
-				<p>
-					Consulter l'état des hotes sur le réseau.
-				</p>
-				<div id="network"></div>
-			</div>
-			<div id="new" class="tab">
-				<h1>Nouveau déploiement</h1>
-				<div class="info"></div>
-				<p>
-					Pour créer un déploiement, merci de remplir le formulaire ci-dessous.
-				</p>
-				<form id="formnew">
-					<p>
-						<label>Nom du déploiement</label><input type="text" id="name" name="name" />
-					</p>
-					<p>
-						<label>Chemin du fichier</label><input type="text" id="path" name="path" />
-					</p>
-					<p>
-						<input type="submit" value="Créer un nouveau déploiement" />
-					</p>
-				</form>
-			</div>
+			Chargement du contenu en cours ...
 		</div>
 		<footer>
 			WebServer powered by Mongoose &ndash; PolyPeer 2012

@@ -31,11 +31,11 @@ WebServer::WebServer() :
 	
 	// insertion des routes
 	routes.insert(pair<string, route_handler>("/ajax/error", error_route));
-	routes.insert(pair<string, route_handler>("/ajax/state", state_route));
-	routes.insert(pair<string, route_handler>("/ajax/home", home_route));
+	routes.insert(pair<string, route_handler>("/ajax/get_stats", get_stats_route));
+	routes.insert(pair<string, route_handler>("/ajax/get_host", get_host_route));
 	routes.insert(pair<string, route_handler>("/ajax/deployment", deployment_route));
 	routes.insert(pair<string, route_handler>("/ajax/deployments", deployments_route));
-	routes.insert(pair<string, route_handler>("/ajax/topology", topology_route));
+	routes.insert(pair<string, route_handler>("/ajax/network", network_route));
 	routes.insert(pair<string, route_handler>("/ajax/new_deployment", new_deployment_route));
 }
 

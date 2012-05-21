@@ -13,7 +13,7 @@ static const char *ajax_reply_start =
   "Content-Type: application/x-javascript\r\n"
   "\r\n";
 
-static void get_qsvar(const struct mg_request_info *request_info,
+void get_qsvar(const struct mg_request_info *request_info,
                       const char *name, char *dst, size_t dst_len) {
   const char *qs = request_info->query_string;
   mg_get_var(qs, strlen(qs == NULL ? "" : qs), name, dst, dst_len);
@@ -35,10 +35,16 @@ void error_route(mg_connection* conn, const mg_request_info* request_info)
 	mg_printf(conn, "{\"error\":\"true\"}");
 }
 
-void state_route(mg_connection* conn, const mg_request_info* request_info)
+void get_stats_route(mg_connection* conn, const mg_request_info* request_info)
 {
 	mg_printf(conn, "%s", ajax_reply_start);
-	mg_printf(conn, "{\"state\":\"online\"}");
+	mg_printf(conn, "{\"state\":\"online\", \"count_deployments\": 3}");
+}
+
+void get_host_route(mg_connection* conn, const mg_request_info* request_info)
+{
+	mg_printf(conn, "%s", ajax_reply_start);
+	mg_printf(conn, "{\"ip\":\"192.168.0.10\", \"name\":\"irc007-02\", \"state\": \"online\", \"deployments\": [{\"name\":\"test\"}]}");
 }
 
 void deployment_route(mg_connection* conn, const mg_request_info* request_info)
@@ -47,18 +53,12 @@ void deployment_route(mg_connection* conn, const mg_request_info* request_info)
 	mg_printf(conn, "{\"name\":\"trololo\"}");
 }
 
-void home_route(mg_connection* conn, const mg_request_info* request_info)
-{
-	mg_printf(conn, "%s", ajax_reply_start);
-	mg_printf(conn, "{\"state\":\"online\", \"count_deployments\": 3}");
-}
-
-void topology_route(mg_connection* conn, const mg_request_info* request_info)
+void network_route(mg_connection* conn, const mg_request_info* request_info)
 {
 	mg_printf(conn, "%s", ajax_reply_start);
 	mg_printf(conn, "[");
-	mg_printf(conn, "{\"id\":\"1\", \"name\":\"Zone1\", \"hosts\":[{\"name\":\"irc001-01\", \"state\": \"online\"}]},");
-	mg_printf(conn, "{\"id\":\"2\", \"name\":\"TPRESAU1\", \"hosts\":[{\"name\":\"irc002-01\", \"state\": \"online\"}, {\"name\":\"irc002-03\", \"state\": \"offline\"}]}");
+	mg_printf(conn, "{\"id\":\"1\", \"type\":\"zone\", \"name\":\"Zone1\", \"hosts\":[{\"ip\":\"192.168.0.2\", \"name\":\"irc001-01\", \"type\":\"host\", \"state\": \"online\"}]},");
+	mg_printf(conn, "{\"id\":\"2\", \"name\":\"TPRESAU1\", \"type\":\"zone\", \"hosts\":[{\"ip\":\"192.168.0.12\", \"name\":\"irc002-01\", \"type\":\"host\", \"state\": \"online\"}, {\"ip\":\"192.168.0.10\", \"name\":\"irc002-03\", \"type\":\"host\",\"state\": \"offline\"}]}");
 	mg_printf(conn, "]");
 }
 
