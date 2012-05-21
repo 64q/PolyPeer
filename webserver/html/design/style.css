@@ -87,6 +87,37 @@ body div#content table tr td {
 	border-bottom: 1px solid black;
 }
 
+form h2 {
+	
+}
+
+form label {
+	display: block;
+	float: left;
+	width: 225px;
+}
+
 .tiny-column {
 	width: 10%;
+}
+
+.info {
+	background: #90C8F0;
+	color: #11476E;
+	border: 1px solid #11476E;
+	padding: 3px;
+}
+
+.success {
+	background: #98F69B;
+	color: green;
+	border: 1px solid green;
+	padding: 3px;
+}
+
+.error {
+	background: #F69898;
+	color: red;
+	border: 1px solid red;
+	padding: 3px;
 }
