@@ -59,6 +59,8 @@ void WebServer::start()
 	// Lancement du serveur
 	this->context = mg_start(eventHandler, NULL, mg_options);
 	
+	logger << notice << "Le serveur web a été démarré sur le port " << this->port << endlog;
+	
 	if (this->context == NULL)
 	{
 		throw exception();
@@ -67,7 +69,7 @@ void WebServer::start()
 
 void WebServer::run()
 {
-	// not implemented
+ // TODO NOTHING
 }
 
 void WebServer::stop()

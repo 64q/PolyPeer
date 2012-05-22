@@ -72,7 +72,7 @@ protected:
 	/**
 	 * Lancement du serveur Web
 	 */
-	void run();
+	static void run();
 	
 	/**
 	 * Contexte nécessaire pour mongoose
@@ -88,6 +88,8 @@ protected:
 	 * Instance du WebServer
 	 */
 	static WebServer* instance;
+	
+	pthread_t thread;
 	
 	friend void* eventHandler(mg_event, mg_connection*, const mg_request_info*);
 };
