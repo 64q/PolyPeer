@@ -5,16 +5,17 @@
 # Version: 
 #
 
+# les autres où chercher les fichiers
+LOGGER=../logger/
+SRV=../ppserver/
+
+# Définitions des autres variables
 CC=g++
-CFLAGS=-Wall -ggdb -I../logger/include/ -Iinclude/ -I../server/include/
+CFLAGS=-Wall -ggdb -I$(LOGGER)include/ -Iinclude/ -I$(SRV)include/
 LDFLAGS=-pthread -ldl
 EXEC=webserver
 SRC=src/
 INC=include/
-
-# les autres où chercher les fichiers
-LOGGER=../logger/
-SRV=../server/
 
 all: webserver
 
