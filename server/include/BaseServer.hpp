@@ -46,11 +46,6 @@ protected:
 	BaseServer& operator=(const BaseServer&);
 	
 	/**
-	 * Méthode permettant de faire tourner le serveur
-	 */
-	virtual void run() = 0;
-	
-	/**
 	 * Logger du server, sert à stocker dans un fichier texte les actions du serv.
 	 */
 	Logger logger;

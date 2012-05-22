@@ -12,7 +12,6 @@ using namespace std;
 
 Server* Server::instance = NULL;
 
-
 Server* Server::getInstance()
 {
 	if (instance == NULL)
