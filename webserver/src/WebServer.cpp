@@ -128,7 +128,7 @@ void* eventHandler(mg_event event, mg_connection *conn, const mg_request_info *r
 	}
 	
 	if (webserver->isDebug()) {
-		webserver->getLogger() << debug << "Route appellée '" << request_info->uri << "' avec les paramètres '" << request_info->query_string << "." << endlog;
+		webserver->getLogger() << debug << "Route appelée '" << request_info->uri << "' avec les paramètres '" << request_info->query_string << "." << endlog;
 	}
 
 	return const_cast<void*> (processed);
