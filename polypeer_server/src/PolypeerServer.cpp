@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include <BaseServer.hpp>
 #include <PolypeerServer.hpp>
 
 using namespace std;
@@ -8,12 +9,11 @@ using namespace std;
 PolypeerServer* PolypeerServer::instance = NULL;
 
 PolypeerServer::PolypeerServer() :
-	running(false),
-	port(6969),
-	logger("log/PolypeerServer.log")
+	BaseServer("log/PolypeerServer.log")
 {
 	logger.setVerboseMode(true);
-	logger << "Lancement du serveur Polypeer..."<<endLog;
+	logger << "Lancement du serveur Polypeer..."<<endlog;
+	webserver = WebServer::getInstance();
 }
 
 PolypeerServer::~PolypeerServer()
@@ -32,20 +32,26 @@ PolypeerServer* PolypeerServer::getInstance()
 
 void PolypeerServer::start()
 {
+	//sData = new ServerData();
 	this->running = true;
-	// Lancement du serveur
+	// Lancement du webserveur
+	webserver->start();
+	// Lancement du server
 	this->run();
 }
 
 void PolypeerServer::restart()
 {
 	stop();
+	sleep(5000);
 	start();
 }
 
 void PolypeerServer::run()
 {
-	while(running)
+	PolypeerServer* server = PolypeerServer::getInstance();
+	
+	while (server->running)
 	{
 		
 	}
@@ -53,11 +59,7 @@ void PolypeerServer::run()
 
 void PolypeerServer::stop()
 {
+	webserver->stop();
 	this->running = false;
-}
-
-Logger& PolypeerServer::getLogger()
-{
-	return logger;
 }
 

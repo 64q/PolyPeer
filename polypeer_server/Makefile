@@ -23,6 +23,7 @@ SERV=../server/
 DATA=../data/
 CB=../callback/
 TCPEXCEPT=../tcp/include/Exceptions/
+WEB=../webserver/
 
 
 # Variables de nomage et de localisation
@@ -32,9 +33,9 @@ SRC=src/
 INC=include/
 
 # Flag pour le linker
-LDFLAGS=-lpthread
+LDFLAGS=-lpthread -pthread -ldl
 # Flag préprocessing et compilation
-CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(TCP)$(INC) -I$(SERV)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -D TIXML_USE_STL
+CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(TCP)$(INC) -I$(SERV)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(WEB)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -D TIXML_USE_STL
 
 
 # commande par defaut
@@ -83,7 +84,22 @@ BaseServer.o: $(SERV)$(SRC)BaseServer.cpp
 #
 ############################
 
-WebServ=
+WebServ=routes.o WebServer.o mongoose.o
+
+# Compilation des routes
+routes.o: $(WEB)$(SRC)routes.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+# Compilation du server
+WebServer.o: $(WEB)$(SRC)WebServer.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+	
+# Compilation de mongoose
+mongoose.o: $(WEB)$(SRC)mongoose.c
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
 ############################
 #
@@ -320,7 +336,7 @@ Logger.o:  $(LOG)$(SRC)Logger.cpp
 ############################
 
 
-polypeer: main.o PolypeerServer.o $(BaseServ) $(MainStruct) $(LibXML) $(FileManager) $(PacketManager) $(CallbackManager) $(Data) $(ConnectionManager) $(Logger)
+polypeer: main.o PolypeerServer.o $(BaseServ) $(MainStruct) $(LibXML) $(FileManager) $(PacketManager) $(CallbackManager) $(Data) $(ConnectionManager) $(Logger) $(WebServ)
 	@echo "Link output files..."
 	@$(CC) -o $@  $^ $(LDFLAGS)
 	@echo "OK"

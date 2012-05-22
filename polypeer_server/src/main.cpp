@@ -21,7 +21,7 @@ using namespace std;
 // prototype
 void args(int argc, char* argv[], bool& deamon, bool& stop);
 void kill_handler(int sig);
-void writtePid();
+void writePid();
 void defineHandleStop();
 
 int main(int argc, char* argv[])
@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 	cout << "Fichier de pid : ./PolypeerServer.pid" << endl;
 	
 	// pretraitement
-	writtePid(); // créer le fichier avec le pid du programme
+	writePid(); // créer le fichier avec le pid du programme
 	defineHandleStop();	// mise en place de l'interception d'un signal
 	
 	// gestion du mode demon
@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
 	{
 		PolypeerServer* server = PolypeerServer::getInstance();
 		
-		(server->getLogger())<< "Le main va lancer la boucle principale !"<<endLog;
+		(server->getLogger())<< "Le main va lancer la boucle principale !"<<endlog;
 		
 		// Lancement du serveur
 		server->start();
@@ -114,7 +114,7 @@ void kill_handler(int sig)
 	server->stop();
 }
 
-void writtePid()
+void writePid()
 {
 	ofstream file;
 	file.open("PolypeerServer.pid", fstream::trunc);

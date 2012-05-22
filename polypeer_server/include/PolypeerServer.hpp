@@ -1,15 +1,15 @@
 #ifndef POLYPEERSERVER_H
 #define POLYPEERSERVER_H
 
-
-#include <Logger.hpp>
+#include <BaseServer.hpp>
 #include <ServerData.hpp>
+#include <WebServer.hpp>
 
 /**
  * Serveur principale de Polypeer.
  * gère le lancement de tous les threads de traitement
  */
-class PolypeerServer
+class PolypeerServer : public BaseServer
 {
 public:
 	/**
@@ -27,6 +27,8 @@ public:
 	 */
 	void restart();
 	
+	inline ServerData& getServerData() { return *(this->sData); }
+	
 	/**
 	 * Destructeur de PolypeerServer
 	 */
@@ -36,11 +38,6 @@ public:
 	 * Accès au singleton du serveur
 	 */
 	static PolypeerServer* getInstance();
-	
-	/**
-	 * Récupérer le logger du serveur
-	 */
-	Logger& getLogger();
 	
 	
 private:
@@ -57,30 +54,19 @@ private:
 	static PolypeerServer* instance;
 	
 	/**
-	 * Function contenant la boucle d'execution
+	 * Méthode de run
 	 */
-	void run();
-	
-	/**
-	 * condition d'exécution
-	 */
-	bool running;
-	
-	/**
-	 * Port d'écoute du serveur
-	 */
-	int port;
-	
-	/**
-	 * Logger du server, sert à stocker dans un fichier texte les actions
-	 */
-	Logger logger;
+	static void run();
 	
 	/**
 	 * Structure principale du programe
 	 */
 	ServerData* sData;
 	
+	/**
+	 * Instance du webserver
+	 */
+	WebServer* webserver;
 };
 
 
