@@ -3,22 +3,20 @@
  * Quentin Lebourgeois - 2012
  */
  
- $('#new-deployment-form').addEventListener('submit', function(e) {
- 	
+$('#new-deployment-form').addEventListener('submit', function(e) {
  	var name = $('#name');
  	var path = $('#path');
  	
- 	var checkboxes = qsa('input[type="checkbox"]');
-	var checked = "(";
+ 	var checkboxes = qsa('#new-deployment-form input[type="checkbox"]');
+	var checked = '';
 	for (var i = 0; i < checkboxes.length; i++) {
 		if (checkboxes[i].checked) {
 			checked += checkboxes[i].value;
-			if (i < checkboxes.length - 1) {
-				checked += ',';
+			if (i != (checkboxes.length - 1)) {
+				checked += ':';
 			}
 		}
 	}
-	checked += ')';
  	
  	Ajax.request('/ajax/new_deployment', 'name=' + name.value + '&path=' + path.value + '&zones=' + checked, function(content) {
  		var content = JSON.parse(content);

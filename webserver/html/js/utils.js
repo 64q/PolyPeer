@@ -113,85 +113,87 @@ var HashNav = {
 		 * Effectue des actions pour afficher l'onglet #home
 		 */
 		home: function() {
-			callPage('#home');
-			
-			// Récupération des informations dynamiques
-			Ajax.request('/ajax/get_stats', null, function(content) {
-				var content = JSON.parse(content);
-				var result = '<ul>';
-				result += '<li><strong>Etat du serveur : </strong>' + content.state + '</li>';
-				result += '<li><strong>Nombre de déploiements en cours : </strong>' + content.count_deployments + '</li>';
-				result += '</ul>';
+			callPage('#home', null, function() {
+				// Récupération des informations dynamiques
+				Ajax.request('/ajax/get_stats', null, function(content) {
+					var content = JSON.parse(content);
+					var result = '<ul>';
+					result += '<li><strong>Etat du serveur : </strong>' + content.state + '</li>';
+					result += '<li><strong>Nombre de déploiements en cours : </strong>' + content.count_deployments + '</li>';
+					result += '</ul>';
 				
-				$('#overview').innerHTML = result;
+					$('#overview').innerHTML = result;
+				});
 			});
 		},
 		
 		admin: function() {
-			callPage('#admin');
-			loadScript('js/admin.js'); // Chargement du fichier JS spécifique
+			callPage('#admin', null, function() { 
+				loadScript('js/admin.js');
+			});
 		},
 		
 		deployments: function() {
-			callPage('#deployments');
-			loadScript('js/deployments.js');
-			
-			// Récupération des déploiements sur le serveur
-			Ajax.request('/ajax/deployments', null, function(content) {
-				var content = JSON.parse(content);
-				var contentTab = $("#deployments>table");
-
-				for (var i = 0; i < content.length; i++) {
-					contentTab.appendChild(createDeploymentLine(content[i]));
-				}
+			callPage('#deployments', null, function() {
+				// Récupération des déploiements sur le serveur
+				Ajax.request('/ajax/deployments', null, function(content) {
+					var content = JSON.parse(content);
+					loadScript('js/deployments.js', function() {
+						var contentTab = $("#deployments>table");
+						for (var i = 0; i < content.length; i++) {
+							contentTab.appendChild(createDeploymentLine(content[i]));
+						}
+					});
+				});
 			});
 		},
 		
 		deployment: function(id) {
-			callPage('#deployment');
-			
-			// Récupération des infos du déploiement cible
-			Ajax.request('/ajax/deployment', 'id=' + id, function(content) {
-				var content = JSON.parse(content);
-				var result = '<h1>' + content.name + '</h1>';
-				result += '<p>Ceci est un déploiement...</p>';
+			callPage('#deployment', null, function() {		
+				// Récupération des infos du déploiement cible
+				Ajax.request('/ajax/deployment', 'id=' + id, function(content) {
+					var content = JSON.parse(content);
+					var result = '<h1>' + content.name + '</h1>';
+					result += '<p>Ceci est un déploiement...</p>';
 				
-				$('#deployment').innerHTML = result;
+					$('#deployment').innerHTML = result;
+				});
 			});
 		},
 		
 		network: function() {
-			callPage('#network');
-			loadScript('js/network.js');
-			
-			Ajax.request('/ajax/network', null, function(content) {
-				var content = JSON.parse(content);
-				var view = $('#network-view');
-				
-				for (var i = 0; i < content.length; i++) {
-					view.appendChild(createZone(content[i]));
-				}
+			callPage('#network', null, function() {
+				Ajax.request('/ajax/network', null, function(content) {
+					var content = JSON.parse(content);
+					loadScript('js/network.js', function() {
+						var view = $('#network-view');
+						for (var i = 0; i < content.length; i++) {
+							view.appendChild(createZone(content[i]));
+						}
+					});
+				});
 			});
 		},
 		
 		new: function() {
-			callPage('#new');
-			loadScript('js/new.js');
+			callPage('#new', null, function() {
+				loadScript('js/new.js');
+			});
 		},
 		
 		host: function(ip) {
-			callPage('#host');
-			
-			Ajax.request('/ajax/get_host', 'ip=' + ip, function(content) {
-				var content = JSON.parse(content);
-				var result = '<ul>';
+			callPage('#host', null, function() {
+				Ajax.request('/ajax/get_host', 'ip=' + ip, function(content) {
+					var content = JSON.parse(content);
+					var result = '<ul>';
 				
-				for (var i = 0; i < content.deployments.length; i++) {
-					result += '<li>' + content.deployments[i].name + '</li>';
-				}
+					for (var i = 0; i < content.deployments.length; i++) {
+						result += '<li>' + content.deployments[i].name + '</li>';
+					}
 				
-				$('#host-info').innerHTML = '<ul><li><strong>Nom : </strong>' + content.name + '</li><li><strong>IP : </strong>' + content.ip + '</li><li><strong>Etat : </strong>' + content.state + '</li></ul>';
-				$('#host-deployments').innerHTML = result;
+					$('#host-info').innerHTML = '<ul><li><strong>Nom : </strong>' + content.name + '</li><li><strong>IP : </strong>' + content.ip + '</li><li><strong>Etat : </strong>' + content.state + '</li></ul>';
+					$('#host-deployments').innerHTML = result;
+				});
 			});
 		},
 		
@@ -199,7 +201,7 @@ var HashNav = {
 		 * Effectue des actions pour afficher l'onglet #doc
 		 */
 		doc: function() {
-			callPage('#doc');
+			callPage('#doc', null, function() {});
 		},
 	},
 };
@@ -214,20 +216,23 @@ function getTargetFromHash(hash) {
 /**
  * Appelle la ressource sur le serveur
  */
-function callPage(tab, args) {
+function callPage(tab, args, callback) {
 	Ajax.request('/pages/' + getTargetFromHash(tab) + '.html', args, function(content) {
 		$('#content').innerHTML = content;
 		HashNav.activate('#content'); // Important, après un chargement, il faut activer les hash links
+		callback();
 	});
 }
 
 /**
  * Charge un script JS dynamiquement
  */
-function loadScript(target) {
+function loadScript(target, callback) {
 	var scriptElement = document.createElement('script');
    scriptElement.src = target;
    document.body.appendChild(scriptElement);
+   
+   scriptElement.onload = callback;
 }
 
 function notifySuccess(msg) {

@@ -64,14 +64,13 @@ void network_route(mg_connection* conn, const mg_request_info* request_info)
 
 void new_deployment_route(mg_connection* conn, const mg_request_info* request_info)
 {
-	char name[32], path[64];
+	char name[32], path[64], zones[1024];
 	
 	get_qsvar(request_info, "name", name, sizeof(name));
 	get_qsvar(request_info, "path", path, sizeof(path));
-	
-	
-	cout << "sent: " << name << " = " << path << endl;
-	
+	get_qsvar(request_info, "zones", zones, sizeof(zones));
+
+	cout << "sent: " << name << ", " << path << ", " << zones << endl;
 	
 	mg_printf(conn, "%s", ajax_reply_start);
 	mg_printf(conn, "{\"state\":\"done\"}");
