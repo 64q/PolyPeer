@@ -11,8 +11,8 @@
  
 typedef enum
 {
-	endLog,
-	endLine,
+	endlog,
+	endline,
 }ELogAction;
 
 typedef enum
@@ -21,6 +21,7 @@ typedef enum
 	alert,
 	error,
 	critical,
+	notice,
 }ELogImportance;
  
  

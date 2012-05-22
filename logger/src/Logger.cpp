@@ -46,13 +46,13 @@ Logger& Logger::operator<<(const ELogAction logAct)
 
 	switch (logAct)
 	{
-		case endLog :
+		case endlog :
 			if (verbose || (typeSave>normal))
 			put(getType(typeSave), stringSave);
 			stringSave="";
 			typeSave=normal;
 			break;
-		case endLine :
+		case endline :
 			stringSave+="\n";
 			break;
 	}
@@ -82,6 +82,8 @@ string Logger::getType (const ELogImportance logType)
 		case critical :
 			toReturn="CRITICAL";
 			break;
+		case notice :
+			toReturn = "notice";
 		default :
 			toReturn="undefined";
 	}
