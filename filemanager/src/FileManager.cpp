@@ -143,6 +143,7 @@ Chunk FileManager::getChunk(long number)
 bool FileManager::saveChunk(Chunk &chunk)
 {
 	//on ne peut modifier le fichier que sil le fichier n'est pas fini
+	bool toReturn = false;
 	if(!isComplete)
 	{
 		currentChunk = getState();
@@ -162,14 +163,14 @@ bool FileManager::saveChunk(Chunk &chunk)
 			}
 
 
-			return true;
+			toReturn = true;
 		}
 		else
 		{
-			return false;
+			toReturn = false;
 		}
 	}
-
+	return toReturn;
 }
 
 long FileManager::getNumberChunk()

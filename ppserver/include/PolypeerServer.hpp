@@ -67,6 +67,10 @@ private:
 	 * Instance du webserver
 	 */
 	WebServer* webserver;
+	
+	/**
+	 * fonctions pour l'algo de distribution
+	 */
 };
 
 
