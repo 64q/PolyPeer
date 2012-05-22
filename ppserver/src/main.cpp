@@ -43,10 +43,10 @@ int main(int argc, char* argv[])
 	cout << "+---------------------------------+" << endl;
 	cout << "Serveur de distribution de fichiers volumineux en réseau" << endl;
 	cout << "Pour les modalités d'utilisation des sources, veuillez lire" << endl;
-	cout << "le fichier LICENCE, inclu dans le projet." << endl;
+	cout << "le fichier LICENCE, inclu dans le projet." << endl << endl;
 	
-	cout << endl << "Fichier de log : ./log/PolypeerServer.log" << endl;
-	cout << "Fichier de pid : ./PolypeerServer.pid" << endl;
+	cout << "Fichier de log : ./log/PolypeerServer.log" << endl;
+	cout << "Fichier de pid : ./ppserver.pid" << endl;
 	
 	// pretraitement
 	writePid(); // créer le fichier avec le pid du programme
@@ -117,7 +117,7 @@ void kill_handler(int sig)
 void writePid()
 {
 	ofstream file;
-	file.open("PolypeerServer.pid", fstream::trunc);
+	file.open("ppserver.pid", fstream::trunc);
 	if (file.is_open()) 
 	{
 		file << getpid();
