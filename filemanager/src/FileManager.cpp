@@ -53,8 +53,6 @@ void FileManager::init(const char* path, long size, long sizeChunk, int idFile)
 			if(getState()==getNumberChunk())
 			{
 				isComplete = true;
-				cout << sizeFile<<endl;
-
 			}
 
 
@@ -170,9 +168,6 @@ bool FileManager::saveChunk(Chunk &chunk)
 		{
 			return false;
 		}
-	}else
-	{
-		cout <<"bad"<<endl;
 	}
 
 }
