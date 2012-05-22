@@ -4,7 +4,7 @@
  
 #include <iostream>
 
-#include "../include/Logger.hpp"
+#include <Logger.hpp>
 
 using namespace std;
 
