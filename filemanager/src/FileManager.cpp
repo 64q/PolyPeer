@@ -7,49 +7,98 @@
 
 using namespace std;
 
-FileManager::FileManager(const char* path, long size, long sizeChunk, int idFile):idFile(idFile), sizeChunk(sizeChunk)
-{
-	string pathStrTmp(path);
-	pathStrTmp+="";
 
-	//on réserve l'emplacement du fichier sur le disque dur si il n'existe pas encore
-	if (!existFile(pathStrTmp.c_str()))
+FileManager::FileManager(const char* path, long sizeChunk, int idFile)
+{
+	isComplete = true;
+	init(path,0,sizeChunk,idFile);
+}
+
+FileManager::FileManager(const char* path, long size, long sizeChunk, int idFile)
+{
+	isComplete = false;
+	init(path,size,sizeChunk,idFile);
+}
+
+void FileManager::init(const char* path, long size, long sizeChunk, int idFile)
+{
+	this->idFile = idFile;
+	this->sizeChunk = sizeChunk;
+	this->sizeFile = size;
+
+	string pathStrTmp(path);
+	pathFile.assign(pathStrTmp);
+
+
+
+	if(!isComplete)
 	{
-		if(getFreeDiskSpace() >= (unsigned)size)
+		string pathStr(path);
+		pathStr += ".STATE";
+
+		pathFileState.assign(pathStr);
+
+		//on vérifi si le fichier d'enregistrement de l'état existe
+
+		if (!existFile(pathFileState.c_str()))
 		{
-			reserveFile(pathStrTmp.c_str(), size);
-		}else
+			//si non, on le crée et on l'initialise à 0
+			ofstream tmp(pathStr.c_str());
+			tmp << 0;
+			tmp.close();
+
+		}
+		else
 		{
-			//si il n'y a pas assez d'espace libre sur le dd on lance un exception
-			throw DiskFullException();
+			if(getState()==getNumberChunk())
+			{
+				isComplete = true;
+				cout << sizeFile<<endl;
+
+			}
+
+
+		}
+	}
+
+
+	if(!isComplete)
+	{
+		pathStrTmp+=".TMP";
+		//on réserve l'emplacement du fichier sur le disque dur si il n'existe pas encore
+		if (!existFile(pathStrTmp.c_str()))
+		{
+			if(getFreeDiskSpace() >= (unsigned)size)
+			{
+				reserveFile(pathStrTmp.c_str(), size);
+			}else
+			{
+				//si il n'y a pas assez d'espace libre sur le dd on lance un exception
+				throw DiskFullException();
+			}
+
 		}
 
+		//on ouvre le fichier en mode binaire
+		file.open(pathStrTmp.c_str(),ios::binary|ios::in|ios::out|ios::ate);
+		if (!file)
+		{
+			cout<<"problème fichier "<<pathStrTmp<<endl;
+		}
+	}
+	else
+	{
+
+		file.open(pathFile.c_str(),ios::binary|ios::in|ios::ate);
 	}
 
-	//on ouvre le fichier en mode binaire
-	file.open(pathStrTmp.c_str(),ios::binary|ios::in|ios::out|ios::ate);
-	if (!file)
-	{
-		cout<<"problème fichier "<<pathStrTmp<<endl;
-	}
+
 
 	//le curseur est à la fin donc la position du curseur donne la taille du fichier
 	sizeFile = file.tellp();
 
-	string pathStr(path);
-	pathStr += ".STATE";
 
-	pathFileState.assign(pathStr);
 
-	//on vérifi si le fichier d'enregistrement de l'état existe
-	ifstream test(pathStr.c_str());
-	if (test.fail())
-	{
-		//si non, on le crée et on l'initialise à 0
-		ofstream tmp(pathStr.c_str());
-		tmp << 0;
-		tmp.close();
-	}
 
 	currentData = new char[sizeChunk];
 }
@@ -95,22 +144,37 @@ Chunk FileManager::getChunk(long number)
 }
 bool FileManager::saveChunk(Chunk &chunk)
 {
-	currentChunk = getState();
-
-	if (currentChunk == chunk.getNumber())
+	//on ne peut modifier le fichier que sil le fichier n'est pas fini
+	if(!isComplete)
 	{
-		file.seekp(currentChunk*sizeChunk, ios::beg);
-		file.write(chunk.getData(), chunk.getSize());
+		currentChunk = getState();
 
-		currentChunk++;
-		saveState();
+		if (currentChunk == chunk.getNumber())
+		{
+			file.seekp(currentChunk*sizeChunk, ios::beg);
+			file.write(chunk.getData(), chunk.getSize());
 
-		return true;
-	}
-	else
+			currentChunk++;
+			saveState();
+
+
+			if(currentChunk == getNumberChunk())
+			{
+				setCompleted();
+			}
+
+
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}else
 	{
-		return false;
+		cout <<"bad"<<endl;
 	}
+
 }
 
 long FileManager::getNumberChunk()
@@ -186,7 +250,16 @@ int64_t FileManager::getFreeDiskSpace()
 	return available;
 }
 
+void FileManager::setCompleted()
+{
+	isComplete = true;
+	string strTmp(pathFile);
+	strTmp+=".TMP";
+	file.close();
+	rename(strTmp.c_str(),pathFile.c_str());
+	file.open(pathFile.c_str(),ios::binary|ios::in);
 
+}
 
 
 

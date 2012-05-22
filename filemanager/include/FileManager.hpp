@@ -33,8 +33,21 @@
 class FileManager
 {
 public:
+
+
 	/**
-	 * Consytucteur
+	 * Constructeur pour un fichier déjà complet (sur le serveur ou sur un client qui a fini de dl un fichier).
+	 * @param const char*
+	 * chemin d'accès du fichier
+	 * @param long
+	 * taille de chaque Chunk dans lesquels vont être placés les morceaux du fichier
+	 * @param int
+	 * id du fichier (renseigné dans le fichier XML de déploiement)
+	 */
+	FileManager(const char* path, long sizeChunk, int idfile);
+
+	/**
+	 * Constructeur pour un fichier incomplet ou dont on ignore l'état.
 	 * @param const char*
 	 * chemin d'accès du fichier
 	 * @param long
@@ -116,16 +129,20 @@ public:
 protected:
 	std::fstream file;
 	int idFile;
+	std::string pathFile;
 	std::string pathFileState;
 	char* currentData;
 	long currentChunk;
 	long sizeFile;
 	long sizeChunk;
+	bool isComplete;
 
+	void init(const char* path, long size, long sizeChunk, int idFile);
 	long getState();
 	void saveState();
 	bool existFile(const char* path);
 	void reserveFile(const char* path, long size);
+	void setCompleted();
 };
 
 #endif // FILEMANAGER_H
