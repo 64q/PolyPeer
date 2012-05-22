@@ -4,8 +4,9 @@
 
 #include <mongoose.h>
 
+/*TODO
 #include <PolypeerServer.hpp>
-#include <ServerData.hpp>
+#include <ServerData.hpp>*/
 #include <routes.hpp>
 
 using namespace std;
@@ -27,6 +28,7 @@ void deployments_route(mg_connection* conn, const mg_request_info* request_info)
 	mg_printf(conn, "%s", ajax_reply_start);
 	mg_printf(conn, "[");
 	
+	/*TODO
 	PolypeerServer* server = PolypeerServer::getInstance();
 	
 	ServerData& data = server->getServerData();
@@ -40,7 +42,7 @@ void deployments_route(mg_connection* conn, const mg_request_info* request_info)
 			mg_printf(conn, ",");
 		}
 	
-	}
+	}*/
 	
 	mg_printf(conn, "]");
 }
