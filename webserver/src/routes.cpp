@@ -33,7 +33,8 @@ void deployments_route(mg_connection* conn, const mg_request_info* request_info)
 	
 	vector<File*>* files = data.getDeployFiles();
 	for (vector<File*>::iterator it = files->begin(); it != files->end(); it++) {
-		mg_printf(conn, "{\"id\":%i, \"filename\":%s}", it->getFileManager()->getIdFile(), it->getFileManager()->getFilePath());
+		FileManager* fm = (*it)->getFileManager();
+		mg_printf(conn, "{\"id\":%i, \"filename\":%s}", fm->getIdFile(), fm->getFileName().c_str());
 		
 		if (it != files->end()--) {
 			mg_printf(conn, ",");

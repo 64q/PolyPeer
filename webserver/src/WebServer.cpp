@@ -59,7 +59,7 @@ void WebServer::start()
 	// Lancement du serveur
 	this->context = mg_start(eventHandler, NULL, mg_options);
 	
-	logger << notice << "Le serveur web a été démarré sur le port " << this->port << endlog;
+	logger << notice << "Le serveur web a été démarré sur le port " << this->port << "." << endlog;
 	
 	if (this->context == NULL)
 	{
@@ -69,7 +69,7 @@ void WebServer::start()
 
 void WebServer::run()
 {
- // TODO NOTHING
+	// Non implémenté
 }
 
 void WebServer::stop()
@@ -78,12 +78,15 @@ void WebServer::stop()
 	
 	mg_stop(this->context);
 	
-	this->logger.put("notice", "le serveur a été arrêté.");
+	logger << notice << "Le serveur web a été arrêté." << endlog;
 }
 
 void WebServer::restart()
 {
-	this->logger.put("notice", "le serveur a été redémarré.");
+	this->stop();
+	sleep(5);
+	this->start();
+	logger << notice << "Le serveur web a été redémarré." << endlog;
 }
 
 void WebServer::toggleDebug()
@@ -101,20 +104,6 @@ void WebServer::toggleDebug()
 bool WebServer::isDebug()
 {
 	return this->debug;
-}
-
-void WebServer::call(mg_connection *conn, const mg_request_info *request_info)
-{
-	map<string, route_handler>::iterator it = routes.find(request_info->uri);
-	
-	if (it != routes.end()) 
-	{
-		it->second(conn, request_info);
-	}
-	else
-	{
-		routes.find("/ajax/error")->second(conn, request_info);
-	}
 }
 
 void* eventHandler(mg_event event, mg_connection *conn, const mg_request_info *request_info)
@@ -136,6 +125,10 @@ void* eventHandler(mg_event event, mg_connection *conn, const mg_request_info *r
 		}
 	} else {
 		processed = NULL;
+	}
+	
+	if (webserver->isDebug()) {
+		webserver->getLogger() << debug << "Route appellée '" << request_info->uri << "' avec les paramètres '" << request_info->query_string << "." << endlog;
 	}
 
 	return const_cast<void*> (processed);

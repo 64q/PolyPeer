@@ -35,11 +35,6 @@ public:
 	void restart();
 	
 	/**
-	 * Appelle la route spécifiée
-	 */
-	void call(mg_connection*, const mg_request_info*);
-	
-	/**
 	 * Permet de passer en mode debug et inversement
 	 */
 	void toggleDebug();
