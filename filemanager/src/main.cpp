@@ -2,8 +2,8 @@
 #include <fstream>
 #include <string>
 
-#include <md5.hpp>
 #include <FileManager.hpp>
+
 
 
 using namespace std;
@@ -11,10 +11,11 @@ using namespace std;
 int main()
 {
 
-    char file1[] = "a.png";
-    char file2[] = "test.png";
 
-    FileManager fmanager(file1, 100000, 2312);
+    char file1[] = "../filemanager/dossier/a.png";
+    char file2[] = "./dossiesrm/dos/test.png";
+
+    FileManager fmanager(file1, 1000, 2312);
 
     FileManager cible(file2,fmanager.getFileSize(), fmanager.getChunkSize(), 1);
 
@@ -62,7 +63,7 @@ int main()
 
     }
 
-//cout<<FileManager::getFreeDiskSpace()/(1)<<endl;
+
 
 
 

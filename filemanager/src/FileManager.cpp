@@ -3,7 +3,12 @@
 #include <fstream>
 #include <sstream>
 
+#include <sys/stat.h>
+#include <sys/types.h>
+
 #include <FileManager.hpp>
+#include <DiskFullException.hpp>
+#include <OpenFileException.hpp>
 
 using namespace std;
 
@@ -29,6 +34,8 @@ void FileManager::init(const char* path, long size, long sizeChunk, int idFile)
 	string pathStrTmp(path);
 	pathFile.assign(pathStrTmp);
 
+
+	checkDirectory(pathStrTmp);
 
 
 	if(!isComplete)
@@ -81,7 +88,7 @@ void FileManager::init(const char* path, long size, long sizeChunk, int idFile)
 		file.open(pathStrTmp.c_str(),ios::binary|ios::in|ios::out|ios::ate);
 		if (!file)
 		{
-			cout<<"problème fichier "<<pathStrTmp<<endl;
+			throw OpenFileException();
 		}
 	}
 	else
@@ -234,11 +241,24 @@ long FileManager::getCurrentNumberChunk()
 int64_t FileManager::getFreeDiskSpace()
 {
 	 int64_t available;
+
+int ind = pathFile.find_last_of("/\\");
+        string tmp;
+
+        if(ind>0)
+        {
+            tmp = pathFile.substr(0,ind);
+        }
+        else
+        {
+            tmp = "./";
+        }
     #ifdef WIN32
-        GetDiskFreeSpaceEx(NULL,(PULARGE_INTEGER)&available,NULL,NULL);
+
+		GetDiskFreeSpaceEx(tmp.c_str(),(PULARGE_INTEGER)&available,NULL,NULL);
     #elif defined (linux)
         struct statfs sf;
-        statfs("./", &sf);
+        statfs(tmp.c_str(), &sf);
         //f_bavail contient le nombre de blocks disponibles, f_bsize contient la taille d'un block en octet
         available=sf.f_bavail*sf.f_bsize;
     #endif
@@ -254,10 +274,37 @@ void FileManager::setCompleted()
 	file.close();
 	rename(strTmp.c_str(),pathFile.c_str());
 	file.open(pathFile.c_str(),ios::binary|ios::in);
+}
+
+void FileManager::checkDirectory(std::string pathDirectory)
+{
+
+    createDirectory( pathDirectory, "");
 
 }
 
+void FileManager::createDirectory(std::string pathDirectory, std::string currentPath)
+{
+    //tout les traitement sont fait même si les répertoires existent déjà
 
+	//on découpe la chaîne par le séparateur / ou \ pour pouvoir créer dosier par dossier en caas d'imbrication
+	int ind = pathDirectory.find_first_of("/\\");
+
+	//si il y a un séparateur de dossier c'est qu'il faut en crée un
+	if(ind>0)
+	{
+		string tmp = currentPath + pathDirectory.substr(0,ind);
+    #ifdef WIN32
+		CreateDirectory(tmp.c_str(), NULL);
+    #elif defined(linux)
+
+        mkdir(tmp.c_str(),655);
+    #endif
+		createDirectory(pathDirectory.substr(ind+1), tmp+"/");
+	}
+
+
+}
 
 
 

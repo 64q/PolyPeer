@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include <Chunk.hpp>
-#include <DiskFullException.hpp>
+
 
 #ifdef WIN32 /* si vous êtes sous Windows */
 #include <windows.h>
@@ -124,7 +124,7 @@ public:
 	 * @return long
 	 * taille disponible sur le disque dur en octet.
 	 */
-	static int64_t getFreeDiskSpace();
+	int64_t getFreeDiskSpace();
 
 protected:
 	std::fstream file;
@@ -143,6 +143,8 @@ protected:
 	bool existFile(const char* path);
 	void reserveFile(const char* path, long size);
 	void setCompleted();
+	void checkDirectory(std::string pathDirectory);
+	void createDirectory(std::string pathDirectory, std::string currentPath);
 };
 
 #endif // FILEMANAGER_H
