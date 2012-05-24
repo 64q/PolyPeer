@@ -1,11 +1,13 @@
 #include <PacketCallback.hpp>
 
+using namespace std;
+
 PacketCallback* PacketCallback::instance = 0;
 
-PacketCallback::PacketCallback()	
-{ 
+PacketCallback::PacketCallback()
+{
 	listOperations.resize ( int (End_PaquetType), NULL);
-	
+
 	// Configuration des callback
 	this->addOperation (ENewFile, callbackNewFile);
 	this->addOperation (ESendOperation, callbackSendOperation);
@@ -15,7 +17,7 @@ PacketCallback::PacketCallback()
 	this->addOperation (EMd5Error, callbackMd5Error);
 	this->addOperation (EDiskFull, callbackPacketDiskFull);
 	this->addOperation (ESendOperationFinished, callbackPacketSendOperationFinished);
-	
+
 }
 
 void PacketCallback::addOperation (PacketType type, pOperation pOp)

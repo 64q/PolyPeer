@@ -16,12 +16,6 @@
 #include <ServerData.hpp>
 
 
-using namespace std;
-
-int callbackSendOperation (Packet& p);
-
-int callbackSendChunk (Packet& p);
-
 int callbackReady (Packet& p);
 
 int callbackChunkReceived (Packet& p);

@@ -13,7 +13,7 @@ int main()
 
 
     char file1[] = "../filemanager/dossier/a.png";
-    char file2[] = "./dossiesrm/dos/test.png";
+    char file2[] = "./media/DCED-6AD4/dossier/test.png";
 
     FileManager fmanager(file1, 1000, 2312);
 
