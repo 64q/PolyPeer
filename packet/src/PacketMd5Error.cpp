@@ -1,5 +1,10 @@
+// Class header
 #include <PacketMd5Error.hpp>
 
+// STL
+#include <iostream>
+
+using namespace std;
 
 PacketMd5Error::PacketMd5Error(int idFile, int numChunk) : Packet()
 {

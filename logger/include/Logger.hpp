@@ -1,6 +1,8 @@
 #ifndef __H_LOGGER__
 #define __H_LOGGER__
 
+
+// Library header
 #include <sstream>
 #include <fstream>
 

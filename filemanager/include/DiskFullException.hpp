@@ -3,7 +3,7 @@
 
 #include <exception>
 
-class DiskFullException: public exception
+class DiskFullException: public std::exception
 {
 
 	public:

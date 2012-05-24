@@ -1,8 +1,19 @@
-#include <callbackFunction.hpp>
+// Class header
+#include <callbackFunctionHost.hpp>
+
+// STL
+#include <iostream>
+
+// Project header
+#include <PolypeerClient.hpp>
+#include <ClientData.hpp>
+#include <Packet.hpp>
+#include <includePacket.hpp>
+
+
 using namespace std;
 
-
-int callbackNewFile (Packet& p)
+int callbackNewFile(Packet& p)
 {
 	PacketNewFile pp (p);
 
@@ -39,7 +50,7 @@ int callbackNewFile (Packet& p)
 	return 1;
 }
 
-int callbackSendOperation (Packet& p)
+int callbackSendOperation(Packet& p)
 {
 	PacketSendOperation pp (p);
 
@@ -60,7 +71,7 @@ int callbackSendOperation (Packet& p)
 	return 1;
 }
 
-int callbackSendChunk (Packet& p)
+int callbackSendChunk(Packet& p)
 {
 	PacketSendChunk pp (p);
 

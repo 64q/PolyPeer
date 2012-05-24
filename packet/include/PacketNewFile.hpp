@@ -15,13 +15,8 @@
  */
 
 
-// Entêtes
-#include <iostream>
-#include <Chunk.hpp>
-
+// Project header
 #include <Packet.hpp>
-
-using namespace std;
 
 class PacketNewFile : public Packet
 {
@@ -33,7 +28,7 @@ public:
 	* Création d'un PacketNewFile pret à être envoyé
 	*
 	*/
-	PacketNewFile(int idFile, string fileName, int size, int sizeChunk);
+	PacketNewFile(int idFile, std::string fileName, int size, int sizeChunk);
 
 	/**
 	* Constructeur sur un Packet (une maniere de caster un Packet)
@@ -47,7 +42,7 @@ public:
 
 	int getIdFile ();
 
-	string getFileName ();
+	std::string getFileName ();
 
 	int getFileSize ();
 

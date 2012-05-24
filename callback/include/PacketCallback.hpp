@@ -12,15 +12,11 @@
  */
 
 
-// Entêtes
-#include <iostream>
+// Library header
 #include <vector>
 
-
-#include <Packet.hpp>	// pour gérer le conteneur
-#include <callbackFunction.hpp>
-
-
+// Project header
+#include <Packet.hpp>
 
 
 /**
@@ -46,7 +42,7 @@ private:
 	/**
 	 * liste des fonctions de callback
 	 */
-	vector<pOperation> listOperations;
+	std::vector<pOperation> listOperations;
 
 
 public:

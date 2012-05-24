@@ -8,25 +8,20 @@
  * par Olivier
  */
 
-// Entêtes
-#include <iostream>
-#include <Packet.hpp>
-#include <includePacket.hpp>
+// forward declaration
+class Packet;
 
-#include <ServerData.hpp>
+int callbackReady(Packet& p);
 
+int callbackChunkReceived(Packet& p);
 
-int callbackReady (Packet& p);
+int callbackMd5Error(Packet& p);
 
-int callbackChunkReceived (Packet& p);
+int callbackNewFile(Packet& p);
 
-int callbackMd5Error (Packet& p);
+int callbackPacketDiskFull(Packet& p);
 
-int callbackNewFile (Packet& p);
-
-int callbackPacketDiskFull (Packet& p);
-
-int callbackPacketSendOperationFinished (Packet& p);
+int callbackPacketSendOperationFinished(Packet& p);
 
 
 

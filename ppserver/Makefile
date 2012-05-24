@@ -253,15 +253,15 @@ PacketNewFile.o: $(PACKET)$(SRC)PacketNewFile.cpp
 #
 ############################
 
-CallbackManager=PacketCallback.o callbackFunction.o
+CallbackManager=PacketCallback.o callbackFunctionServer.o
 
 # Compilation du PacketManager
 PacketCallback.o:  $(CB)$(SRC)PacketCallback.cpp
 	@echo $^
 	@$(CC) -c $^ $(CFLAGS)
 
-# Compilation du callbackFunction
-callbackFunction.o: $(CB)$(SRC)callbackFunction.cpp
+# Compilation du callbackFunctionServer
+callbackFunctionServer.o: $(CB)$(SRC)callbackFunctionServer.cpp
 	@echo $^
 	@$(CC) -c $^ $(CFLAGS)
 

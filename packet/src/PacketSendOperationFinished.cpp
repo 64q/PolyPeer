@@ -1,5 +1,11 @@
+// Class header
 #include <PacketSendOperationFinished.hpp>
 
+// STL
+#include <iostream>
+
+
+using namespace std;
 
 PacketSendOperationFinished::PacketSendOperationFinished() : Packet()
 {

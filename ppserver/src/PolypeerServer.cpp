@@ -1,9 +1,17 @@
-#include <iostream>
-
+// Class header
 #include <PolypeerServer.hpp>
 
-using namespace std;
+// STL
+#include <iostream>
 
+// Project header
+#include <ServerData.hpp>
+#include <WebServer.hpp>
+#include <PacketCallback.hpp>
+#include <callbackFunctionServer.hpp>
+
+
+using namespace std;
 
 PolypeerServer* PolypeerServer::instance = NULL;
 
@@ -13,6 +21,16 @@ PolypeerServer::PolypeerServer() :
 	logger.setVerboseMode(true);
 	logger << "Lancement du serveur Polypeer..."<<endlog;
 	webserver = WebServer::getInstance();
+	
+	
+	// initialisation du system de callBack
+	// -> permet l'appel "automatique des traitement pour un paquet
+	PacketCallback * pcb = PacketCallback::getPacketCallback();
+	pcb->addOperation (EReady, callbackReady);
+	pcb->addOperation (EChunkReceived, callbackChunkReceived);
+	pcb->addOperation (EMd5Error, callbackMd5Error);
+	pcb->addOperation (EDiskFull, callbackPacketDiskFull);
+	pcb->addOperation (ESendOperationFinished, callbackPacketSendOperationFinished);
 }
 
 PolypeerServer::~PolypeerServer()
@@ -50,13 +68,13 @@ void PolypeerServer::run()
 {
 	// propre à 'instance serveur polypeer
 	PolypeerServer* server = PolypeerServer::getInstance();
-	ServerData& data = server->getServerData();
+	//ServerData& data = server->getServerData();
 	
 	// liste des déploiements - PENSER A REMETTRE CETTE VARIABLE A JOUR REGULIEREMENT
-	vector<File*>* files = data.getDeployFiles();
+	//vector<File*>* files = data.getDeployFiles();
 	
 	// liste temporaire des entités du déploiement
-	vector<Entity*>* entities;
+	//vector<Entity*>* entities;
 	
 	cout<< "Lancement Algo de décision" << endl;
 	

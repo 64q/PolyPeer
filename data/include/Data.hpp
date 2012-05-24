@@ -13,14 +13,9 @@
  * par Olivier
  */
 
-
-// standard
-#include <iostream>
+// Library header
 #include <string>
-#include <cstring>
-#include <cmath>
 
-using namespace std;
 
 class Data
 {
@@ -133,7 +128,7 @@ public:
 	 * @return Data&
 	 * 	référence sur le data modifié
 	 */
-	Data& add ( const string& s );
+	Data& add ( const std::string& s );
 	
 	/**
 	 * Ajouter un conteneur
@@ -163,7 +158,7 @@ public:
 	 * Récupérer le contenu de Data avec un string
 	 * @return string
 	 */
-	string getString () const;
+	std::string getString () const;
 	
 	/**
 	 * Affichage du contenu pour les test
@@ -175,11 +170,11 @@ public:
 	// Les fonctions suivantes permettent une utilisation rapide des fonctions add ( ... );
 	
 	Data& operator+= ( char c ) { return add ( c ); }
-	Data& operator+= ( const string& s ) { return add ( s ); }
+	Data& operator+= ( const std::string& s ) { return add ( s ); }
 	Data& operator+= ( const Data& d ) { return add ( d ); }
 	
 	Data& operator<< ( char c ) { return add ( c ); }
-	Data& operator<< ( const string& s ) { return add ( s ); }
+	Data& operator<< ( const std::string& s ) { return add ( s ); }
 	Data& operator<< ( const Data& d ) { return add ( d ); }
 
 	

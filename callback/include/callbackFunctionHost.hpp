@@ -8,19 +8,12 @@
  * par Olivier
  */
 
-// Entêtes
-#include <iostream>
-#include <Packet.hpp>
-#include <includePacket.hpp>
+// forward declaration
+class Packet;
 
-#include <Clientdata.hpp>
+int callbackSendOperation(Packet& p);
 
-
-using namespace std;
-
-int callbackSendOperation (Packet& p);
-
-int callbackSendChunk (Packet& p);
+int callbackSendChunk(Packet& p);
 
 
 

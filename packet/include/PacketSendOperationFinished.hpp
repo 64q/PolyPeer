@@ -13,12 +13,8 @@
  */
 
 
-// Entêtes
-#include <iostream>
-#include <string>
-
+// Project header
 #include <Packet.hpp>
-#include <Data.hpp>
 
 using namespace std;
 

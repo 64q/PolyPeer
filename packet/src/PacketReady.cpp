@@ -1,5 +1,10 @@
+// Class header
 #include <PacketReady.hpp>
 
+// STL
+#include <iostream>
+
+using namespace std;
 
 PacketReady::PacketReady(int idFile, int numChunk) : Packet()
 {

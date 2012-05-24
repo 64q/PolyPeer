@@ -9,19 +9,13 @@
  * Gérer un type de packet spécifique
  *
  *
- *
- *
  * par Olivier
  */
 
 
-// Entêtes
-#include <iostream>
-#include <string>
-
+// Project class
 #include <Packet.hpp>
 
-using namespace std;
 
 class PacketChunkReceived : public Packet
 {
