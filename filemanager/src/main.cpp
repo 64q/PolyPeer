@@ -15,7 +15,7 @@ int main()
     char file1[] = "../filemanager/dossier/a.png";
     char file2[] = "./media/DCED-6AD4/dossier/test.png";
 
-    FileManager fmanager(file1, 1000, 2312);
+    FileManager fmanager(file1, 345);
 
     FileManager cible(file2,fmanager.getFileSize(), fmanager.getChunkSize(), 1);
 

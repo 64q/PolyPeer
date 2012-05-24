@@ -13,7 +13,7 @@
 using namespace std;
 
 
-FileManager::FileManager(const char* path, long sizeChunk, int idFile)
+FileManager::FileManager(const char* path, int idFile, long sizeChunk)
 {
 	isComplete = true;
 	init(path,0,sizeChunk,idFile);

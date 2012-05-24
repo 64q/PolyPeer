@@ -39,12 +39,12 @@ public:
 	 * Constructeur pour un fichier déjà complet (sur le serveur ou sur un client qui a fini de dl un fichier).
 	 * @param const char*
 	 * chemin d'accès du fichier
-	 * @param long
-	 * taille de chaque Chunk dans lesquels vont être placés les morceaux du fichier
 	 * @param int
 	 * id du fichier (renseigné dans le fichier XML de déploiement)
+	 * @param long
+	 * taille de chaque Chunk dans lesquels vont être placés les morceaux du fichier
 	 */
-	FileManager(const char* path, long sizeChunk, int idfile);
+	FileManager(const char* path, int idFile, long sizeChunk=1000);
 
 	/**
 	 * Constructeur pour un fichier incomplet ou dont on ignore l'état.
