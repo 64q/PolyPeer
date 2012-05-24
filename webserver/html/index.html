@@ -1,26 +1,36 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!-- headers standards -->
 		<meta charset="utf-8" />
-		<title>Accueil PolyPeer WebServer</title>
+		<title>PolyPeer WebServer</title>
 		<link rel="stylesheet" href="design/style.css" />
+		<!-- Scripts JS -->
+		<script src="js/json.js"></script>
+		<script src="js/utils.js"></script>
+		<script src="js/main.js"></script>
 	</head>
 	<body>
-		<!# include(header.html) #!>
-		<h1>Accueil PolyPeer WebServer</h1>
-		<!# include(navbar.html) #!>
+		<header>
+			<div id="state">Chargement en cours...</div>
+			<h1>PolyPeer WebServer</h1>
+		</header>
+		<nav>
+			<ul style="float:right;">
+				<li><a href="#admin" class="link">Administration</a></li>
+			</ul>
+			<ul>
+				<li><a href="#home" class="link">Accueil</a></li>
+				<li><a href="#deployments" class="link">Déploiements</a></li>
+				<li><a href="#network" class="link">Réseau</a></li>
+				<li><a href="#new" class="link">Nouveau déploiement</a></li>
+			</ul>
+		</nav>
 		<div id="content">
-			<p>
-				Bienvenue sur la page d'administration du serveur PolyPeer
-			</p>
-			<p>
-				Pilotez l'installation PolyPeer à partir de cette page web.
-			</p>
-			<h2>Informations utiles</h2>
-			<p>
-				Afin d'exploiter au maximum l'interface d'administration, veuillez vous référer à la page de documentation, <a href="/doc">disponible ici</a>.
-			</p>
+			Chargement du contenu en cours ...
 		</div>
-		<!# include(footer.html) #!>
+		<footer>
+			WebServer powered by Mongoose &ndash; PolyPeer 2012
+		</footer>
 	</body>
 </html>

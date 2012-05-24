@@ -5,25 +5,31 @@
 #include <fstream>
 
 /**
- * Le logger permet d'enregistrer dans un fichier toute trace textuelle émise par
- * les serveurs afin de pouvoir traiter les éventuelles erreurs/informations.
+ * Les terminaisons de ligne pour l'insertion par flux
  */
- 
 typedef enum
 {
-	endLog,
-	endLine,
-}ELogAction;
+	endlog,
+	endline,
+} ELogAction;
 
+/**
+ * Les différents niveaux de logs
+ */
 typedef enum
 {
-	normal=0,
+	normal = 0,
 	alert,
 	error,
 	critical,
-}ELogImportance;
+	notice,
+	debug,
+} ELogImportance;
  
- 
+/**
+ * Le logger permet d'enregistrer dans un fichier toute trace textuelle émise par
+ * les serveurs afin de pouvoir traiter les éventuelles erreurs/informations.
+ */
 class Logger
 {
 public:
@@ -72,21 +78,26 @@ public:
 
 	/**
 	 * Récupérer la chaine de caracteres correspondant au type
+	 * @param LogLevel
+	 * 	niveau de la ligne de log
+	 * @return string
+	 *		la chaine associé au niveau
 	 */
 	std::string getType (const ELogImportance logType);
 	
 	/**
-	 * gestion du mode verbose
+	 * Gère le mode d'output
+	 * @param bool
+	 * 	le mode d'affichage (true = cout + fichier, false = fichier)
 	 */
-	void setVerboseMode(bool mode){verbose=mode;}
-	bool getVerboseMode() const {return verbose;}
+	void setVerboseMode(bool mode) { verbose = mode; }
 	
 	/**
-	 * Récupère le contenu du fichier de log dans une chaine
-	 * @return string
-	 * 	contenu du fichier de log
+	 * Retourne l'état du mode d'affichage
+	 * @return bool
+	 * 	le mode d'affichage
 	 */
-	std::string getContent();
+	bool getVerboseMode() const { return verbose; }
 	
 private:
 	/*
@@ -100,21 +111,21 @@ private:
 	 * ofstream sur le fichier où l'on enregistre
 	 */
 	std::ofstream file;
-	
+
 	/**
 	 * Chaine temporaire de sauvegarde pour le flux
 	 */
-	 std::string stringSave;
-	 
-	 /**
+	std::string stringSave;
+
+	/**
 	 * sauvegarde du type temporaire
 	 */
-	 ELogImportance typeSave;
-	 
-	 /**
-	  * Mode du débugger
-	  */
-	  bool verbose;
+	ELogImportance typeSave;
+
+	/**
+	 * Mode du débugger
+	 */
+	bool verbose;
 };
 
 #endif

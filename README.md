@@ -11,6 +11,7 @@ Technologies utilisées
 PolyPeer utilise les technologies suivantes :
 
 * La STL de C++
+* Mongoose, embedded webserver
 
 Cahier des charges
 ------------------
@@ -27,10 +28,10 @@ Le sous projet doit être un dossier sans majuscules.
 
 ```
 projet1/
-	include/		-- Contient les headers
-	src/			-- Contient les sources
-	Makefile		-- Nécessaire à la compilation de l'exemple
-	.gitignore	-- Nécessaire pour éviter de push les .o et l'executable
+	include/     -- Contient les headers
+	src/         -- Contient les sources
+	Makefile     -- Nécessaire à la compilation de l'exemple
+	.gitignore   -- Nécessaire pour éviter de push les .o et l'executable
 ```
 
 Dans chaque sous projet :
@@ -42,6 +43,26 @@ Dans chaque sous projet :
 * Pensez à créer un .gitignore pour ne pas pusher les .o et l'executable du sous projet.
 
 /!\ Pas de fichiers .cpp en dehors de src/ /!\
+
+#### Arborescence actuelle des projets
+
+Le projet est actuellement divisé en sous-projets que voici :
+
+```
+XMLTool/     -- Contient les utilitaires de gestion de fichiers XML et de peuplement des structs de données
+callback/    -- Contient les fonctions d'actions sur les paquets
+connection/  -- Contient le gestionnaire de connexions
+data/        -- Contient l'utilitaire de gestion des données
+filemanager/ -- Contient le gestionnaire de fichier
+logger/      -- Contient l'utilitaire de gestion des logs
+mutex/       -- Contient la bibliothèque de gestion des mutex
+packet/      -- Contient les paquets et leur gestionnaire
+ppclient/    -- Contient le client polypeer
+ppserver/    -- Contient le serveur polypeer
+tcp/         -- Contient la bibliothèque de gestion des Sockets
+tests/       -- Contient des tests en tout genre
+webserver/   -- Contient le gestionnaire de l'interface web
+```
 
 ### Conventions de nommages
 

@@ -6,6 +6,7 @@
 #include <mongoose.h>
 
 #include <WebServer.hpp>
+#include <routes.hpp>
 
 using namespace std;
 
@@ -13,6 +14,8 @@ static const char *mg_options[] = {
   "document_root", "html",
   "listening_ports", "6969",
   "num_threads", "5",
+  "global_passwords_file", "passwd",
+  "authentication_domain", "polypeer.polytech.prive",
   NULL
 };
 
@@ -25,6 +28,15 @@ WebServer::WebServer() :
 	this->port = 6969;
 	this->debug	= false;
 	this->running = true;
+	
+	// insertion des routes
+	routes.insert(pair<string, route_handler>("/ajax/error", error_route));
+	routes.insert(pair<string, route_handler>("/ajax/get_stats", get_stats_route));
+	routes.insert(pair<string, route_handler>("/ajax/get_host", get_host_route));
+	routes.insert(pair<string, route_handler>("/ajax/deployment", deployment_route));
+	routes.insert(pair<string, route_handler>("/ajax/deployments", deployments_route));
+	routes.insert(pair<string, route_handler>("/ajax/network", network_route));
+	routes.insert(pair<string, route_handler>("/ajax/new_deployment", new_deployment_route));
 }
 
 WebServer::~WebServer()
@@ -47,6 +59,8 @@ void WebServer::start()
 	// Lancement du serveur
 	this->context = mg_start(eventHandler, NULL, mg_options);
 	
+	logger << notice << "Le serveur web a été démarré sur le port " << this->port << "." << endlog;
+	
 	if (this->context == NULL)
 	{
 		throw exception();
@@ -55,24 +69,7 @@ void WebServer::start()
 
 void WebServer::run()
 {
-	// not implemented
-}
-
-void* eventHandler(mg_event event, mg_connection *conn, const mg_request_info *request_info)
-{
-	const void *processed = "yes";
-
-	if (event == MG_NEW_REQUEST) {
-		if (strcmp(request_info->uri, "/test") == 0) {
-			processed = NULL;
-		} else {
-			processed = NULL;
-		}
-	} else {
-		processed = NULL;
-	}
-
-	return const_cast<void*> (processed);
+	// Non implémenté
 }
 
 void WebServer::stop()
@@ -81,12 +78,15 @@ void WebServer::stop()
 	
 	mg_stop(this->context);
 	
-	this->logger.put("notice", "le serveur a été arrêté.");
+	logger << notice << "Le serveur web a été arrêté." << endlog;
 }
 
 void WebServer::restart()
 {
-	this->logger.put("notice", "le serveur a été redémarré.");
+	this->stop();
+	sleep(5);
+	this->start();
+	logger << notice << "Le serveur web a été redémarré." << endlog;
 }
 
 void WebServer::toggleDebug()
@@ -106,3 +106,30 @@ bool WebServer::isDebug()
 	return this->debug;
 }
 
+void* eventHandler(mg_event event, mg_connection *conn, const mg_request_info *request_info)
+{
+	const void *processed = "yes";
+
+	WebServer* webserver	= WebServer::getInstance();
+	
+	if (event == MG_NEW_REQUEST) {
+		map<string, route_handler>::iterator it = webserver->routes.find(request_info->uri);
+
+		if (it != webserver->routes.end()) 
+		{
+			it->second(conn, request_info);
+		}
+		else
+		{
+			processed = NULL;
+		}
+	} else {
+		processed = NULL;
+	}
+	
+	if (webserver->isDebug()) {
+		webserver->getLogger() << debug << "Route appelée '" << request_info->uri << "' avec les paramètres '" << request_info->query_string << "." << endlog;
+	}
+
+	return const_cast<void*> (processed);
+}

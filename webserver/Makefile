@@ -6,23 +6,25 @@
 #
 
 CC=g++
-CFLAGS=-Wall -ggdb -I../tcp/include/ -I../logger/include/ -Iinclude/ -I../tcp/include/Exceptions/ -I../server/include/ -I../packet/include/
+CFLAGS=-Wall -ggdb -I../logger/include/ -Iinclude/ -I../server/include/
 LDFLAGS=-pthread -ldl
 EXEC=webserver
 SRC=src/
 INC=include/
 
 # les autres où chercher les fichiers
-TCP=../tcp/
 LOGGER=../logger/
 SRV=../server/
-PACKET=../packet/
 
 all: webserver
 
 # Edition des liens
-webserver: WebServer.o Logger.o server.o BaseServer.o mongoose.o
+webserver: WebServer.o Logger.o server.o BaseServer.o mongoose.o routes.o
 	$(CC) -o $@ $^ $(LDFLAGS)
+
+# Compilation des routes
+routes.o: $(SRC)routes.cpp
+	$(CC) -c $^ $(CFLAGS)
 
 # Compilation du server
 WebServer.o: $(SRC)WebServer.cpp

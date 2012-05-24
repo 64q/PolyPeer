@@ -6,7 +6,7 @@
 #
 
 CC=g++
-CFLAGS=-Wall -ggdb
+CFLAGS=-Wall -ggdb -Iinclude/
 LDFLAGS=
 EXEC=logger
 SRC=src/

@@ -7,7 +7,8 @@
 #include <ctime>
 #include <cstdlib>
 
-#include "../include/Logger.hpp"
+#include <Logger.hpp>
+#include <OpenFileException.hpp>
 
 using namespace std;
 
@@ -17,7 +18,7 @@ Logger::Logger(const string& path) : stringSave(""), typeSave(normal), verbose(f
 	
 	if (!this->file.is_open()) 
 	{
-		throw new std::exception;
+		throw OpenFileException();
 	}
 }
 
@@ -36,24 +37,18 @@ void Logger::put(const string& type, const string& content)
 	this->file << "[" << buffer << "] [" << type << "] " << content << endl;
 }
 
-string Logger::getContent()
-{
-	return string("unimplemented");
-}
-
 Logger& Logger::operator<<(const ELogAction logAct)
 {
-
 	switch (logAct)
 	{
-		case endLog :
+		case endlog:
 			if (verbose || (typeSave>normal))
 			put(getType(typeSave), stringSave);
-			stringSave="";
-			typeSave=normal;
+			stringSave = "";
+			typeSave = normal;
 			break;
-		case endLine :
-			stringSave+="\n";
+		case endline :
+			stringSave += "\n";
 			break;
 	}
 	return *this;
@@ -61,30 +56,37 @@ Logger& Logger::operator<<(const ELogAction logAct)
 
 Logger& Logger::operator<<(const ELogImportance logType)
 {
-	typeSave=logType;
+	typeSave = logType;
 	return *this;
 }
 
-string Logger::getType (const ELogImportance logType)
+string Logger::getType(const ELogImportance logType)
 {
 	string toReturn;
+	
 	switch (logType)
 	{
-		case normal :
-			toReturn="normal";
+		case normal:
+			toReturn = "normal";
 			break;
-		case alert :
-			toReturn="ALERT";
+		case alert:
+			toReturn = "alert";
 			break;
-		case error :
-			toReturn="ERROR";
+		case error:
+			toReturn = "error";
 			break;
-		case critical :
-			toReturn="CRITICAL";
+		case critical:
+			toReturn = "critical";
 			break;
+		case debug:
+			toReturn = "debug";
+			break;
+		case notice:
+			toReturn = "notice";
 		default :
-			toReturn="undefined";
+			toReturn = "undefined";
 	}
+	
 	return toReturn;
 }
 

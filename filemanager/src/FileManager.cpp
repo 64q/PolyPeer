@@ -3,42 +3,107 @@
 #include <fstream>
 #include <sstream>
 
+#include <sys/stat.h>
+#include <sys/types.h>
+
 #include <FileManager.hpp>
+#include <DiskFullException.hpp>
+#include <OpenFileException.hpp>
 
 using namespace std;
 
-FileManager::FileManager(const char* path, long size, long sizeChunk, int idFile):idFile(idFile), sizeChunk(sizeChunk)
+
+FileManager::FileManager(const char* path, long sizeChunk, int idFile)
 {
-	//on réserve l'emplacement du fichier sur le disque dur si il n'existe pas encore
-	if (!existFile(path))
+	isComplete = true;
+	init(path,0,sizeChunk,idFile);
+}
+
+FileManager::FileManager(const char* path, long size, long sizeChunk, int idFile)
+{
+	isComplete = false;
+	init(path,size,sizeChunk,idFile);
+}
+
+void FileManager::init(const char* path, long size, long sizeChunk, int idFile)
+{
+	this->idFile = idFile;
+	this->sizeChunk = sizeChunk;
+	this->sizeFile = size;
+
+	string pathStrTmp(path);
+	pathFile.assign(pathStrTmp);
+
+
+	checkDirectory(pathStrTmp);
+
+
+	if(!isComplete)
 	{
-		reserveFile(path, size);
+		string pathStr(path);
+		pathStr += ".STATE";
+
+		pathFileState.assign(pathStr);
+
+		//on vérifi si le fichier d'enregistrement de l'état existe
+
+		if (!existFile(pathFileState.c_str()))
+		{
+			//si non, on le crée et on l'initialise à 0
+			ofstream tmp(pathStr.c_str());
+			tmp << 0;
+			tmp.close();
+
+		}
+		else
+		{
+			if(getState()==getNumberChunk())
+			{
+				isComplete = true;
+			}
+
+
+		}
 	}
 
-	//on ouvre le fichier en mode binaire
-	file.open(path,ios::binary|ios::in|ios::out|ios::ate);
-	if (!file)
+
+	if(!isComplete)
 	{
-		cout<<"problème fichier "<<path<<endl;
+		pathStrTmp+=".TMP";
+		//on réserve l'emplacement du fichier sur le disque dur si il n'existe pas encore
+		if (!existFile(pathStrTmp.c_str()))
+		{
+			if(getFreeDiskSpace() >= (unsigned)size)
+			{
+				reserveFile(pathStrTmp.c_str(), size);
+			}else
+			{
+				//si il n'y a pas assez d'espace libre sur le dd on lance un exception
+				throw DiskFullException();
+			}
+
+		}
+
+		//on ouvre le fichier en mode binaire
+		file.open(pathStrTmp.c_str(),ios::binary|ios::in|ios::out|ios::ate);
+		if (!file)
+		{
+			throw OpenFileException();
+		}
 	}
+	else
+	{
+
+		file.open(pathFile.c_str(),ios::binary|ios::in|ios::ate);
+	}
+
+
 
 	//le curseur est à la fin donc la position du curseur donne la taille du fichier
 	sizeFile = file.tellp();
 
-	string pathStr(path);
-	pathStr += ".STATE";
 
-	pathFileState.assign(pathStr);
 
-	//on vérifi si le fichier d'enregistrement de l'état existe
-	ifstream test(pathStr.c_str());
-	if (test.fail())
-	{
-		//si non, on le crée et on l'initialise à 0
-		ofstream tmp(pathStr.c_str());
-		tmp << 0;
-		tmp.close();
-	}
 
 	currentData = new char[sizeChunk];
 }
@@ -84,22 +149,35 @@ Chunk FileManager::getChunk(long number)
 }
 bool FileManager::saveChunk(Chunk &chunk)
 {
-	currentChunk = getState();
-
-	if (currentChunk == chunk.getNumber())
+	//on ne peut modifier le fichier que sil le fichier n'est pas fini
+	bool toReturn = false;
+	if(!isComplete)
 	{
-		file.seekp(currentChunk*sizeChunk, ios::beg);
-		file.write(chunk.getData(), chunk.getSize());
+		currentChunk = getState();
 
-		currentChunk++;
-		saveState();
+		if (currentChunk == chunk.getNumber())
+		{
+			file.seekp(currentChunk*sizeChunk, ios::beg);
+			file.write(chunk.getData(), chunk.getSize());
 
-		return true;
+			currentChunk++;
+			saveState();
+
+
+			if(currentChunk == getNumberChunk())
+			{
+				setCompleted();
+			}
+
+
+			toReturn = true;
+		}
+		else
+		{
+			toReturn = false;
+		}
 	}
-	else
-	{
-		return false;
-	}
+	return toReturn;
 }
 
 long FileManager::getNumberChunk()
@@ -160,10 +238,73 @@ long FileManager::getCurrentNumberChunk()
 	return currentChunk;
 }
 
+int64_t FileManager::getFreeDiskSpace()
+{
+	 int64_t available;
+
+int ind = pathFile.find_last_of("/\\");
+        string tmp;
+
+        if(ind>0)
+        {
+            tmp = pathFile.substr(0,ind);
+        }
+        else
+        {
+            tmp = "./";
+        }
+    #ifdef WIN32
+
+		GetDiskFreeSpaceEx(tmp.c_str(),(PULARGE_INTEGER)&available,NULL,NULL);
+    #elif defined (linux)
+        struct statfs sf;
+        statfs(tmp.c_str(), &sf);
+        //f_bavail contient le nombre de blocks disponibles, f_bsize contient la taille d'un block en octet
+        available=sf.f_bavail*sf.f_bsize;
+    #endif
+
+	return available;
+}
+
+void FileManager::setCompleted()
+{
+	isComplete = true;
+	string strTmp(pathFile);
+	strTmp+=".TMP";
+	file.close();
+	rename(strTmp.c_str(),pathFile.c_str());
+	file.open(pathFile.c_str(),ios::binary|ios::in);
+}
+
+void FileManager::checkDirectory(std::string pathDirectory)
+{
+
+    createDirectory( pathDirectory, "");
+
+}
+
+void FileManager::createDirectory(std::string pathDirectory, std::string currentPath)
+{
+    //tout les traitement sont fait même si les répertoires existent déjà
+
+	//on découpe la chaîne par le séparateur / ou \ pour pouvoir créer dosier par dossier en caas d'imbrication
+	int ind = pathDirectory.find_first_of("/\\");
+
+	//si il y a un séparateur de dossier c'est qu'il faut en crée un
+	if(ind>0)
+	{
+		string tmp = currentPath + pathDirectory.substr(0,ind);
+    #ifdef WIN32
+		CreateDirectory(tmp.c_str(), NULL);
+    #elif defined(linux)
+
+        mkdir(tmp.c_str(),655);
+    #endif
+		createDirectory(pathDirectory.substr(ind+1), tmp+"/");
+	}
 
 
-
-
+}
 
 
 
