@@ -23,6 +23,7 @@ public :
 	int getSize() { return fileM->getFileSize(); }
 	int getChunkSize() { return fileM->getChunkSize(); };
 	vector<Entity*>* getDeploysOn() { return &deploysOn; }
+	vector<vector<Entity*>* >* getSortedHosts();
 	void addEntity(Entity* entity);
 	
 protected :

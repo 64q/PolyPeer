@@ -21,19 +21,27 @@
  * les accesseurs associés
  */
  
+class XMLTool;
+
 class ServerData
 {
 
 public :
+
+	/**
+	 * Constructeur d'un ServerData
+	 */
+	ServerData();
+	
 	/**
 	* Destructeur
 	*/
 	~ServerData();
-	
+
 	/**
-	* Accès au singleton de la classe
+	* Retourne un pointeur vers xmlTool
 	*/
-	static ServerData* getInstance();
+	XMLTool* getXMLTool();
 	
 	/**
 	* Retourne un pointeur vers la structure contenant la topologie du réseau
@@ -74,7 +82,7 @@ public :
 	* @param address
 	*	adress de l'Host à creer
 	*/	
-	Entity* addHost(string name, string address);
+	Entity* addHost(string name, Entity* parent,int networkCapacity, string address);
 	
 	/**
 	* Récupération de la structure hosts stockant les Host du réseau
@@ -182,11 +190,6 @@ public :
 
 protected :
 	/**
-	 * Pointeur vers une instance d'un ServerData
-	 */
-	static ServerData* instance;
-	
-	/**
 	 * Map représentant la topologie et contenant des pointeurs vers les différentes
 	 * entités du réseau
 	 */
@@ -212,16 +215,17 @@ protected :
 	 * Adresse du serveur principal
 	 */
 	string addressServ;
+	
+	/**
+	* Contient la DOM des fichiers de déploiement et de topologie
+	*/
+	XMLTool* xmlTool;
 
 private :
-	/**
-	 * Constructeur d'un ServerData
-	 */
-	ServerData();
-	
 
 	void deleteMap(map<string, Entity*>* entities, vector<string> &alreadyDelete);
 	void deleteDeployFiles();
+	void deleteHosts();
 	void displayEntities(map<string, Entity*>* entities, int level = 0);
 	Entity* getEntity(map<string, Entity*>* entities, string entityName);
 	void fillAddressList(Entity* entity, list<string> &list);

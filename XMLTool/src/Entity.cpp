@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Entity::Entity(const std::string& name) :
-	name(name)
+Entity::Entity(const std::string& name, Entity* parent, int networkCapacity) :
+	name(name), parent(parent), networkCapacity(networkCapacity)
 {
 
 }
@@ -19,3 +19,12 @@ std::string Entity::getName()
 	return name;
 }
 
+Entity* Entity::getParent()
+{
+	return parent;
+}
+
+int Entity::getNetworkCapacity()
+{
+	return networkCapacity;
+}

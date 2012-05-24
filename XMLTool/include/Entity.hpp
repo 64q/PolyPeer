@@ -23,8 +23,10 @@ public:
 	 * @param string name
 	 * 	nom de l'entité
 	 */
-	Entity(const std::string& name);
+	Entity(const std::string& name, Entity* parent, int networkCapacity);
 	std::string getName();
+	Entity* getParent();
+	int getNetworkCapacity();
 	~Entity();
 	virtual std::map<std::string, Entity*>* getEntities() = 0;
 	virtual std::vector<DeploymentState>* getDeploys() = 0;
@@ -38,6 +40,8 @@ protected:
 	 * Nom de l'entité
 	 */
 	std::string name;
+	Entity* parent;
+	int networkCapacity;
 };
 
 #endif

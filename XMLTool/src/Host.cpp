@@ -6,8 +6,8 @@
 
 using namespace std;
 
-Host::Host(const std::string& name, const std::string& ip):
-	Entity(name), ip(ip)
+Host::Host(const std::string& name, Entity* parent, int networkCapacity, const std::string& ip):
+	Entity(name, parent, networkCapacity), ip(ip)
 {
 	hostState = OFFLINE;
 }

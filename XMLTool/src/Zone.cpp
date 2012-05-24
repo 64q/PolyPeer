@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Zone::Zone(const std::string& name) :
-	Entity(name)
+Zone::Zone(const std::string& name, Entity* parent, int networkCapacity) :
+	Entity(name, parent, networkCapacity)
 {
 
 }
@@ -36,7 +36,7 @@ std::string* Zone::getIP()
 
 State Zone::getHostState()
 {
-	return WAIT;
+	return OFFLINE;
 }
 
 void Zone::setHostState(State)

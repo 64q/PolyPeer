@@ -11,33 +11,34 @@
 #include <Zone.hpp>
 #include <Host.hpp>
 #include <File.hpp>
+#include <ServerData.hpp>
 
 using namespace std;
-
+class ServerData;
 
 class XMLTool 
 {
 	
 public :
+	XMLTool(ServerData* sData);
 	~XMLTool();
 	XMLTool& operator=(XMLTool& reader); 
 	
-	static XMLTool* getInstance();
 	//Fonctions conteneurs
 	void public_displayTopology();
+	void writeFileIntoDeployments(int id, string path, int size, int chunkSize);
+	void writeEntityIntoFile(int fileId, Entity* entity);
 	
 protected :
-	static XMLTool* instance; 
 	string topologyFile;
 	string deploymentsFile;
 	TiXmlDocument DOMTopology;
 	TiXmlDocument DOMDeployments;
 	
 private :
-	XMLTool();
 	void displayTopology(TiXmlNode* node, int level = 0);
-	void readTopology(TiXmlNode* node, map<string, Entity*>* entities);
-	void readDeployments(TiXmlNode* node);
+	void readTopology(ServerData* sData, TiXmlNode* node, map<string, Entity*>* entities, Entity* parent);
+	void readDeployments(ServerData* sData, TiXmlNode* node);
 	
 };
 

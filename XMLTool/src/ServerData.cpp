@@ -2,22 +2,11 @@
 
 using namespace std;
 
-ServerData* ServerData::instance = NULL;
-
 ServerData::ServerData()
 {
 	cM = new ConnectionManager(6666);
 	addressServ = "192.168.0.1";
-}
-
-ServerData* ServerData::getInstance()
-{
-	if (instance == NULL)
-	{
-		instance = new ServerData();
-	}
-	
-	return instance;
+	xmlTool = new XMLTool(this);
 }
 
 ServerData::~ServerData()
@@ -25,7 +14,7 @@ ServerData::~ServerData()
 	delete cM;
 	vector <string> alreadyDelete;
 	deleteDeployFiles();
-	//deleteHosts();
+	deleteHosts();
 	//deleteMap(this->getEntities(), alreadyDelete);
 
 }
@@ -59,10 +48,24 @@ ServerData::~ServerData()
 void ServerData::deleteDeployFiles()
 {
 	unsigned int i;
+	for (i=0;i<deployFiles.size();i++)
+	{
+		delete deployFiles[i];
+	}
+}
+
+void ServerData::deleteHosts()
+{
+	unsigned int i;
 	for (i=0;i<hosts.size();i++)
 	{
 		delete hosts[i];
 	}
+}
+
+XMLTool* ServerData::getXMLTool()
+{
+	return xmlTool;
 }
 
 map<string, Entity*>* ServerData::getEntities()
@@ -156,9 +159,9 @@ File* ServerData::getFile(int id)
 	return toReturn;	
 }
 
-Entity* ServerData::addHost(string name, string address)
+Entity* ServerData::addHost(string name, Entity* parent, int networkCapacity, string address)
 {
-	Entity* host = new Host(name, address);
+	Entity* host = new Host(name, parent, networkCapacity, address);
 	hosts.push_back(host);
 	return host;
 }
@@ -231,7 +234,8 @@ void ServerData::displayEntities(map<string, Entity*>* entities, int level)
 		
 	for(; mit!=mend; ++mit) 
 	{
-		cout << string( level*3, ' ' ) << mit->first << " ";		
+		if (mit->second->getParent() != NULL)
+			cout << string( level*3, ' ' ) << mit->first << " | " << "capacity : "<< mit->second->getNetworkCapacity()<< " " << " | " << "parent : "<< (mit->second->getParent())->getName();		
 		if (mit->second->getEntities() != NULL)
 		{
 			cout << endl;
