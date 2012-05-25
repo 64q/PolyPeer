@@ -23,7 +23,7 @@ DATA=../data/
 CB=../callback/
 TCPEXCEPT=../tcp/include/Exceptions/
 WEB=../webserver/
-
+BASESERVER=../baseserver/
 
 # Variables de nomage et de localisation
 CC=g++
@@ -34,7 +34,7 @@ INC=include/
 # Flag pour le linker
 LDFLAGS=-lpthread -pthread -ldl
 # Flag préprocessing et compilation
-CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(TCP)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(WEB)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -D TIXML_USE_STL
+CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(TCP)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(WEB)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -I$(BASESERVER)$(INC) -D TIXML_USE_STL
 
 
 # commande par defaut
@@ -73,7 +73,7 @@ PolypeerServer.o: $(SRC)PolypeerServer.cpp
 BaseServ=BaseServer.o
 
 # Compilation du serveur PolyPeer
-BaseServer.o: $(SRC)BaseServer.cpp
+BaseServer.o: $(BASESERVER)$(SRC)BaseServer.cpp
 	@echo $^
 	@$(CC) -c $^ $(CFLAGS)
 
