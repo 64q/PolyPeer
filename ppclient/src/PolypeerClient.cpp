@@ -48,6 +48,16 @@ void PolypeerClient::start()
 	//sData = new ServerData();
 	this->running = true;
 
+	// ajouter connection avec serveur
+	try
+	{
+		Socket sock(getClientData()->getIpServer(), getClientData()->getPortServer());
+		getClientData()->getConnectionManager()->addConnection(getClientData()->getIpServer(), &sock);
+	}
+	catch(HostNotFoundException)
+	{
+		logger << "Impossible de contacter le serveur!" << endlog;
+	}
 	// Lancement du server
 	this->run();
 }
