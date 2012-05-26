@@ -25,7 +25,7 @@ TCPEXCEPT=../tcp/include/Exceptions/
 WEB=../webserver/
 BASESERVER=../baseserver/
 PPS = ../ppserver/
-ALGO = ../algorithm
+ALGO = ../algorithm/
 
 # Variables de nomage et de localisation
 CC=g++
