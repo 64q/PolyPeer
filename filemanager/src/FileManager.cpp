@@ -297,7 +297,7 @@ void FileManager::createDirectory(std::string pathDirectory, std::string current
     #ifdef WIN32
 		CreateDirectory(tmp.c_str(), NULL);
     #elif defined(linux)
-        mkdir(tmp.c_str(),655);
+        mkdir(tmp.c_str(),755);
     #endif
 		createDirectory(pathDirectory.substr(ind+1), tmp+"/");
 	}
