@@ -15,4 +15,10 @@
         <host ref="PC8" />
         <host ref="PC11" />
     </file>
+    <file id="27" name="D4" path="" size="-1" chunkSize="1000">
+        <host ref="PC6" />
+        <host ref="PC7" />
+        <host ref="PC8" />
+        <host ref="PC11" />
+    </file>
 </deployments>
