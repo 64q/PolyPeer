@@ -123,6 +123,8 @@ void ShareDeployment::nextStep()
 					{
 						// envoie packet
 						cout<<"\t\t\t Envoie d'un nouveau Chunk sur le maitre de zone" << endl;
+						
+						//sData->getConnectionManager()->sendTo((*(entity->getIP())), PacketSendChunk(Chunk& chunk));
 						// ajout du déploiement sur forme d'arbre de la zone dans les actions en attentes
 						cout<<"\t\t\t Création de l'arbre de déploiement sous forme d'action dans la liste d'attente" << endl;
 					}
