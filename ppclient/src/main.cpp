@@ -1,4 +1,6 @@
-include <iostream>
+#include <iostream>
+
+#include <PolyPeerClient.hpp>
 
 using namespace std;
 

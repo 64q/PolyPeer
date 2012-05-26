@@ -10,6 +10,13 @@
 #include <callbackFunctionClient.hpp>
 
 
+#ifdef WIN32 /* si vous êtes sous Windows */
+
+#define sleep(t) Sleep(t)
+
+#endif
+
+
 using namespace std;
 
 PolypeerClient* PolypeerClient::instance = NULL;
@@ -20,6 +27,7 @@ PolypeerClient::PolypeerClient() :
 	logger.setVerboseMode(true);
 	logger << "Lancement du client Polypeer..."<<endlog;
 
+	cData = new ClientData();
 
 	// initialisation du system de callBack
 	// -> permet l'appel "automatique des traitement pour un paquet
@@ -51,10 +59,16 @@ void PolypeerClient::start()
 	// ajouter connection avec serveur
 	try
 	{
-		Socket sock(getClientData()->getIpServer(), getClientData()->getPortServer());
-		getClientData()->getConnectionManager()->addConnection(getClientData()->getIpServer(), &sock);
+		logger << "tentative de contact du serveur!" << endlog;
+		Socket sock(getClientData().getAddressServ(), getClientData().getPortServ());
+		logger << "connexion au serveur "<<getClientData().getAddressServ()<<":"<<getClientData().getPortServ()<<" réussie"<<endlog;
+		getClientData().getConnectionManager()->addConnection(getClientData().getAddressServ(), &sock);
 	}
 	catch(HostNotFoundException)
+	{
+		logger << "Impossible de contacter le serveur!" << endlog;
+	}
+	catch(ConnectionException)
 	{
 		logger << "Impossible de contacter le serveur!" << endlog;
 	}
@@ -72,7 +86,7 @@ void PolypeerClient::restart()
 void PolypeerClient::run()
 {
 	// propre à 'instance client polypeer
-	PolypeerClient* server = PolypeerClient::getInstance();
+	//PolypeerClient* server = PolypeerClient::getInstance();
 
 
 
