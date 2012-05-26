@@ -124,7 +124,6 @@ void ShareDeployment::nextStep()
 						cout<<"\t\t\t Création de l'arbre de déploiement sous forme d'action dans la liste d'attente" << endl;
 					}
 				}
-				
 			}
 		}
 	}

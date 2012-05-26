@@ -4,13 +4,16 @@
 File::File(int id, string path, int size, int chunkSize)
 {
 	/*try 
-	{
-		fileM = new FileManager(path.data(), (long)chunkSize, id);
-	} catch (openFileException)
+	{*/
+	
+		fileM = new FileManager(path.data(), id, (long)chunkSize);
+		//fileM = new FileManager(path.data(), (long)chunkSize, id);
+
+	/*} catch (openFileException)
 	{
 		cout << "Fichier " << path << " inexistant"<< endl;
-	}*/
-	fileM= new FileManager(path.data(),(long)size, (long)chunkSize, id);
+	}
+	fileM= new FileManager(path.data(),(long)size, (long)chunkSize, id);*/
 }
 
 File::~File()
