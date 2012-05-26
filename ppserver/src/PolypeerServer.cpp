@@ -23,9 +23,8 @@ PolypeerServer::PolypeerServer() :
 	logger.setVerboseMode(true);
 	logger << "Lancement du serveur Polypeer..."<<endlog;
 	webserver = WebServer::getInstance();
-	
+
 	sData = new ServerData();
-	
 	
 	
 	// initialisation du system de callBack

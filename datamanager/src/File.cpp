@@ -7,7 +7,6 @@ name(name)
 {
 	/*try 
 	{*/
-	
 		fileM = new FileManager(path.data(), id, (long)chunkSize);
 		//fileM = new FileManager(path.data(), (long)chunkSize, id);
 
