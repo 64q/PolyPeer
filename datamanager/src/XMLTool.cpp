@@ -15,11 +15,13 @@ XMLTool::XMLTool(ServerData* sData)
 		cout << "Erreur lors du chargement du fichier : " << topologyFile << endl;
 	if(!DOMDeployments.LoadFile())
 		cout << "Erreur lors du chargement du fichier : " << deploymentsFile << endl;
-	
+
 	//Création de la topologie dans la map
 	readTopology(sData, DOMTopology.RootElement(), sData->getEntities(), NULL);
+
 	//Ajout des états de déploiement dans la map
 	readDeployments(sData, DOMDeployments.RootElement());
+
 }
 
 XMLTool::~XMLTool()
@@ -110,56 +112,46 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 	int chunkSize = 0;
 	Entity* entity = NULL;
 	
-	string name ="";
-	
-	
-	try
+	if ( node->ToElement() )
 	{
-		if ( node->ToElement() )
+		TiXmlElement* parentElem = (node->Parent())->ToElement();
+		TiXmlElement* elem = node->ToElement();
+		if (!(node->ValueStr().compare("file")))
 		{
-			TiXmlElement* parentElem = (node->Parent())->ToElement();
-			TiXmlElement* elem = node->ToElement();
-			if (!(node->ValueStr().compare("file")))
+			elem->QueryIntAttribute("id", &id);
+			elem->QueryIntAttribute("size", &size);
+			elem->QueryIntAttribute("chunkSize", &chunkSize);
+			File *f = new File(id, elem->Attribute("name"), elem->Attribute("path"), size, chunkSize);
+			sData->addFile(f);
+		}
+		if (!(node->ValueStr().compare("zone")) || !(node->ValueStr().compare("host")))
+		{
+			entity = sData->public_getEntity(elem->Attribute("ref"));
+			if (entity != NULL)
 			{
-				elem->QueryIntAttribute("id", &id);
-				elem->QueryIntAttribute("size", &size);
-				elem->QueryIntAttribute("chunkSize", &chunkSize);
-			
-				name = elem->Attribute("path");
-				sData->addFile(id,elem->Attribute("path"), size, chunkSize);
-				
+				parentElem->QueryIntAttribute("id", &id);
+				File* f = sData->getFile(id);
+				f->addEntity(entity);
 			}
-			if (!(node->ValueStr().compare("zone")) || !(node->ValueStr().compare("host")))
-			{
-				entity = sData->public_getEntity(elem->Attribute("ref"));
-				if (entity != NULL)
-				{
-					parentElem->QueryIntAttribute("id", &id);
-					sData->fillDeployFiles(entity, id);
-				}
-			}	
-		} 
+		}	
+	} 
 	
 
-		for(TiXmlNode* element = node->FirstChild(); element; element = element->NextSibling())
-		{
-			if ( node->ToElement() )
-				readDeployments(sData, element);
-		}
-	} catch (OpenFileException)
+	for(TiXmlNode* element = node->FirstChild(); element; element = element->NextSibling())
 	{
-		cout << "Fail load : " << name << endl;
+		if ( node->ToElement() )
+			readDeployments(sData, element);
 	}
 }
 
-void XMLTool::writeFileIntoDeployments(int id, string path, int size, int chunkSize)
+void XMLTool::writeFileIntoDeployments(File* file)
 {
 	TiXmlElement *f = DOMDeployments.FirstChildElement();
 	TiXmlElement newFile ("file");
-	newFile.SetAttribute("id", id);
-	newFile.SetAttribute("path", path);
-	newFile.SetAttribute("size", size);
-	newFile.SetAttribute("chunkSize", chunkSize);
+	newFile.SetAttribute("id", (file->getFileManager())->getIdFile());
+	newFile.SetAttribute("path", (file->getFileManager())->getFileName());
+	newFile.SetAttribute("size", (file->getFileManager())->getFileSize());
+	newFile.SetAttribute("chunkSize", (file->getFileManager())->getChunkSize());
 	f->InsertEndChild(newFile);
 	DOMDeployments.SaveFile(deploymentsFile);
 

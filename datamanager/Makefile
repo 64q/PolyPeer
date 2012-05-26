@@ -1,153 +1,375 @@
-# Makefile des packets
+# Makefile de céation du serveur polypeer
 #
-# Auteur: LEBOURGEOIS Quentin et réutilisé par Charles
-# Date: jeu. 5 avril 2012
+# Auteur: Equipe de dev
+# Date: lun. 21 mai 2012 18:48:11 CEST 
 # Version: 
 #
+# Actions :
+#	make all 		: compilation (defaut)
+#	make clean 		: suppression des .o
+#	make mrproper 	: suppression des .o et de l'exe
 
+
+
+# Liste des dossiers à lier
+FM =../filemanager/
+PACKET =../packet/
+CONNECT =../connection/
+TCP =../tcp/
+XML=../datamanager/
+TinyXML=../datamanager/include/tinyxml/
+LOG=../logger/
+DATA=../data/
+CB=../callback/
+TCPEXCEPT=../tcp/include/Exceptions/
+WEB=../webserver/
+BASESERVER=../baseserver/
+PPS = ../ppserver/
+ALGO = ../algorithm
+
+# Variables de nomage et de localisation
 CC=g++
-CFLAGS=-Wall -ggdb -Iinclude/ -Iinclude/tinyxml -I../filemanager/include/ -I../packet/include/ -I../connection/include/ -I../tcp/include/ -I../tcp/include/Exceptions -D TIXML_USE_STL
-LDFLAGS=-lpthread
-EXEC=xml
+EXEC=polypeer
 SRC=src/
 INC=include/
 
-FM =../filemanager/
-P = ../packet/
-C = ../connection/
-T = ../tcp/
+# Flag pour le linker
+LDFLAGS=-lpthread -pthread -ldl
+# Flag préprocessing et compilation
+CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(TCP)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(WEB)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -I$(BASESERVER)$(INC) -I$(PPS)$(INC) -I$(ALGO)$(INC) -D TIXML_USE_STL
 
-all: xml
 
-# Edition des liens
-xml: Host.o Zone.o File.o DeploymentState.o Entity.o ServerData.o XMLTool.o tinyxml.o tinyxmlparser.o tinyxmlerror.o tinystr.o Chunk.o FileManager.o Data.o ConnectionManager.o Connection.o BaseSocket.o ServerSocket.o Socket.o callbackFunction.o Packet.o PacketReady.o PacketDiskFull.o PacketSendOperationFinished.o PacketMd5Error.o PacketSendChunk.o PacketSendOperation.o PacketNewFile.o PacketChunkReceived.o PacketCallback.o main.o
-	$(CC) -o $@ $^ $(LDFLAGS)
+# commande par defaut
+all: $(EXEC)
 
-# Compilation de ServerData
-ServerData.o: $(SRC)ServerData.cpp
-	$(CC) -c $^ $(CFLAGS)
-	
-# Compilation de XMLTool
-XMLTool.o: $(SRC)XMLTool.cpp
-	$(CC) -c $^ $(CFLAGS)
-	
-# Compilation de Entity
-Entity.o: $(SRC)Entity.cpp
-	$(CC) -c $^ $(CFLAGS)
 
-# Compilation de DeploymentState
-DeploymentState.o: $(SRC)DeploymentState.cpp
-	$(CC) -c $^ $(CFLAGS)
-
-# Compilation de File
-File.o: $(SRC)File.cpp
-	$(CC) -c $^ $(CFLAGS)
-
-# Compilation de Zone
-Zone.o: $(SRC)Zone.cpp
-	$(CC) -c $^ $(CFLAGS)
-
-# Compilation de Host
-Host.o: $(SRC)Host.cpp
-	$(CC) -c $^ $(CFLAGS)
+############################
+#
+#          MAIN
+#
+############################
 
 # Compilation du main
 main.o: $(SRC)main.cpp
-	$(CC) -c $^ $(CFLAGS)
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
+
+############################
+#
+#     SERVEUR PolyPeer
+#
+############################
+
+PPServer = PolypeerServer.o
+
+# Compilation du serveur PolyPeer
+PolypeerServer.o: $(PPS)$(SRC)PolypeerServer.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+############################
+#
+#     SERVEUR de base
+#
+############################
+
+BaseServ=BaseServer.o
+
+# Compilation du serveur PolyPeer
+BaseServer.o: $(BASESERVER)$(SRC)BaseServer.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+############################
+#
+#       WEB SERVEUR
+#
+############################
+
+WebServ=routes.o WebServer.o mongoose.o
+
+# Compilation des routes
+routes.o: $(WEB)$(SRC)routes.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+# Compilation du server
+WebServer.o: $(WEB)$(SRC)WebServer.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+	
+# Compilation de mongoose
+mongoose.o: $(WEB)$(SRC)mongoose.c
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+############################
+#
+#   STRUCTURE PRINCIPALE
+#
+############################
+
+MainStruct=Zone.o Host.o Entity.o File.o DeploymentState.o XMLTool.o ServerData.o
+
+# Compilation de Zone
+Zone.o: $(XML)$(SRC)Zone.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+# Compilation de Host
+Host.o: $(XML)$(SRC)Host.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+# Compilation de Entity
+Entity.o: $(XML)$(SRC)Entity.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+# Compilation de File
+File.o: $(XML)$(SRC)File.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+# Compilation de DeploymentState
+DeploymentState.o: $(XML)$(SRC)DeploymentState.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+	
+# Compilation de XMLTool
+XMLTool.o: $(XML)$(SRC)XMLTool.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+	
+# Compilation de ServerData
+ServerData.o: $(XML)$(SRC)ServerData.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+
+
+############################
+#
+#    LIBRAIRY TINY XML
+#
+############################
+
+LibXML=tinyxml.o tinyxmlparser.o tinyxmlerror.o tinystr.o
+	
 # Compilation de tinyxml
-tinyxml.o: $(INC)tinyxml/tinyxml.cpp
-	$(CC) -c $^ $(CFLAGS)
+tinyxml.o: $(TinyXML)tinyxml.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
 # Compilation de tinyxmlparser
-tinyxmlparser.o: $(INC)tinyxml/tinyxmlparser.cpp
-	$(CC) -c $^ $(CFLAGS)
+tinyxmlparser.o: $(TinyXML)tinyxmlparser.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
 # Compilation de tinyxmlerror
-tinyxmlerror.o: $(INC)tinyxml/tinyxmlerror.cpp
-	$(CC) -c $^ $(CFLAGS)
+tinyxmlerror.o: $(TinyXML)tinyxmlerror.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
 # Compilation de tinystr
-tinystr.o: $(INC)tinyxml/tinystr.cpp
-	$(CC) -c $^ $(CFLAGS)
+tinystr.o: $(TinyXML)tinystr.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 	
-# FileManager
+
+############################
+#
+#       FILEMANAGER
+#
+############################
+
+FileManager=FileManager.o Chunk.o
+
 # Compilation du Chunk
 Chunk.o: $(FM)$(SRC)Chunk.cpp
-	$(CC) -c $^ $(CFLAGS)
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
 # Compilation du FileManager
 FileManager.o: $(FM)$(SRC)FileManager.cpp
-	$(CC) -c $^ $(CFLAGS)
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
-# Compilation de Data
-Data.o: $(P)$(SRC)Data.cpp
-	$(CC) -c $^ $(CFLAGS)
+
+############################
+#
+#     PACKET::PROTOCOL
+#
+############################
+
+PacketManager= Packet.o PacketReady.o PacketDiskFull.o PacketSendOperationFinished.o PacketMd5Error.o PacketSendChunk.o PacketSendOperation.o PacketChunkReceived.o PacketNewFile.o
 
 # Compilation du Packet
-Packet.o: $(P)$(SRC)Packet.cpp
-	$(CC) -c $^ $(CFLAGS)
+Packet.o: $(PACKET)$(SRC)Packet.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 	
 # Compilation du PacketReady
-PacketReady.o: $(P)$(SRC)PacketReady.cpp
-	$(CC) -c $^ $(CFLAGS)
+PacketReady.o: $(PACKET)$(SRC)PacketReady.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
 # Compilation du PacketDiskFull
-PacketDiskFull.o: $(P)$(SRC)PacketDiskFull.cpp
-	$(CC) -c $^ $(CFLAGS)
+PacketDiskFull.o: $(PACKET)$(SRC)PacketDiskFull.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
 # Compilation du PacketSendOperationFinished
-PacketSendOperationFinished.o: $(P)$(SRC)PacketSendOperationFinished.cpp
-	$(CC) -c $^ $(CFLAGS)
+PacketSendOperationFinished.o: $(PACKET)$(SRC)PacketSendOperationFinished.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 	
 # Compilation du PacketMd5Error
-PacketMd5Error.o: $(P)$(SRC)PacketMd5Error.cpp
-	$(CC) -c $^ $(CFLAGS)
+PacketMd5Error.o: $(PACKET)$(SRC)PacketMd5Error.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 	
 # Compilation du PacketSendChunk
-PacketSendChunk.o: $(P)$(SRC)PacketSendChunk.cpp
-	$(CC) -c $^ $(CFLAGS)
+PacketSendChunk.o: $(PACKET)$(SRC)PacketSendChunk.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 	
 # Compilation du PacketSendOperation
-PacketSendOperation.o: $(P)$(SRC)PacketSendOperation.cpp
-	$(CC) -c $^ $(CFLAGS)
+PacketSendOperation.o: $(PACKET)$(SRC)PacketSendOperation.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
 # Compilation du PacketChunkReceived
-PacketChunkReceived.o: $(P)$(SRC)PacketChunkReceived.cpp
-	$(CC) -c $^ $(CFLAGS)
+PacketChunkReceived.o: $(PACKET)$(SRC)PacketChunkReceived.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
 # Compilation du PacketNewFile
-PacketNewFile.o: $(P)$(SRC)PacketNewFile.cpp
-	$(CC) -c $^ $(CFLAGS)
+PacketNewFile.o: $(PACKET)$(SRC)PacketNewFile.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+
+############################
+#
+#      CALLBACK MANAGER
+#
+############################
+
+CallbackManager=PacketCallback.o callbackFunctionServer.o
 
 # Compilation du PacketManager
-PacketCallback.o:  $(P)$(SRC)PacketCallback.cpp
-	$(CC) -c $^ $(CFLAGS)
+PacketCallback.o:  $(CB)$(SRC)PacketCallback.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+# Compilation du callbackFunctionServer
+callbackFunctionServer.o: $(CB)$(SRC)callbackFunctionServer.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+############################
+#
+#     	    DATA
+#
+############################
+
+Data=Data.o
+
+# Compilation de Data
+Data.o: $(DATA)$(SRC)Data.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+############################
+#
+#    CONNECTION MANAGER
+#
+############################
+
+ConnectionManager=ConnectionManager.o Connection.o BaseSocket.o ServerSocket.o Socket.o
+
 
 # Compilation du ConnectionManager
-ConnectionManager.o: $(C)$(SRC)ConnectionManager.cpp
-	$(CC) -c $^ $(CFLAGS)
+ConnectionManager.o: $(CONNECT)$(SRC)ConnectionManager.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
 # Compilation de Connection
-Connection.o: $(C)$(SRC)Connection.cpp
-	$(CC) -c $^ $(CFLAGS)
+Connection.o: $(CONNECT)$(SRC)Connection.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
 # Compilation du BaseSocket
-BaseSocket.o: $(T)$(SRC)BaseSocket.cpp
-	$(CC) -c $^ $(CFLAGS)
+BaseSocket.o: $(TCP)$(SRC)BaseSocket.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
 # Compilation du ServerSocket
-ServerSocket.o: $(T)$(SRC)ServerSocket.cpp
-	$(CC) -c $^ $(CFLAGS)
+ServerSocket.o: $(TCP)$(SRC)ServerSocket.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
 # Compilation du Socket
-Socket.o: $(T)$(SRC)Socket.cpp
-	$(CC) -c $^ $(CFLAGS)
+Socket.o: $(TCP)$(SRC)Socket.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+
+############################
+#
+#      LOGGER
+#
+############################
+
+Logger=Logger.o
+
+# Compilation du Logger
+Logger.o:  $(LOG)$(SRC)Logger.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+############################
+#
+#      ALGORITHM
+#
+############################
+
+Algo=DeploymentAlgorithm.o ShareDeployment.o
+
+# Compilation du DeploymentAlgorithm
+DeploymentAlgorithm.o:  $(ALGO)$(SRC)DeploymentAlgorithm.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+	
+# Compilation du ShareDeployment
+ShareDeployment.o:  $(ALGO)$(SRC)ShareDeployment.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+
+############################
+#
+#    EDITION DES LIENS
+#    CREATION DE L'EXE
+#
+############################
+
+
+polypeer: main.o $(BaseServ) $(MainStruct) $(LibXML) $(FileManager) $(PacketManager) $(CallbackManager) $(Data) $(ConnectionManager) $(Logger) $(WebServ) $(PPServer) $(Algo)
+	@echo "Link output files..."
+	@$(CC) -o $@  $^ $(LDFLAGS)
+	@echo "OK"
+	@echo "Program name is 'polypeer'"
+
+
+############################
+#
+#          CLEAN
+#
+############################
 			
-# Compilation du callbackFunction
-callbackFunction.o: $(P)$(SRC)callbackFunction.cpp
-	$(CC) -c $^ $(CFLAGS)
-				
 clean:
 	rm -f *.o
 	

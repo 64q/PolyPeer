@@ -26,6 +26,8 @@ public:
 	Entity(const std::string& name, Entity* parent, int networkCapacity);
 	std::string getName();
 	Entity* getParent();
+	double getCurrentBroadbandSpeed();
+	void setCurrentBroadbandSpeed(double bbs);
 	int getNetworkCapacity();
 	~Entity();
 	virtual std::map<std::string, Entity*>* getEntities() = 0;
@@ -41,6 +43,7 @@ protected:
 	 */
 	std::string name;
 	Entity* parent;
+	double currentBroadbandSpeed; 
 	int networkCapacity;
 };
 

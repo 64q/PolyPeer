@@ -12,6 +12,6 @@ DeploymentState::DeploymentState(const int currentIdChunk, File* file, State s):
 
 int DeploymentState::getId() 
 { 
-	return refFile->getId(); 
+	return (refFile->getFileManager())->getIdFile(); 
 }
 
