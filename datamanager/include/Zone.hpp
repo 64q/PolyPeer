@@ -16,6 +16,7 @@ public:
 	Zone(const std::string& name, Entity* parent, int networkCapacity);
 	~Zone();
 	void addDeploymentState(const int, File*, State);
+	DeploymentState* getDeploymentState(int idFile);
 	std::map<std::string, Entity*>* getEntities();
 	
 	std::vector<DeploymentState>* getDeploys();

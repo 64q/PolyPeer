@@ -34,6 +34,7 @@ public:
 	virtual std::vector<DeploymentState>* getDeploys() = 0;
 	virtual std::string* getIP() = 0;
 	virtual void addDeploymentState(const int, File*, State) = 0;
+	virtual DeploymentState* getDeploymentState(int idFile) = 0;
 	virtual State getHostState() = 0;
 	virtual void setHostState(State) = 0;
 	

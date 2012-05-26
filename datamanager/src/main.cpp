@@ -91,6 +91,11 @@ int main()
 		}
 	}*/
 	
+	Entity* e = sData->public_getEntity("PC2");
+	DeploymentState* ds = e->getDeploymentState(23);
+	cout << ds->getCurrentState() << endl;
+	cout << ds->getRefFile()->getName() << endl;
+	
 	cout << "CurrentID : "<< sData->getCurrentId() << endl;
 	
 	delete sData;
