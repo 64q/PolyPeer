@@ -79,7 +79,6 @@ void File::addEntity(Entity* entity)
 				if (mit->second->getIP() != NULL)
 				{
 					deploysOn.push_back(mit->second);
-					cout << mit->second->getName() << endl;
 					mit->second->addDeploymentState(0, this, OFFLINE);
 				}
 				if (mit->second->getEntities() != NULL)
@@ -88,7 +87,6 @@ void File::addEntity(Entity* entity)
 		} else 
 		{
 			deploysOn.push_back(entity);
-			cout << "ici" << entity->getName() << endl;
 			entity->addDeploymentState(0, this, OFFLINE);
 		}
 	}

@@ -19,6 +19,12 @@ void Zone::addDeploymentState(const int, File*, State)
 
 }
 
+DeploymentState* Zone::getDeploymentState(int idFile)
+{
+	return NULL;
+}
+
+
 std::map<std::string, Entity*>* Zone::getEntities()
 {
 	return &entities;
