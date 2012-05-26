@@ -9,6 +9,7 @@
 #include <ClientData.hpp>
 #include <Packet.hpp>
 #include <includePacket.hpp>
+#include <DiskFullException.hpp>
 
 
 using namespace std;
@@ -23,7 +24,7 @@ int callbackNewFile(Packet& p)
 	Packet pReturn;
 
 	// récupérer singleton serveur
-	ClientData* cd = ClientData::getInstance();
+	ClientData* cd = new ClientData();
 
 	// -> un filemanager existe deja pour le fichier ? info ifFile et fileName
 	FileManager* fm = cd->getFileManager(pp.getIdFile());
@@ -32,8 +33,9 @@ int callbackNewFile(Packet& p)
 		// création du fileManager
 		try
 		{
-			fm = cd->addFile(pp.getIdFile(), pp.getFileName(), pp.getFileSize(), pp.getChunkSize());
-		} catch (DiskFullException)
+			fm = new FileManager(pp.getFileName().c_str(), pp.getFileSize(), pp.getChunkSize(), pp.getIdFile());
+			cd->addFileManager(fm);
+		} catch (DiskFullException e)
 		{
 			// Création du paquet d'erreur
 			pReturn = PacketDiskFull (pp.getIdFile());

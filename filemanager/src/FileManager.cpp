@@ -95,6 +95,10 @@ void FileManager::init(const char* path, long size, long sizeChunk, int idFile)
 	{
 
 		file.open(pathFile.c_str(),ios::binary|ios::in|ios::ate);
+		if (!file)
+		{
+			throw OpenFileException();
+		}
 	}
 
 
