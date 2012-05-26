@@ -1,16 +1,14 @@
 #include <XMLTool.hpp>
-
+#include <OpenFileException.hpp>
 
 XMLTool::XMLTool(ServerData* sData)
 {
-	
 	topologyFile = string("topology.xml");
 	deploymentsFile = string("deployments.xml");
 	TiXmlDocument DOMT(topologyFile);
 	TiXmlDocument DOMD(deploymentsFile);
 	DOMTopology = DOMT;
 	DOMDeployments = DOMD;
-	
 	if(!DOMTopology.LoadFile())
 		cout << "Erreur lors du chargement du fichier : " << topologyFile << endl;
 	if(!DOMDeployments.LoadFile())
@@ -111,36 +109,42 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 	int size = 0;
 	int chunkSize = 0;
 	Entity* entity = NULL;
-	
-	if ( node->ToElement() )
-	{
-		TiXmlElement* parentElem = (node->Parent())->ToElement();
-		TiXmlElement* elem = node->ToElement();
-		if (!(node->ValueStr().compare("file")))
-		{
-			elem->QueryIntAttribute("id", &id);
-			elem->QueryIntAttribute("size", &size);
-			elem->QueryIntAttribute("chunkSize", &chunkSize);
-			File *f = new File(id, elem->Attribute("name"), elem->Attribute("path"), size, chunkSize);
-			sData->addFile(f);
-		}
-		if (!(node->ValueStr().compare("zone")) || !(node->ValueStr().compare("host")))
-		{
-			entity = sData->public_getEntity(elem->Attribute("ref"));
-			if (entity != NULL)
-			{
-				parentElem->QueryIntAttribute("id", &id);
-				File* f = sData->getFile(id);
-				f->addEntity(entity);
-			}
-		}	
-	} 
-	
 
-	for(TiXmlNode* element = node->FirstChild(); element; element = element->NextSibling())
+	string name ="";
+	
+	try
 	{
 		if ( node->ToElement() )
-			readDeployments(sData, element);
+		{
+			TiXmlElement* parentElem = (node->Parent())->ToElement();
+			TiXmlElement* elem = node->ToElement();
+			if (!(node->ValueStr().compare("file")))
+			{
+				elem->QueryIntAttribute("id", &id);
+				elem->QueryIntAttribute("size", &size);
+				elem->QueryIntAttribute("chunkSize", &chunkSize);
+				File *f = new File(id, elem->Attribute("name"), elem->Attribute("path"), size, chunkSize);
+				sData->addFile(f);
+			}
+			if (!(node->ValueStr().compare("zone")) || !(node->ValueStr().compare("host")))
+			{
+				entity = sData->public_getEntity(elem->Attribute("ref"));
+				if (entity != NULL)
+				{
+					parentElem->QueryIntAttribute("id", &id);
+					File* f = sData->getFile(id);
+					f->addEntity(entity);
+				}
+			}
+		}
+		for(TiXmlNode* element = node->FirstChild(); element; element = element->NextSibling())
+		{
+			if ( node->ToElement() )
+				readDeployments(sData, element);
+		}
+	} catch (OpenFileException)
+	{
+		cout << "Fail load : " << name << endl;
 	}
 }
 
