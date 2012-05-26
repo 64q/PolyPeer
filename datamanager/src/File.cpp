@@ -21,7 +21,6 @@ File::~File()
 vector<vector<Entity*>* >* File::getSortedHosts()
 {
 	unsigned int i,j;
-
 	vector<vector<Entity*>* >* toReturn = new vector<vector<Entity*>* >();
 	
 	bool find = false;
@@ -29,7 +28,6 @@ vector<vector<Entity*>* >* File::getSortedHosts()
 	for(i=0;i<deploysOn.size();i++) 
 	{
 		Entity* host = deploysOn[i];
-
 		find = false;
 		for (j=0;j<toReturn->size();j++)
 		{
@@ -45,7 +43,7 @@ vector<vector<Entity*>* >* File::getSortedHosts()
 		{
 			toReturn->push_back(new vector<Entity*> (1,host));
 		}
-	
+		
 	}
 	
 	return toReturn;

@@ -74,9 +74,6 @@ private:
 	 */
 	WebServer* webserver;
 	
-	/**
-	 * fonctions pour l'algo de distribution
-	 */
 };
 
 

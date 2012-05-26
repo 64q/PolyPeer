@@ -15,6 +15,7 @@
 #include <FileManager.hpp>
 #include <ConnectionManager.hpp>
 #include <Packet.hpp>
+#include <OpenFileException.hpp>
 
 /**
  * Classe contenant les différentes structures de stockage des données ainsi que

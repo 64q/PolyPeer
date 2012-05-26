@@ -110,33 +110,45 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 	int chunkSize = 0;
 	Entity* entity = NULL;
 	
-	if ( node->ToElement() )
-	{
-		TiXmlElement* parentElem = (node->Parent())->ToElement();
-		TiXmlElement* elem = node->ToElement();
-		if (!(node->ValueStr().compare("file")))
-		{
-			elem->QueryIntAttribute("id", &id);
-			elem->QueryIntAttribute("size", &size);
-			elem->QueryIntAttribute("chunkSize", &chunkSize);
-			sData->addFile(id,elem->Attribute("path"), size, chunkSize);
-		}
-		if (!(node->ValueStr().compare("zone")) || !(node->ValueStr().compare("host")))
-		{
-			entity = sData->public_getEntity(elem->Attribute("ref"));
-			if (entity != NULL)
-			{
-				parentElem->QueryIntAttribute("id", &id);
-				sData->fillDeployFiles(entity, id);
-			}
-		}	
-	} 
+	string name ="";
 	
-
-	for(TiXmlNode* element = node->FirstChild(); element; element = element->NextSibling())
+	
+	try
 	{
 		if ( node->ToElement() )
-			readDeployments(sData, element);
+		{
+			TiXmlElement* parentElem = (node->Parent())->ToElement();
+			TiXmlElement* elem = node->ToElement();
+			if (!(node->ValueStr().compare("file")))
+			{
+				elem->QueryIntAttribute("id", &id);
+				elem->QueryIntAttribute("size", &size);
+				elem->QueryIntAttribute("chunkSize", &chunkSize);
+			
+				name = elem->Attribute("path");
+				sData->addFile(id,elem->Attribute("path"), size, chunkSize);
+				
+			}
+			if (!(node->ValueStr().compare("zone")) || !(node->ValueStr().compare("host")))
+			{
+				entity = sData->public_getEntity(elem->Attribute("ref"));
+				if (entity != NULL)
+				{
+					parentElem->QueryIntAttribute("id", &id);
+					sData->fillDeployFiles(entity, id);
+				}
+			}	
+		} 
+	
+
+		for(TiXmlNode* element = node->FirstChild(); element; element = element->NextSibling())
+		{
+			if ( node->ToElement() )
+				readDeployments(sData, element);
+		}
+	} catch (OpenFileException)
+	{
+		cout << "Fail load : " << name << endl;
 	}
 }
 
