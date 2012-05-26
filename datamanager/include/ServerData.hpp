@@ -15,7 +15,6 @@
 #include <FileManager.hpp>
 #include <ConnectionManager.hpp>
 #include <Packet.hpp>
-#include <OpenFileException.hpp>
 
 /**
  * Classe contenant les différentes structures de stockage des données ainsi que
@@ -56,17 +55,23 @@ public :
 	vector<File*>* getDeployFiles();
 	
 	/**
-	* Création et ajout d'un fichier de déploiement dans DeployFiles
-	* @param id
-	*	identifiant du fichier
-	* @param path
-	*	chemin du fichier
-	* @param size
-	* 	taille du fichier
-	* @param chunkSize
-	*	taille des morceaux de fichier envoyés
+	* Ajout d'un fichier de déploiement dans DeployFiles
+	* @param f
+	*	File à ajouter
 	*/
-	FileManager* addFile(int id, string path, int size, int chunkSize);
+	FileManager* addFile(File* f);
+	
+	/**
+	* Ajout d'un fichier de déploiement dans DeployFiles ainsi que dans le fichier XML
+	* @param f
+	*	File à ajouter
+	*/
+	void addFileToAll(File* f);
+	
+	/**
+	* Renvoi l'id courante qui sert lors de la création d'un nouveau déploiement
+	*/
+	int getCurrentId();
 	
 	/**
 	* Cherche un fichier de déploiement dans DeployFiles en fonction de son id et
@@ -178,16 +183,7 @@ public :
 	*/
 	void public_fillAddressList(string entityName, list<string> &list);
 	
-	/**
-	* Remplissage du vecteur contenant les entités sur lesquels déployer le fichier 
-	* d'identifiant passé en paramètre. Mise à jour du deploymentState correspondant
-	* contenu dans les entités ciblées.
-	* @param entity
-	* 	nom de l'entité que l'on ajoute et met à jour
-	* @param fileID
-	*	identifiant du fichier
-	*/	
-	void fillDeployFiles(Entity* entity, int fileID);
+
 
 protected :
 	/**

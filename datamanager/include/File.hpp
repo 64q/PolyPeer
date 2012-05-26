@@ -15,18 +15,19 @@ class File
 {
 
 public :
-	File(int id, string path, int size, int chunkSize);
+	File(int id, string name, string path);
+	File(int id, string name, string path, int size, int chunkSize);
 	~File();
+	string getName() { return name; }
 	FileManager* getFileManager() { return fileM; }
-	int getId() { return fileM->getIdFile(); }
-	string getFilePath() { return fileM->getFileName(); }
-	int getSize() { return fileM->getFileSize(); }
-	int getChunkSize() { return fileM->getChunkSize(); };
 	vector<Entity*>* getDeploysOn() { return &deploysOn; }
 	vector<vector<Entity*>* >* getSortedHosts();
+
 	void addEntity(Entity* entity);
 	
 protected :
+	
+	string name;
 	FileManager* fileM;
 	vector<Entity*> deploysOn;
 	

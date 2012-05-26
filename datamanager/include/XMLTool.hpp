@@ -26,7 +26,7 @@ public :
 	
 	//Fonctions conteneurs
 	void public_displayTopology();
-	void writeFileIntoDeployments(int id, string path, int size, int chunkSize);
+	void writeFileIntoDeployments(File* file);
 	void writeEntityIntoFile(int fileId, Entity* entity);
 	
 protected :
