@@ -30,9 +30,9 @@ int main()
 	Entity* entity2;
 	vector<DeploymentState>* deploys;
 	
-	File* fileTest = new File(sData->getCurrentId(),"D4", "truc.png");
+	File* fileTest = new File(sData->getCurrentId()+1,"D4", "truc.png");
 	fileTest->addEntity(sData->public_getEntity("batiment_D"));
-	sData->addFile(fileTest);
+	sData->addFileToAll(fileTest);
 	
 	unsigned int i, j, k;
 	cout << endl;

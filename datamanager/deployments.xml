@@ -9,5 +9,16 @@
     <file id="25" name="D3" path="file/truc2.png" size="34535" chunkSize="13000">
         <zone ref="PC2" />
     </file>
-    
+    <file id="26" name="D4" path="" size="-1" chunkSize="1000">
+        <host ref="PC6" />
+        <host ref="PC7" />
+        <host ref="PC8" />
+        <host ref="PC11" />
+    </file>
+    <file id="27" name="D4" path="" size="-1" chunkSize="1000">
+        <host ref="PC6" />
+        <host ref="PC7" />
+        <host ref="PC8" />
+        <host ref="PC11" />
+    </file>
 </deployments>

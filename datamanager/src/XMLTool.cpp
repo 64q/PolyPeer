@@ -153,6 +153,7 @@ void XMLTool::writeFileIntoDeployments(File* file)
 	TiXmlElement *f = DOMDeployments.FirstChildElement();
 	TiXmlElement newFile ("file");
 	newFile.SetAttribute("id", (file->getFileManager())->getIdFile());
+	newFile.SetAttribute("name", file->getName());
 	newFile.SetAttribute("path", (file->getFileManager())->getFileName());
 	newFile.SetAttribute("size", (file->getFileManager())->getFileSize());
 	newFile.SetAttribute("chunkSize", (file->getFileManager())->getChunkSize());
