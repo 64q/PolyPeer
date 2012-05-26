@@ -6,7 +6,7 @@
 #
 
 CC=g++
-CFLAGS=-Wall -ggdb -I../logger/include/ -Iinclude/ -I../server/include/
+CFLAGS=-Wall -ggdb -I../logger/include/ -Iinclude/ -I../baseserver/include/
 LDFLAGS=-pthread -ldl
 EXEC=webserver
 SRC=src/
@@ -14,7 +14,7 @@ INC=include/
 
 # les autres où chercher les fichiers
 LOGGER=../logger/
-SRV=../server/
+SRV=../baseserver/
 
 all: webserver
 
