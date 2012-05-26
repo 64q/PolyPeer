@@ -1,12 +1,13 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
+#include <string>
 
 #include <mongoose.h>
-
+/*
 #include <PolypeerServer.hpp>
 #include <ServerData.hpp>
-#include <routes.hpp>
+#include <routes.hpp>*/
 
 using namespace std;
 
@@ -26,7 +27,7 @@ void deployments_route(mg_connection* conn, const mg_request_info* request_info)
 {
 	mg_printf(conn, "%s", ajax_reply_start);
 	mg_printf(conn, "[");
-	
+	/*
 	PolypeerServer* server = PolypeerServer::getInstance();
 	
 	ServerData& data = server->getServerData();
@@ -40,7 +41,7 @@ void deployments_route(mg_connection* conn, const mg_request_info* request_info)
 			mg_printf(conn, ",");
 		}
 	
-	}
+	}*/
 	
 	mg_printf(conn, "]");
 }
@@ -80,14 +81,30 @@ void network_route(mg_connection* conn, const mg_request_info* request_info)
 
 void new_deployment_route(mg_connection* conn, const mg_request_info* request_info)
 {
-	char name[32], path[64], zones[1024];
+	char qname[32], qpath[64], qzones[1024];
 	
-	get_qsvar(request_info, "name", name, sizeof(name));
-	get_qsvar(request_info, "path", path, sizeof(path));
-	get_qsvar(request_info, "zones", zones, sizeof(zones));
+	get_qsvar(request_info, "name", qname, sizeof(qname));
+	get_qsvar(request_info, "path", qpath, sizeof(qpath));
+	get_qsvar(request_info, "zones", qzones, sizeof(qzones));
 
-	cout << "sent: " << name << ", " << path << ", " << zones << endl;
+	cout << "sent: " << qname << ", " << qpath << ", " << qzones << endl;
+
+	vector<string> vzones;
+
+	char* pch = NULL;
+	
+	pch = strtok(qzones,",");
+	while (pch != NULL)
+	{
+		vzones.push_back(string(pch));
+		pch = strtok (NULL, ",");
+	}
+	
+	for (unsigned int i = 0; i < vzones.size(); i++) {
+		cout << "Zone = " << vzones[i] << endl;
+	}
 	
 	mg_printf(conn, "%s", ajax_reply_start);
 	mg_printf(conn, "{\"state\":\"done\"}");
 }
+
