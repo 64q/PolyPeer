@@ -6,6 +6,8 @@
 #include <mongoose.h>
 
 #include <WebServer.hpp>
+#include <WebServerException.hpp>
+#include <Logger.hpp>
 #include <routes.hpp>
 
 using namespace std;
@@ -63,7 +65,7 @@ void WebServer::start()
 	
 	if (this->context == NULL)
 	{
-		throw exception();
+		throw WebServerException();
 	}
 }
 

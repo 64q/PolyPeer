@@ -23,6 +23,8 @@ int main(int argc, char* argv[])
 	
 	getchar();
 	
+	server->stop();
+	
 	// Suppression des allocations dynamiques
 	delete server;
 	
