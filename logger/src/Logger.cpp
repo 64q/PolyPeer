@@ -1,13 +1,17 @@
+// Class header
+#include <Logger.hpp>
+
+// STL
 #include <iostream>
 #include <fstream>
 #include <exception>
 #include <sstream>
 
-// Includes venant du C
+// C library
 #include <ctime>
 #include <cstdlib>
 
-#include <Logger.hpp>
+// Project header
 #include <OpenFileException.hpp>
 
 using namespace std;

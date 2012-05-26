@@ -2,9 +2,8 @@
 #define DISKFULLEXCEPTION_H
 
 #include <exception>
-using namespace std;
 
-class DiskFullException: public exception
+class DiskFullException: public std::exception
 {
 
 	public:

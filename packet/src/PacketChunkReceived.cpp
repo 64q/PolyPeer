@@ -1,4 +1,8 @@
+// Class header
 #include <PacketChunkReceived.hpp>
+
+// STL
+#include <iostream>
 
 
 PacketChunkReceived::PacketChunkReceived(int idFile, int numChunk) : Packet()

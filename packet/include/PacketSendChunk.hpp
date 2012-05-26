@@ -15,14 +15,12 @@
  */
 
 
-// Entêtes
-#include <iostream>
-#include <Chunk.hpp>
-
+// Project header
 #include <Packet.hpp>
-#include <Data.hpp>
 
-using namespace std;
+// forward declaration
+class Chunk;
+
 
 class PacketSendChunk : public Packet
 {

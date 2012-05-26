@@ -13,10 +13,7 @@
  */
 
 
-// Entêtes
-#include <iostream>
-#include <cstring>
-#include <string>
+// Library header
 #include <vector>
 #include <sstream>
 
@@ -33,11 +30,9 @@ typedef unsigned __int64 uint64_t;
 #include <stdint.h>
 #endif
 
-#include <Data.hpp>	// pour gérer le conteneur
+// Project header
+#include <Data.hpp>
 
-
-
-using namespace std;
 
 
 /**
@@ -64,7 +59,7 @@ class Packet
 {
 private:
     // données du packet
-    vector<Data> myListData;
+    std::vector<Data> myListData;
 	// type du paquet
     PacketType myType;
 
@@ -75,7 +70,7 @@ private:
 	bool valid;
 	
 	// adresse de la source
-	string address;
+	std::string address;
 
 
 public:
@@ -130,14 +125,14 @@ public:
 	 /**
 	 * affecter l'adresse
 	 */
-	 void setAddress (string addr);
+	 void setAddress (std::string addr);
 	 
 	 /**
 	 * Récupérer l'adresse
 	 * @return string
 	 *	address
 	 */
-	 string getAddress () const;
+	 std::string getAddress () const;
 
 
 protected:
@@ -204,8 +199,8 @@ protected:
 
 	// idem pour le reste
 
-	Packet & operator<< (const string s);
-	Packet & operator>> (string& s);
+	Packet & operator<< (const std::string s);
+	Packet & operator>> (std::string& s);
 
 	Packet & operator<< (const int);
 	Packet & operator>> (int& i);
@@ -217,7 +212,7 @@ protected:
 	*/
 
 
-	string extract (unsigned int startPos, const Data& d);
+	std::string extract (unsigned int startPos, const Data& d);
 
 	template<class Type> std::string typeToString(Type source)
 	{
@@ -231,7 +226,7 @@ protected:
 	template<class Type> Type stringToType(std::string source)
 	{
 		// creer le flux
-		istringstream iss(source);
+		std::istringstream iss(source);
 		// affecter les nouvelles valeurs
 		Type tmp;
 		iss>>tmp;

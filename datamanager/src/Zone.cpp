@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Zone::Zone(const std::string& name) :
-	Entity(name)
+Zone::Zone(const std::string& name, Entity* parent, int networkCapacity) :
+	Entity(name, parent, networkCapacity)
 {
 
 }
@@ -18,6 +18,12 @@ void Zone::addDeploymentState(const int, File*, State)
 {
 
 }
+
+DeploymentState* Zone::getDeploymentState(int idFile)
+{
+	return NULL;
+}
+
 
 std::map<std::string, Entity*>* Zone::getEntities()
 {
@@ -36,7 +42,7 @@ std::string* Zone::getIP()
 
 State Zone::getHostState()
 {
-	return WAIT;
+	return OFFLINE;
 }
 
 void Zone::setHostState(State)

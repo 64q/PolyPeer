@@ -1,6 +1,11 @@
 #ifndef __H_BASESERVER__
 #define __H_BASESERVER__
 
+
+// Library header
+#include <string>
+
+// Project header
 #include <Logger.hpp>
 
 /**

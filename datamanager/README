@@ -1,0 +1,25 @@
+Désolé de push si tard mais mon linux virtualisé a voulu faire une maj sur mon portable, elle s'est mal effectuée -> perdu mon linux
+Du coup j'ai mis un peu de temps a reconfigurer git et refaire quelques trucs mais je pense que c'est bon là.
+
+AJOUTS :
+
+CLASS File :
+ - attribut name
+ - accesseurs associés
+ - constructeur(name,path)
+ - modif du constructeur qui existait pour inclure le name
+ - suppression des fonctions redondantes avec fileManager
+ - modification de addEntity pour que ce soit plus intuitif
+
+CLASS ServerData :
+ - addFile ne creer plus le file il faut lui passer un pointeur vers le File
+ - getCurrentId pour récupérer l'id courrante des déploiements
+ - addFileToAll pour Quentin, permet d'ajouter le déploiement dans ServerData et dans le fichier XML (peut etre un bug pas refait mon makefile pour tester ...)
+ 
+CLASS Entity :
+ - attribut broadbandSpeed pour le débit courant
+ - accesseurs associés
+
+NEW CLASS ClientData :
+ - la base de base ya certainement des trucs à ajouter ou modifier j'ai fait en fonction de ce que tu m'avais dit jeudi Erwan
+ 

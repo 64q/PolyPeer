@@ -14,15 +14,9 @@
  * par Olivier
  */
 
-
-// Entêtes
-#include <iostream>
-#include <string>
-
+// Project header
 #include <Packet.hpp>
-#include <Data.hpp>
 
-using namespace std;
 
 class PacketDiskFull : public Packet
 {

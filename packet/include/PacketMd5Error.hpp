@@ -15,12 +15,8 @@
  */
 
 
-// Entêtes
-#include <iostream>
-
+// Project header
 #include <Packet.hpp>
-
-using namespace std;
 
 
 class PacketMd5Error : public Packet

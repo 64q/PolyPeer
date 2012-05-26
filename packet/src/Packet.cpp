@@ -1,5 +1,14 @@
+// Class header
 #include <Packet.hpp>
 
+// STL
+#include <iostream>
+#include <cstring>
+#include <string>
+
+// Project header
+
+using namespace std;
 
 Packet::Packet() : myType(EUndefined), myReadingPosition(0), valid(true), address("255.255.255.255")
 {

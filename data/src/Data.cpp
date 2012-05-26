@@ -1,7 +1,15 @@
+// Class header
 #include <Data.hpp>
 
+// STL
+#include <iostream>
+#include <cstring>
+#include <cmath>
 
-Data::Data () 
+
+using namespace std;
+
+Data::Data() 
 { 
 	data = 0;
 	size = 0;
@@ -9,19 +17,19 @@ Data::Data ()
 	data = new char [realSize]; 
 }
 
-Data::~Data () 
+Data::~Data() 
 {
 	if (data != 0) delete [] data;
 }
 
-Data::Data (const Data& other) : data(0), size(other.size), realSize(other.realSize)
+Data::Data(const Data& other) : data(0), size(other.size), realSize(other.realSize)
 {
 	data = new char [realSize];
 	
 	memcpy (data, other.data, size);	
 }
 
-Data::Data ( const char* s, unsigned int size ) : data(0), size(0), realSize(8)
+Data::Data(const char* s, unsigned int size) : data(0), size(0), realSize(8)
 {
 	data = new char [realSize];
 	add (s, size);
@@ -41,18 +49,18 @@ Data& Data::operator=(const Data& other)
 	return *this;
 }
 
-const char& Data::operator[] ( unsigned int pos ) const
+const char& Data::operator[](unsigned int pos) const
 {
 	return data[pos];
 }
 
-char& Data::operator[] ( unsigned int pos )
+char& Data::operator[](unsigned int pos)
 {
 	return data[pos];
 }
 
 
-void Data::resize ( unsigned int size )
+void Data::resize(unsigned int size)
 {
 	unsigned int tmpS = realSize;
 	realSize = 8;
@@ -72,7 +80,7 @@ void Data::resize ( unsigned int size )
 	this->size = size;
 }
 
-void Data::clear ()
+void Data::clear()
 {
 	if (realSize != 8)
 	{
@@ -83,12 +91,12 @@ void Data::clear ()
 	size = 0;
 }
 
-bool Data::empty () const
+bool Data::empty() const
 {
 	return (size == 0);
 }
 
-Data& Data::add ( const char* s, unsigned int size )
+Data& Data::add(const char* s, unsigned int size)
 {
 	resize (this->size + size);
 	for (unsigned int i = 0; i < size; i++)
@@ -97,14 +105,14 @@ Data& Data::add ( const char* s, unsigned int size )
 	return *this;
 }
 
-Data& Data::add ( char c )
+Data& Data::add(char c)
 {
 	resize (size+1);
 	data[size-1] = c;
 	return *this;
 }
 
-Data& Data::add ( const string& s )
+Data& Data::add(const string& s)
 {
 	int length = s.length();
 	resize (this->size + length);
@@ -114,7 +122,7 @@ Data& Data::add ( const string& s )
 	return *this;
 }
 
-Data& Data::add ( const Data& d )
+Data& Data::add(const Data& d)
 {
 	int length = d.getSize();
 	resize (this->size + length);
@@ -125,22 +133,22 @@ Data& Data::add ( const Data& d )
 }
 
 
-void Data::c_str ( char* s ) const
+void Data::c_str(char* s) const
 {
 	memcpy (s, data, size);
 }
 
-const char* Data::c_str () const
+const char* Data::c_str() const
 {
 	return data;
 }
 
-string Data::getString () const
+string Data::getString() const
 {
 	return (string (c_str(), getSize()));
 }
 
-void Data::print ()
+void Data::print()
 {
 	std::cout << data << std::endl;
 }

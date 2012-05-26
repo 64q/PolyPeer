@@ -1,5 +1,11 @@
+// Class header
 #include <PacketNewFile.hpp>
 
+// STL
+#include <iostream>
+#include <string>
+
+using namespace std;
 
 PacketNewFile::PacketNewFile(int idFile, string fileName, int size, int sizeChunk) : Packet()
 {

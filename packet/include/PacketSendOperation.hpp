@@ -14,15 +14,11 @@
  * par Olivier
  */
 
-
-// Entêtes
-#include <iostream>
-#include <Chunk.hpp>
-
+// Project header
 #include <Packet.hpp>
-#include <Data.hpp>
 
-using namespace std;
+// forward declaration
+class Chunk;
 
 class PacketSendOperation : public Packet
 {
@@ -34,7 +30,7 @@ public:
 	* Création d'un PacketSendOperation pret à être envoyé
 	* 
 	*/
-	PacketSendOperation(string target, Chunk& chunk);
+	PacketSendOperation(std::string target, Chunk& chunk);
 	
 	/**
 	* Constructeur sur un Packet (une maniere de caster un Packet)
@@ -47,7 +43,7 @@ public:
 	virtual ~PacketSendOperation();
 	
 	
-	string getTarget ();
+	std::string getTarget ();
 	
 	Chunk getChunk ();
 	

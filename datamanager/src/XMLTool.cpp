@@ -1,38 +1,25 @@
 #include <XMLTool.hpp>
-#include <ServerData.hpp>
+#include <OpenFileException.hpp>
 
-XMLTool* XMLTool::instance = NULL;
-
-XMLTool::XMLTool()
+XMLTool::XMLTool(ServerData* sData)
 {
-	ServerData* sData = ServerData::getInstance();
-	
 	topologyFile = string("topology.xml");
 	deploymentsFile = string("deployments.xml");
 	TiXmlDocument DOMT(topologyFile);
 	TiXmlDocument DOMD(deploymentsFile);
 	DOMTopology = DOMT;
 	DOMDeployments = DOMD;
-	
 	if(!DOMTopology.LoadFile())
 		cout << "Erreur lors du chargement du fichier : " << topologyFile << endl;
 	if(!DOMDeployments.LoadFile())
 		cout << "Erreur lors du chargement du fichier : " << deploymentsFile << endl;
-	
-	//Création de la topologie dans la map
-	readTopology(DOMTopology.RootElement(), sData->getEntities());
-	//Ajout des états de déploiement dans la map
-	readDeployments(DOMDeployments.RootElement());
-}
 
-XMLTool* XMLTool::getInstance()
-{
-	if (instance == NULL)
-	{
-		instance = new XMLTool();
-	}
-	
-	return instance;
+	//Création de la topologie dans la map
+	readTopology(sData, DOMTopology.RootElement(), sData->getEntities(), NULL);
+
+	//Ajout des états de déploiement dans la map
+	readDeployments(sData, DOMDeployments.RootElement());
+
 }
 
 XMLTool::~XMLTool()
@@ -60,11 +47,11 @@ void XMLTool::displayTopology(TiXmlNode* node, int level)
 		displayTopology( element, level + 1 );
 }
 
-void XMLTool::readTopology(TiXmlNode* node, map<string, Entity*>* entities)
+void XMLTool::readTopology(ServerData* sData, TiXmlNode* node, map<string, Entity*>* entities, Entity* parent)
 {
 	Zone* zone = NULL;
 	Entity* entity = NULL;
-	ServerData* sData = ServerData::getInstance();
+	int capacity;
 	
 	if ( node->ToElement() )
 	{
@@ -80,7 +67,8 @@ void XMLTool::readTopology(TiXmlNode* node, map<string, Entity*>* entities)
 					cout << "reference inexistante" << endl;
 			}else
 			{
-				entity = sData->addHost(elem->Attribute("name"), elem->Attribute("address"));
+				elem->QueryIntAttribute("networkCapacity", &capacity);
+				entity = sData->addHost(elem->Attribute("name"), parent, capacity, elem->Attribute("address"));
 				entities->insert(make_pair(elem->Attribute("name"), entity));
 			}
 		}
@@ -95,7 +83,8 @@ void XMLTool::readTopology(TiXmlNode* node, map<string, Entity*>* entities)
 					cout << "reference inexistante" << endl;
 			}else
 			{
-				zone = new Zone(elem->Attribute("name"));
+				elem->QueryIntAttribute("networkCapacity", &capacity);
+				zone = new Zone(elem->Attribute("name"), parent, capacity);
 				entities->insert(make_pair(elem->Attribute("name"), zone));
 			}
 		}
@@ -107,51 +96,111 @@ void XMLTool::readTopology(TiXmlNode* node, map<string, Entity*>* entities)
 		if ( node->ToElement() )
 		{
 			if (!(node->ValueStr().compare("zone")))
-				readTopology(element, zone->getEntities());
+				readTopology(sData, element, zone->getEntities(), zone);
 			else 
-				readTopology(element, entities);
+				readTopology(sData, element, entities, parent);
 		}
 	}
 }
 
-void XMLTool::readDeployments(TiXmlNode* node)
+void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 {
 	int id = 0;
 	int size = 0;
 	int chunkSize = 0;
 	Entity* entity = NULL;
-	ServerData* sData = ServerData::getInstance();
-	
-	if ( node->ToElement() )
-	{
-		TiXmlElement* parentElem = (node->Parent())->ToElement();
-		TiXmlElement* elem = node->ToElement();
-		if (!(node->ValueStr().compare("file")))
-		{
-			elem->QueryIntAttribute("id", &id);
-			elem->QueryIntAttribute("size", &size);
-			elem->QueryIntAttribute("chunkSize", &chunkSize);
-			sData->addFile(id,elem->Attribute("path"), size, chunkSize);
-		}
-		if (!(node->ValueStr().compare("zone")) || !(node->ValueStr().compare("host")))
-		{
-			entity = sData->public_getEntity(elem->Attribute("ref"));
-			if (entity != NULL)
-			{
-				parentElem->QueryIntAttribute("id", &id);
-				sData->fillDeployFiles(entity, id);
-			}
-		}	
-	} 
-	
 
-	for(TiXmlNode* element = node->FirstChild(); element; element = element->NextSibling())
+	string name ="";
+	
+	try
 	{
 		if ( node->ToElement() )
-			readDeployments(element);
+		{
+			TiXmlElement* parentElem = (node->Parent())->ToElement();
+			TiXmlElement* elem = node->ToElement();
+			if (!(node->ValueStr().compare("file")))
+			{
+				elem->QueryIntAttribute("id", &id);
+				elem->QueryIntAttribute("size", &size);
+				elem->QueryIntAttribute("chunkSize", &chunkSize);
+				
+				name = elem->Attribute("name");
+				File *f = new File(id, elem->Attribute("name"), elem->Attribute("path"), size, chunkSize);
+				sData->addFile(f);
+			}
+			if (!(node->ValueStr().compare("zone")) || !(node->ValueStr().compare("host")))
+			{
+				entity = sData->public_getEntity(elem->Attribute("ref"));
+				if (entity != NULL)
+				{
+					parentElem->QueryIntAttribute("id", &id);
+					File* f = sData->getFile(id);
+					f->addEntity(entity);
+				}
+			}
+		}
+		for(TiXmlNode* element = node->FirstChild(); element; element = element->NextSibling())
+		{
+			if ( node->ToElement() )
+				readDeployments(sData, element);
+		}
+	} catch (OpenFileException)
+	{
+		cout << "Fail load : " << name << endl;
 	}
 }
 
+void XMLTool::writeFileIntoDeployments(File* file)
+{
+	TiXmlElement *f = DOMDeployments.FirstChildElement();
+	TiXmlElement newFile ("file");
+	newFile.SetAttribute("id", (file->getFileManager())->getIdFile());
+	newFile.SetAttribute("name", file->getName());
+	newFile.SetAttribute("path", (file->getFileManager())->getFileName());
+	newFile.SetAttribute("size", (file->getFileManager())->getFileSize());
+	newFile.SetAttribute("chunkSize", (file->getFileManager())->getChunkSize());
+	f->InsertEndChild(newFile);
+	DOMDeployments.SaveFile(deploymentsFile);
+
+}
+
+void XMLTool::writeEntityIntoFile(int fileId, Entity* entity)
+{
+	bool find = false;
+	int id;
+	TiXmlHandle hdl(&DOMDeployments);
+	TiXmlElement *file = hdl.FirstChildElement().FirstChildElement().Element();
+	
+	if (entity != NULL)
+	{
+		while(file && !find)
+		{
+			file->QueryIntAttribute("id", &id);
+			if(id == fileId)
+			{
+				find = true;
+				if (entity->getIP() != NULL)
+				{
+					TiXmlElement newEntity ("host");
+					newEntity.SetAttribute("ref", entity->getName());				
+					file->InsertEndChild(newEntity);
+				} else
+				{
+					TiXmlElement newEntity ("zone");
+					newEntity.SetAttribute("ref", entity->getName());				
+					file->InsertEndChild(newEntity);
+				}
+			}
+			file = file->NextSiblingElement();
+		}
+	
+		if (!find)
+			cerr << "user inexistant" << endl;
+		DOMDeployments.SaveFile(deploymentsFile);
+	} 
+
+}
+	
 void XMLTool::public_displayTopology() 
 { 
 	displayTopology(DOMTopology.RootElement()); 

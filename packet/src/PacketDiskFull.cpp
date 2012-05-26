@@ -1,5 +1,10 @@
+// Class header
 #include <PacketDiskFull.hpp>
 
+// STL
+#include <iostream>
+
+using namespace std;
 
 PacketDiskFull::PacketDiskFull(int idFile) : Packet()
 {

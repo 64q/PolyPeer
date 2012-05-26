@@ -1,6 +1,9 @@
+// Class header
+#include <BaseServer.hpp>
+
+// STL
 #include <iostream>
 
-#include <BaseServer.hpp>
 
 using namespace std;
 

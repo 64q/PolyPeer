@@ -12,15 +12,11 @@
  */
 
 
-// Entêtes
-#include <iostream>
+// Library header
 #include <vector>
 
-
-#include <Packet.hpp>	// pour gérer le conteneur
-#include <callbackFunction.hpp>
-
-using namespace std;
+// Project header
+#include <Packet.hpp>
 
 
 /**
@@ -36,19 +32,19 @@ private:
 	 * Pour avoir une classe en mode singleton
 	 */
 	static PacketCallback* instance;
-	
+
 	/**
 	 * Redefinition des constructeur en privé pour empecher l'instanciation de la classe
 	 */
 	PacketCallback();
 	PacketCallback(const PacketCallback& pm)	{ }
-	
+
 	/**
 	 * liste des fonctions de callback
 	 */
-	vector<pOperation> listOperations;
-    
-	
+	std::vector<pOperation> listOperations;
+
+
 public:
 	/**
 	 * Fonction de Classe
@@ -60,7 +56,7 @@ public:
 			PacketCallback::instance = new PacketCallback();
 		return PacketCallback::instance;
 	}
-	
+
 	/**
 	 * Fonction de classe
 	 * Détruire l'instance de la classe
@@ -73,7 +69,7 @@ public:
 			PacketCallback::instance = NULL;
 		}
 	}
-	
+
 	/**
 	 * Ajouter la fonction de callback correspondant à un type de paquet
 	 * @param PacketType

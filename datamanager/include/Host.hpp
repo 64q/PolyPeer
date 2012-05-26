@@ -11,9 +11,10 @@ class Host : public Entity
 {	
 public:
 
-	Host(const std::string& name, const std::string& ip);
+	Host(const std::string& name, Entity* parent, int networkCapacity, const std::string& ip);
 	~Host();
 	void addDeploymentState(const int, File* file, State);
+	DeploymentState* getDeploymentState(int idFile);
 	std::vector<DeploymentState>* getDeploys();
 	std::string* getIP();
 	State getHostState();

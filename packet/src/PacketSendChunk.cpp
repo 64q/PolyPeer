@@ -1,5 +1,13 @@
+// Class header
 #include <PacketSendChunk.hpp>
 
+// STL
+#include <iostream>
+
+// Project header
+#include <Chunk.hpp>
+
+using namespace std;
 
 PacketSendChunk::PacketSendChunk(Chunk& chunk) : Packet()
 {

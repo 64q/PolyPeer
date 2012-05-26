@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include <Chunk.hpp>
-#include <DiskFullException.hpp>
+
 
 #ifdef WIN32 /* si vous êtes sous Windows */
 #include <windows.h>
@@ -33,8 +33,21 @@
 class FileManager
 {
 public:
+
+
 	/**
-	 * Consytucteur
+	 * Constructeur pour un fichier déjà complet (sur le serveur ou sur un client qui a fini de dl un fichier).
+	 * @param const char*
+	 * chemin d'accès du fichier
+	 * @param int
+	 * id du fichier (renseigné dans le fichier XML de déploiement)
+	 * @param long
+	 * taille de chaque Chunk dans lesquels vont être placés les morceaux du fichier
+	 */
+	FileManager(const char* path, int idFile, long sizeChunk=1000);
+
+	/**
+	 * Constructeur pour un fichier incomplet ou dont on ignore l'état.
 	 * @param const char*
 	 * chemin d'accès du fichier
 	 * @param long
@@ -111,21 +124,27 @@ public:
 	 * @return long
 	 * taille disponible sur le disque dur en octet.
 	 */
-	static int64_t getFreeDiskSpace();
+	int64_t getFreeDiskSpace();
 
 protected:
 	std::fstream file;
 	int idFile;
+	std::string pathFile;
 	std::string pathFileState;
 	char* currentData;
 	long currentChunk;
 	long sizeFile;
 	long sizeChunk;
+	bool isComplete;
 
+	void init(const char* path, long size, long sizeChunk, int idFile);
 	long getState();
 	void saveState();
 	bool existFile(const char* path);
 	void reserveFile(const char* path, long size);
+	void setCompleted();
+	void checkDirectory(std::string pathDirectory);
+	void createDirectory(std::string pathDirectory, std::string currentPath);
 };
 
 #endif // FILEMANAGER_H

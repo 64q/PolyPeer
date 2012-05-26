@@ -7,14 +7,17 @@
  *
  */
 
-
+// STL
 #include <iostream>
 #include <string>
 #include <fstream>
-// include du C
+
+// C library
 #include <signal.h>
 
+// Project header
 #include <PolypeerServer.hpp>
+#include <Logger.hpp>
 
 using namespace std;
 

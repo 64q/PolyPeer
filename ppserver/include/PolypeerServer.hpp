@@ -1,9 +1,12 @@
 #ifndef POLYPEERSERVER_H
 #define POLYPEERSERVER_H
 
+// header
 #include <BaseServer.hpp>
-#include <ServerData.hpp>
-#include <WebServer.hpp>
+
+// forward declaration
+class ServerData;
+class WebServer;
 
 /**
  * Serveur principale de Polypeer.
@@ -27,6 +30,9 @@ public:
 	 */
 	void restart();
 	
+	/**
+	 * Récupérer la structure principale
+	 */
 	inline ServerData& getServerData() { return *(this->sData); }
 	
 	/**
@@ -67,6 +73,7 @@ private:
 	 * Instance du webserver
 	 */
 	WebServer* webserver;
+	
 };
 
 

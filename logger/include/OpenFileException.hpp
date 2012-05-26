@@ -1,8 +1,6 @@
 #include <exception>
 
-using namespace std;
-
-class OpenFileException : public exception
+class OpenFileException : public std::exception
 {
 
 	public:

@@ -21,19 +21,27 @@
  * les accesseurs associés
  */
  
+class XMLTool;
+
 class ServerData
 {
 
 public :
+
+	/**
+	 * Constructeur d'un ServerData
+	 */
+	ServerData();
+	
 	/**
 	* Destructeur
 	*/
 	~ServerData();
-	
+
 	/**
-	* Accès au singleton de la classe
+	* Retourne un pointeur vers xmlTool
 	*/
-	static ServerData* getInstance();
+	XMLTool* getXMLTool();
 	
 	/**
 	* Retourne un pointeur vers la structure contenant la topologie du réseau
@@ -47,17 +55,23 @@ public :
 	vector<File*>* getDeployFiles();
 	
 	/**
-	* Création et ajout d'un fichier de déploiement dans DeployFiles
-	* @param id
-	*	identifiant du fichier
-	* @param path
-	*	chemin du fichier
-	* @param size
-	* 	taille du fichier
-	* @param chunkSize
-	*	taille des morceaux de fichier envoyés
+	* Ajout d'un fichier de déploiement dans DeployFiles
+	* @param f
+	*	File à ajouter
 	*/
-	FileManager* addFile(int id, string path, int size, int chunkSize);
+	FileManager* addFile(File* f);
+	
+	/**
+	* Ajout d'un fichier de déploiement dans DeployFiles ainsi que dans le fichier XML
+	* @param f
+	*	File à ajouter
+	*/
+	void addFileToAll(File* f);
+	
+	/**
+	* Renvoi l'id courante qui sert lors de la création d'un nouveau déploiement
+	*/
+	int getCurrentId();
 	
 	/**
 	* Cherche un fichier de déploiement dans DeployFiles en fonction de son id et
@@ -74,7 +88,7 @@ public :
 	* @param address
 	*	adress de l'Host à creer
 	*/	
-	Entity* addHost(string name, string address);
+	Entity* addHost(string name, Entity* parent,int networkCapacity, string address);
 	
 	/**
 	* Récupération de la structure hosts stockant les Host du réseau
@@ -169,23 +183,9 @@ public :
 	*/
 	void public_fillAddressList(string entityName, list<string> &list);
 	
-	/**
-	* Remplissage du vecteur contenant les entités sur lesquels déployer le fichier 
-	* d'identifiant passé en paramètre. Mise à jour du deploymentState correspondant
-	* contenu dans les entités ciblées.
-	* @param entity
-	* 	nom de l'entité que l'on ajoute et met à jour
-	* @param fileID
-	*	identifiant du fichier
-	*/	
-	void fillDeployFiles(Entity* entity, int fileID);
+
 
 protected :
-	/**
-	 * Pointeur vers une instance d'un ServerData
-	 */
-	static ServerData* instance;
-	
 	/**
 	 * Map représentant la topologie et contenant des pointeurs vers les différentes
 	 * entités du réseau
@@ -212,16 +212,17 @@ protected :
 	 * Adresse du serveur principal
 	 */
 	string addressServ;
+	
+	/**
+	* Contient la DOM des fichiers de déploiement et de topologie
+	*/
+	XMLTool* xmlTool;
 
 private :
-	/**
-	 * Constructeur d'un ServerData
-	 */
-	ServerData();
-	
 
 	void deleteMap(map<string, Entity*>* entities, vector<string> &alreadyDelete);
 	void deleteDeployFiles();
+	void deleteHosts();
 	void displayEntities(map<string, Entity*>* entities, int level = 0);
 	Entity* getEntity(map<string, Entity*>* entities, string entityName);
 	void fillAddressList(Entity* entity, list<string> &list);

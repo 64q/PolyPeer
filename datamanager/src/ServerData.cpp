@@ -2,22 +2,11 @@
 
 using namespace std;
 
-ServerData* ServerData::instance = NULL;
-
 ServerData::ServerData()
 {
 	cM = new ConnectionManager(6666);
 	addressServ = "192.168.0.1";
-}
-
-ServerData* ServerData::getInstance()
-{
-	if (instance == NULL)
-	{
-		instance = new ServerData();
-	}
-	
-	return instance;
+	xmlTool = new XMLTool(this);
 }
 
 ServerData::~ServerData()
@@ -25,7 +14,7 @@ ServerData::~ServerData()
 	delete cM;
 	vector <string> alreadyDelete;
 	deleteDeployFiles();
-	//deleteHosts();
+	deleteHosts();
 	//deleteMap(this->getEntities(), alreadyDelete);
 
 }
@@ -59,10 +48,24 @@ ServerData::~ServerData()
 void ServerData::deleteDeployFiles()
 {
 	unsigned int i;
+	for (i=0;i<deployFiles.size();i++)
+	{
+		delete deployFiles[i];
+	}
+}
+
+void ServerData::deleteHosts()
+{
+	unsigned int i;
 	for (i=0;i<hosts.size();i++)
 	{
 		delete hosts[i];
 	}
+}
+
+XMLTool* ServerData::getXMLTool()
+{
+	return xmlTool;
 }
 
 map<string, Entity*>* ServerData::getEntities()
@@ -131,11 +134,34 @@ void ServerData::updateHost(string addressHost, State s)
 }
 
 
-FileManager* ServerData::addFile(int id, string path, int size, int chunkSize)
+FileManager* ServerData::addFile(File* f)
 {
-	File *f = new File(id,path,size,chunkSize);
 	deployFiles.push_back(f);
 	return f->getFileManager();
+}
+
+void ServerData::addFileToAll(File* f)
+{
+	unsigned int i;
+	addFile(f);
+	xmlTool->writeFileIntoDeployments(f);
+	for(i=0; i < (f->getDeploysOn())->size(); i++)
+	{
+		xmlTool->writeEntityIntoFile((f->getFileManager())->getIdFile(), (*(f->getDeploysOn()))[i]);
+	}
+}
+
+int ServerData::getCurrentId()
+{
+	int currentId=0;
+	unsigned int i;
+	for (i=0;i<deployFiles.size();i++)
+	{
+		if (currentId < (deployFiles[i]->getFileManager())->getIdFile())
+			currentId = (deployFiles[i]->getFileManager())->getIdFile();
+	}
+	
+	return currentId;
 }
 
 File* ServerData::getFile(int id)
@@ -146,7 +172,7 @@ File* ServerData::getFile(int id)
 
 	while( (i < deployFiles.size()) && (find == false) )
 	{
-		if (deployFiles[i]->getId() == id )
+		if ((deployFiles[i]->getFileManager())->getIdFile() == id )
 		{
 			find = true;
 			toReturn = deployFiles[i];
@@ -156,9 +182,9 @@ File* ServerData::getFile(int id)
 	return toReturn;	
 }
 
-Entity* ServerData::addHost(string name, string address)
+Entity* ServerData::addHost(string name, Entity* parent, int networkCapacity, string address)
 {
-	Entity* host = new Host(name, address);
+	Entity* host = new Host(name, parent, networkCapacity, address);
 	hosts.push_back(host);
 	return host;
 }
@@ -212,7 +238,7 @@ FileManager* ServerData::getFileManager(int id)
 
 	while( (i < deployFiles.size()) && (find == false) )
 	{
-		if (deployFiles[i]->getId() == id )
+		if ((deployFiles[i]->getFileManager())->getIdFile() == id )
 		{
 			find = true;
 			toReturn = deployFiles[i]->getFileManager();
@@ -231,7 +257,8 @@ void ServerData::displayEntities(map<string, Entity*>* entities, int level)
 		
 	for(; mit!=mend; ++mit) 
 	{
-		cout << string( level*3, ' ' ) << mit->first << " ";		
+		if (mit->second->getParent() != NULL)
+			cout << string( level*3, ' ' ) << mit->first << " | " << "capacity : "<< mit->second->getNetworkCapacity()<< " " << " | " << "parent : "<< (mit->second->getParent())->getName();		
 		if (mit->second->getEntities() != NULL)
 		{
 			cout << endl;
@@ -243,9 +270,9 @@ void ServerData::displayEntities(map<string, Entity*>* entities, int level)
 			{
 				for (i=0; i < (mit->second->getDeploys())->size(); i++)
 				{
-					cout << " | fID : " << (((*(mit->second->getDeploys()))[i]).getRefFile())->getId();
+					cout << " | fID : " << (((*(mit->second->getDeploys()))[i]).getRefFile())->getFileManager()->getIdFile();
 					cout << " | cID : " << (*(mit->second->getDeploys()))[i].getCurrentIdChunk();
-					cout << " | fPath : " << ((*(mit->second->getDeploys()))[i].getRefFile())->getFilePath();
+					cout << " | fPath : " << ((*(mit->second->getDeploys()))[i].getRefFile())->getFileManager()->getFileName();
 					cout << " | hState : " << (*(mit->second->getDeploys()))[i].getCurrentState();
 					cout << endl;
 					cout << string( level*3 + (mit->first).size(), ' ' ) << " " ;
@@ -276,39 +303,6 @@ Entity* ServerData::getEntity(map<string, Entity*>* entities, string entityName)
 	}
 
 	return toReturn;
-}
-
-void ServerData::fillDeployFiles(Entity* entity, int fileID)
-{
-	map<string, Entity*>* entities;
-	File* file;
-	
-	if (entity != NULL)
-	{
-		entities = entity->getEntities();
-		if ( entities != NULL)
-		{
-			map<std::string,Entity*>::const_iterator
-			mit (entities->begin()),
-			mend(entities->end());
-			for(; mit!=mend; ++mit) 
-			{	
-				if (mit->second->getIP() != NULL)
-				{
-					file = getFile(fileID);
-					file->addEntity(mit->second);
-					mit->second->addDeploymentState(0, file, OFFLINE);
-				}
-				if (mit->second->getEntities() != NULL)
-					fillDeployFiles(mit->second, fileID);
-			}
-		} else 
-		{
-			file = getFile(fileID);
-			file->addEntity(entity);
-			entity->addDeploymentState(0, file, OFFLINE);
-		}
-	}
 }
 
 void ServerData::fillAddressList(Entity* entity, list<string> &list)

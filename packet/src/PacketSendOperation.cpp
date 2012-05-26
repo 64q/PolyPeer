@@ -1,5 +1,14 @@
+// Class header
 #include <PacketSendOperation.hpp>
 
+// STL
+#include <iostream>
+#include <string>
+
+// Project header
+#include <Chunk.hpp>
+
+using namespace std;
 
 PacketSendOperation::PacketSendOperation(string target, Chunk& chunk) : Packet()
 {

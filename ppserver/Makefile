@@ -23,7 +23,8 @@ DATA=../data/
 CB=../callback/
 TCPEXCEPT=../tcp/include/Exceptions/
 WEB=../webserver/
-
+BASESERVER=../baseserver/
+ALGO=../algorithm/
 
 # Variables de nomage et de localisation
 CC=g++
@@ -34,7 +35,7 @@ INC=include/
 # Flag pour le linker
 LDFLAGS=-lpthread -pthread -ldl
 # Flag préprocessing et compilation
-CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(TCP)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(WEB)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -D TIXML_USE_STL
+CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(ALGO)$(INC) -I$(TCP)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(WEB)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -I$(BASESERVER)$(INC) -D TIXML_USE_STL
 
 
 # commande par defaut
@@ -73,7 +74,7 @@ PolypeerServer.o: $(SRC)PolypeerServer.cpp
 BaseServ=BaseServer.o
 
 # Compilation du serveur PolyPeer
-BaseServer.o: $(SRC)BaseServer.cpp
+BaseServer.o: $(BASESERVER)$(SRC)BaseServer.cpp
 	@echo $^
 	@$(CC) -c $^ $(CFLAGS)
 
@@ -253,17 +254,37 @@ PacketNewFile.o: $(PACKET)$(SRC)PacketNewFile.cpp
 #
 ############################
 
-CallbackManager=PacketCallback.o callbackFunction.o
+CallbackManager=PacketCallback.o callbackFunctionServer.o
 
 # Compilation du PacketManager
 PacketCallback.o:  $(CB)$(SRC)PacketCallback.cpp
 	@echo $^
 	@$(CC) -c $^ $(CFLAGS)
 
-# Compilation du callbackFunction
-callbackFunction.o: $(CB)$(SRC)callbackFunction.cpp
+# Compilation du callbackFunctionServer
+callbackFunctionServer.o: $(CB)$(SRC)callbackFunctionServer.cpp
 	@echo $^
 	@$(CC) -c $^ $(CFLAGS)
+
+
+############################
+#
+#   DEPLOYMENT ALGORITHM
+#
+############################
+
+Algorithm=ShareDeployment.o DeploymentAlgorithm.o
+
+# Compilation du DeploymentAlgorithm
+DeploymentAlgorithm.o:  $(ALGO)$(SRC)DeploymentAlgorithm.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+# Compilation du ShareDeployment
+ShareDeployment.o:  $(ALGO)$(SRC)ShareDeployment.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
 
 ############################
 #
@@ -335,7 +356,7 @@ Logger.o:  $(LOG)$(SRC)Logger.cpp
 ############################
 
 
-polypeer: main.o PolypeerServer.o $(BaseServ) $(MainStruct) $(LibXML) $(FileManager) $(PacketManager) $(CallbackManager) $(Data) $(ConnectionManager) $(Logger) $(WebServ)
+polypeer: main.o PolypeerServer.o $(BaseServ) $(MainStruct) $(LibXML) $(FileManager) $(PacketManager) $(CallbackManager) $(Data) $(ConnectionManager) $(Logger) $(WebServ) $(Algorithm)
 	@echo "Link output files..."
 	@$(CC) -o $@  $^ $(LDFLAGS)
 	@echo "OK"
