@@ -8,6 +8,7 @@
 // Project header
 #include <PolypeerServer.hpp>
 #include <ServerData.hpp>
+#include <includePacket.hpp>
 
 
 using namespace std;
@@ -16,7 +17,7 @@ using namespace std;
 ShareDeployment::ShareDeployment(PolypeerServer* pps, ServerData* sd) :
 	ppServer(pps),
 	sData(sd),
-	scanNetwork(true)
+	firstLaunch(true)
 {
 
 }
@@ -89,16 +90,18 @@ void ShareDeployment::nextStep()
 	// Pour chaque fichier en cour de déploiement, recherche des nouvelles actions
 	for (vector<File*>::iterator itFile = files->begin(); itFile != files->end(); itFile++) 
 	{
-		cout<< "\t Gestion deploiement : " << (*itFile)->getFileManager()->getFileName() << endl;
+		cout<< "\t Gestion deploiement : " << (*itFile)->getName() << endl;
 		
 		// Récupération des entités concernés par ce déploiement
 		entities = (*itFile)->getSortedHosts();
 		
-		if(scanNetwork)
+		if(firstLaunch)
 		{
 			cout<<"\t\t Premier passage" << endl;
 			// Faire un scan du réseau pour MAJ
 			cout<<"\t\t\t MAJ du réseau" << endl;
+			ShareDeployment::networkScan(entities, (*itFile));
+			
 			if(!isEnd(entities, 1))
 			{
 				cout<<"\t\t\t Recréer les actions en attente" << endl;
@@ -129,8 +132,8 @@ void ShareDeployment::nextStep()
 	}
 
 	// L'état de déploiement a été mis a jour
-	if(scanNetwork)
-		scanNetwork=false;
+	if(firstLaunch)
+		firstLaunch=false;
 		
 	cout<< "FIN" << endl << endl;
 	
@@ -151,7 +154,6 @@ bool ShareDeployment::isEnd(vector<vector<Entity*>* >* entities, int idFile)
 		{
 			//if(deploy == FULL)
 				toReturn = false;
-			//cout<<"\t\t Nom zone cible : " <<  (*itHost)->getName() << endl;
 		}
 	}
 	return toReturn;
@@ -166,6 +168,23 @@ Entity* ShareDeployment::selectZoneMaster(std::vector<Entity*>* zone)
 		//if((*itHost)->
 	}
 	return toReturn;
+}
+
+void ShareDeployment::networkScan(vector<vector<Entity*>* >* entities, File* f)
+{
+	for (vector<vector<Entity*>* >::iterator itZone = entities->begin(); itZone != entities->end(); itZone++) 
+	{
+	
+		for (vector<Entity*>::iterator itHost = (*itZone)->begin(); itHost != (*itZone)->end(); itHost++) 
+		{
+			// Envoie d'un packet d'initialisation avec le client
+			// -> le client renvoie où il est rendu
+			// -> si le fichier n'existe pas, il est créé
+			
+			Packet p = PacketNewFile(f->getFileManager()->getIdFile(), f->getName(), f->getFileManager()->getFileSize(), f->getFileManager()->getChunkSize());
+			sData->getConnectionManager()->sendTo((*(*itHost)->getIP()), p);
+		}
+	}
 }
 
 

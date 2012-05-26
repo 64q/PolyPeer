@@ -123,6 +123,8 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 				elem->QueryIntAttribute("id", &id);
 				elem->QueryIntAttribute("size", &size);
 				elem->QueryIntAttribute("chunkSize", &chunkSize);
+				
+				name = elem->Attribute("name");
 				File *f = new File(id, elem->Attribute("name"), elem->Attribute("path"), size, chunkSize);
 				sData->addFile(f);
 			}

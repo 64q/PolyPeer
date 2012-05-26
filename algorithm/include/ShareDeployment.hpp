@@ -28,6 +28,7 @@
 class PolypeerServer;
 class ServerData;
 class Entity;
+class File;
 
 
 class ShareDeployment : public DeploymentAlgorithm
@@ -57,7 +58,12 @@ private:
 	 * Etat initial
 	 * cas particulier du lancement où il faut se mettre à jour
 	 */
-	bool scanNetwork;
+	bool firstLaunch;
+	
+	/**
+	 * Scan du réseau
+	 */
+	void networkScan(std::vector<std::vector<Entity*>* >* entities, File* f);
 	
 	/**
 	 * Essaye de lancer les actions en attente
