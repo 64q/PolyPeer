@@ -4,6 +4,9 @@
 // STL
 #include <iostream>
 
+// C lib
+#include <pthread.h>
+
 // Project header
 #include <ServerData.hpp>
 #include <WebServer.hpp>
@@ -11,6 +14,7 @@
 #include <callbackFunctionServer.hpp>
 #include <DeploymentAlgorithm.hpp>
 #include <ShareDeployment.hpp>
+
 
 
 using namespace std;
@@ -60,7 +64,7 @@ void PolypeerServer::start()
 	webserver->start();
 	
 	// initialisation des connexions
-	initConnections();
+	//initConnections();
 	
 	// Lancement du server
 	this->run();
@@ -104,6 +108,7 @@ void PolypeerServer::stop()
 	this->running = false;
 }
 
+
 void  PolypeerServer::initConnections()
 {
 	// liste des déploiements
@@ -119,15 +124,32 @@ void  PolypeerServer::initConnections()
 		{
 			if(cm->getConnection((*itHost)->getIP()) == NULL)
 			{
-				cout << "aaa"<<(*itHost)->getIP()<<clientPort<<endl;
-				Socket* socket = new Socket((*itHost)->getIP(), clientPort);
-				cout << "dd"<<endl;
-				cm->addConnection((*itHost)->getIP(), socket);
-				cout << "bb"<<endl;
-				(*itHost)->setHostState(WAIT);
-				cout << "cc"<<endl;
+				pthread_t myThread;
+				pthread_create(&myThread, NULL, thread_initConnection, (*itHost));
 			}
 		}
 	}
 }
+
+
+void* thread_initConnection(void* data)
+{
+	ConnectionManager* cm = (PolypeerServer::instance)->getServerData().getConnectionManager();
+	Host* myHost = (Host*)data;
+	
+	try
+	{	
+		Socket* socket = new Socket(myHost->getIP(), (PolypeerServer::instance)->getClientPort());
+		cm->addConnection(myHost->getIP(), socket);
+		myHost->setHostState(WAIT);
+	} catch(ConnectionException)
+	{
+		cout<<"ConnectionTo " << myHost->getIP() << " failed"<<endl;
+	}
+
+	
+	return NULL;
+}
+
+
 
