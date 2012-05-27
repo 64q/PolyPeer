@@ -57,6 +57,7 @@ class ConnectionManager
 
 		void sendTo(std::string dest, Packet packet);
 
+		void wait();
 
 	private:
 		std::map<std::string, Connection*> listConnections;
