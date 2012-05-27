@@ -29,9 +29,11 @@ DeploymentState* Host::getDeploymentState(int idFile)
 	DeploymentState* ds = NULL;
 	while(i < deploys.size() && ds == NULL)
 	{
-	
-		if (deploys[i].getRefFile()->getFileManager()->getIdFile() == idFile)
-			ds = &(deploys[i]);
+		if (deploys[i].getRefFile()->getFileManager() != NULL)
+		{
+			if (deploys[i].getRefFile()->getFileManager()->getIdFile() == idFile)
+				ds = &(deploys[i]);
+		}
 			
 		i++;
 	}

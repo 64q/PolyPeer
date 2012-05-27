@@ -150,7 +150,10 @@ void ServerData::addFileToAll(File* f)
 	xmlTool->writeFileIntoDeployments(f);
 	for(i=0; i < (f->getDeploysOn())->size(); i++)
 	{
-		xmlTool->writeEntityIntoFile((f->getFileManager())->getIdFile(), (*(f->getDeploysOn()))[i]);
+		if (f->getFileManager() != NULL)
+		{
+			xmlTool->writeEntityIntoFile((f->getFileManager())->getIdFile(), (*(f->getDeploysOn()))[i]);
+		}
 	}
 }
 
@@ -167,12 +170,15 @@ File* ServerData::getFile(int id)
 
 	while( (i < deployFiles.size()) && (find == false) )
 	{
-		if ((deployFiles[i]->getFileManager())->getIdFile() == id )
+		if (deployFiles[i]->getFileManager())
 		{
-			find = true;
-			toReturn = deployFiles[i];
+			if ((deployFiles[i]->getFileManager())->getIdFile() == id )
+			{
+				find = true;
+				toReturn = deployFiles[i];
+			}
+			i++;
 		}
-		i++;
 	}
 	return toReturn;	
 }
@@ -192,10 +198,13 @@ void ServerData::deleteFile(int id)
 		
 	for(; vit!=vend; ++vit) 
 	{
-		if (((*vit)->getFileManager())->getIdFile() == id )
+		if ((*vit)->getFileManager() != NULL)
 		{
-			deployFiles.erase(vit);
-			break;
+			if (((*vit)->getFileManager())->getIdFile() == id )
+			{
+				deployFiles.erase(vit);
+				break;
+			}
 		}
 	}
 	
@@ -257,10 +266,13 @@ FileManager* ServerData::getFileManager(int id)
 
 	while( (i < deployFiles.size()) && (find == false) )
 	{
-		if ((deployFiles[i]->getFileManager())->getIdFile() == id )
+		if (deployFiles[i]->getFileManager() != NULL)
 		{
-			find = true;
-			toReturn = deployFiles[i]->getFileManager();
+			if ((deployFiles[i]->getFileManager())->getIdFile() == id )
+			{
+				find = true;
+				toReturn = deployFiles[i]->getFileManager();
+			}
 		}
 		i++;
 	}
@@ -304,12 +316,15 @@ void ServerData::displayEntities(map<string, Entity*>* entities, int level)
 			{
 				for (i=0; i < (mit->second->getDeploys())->size(); i++)
 				{
-					cout << " | fID : " << (((*(mit->second->getDeploys()))[i]).getRefFile())->getFileManager()->getIdFile();
-					cout << " | cID : " << (*(mit->second->getDeploys()))[i].getCurrentIdChunk();
-					cout << " | fPath : " << ((*(mit->second->getDeploys()))[i].getRefFile())->getFileManager()->getFileName();
-					cout << " | hState : " << (*(mit->second->getDeploys()))[i].getCurrentState();
-					cout << endl;
-					cout << string( level*3 + (mit->first).size(), ' ' ) << " " ;
+					if ((((*(mit->second->getDeploys()))[i]).getRefFile())->getFileManager() != NULL )
+					{
+						cout << " | fID : " << (((*(mit->second->getDeploys()))[i]).getRefFile())->getFileManager()->getIdFile();
+						cout << " | cID : " << (*(mit->second->getDeploys()))[i].getCurrentIdChunk();
+						cout << " | fPath : " << ((*(mit->second->getDeploys()))[i].getRefFile())->getFileManager()->getFileName();
+						cout << " | hState : " << (*(mit->second->getDeploys()))[i].getCurrentState();
+						cout << endl;
+						cout << string( level*3 + (mit->first).size(), ' ' ) << " " ;
+					}
 				}
 			}
 		}
