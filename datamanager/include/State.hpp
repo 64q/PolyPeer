@@ -16,5 +16,20 @@ enum HostDeployState { HDS_DOWNLOAD=0, HDS_WAIT=1, HDS_FINISH=2 };
 */
 enum FileState { READY=0, DEPLOYMENT=1, FINISH=2, ERROR=3 };
 
+/**
+ * Récupère sous forme de chaine de texte l'état
+ */
+std::string getStringHostState(HostState state);
+
+/**
+ * Récupère sous forme de chaine de texte l'état
+ */
+std::string getStringHostDeployState(HostDeployState state);
+
+/**
+ * Récupère sous forme de chaine de texte l'état
+ */
+std::string getStringFileState(HostDeployState state);
+
 #endif
 
