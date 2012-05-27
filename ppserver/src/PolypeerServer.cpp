@@ -64,7 +64,7 @@ void PolypeerServer::start()
 	webserver->start();
 	
 	// initialisation des connexions
-	//initConnections();
+	initConnections();
 	
 	// Lancement du server
 	this->run();
