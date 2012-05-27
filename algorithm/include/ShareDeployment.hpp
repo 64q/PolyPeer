@@ -78,7 +78,17 @@ private:
 	/**
 	 * sélectionner le maitre d'une zone
 	 */
-	Entity* selectZoneMaster(std::vector<Entity*>* zone);
+	Entity* selectZoneMaster(std::vector<Entity*>* zone, int idFile);
+	
+	/**
+	 * Récupérer l'host le moins avancé de la zone
+	 */
+	Entity* getMinZoneDeployment(std::vector<Entity*>* zone, int idFile);
+
+	/**
+	 * Récupérer l'host le plus avancé de la zone
+	 */
+	Entity* getMaxZoneDeployment(std::vector<Entity*>* zone, int idFile);
 	
 		
 };

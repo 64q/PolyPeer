@@ -3,18 +3,19 @@
 #include <OpenFileException.hpp>
 
 File::File(int id, string name, string path, int size, int chunkSize):
-name(name)
+	name(name),
+	fState(READY)
 {
-	/*try 
-	{*/
+	//try 
+	//{
 		fileM = new FileManager(path.data(), id, (long)chunkSize);
 		//fileM = new FileManager(path.data(), (long)chunkSize, id);
 
-	/*} catch (openFileException)
+	/*} catch (OpenFileException)
 	{
-		cout << "Fichier " << path << " inexistant"<< endl;
-	}
-	fileM= new FileManager(path.data(),(long)size, (long)chunkSize, id);*/
+		fState = ERROR;
+		cout << "FAIL LOAD : Fichier " << path << " inexistant"<< endl;
+	}*/
 
 }
 

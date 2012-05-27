@@ -5,7 +5,9 @@
 #include <iostream>
 
 #include <Entity.hpp>
+#include <State.hpp>
 #include <FileManager.hpp>
+
 
 class Entity;
 
