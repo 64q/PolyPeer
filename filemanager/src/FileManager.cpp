@@ -225,7 +225,7 @@ std::string FileManager::getFileName()
 	if(last > 0)
 	{
 		//le 6 correspond au .STATE
-		return pathFile.substr( last,pathFile.size() - last - 6);
+		return pathFile.substr( last,pathFile.size() - last);
 	}
 
 	return pathFile.substr( 0,pathFile.size() - 6);
