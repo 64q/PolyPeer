@@ -221,7 +221,7 @@ Entity* ServerData::getHostByAddress(string address)
 
 	while( (i < hosts.size()) && (find == false) )
 	{
-		if (!((*(hosts[i]->getIP())).compare(address)))
+		if (!((hosts[i]->getIP()).compare(address)))
 		{
 			find = true;
 			toReturn = hosts[i];
@@ -352,13 +352,13 @@ void ServerData::fillAddressList(Entity* entity, list<string> &list)
 			mend(entities->end());
 			for(; mit!=mend; ++mit) 
 			{	
-				if (mit->second->getIP() != NULL)
-					list.push_back(*(mit->second->getIP()));
+				if (mit->second->getType() != HOST)
+					list.push_back(mit->second->getIP());
 				if (mit->second->getEntities() != NULL)
 					fillAddressList(mit->second, list);
 			}
 		} else 
-			list.push_back(*(entity->getIP()));
+			list.push_back(entity->getIP());
 	}
 }
 

@@ -10,7 +10,7 @@ File::File(int id, string name, string path, int size, int chunkSize, FileState 
 {
 	try 
 	{
-		fileM = new FileManager(path.data(), (long)size, (long)chunkSize, id);
+		fileM= new FileManager(path.data(), id);
 
 	} catch (OpenFileException)
 	{
@@ -26,7 +26,7 @@ File::File(int id, string name, string path, int size, int chunkSize):
 {
 	try 
 	{
-		fileM = new FileManager(path.data(), (long)size, (long)chunkSize, id);
+		fileM= new FileManager(path.data(), id);
 
 	} catch (OpenFileException)
 	{
@@ -118,7 +118,7 @@ void File::addEntity(Entity* entity)
 			mend(entities->end());
 			for(; mit!=mend; ++mit) 
 			{	
-				if (mit->second->getIP() != NULL)
+				if (mit->second->getType() == HOST)
 				{
 					deploysOn.push_back(mit->second);
 					mit->second->addDeploymentState(0, this, HDS_WAIT);
