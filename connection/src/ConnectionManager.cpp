@@ -91,4 +91,7 @@ void ConnectionManager::sendTo(std::string dest, Packet packet)
 	}
 }
 
-
+void ConnectionManager::wait()
+{
+	//pthread_join(thread, NULL);
+}
