@@ -8,6 +8,10 @@
 #include <ConnectionManager.hpp>
 #include <Packet.hpp>
 
+/**
+ * Classe contenant les informations d'un host pour un déploiement donné
+ */
+ 
 class ClientData
 {
 
