@@ -29,37 +29,44 @@ int main()
 	Entity* entity2;
 	vector<DeploymentState>* deploys;
 		
-	/*File* fileTest = new File(sData->getCurrentId()+1,"D4", "file/truc3.png");
+	File* fileTest = new File(sData->getCurrentId()+1,"D4", "file/truc3.png");
 	fileTest->addEntity(sData->public_getEntity("batiment_D"));
 	sData->addFileToAll(fileTest);
 	
-	sData->deleteFile(23);*/
+	/*sData->deleteFile(23);*/
 	
 	unsigned int i, j, k;
 	cout << endl;
 	for (i=0; i < vFile->size(); i++)
 	{
-		cout << "id : " << ((*vFile)[i])->getFileManager()->getIdFile() <<endl;
-		cout << "name : " << ((*vFile)[i])->getName() << endl;
-		cout << "path : " << ((*vFile)[i])->getFileManager()->getFileName() <<endl;
-		cout << "size : " << ((*vFile)[i])->getFileManager()->getFileSize() <<endl;
-		cout << "fileState : " << getStringFileState(((*vFile)[i])->getFileState()) << endl;
-		cout << "chunkSize : " << ((*vFile)[i])->getFileManager()->getChunkSize() <<endl;
-		vEntity = ((*vFile)[i])->getDeploysOn();
-		if (vEntity != NULL)
+			cout << "name : " << ((*vFile)[i])->getName() << endl;
+		if (((*vFile)[i])->getFileState() != F_ERROR)
 		{
-			for (j=0; j < vEntity->size(); j++)
+			cout << "id : " << ((*vFile)[i])->getFileManager()->getIdFile() <<endl;
+			cout << "path : " << ((*vFile)[i])->getFileManager()->getFileName() <<endl;
+			cout << "size : " << ((*vFile)[i])->getFileManager()->getFileSize() <<endl;
+			cout << "fileState : " << getStringFileState(((*vFile)[i])->getFileState()) << endl;
+			cout << "chunkSize : " << ((*vFile)[i])->getFileManager()->getChunkSize() <<endl;
+			vEntity = ((*vFile)[i])->getDeploysOn();
+			if (vEntity != NULL)
 			{
-				entity2 = (*vEntity)[j];
-				cout << "     nom host : " << entity2->getName() << " | ";
-				cout << "address : " << entity2->getIP() << " | ";
-				if (entity2->getParent()!=NULL)
-					cout << "parent : " << (entity2->getParent())->getName() << endl;
-				deploys = entity2->getDeploys();
-				for (k=0; k < deploys->size(); k++)
+				for (j=0; j < vEntity->size(); j++)
 				{
-					cout << "                   idFile : " << ((((*deploys)[k]).getRefFile())->getFileManager()->getIdFile())<< endl;
+					entity2 = (*vEntity)[j];
+					cout << "     nom host : " << entity2->getName() << " | ";
+					cout << "address : " << entity2->getIP() << " | ";
+					if (entity2->getParent()!=NULL)
+						cout << "parent : " << (entity2->getParent())->getName() << endl;
+					deploys = entity2->getDeploys();
+					for (k=0; k < deploys->size(); k++)
+					{
+						if ((((*deploys)[k]).getRefFile())->getFileState() != F_ERROR)
+						{
+							cout << "                   idFile : " << ((((*deploys)[k]).getRefFile())->getFileManager()->getIdFile())<< endl;
+						}
+					}
 				}
+
 			}
 		}
 	}
@@ -69,7 +76,6 @@ int main()
 	{
 		cout << ((*hosts)[i])->getName() << endl;
 	}
-	cout << "lol" << endl;
 	/*Entity* entity10 = sData->public_getEntity("PC11");
 	Entity* entity20= sData->public_getEntity("batiment_C");
 	Entity* entity30 = sData->public_getEntity("PC40");
@@ -115,7 +121,7 @@ int main()
 	
 	sData->public_displayEntities();
 	
-	
+		cout << "lol" << endl;
 	delete sData;
-		
+
 }

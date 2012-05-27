@@ -52,7 +52,9 @@ void* runFct(void* connectionManager)
 	Socket* sockTmp;
 	while(connectionManagerTmp->run)
 	{
+		cout << "en attente "<<endl;
 		sockTmp = connectionManagerTmp->serverSocket->accept();
+		cout << "connexion "<<endl;
 		connectionManagerTmp->addConnection(sockTmp->getIpAdress(), sockTmp);
 
 	}
