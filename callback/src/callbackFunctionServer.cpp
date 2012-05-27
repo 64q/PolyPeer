@@ -88,6 +88,18 @@ int callbackPacketSendOperationFinished(Packet& p)
 	return 1;
 }
 
+int callBackAddHost(Packet& p)
+{
+	PacketAddHost pp (p);
+	
+	cout << "PacketAddHost" << endl;
+	
+	ServerData& sd = PolypeerServer::getInstance()->getServerData();
+	
+	sd.updateHost(pp.getIpAddress(), WAIT);
+	
+	return 1;
+}
 
 
 
