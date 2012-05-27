@@ -87,6 +87,32 @@ body div#content table tr td {
 	border-bottom: 1px solid black;
 }
 
+body #network-view {
+	border: 1px solid black;
+	background: silver;
+	padding: 5px;
+}
+
+body #network-view h2 {
+	padding: 3px;
+	margin: 0px;
+	background: gray;
+	color: white;
+	border: 0px solid transparent;
+}
+
+body #network-view div {
+	margin: 5px;
+	margin-left: 15px;
+	border: 1px solid black;
+	background: silver;
+}
+
+body div li {
+	margin-top: 9px;
+	margin-bottom: 9px;
+}
+
 form h2 {
 	
 }

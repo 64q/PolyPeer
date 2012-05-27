@@ -91,6 +91,12 @@ public :
 	Entity* addHost(string name, Entity* parent,int networkCapacity, string address);
 	
 	/**
+	* Supprime de la mémoire et du fichier XML le déploiement d'id passé en paramètre, si son 
+	* State = FINISH alors nous le conservons dans le fichier XML pour un historique
+	*/
+	void deleteFile(int id);
+	
+	/**
 	* Récupération de la structure hosts stockant les Host du réseau
 	*/
 	vector<Entity*>* getHosts();

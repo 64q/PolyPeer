@@ -15,3 +15,7 @@ int DeploymentState::getId()
 	return (refFile->getFileManager())->getIdFile(); 
 }
 
+void DeploymentState::setCurrentState(HostDeployState s)
+{ 
+	currentState = s; 
+}

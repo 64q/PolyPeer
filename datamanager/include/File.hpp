@@ -7,34 +7,36 @@
 #include <Entity.hpp>
 #include <State.hpp>
 #include <FileManager.hpp>
+#include <State.hpp>
 
 
 class Entity;
-
-using namespace std;
 
 class File
 {
 
 public :
-	File(int id, string name, string path);
-	File(int id, string name, string path, int size, int chunkSize);
+
+	File(int id, std::string name, std::string path);
+	File(int id, std::string name, std::string path, int size, int chunkSize);
+	File(int id, std::string name, std::string path, int size, int chunkSize, FileState fs);
 	~File();
-	string getName() { return name; }
+	std::string getName() { return name; }
 	FileManager* getFileManager() { return fileM; }
 	FileState getFileState() { return fState; }
 	void setFileState(FileState fs);
-	vector<Entity*>* getDeploysOn() { return &deploysOn; }
-	vector<vector<Entity*>* >* getSortedHosts();
-
+	std::vector<Entity*>* getDeploysOn() { return &deploysOn; }
+	std::vector<std::vector<Entity*>* >* getSortedHosts();
+	void deleteSortedHost(std::vector<std::vector<Entity*>* >* v);
 	void addEntity(Entity* entity);
+
 	
 protected :
 	
-	string name;
+	std::string name;
 	FileManager* fileM;
 	FileState fState;
-	vector<Entity*> deploysOn;
+	std::vector<Entity*> deploysOn;
 	
 };
 

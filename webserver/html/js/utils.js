@@ -168,7 +168,11 @@ var HashNav = {
 					loadScript('js/network.js', function() {
 						var view = $('#network-view');
 						for (var i = 0; i < content.length; i++) {
-							view.appendChild(createZone(content[i]));
+							if (content[i].type == "zone") {
+								createZone(view, content[i]);
+							} else {
+								view.appendChild(createHostLine('p', content[i]));
+							}
 						}
 					});
 				});
@@ -188,10 +192,10 @@ var HashNav = {
 					var result = '<ul>';
 				
 					for (var i = 0; i < content.deployments.length; i++) {
-						result += '<li>' + content.deployments[i].name + '</li>';
+						result += '<li>' + content.deployments[i].name + ' (' + content.deployments[i].current + '/' + content.deployments[i].total + ')</li>';
 					}
 				
-					$('#host-info').innerHTML = '<ul><li><strong>Nom : </strong>' + content.name + '</li><li><strong>IP : </strong>' + content.ip + '</li><li><strong>Etat : </strong>' + content.state + '</li></ul>';
+					$('#host-info').innerHTML = '<ul><li><strong>Nom : </strong>' + content.name + '</li><li><strong>IP : </strong>' + content.ip + '</li><li><strong>Etat : </strong>' + printState(content.state) + '</li></ul>';
 					$('#host-deployments').innerHTML = result;
 				});
 			});
@@ -241,4 +245,12 @@ function notifySuccess(msg) {
 
 function notifyError(msg) {
 	$('#notifs').innerHTML = '<p class="error">' + msg + '</p>';
+}
+
+function printState(state) {
+	if (state == 'offline') {
+		return '<span class="error">Hors-ligne</span>';
+	} else {
+		return '<span class="success">En ligne</span>';
+	}
 }

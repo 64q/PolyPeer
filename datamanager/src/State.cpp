@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <map>
 
 #include <State.hpp>
 
@@ -75,4 +76,18 @@ string getStringFileState(FileState state)
 	}
 	
 	return result;
+}
+
+FileState getFileStateString(string stringState)
+{
+
+	map<string, FileState> fsMap;
+	fsMap.insert(make_pair("ready",READY));
+	fsMap.insert(make_pair("deployment",DEPLOYMENT));
+	fsMap.insert(make_pair("finished",FINISH));
+	fsMap.insert(make_pair("error",ERROR));
+	
+	map<string,FileState>::iterator s = fsMap.find(stringState);
+	
+	return s->second;
 }
