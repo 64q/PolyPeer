@@ -6,28 +6,7 @@ using namespace std;
 
 int main()
 {
-
-	ServerSocket server(5556);
-	cout << "en attente" << endl;
-
-	Socket* sock;
-	while (true)
-	{
-		sock = server.accept();
-		sock->send("crotte", strlen("crotte"));
-		sock->close();
-		delete sock;
-
-	}
-
-	server.close();
-
-//	    Socket sock("localhost", 5556);
-//
-//	    char buff[200];
-//	    int taille = sock.read(buff, 200);
-//	    cout << taille<<" : "<<buff << endl;
-//	    sock.close();
+	Socket sock("123.123.123.123",4545);
 
 	return 0;
 }
