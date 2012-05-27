@@ -266,7 +266,20 @@ FileManager* ServerData::getFileManager(int id)
 	}
 	return toReturn;		
 }
+
+bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity, double packetWeight)
+{
+	bool possible = true;
+	Entity* e = entity;
+	while (e != NULL && possible == true)
+	{
+		possible = e->setCurrentBroadbandSpeed(e->getCurrentBroadbandSpeed() + packetWeight);
+		e = e->getParent();
+	}
 	
+	return possible;	
+}
+
 void ServerData::displayEntities(map<string, Entity*>* entities, int level)
 {
 	unsigned int i;
@@ -276,8 +289,10 @@ void ServerData::displayEntities(map<string, Entity*>* entities, int level)
 		
 	for(; mit!=mend; ++mit) 
 	{
+		cout << string( level*3, ' ' ) << mit->first << " | " << "capacity : "<< mit->second->getNetworkCapacity()<<"  | " << "broadbandSpeed : "<< mit->second->getCurrentBroadbandSpeed();
 		if (mit->second->getParent() != NULL)
-			cout << string( level*3, ' ' ) << mit->first << " | " << "capacity : "<< mit->second->getNetworkCapacity()<< " " << " | " << "parent : "<< (mit->second->getParent())->getName();		
+			cout << "  | "<< "parent : "<< (mit->second->getParent())->getName();
+					
 		if (mit->second->getEntities() != NULL)
 		{
 			cout << endl;

@@ -29,7 +29,7 @@ public:
 	std::string getName();
 	Entity* getParent();
 	double getCurrentBroadbandSpeed();
-	void setCurrentBroadbandSpeed(double bbs);
+	bool setCurrentBroadbandSpeed(double bbs);
 	int getNetworkCapacity();
 	~Entity();
 	virtual std::map<std::string, Entity*>* getEntities() = 0;
