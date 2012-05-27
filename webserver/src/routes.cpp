@@ -105,9 +105,48 @@ void deployment_route(mg_connection* conn, const mg_request_info* request_info)
 	char qid[16];
 	
 	get_qsvar(request_info, "id", qid, sizeof(qid));
+	std::istringstream iss(qid);
+	// convertir en un int
+	int id;
+	iss >> id;
+	
+	PolypeerServer* server = PolypeerServer::getInstance();
+	ServerData& data = server->getServerData();
+	File* file = data.getFile(id);
+	FileManager* fm = file->getFileManager();
+	std::vector<std::vector<Entity*>* >* pp = file->getSortedHosts();
 	
 	mg_printf(conn, "%s", ajax_reply_start);
-	mg_printf(conn, "{\"id\":\"%s\", \"name\":\"trololo\"}", qid);
+	mg_printf(conn, "{\"id\":\"%i\", \"name\":\"%s\", \"state\":\"%s\", \"nbchunk\":%lu, \"chunksize\":%lu, \"size\":%lu, \"hosts\":["
+		, id, file->getName().c_str()
+		, getStringFileState(file->getFileState()).c_str()
+		, fm->getNumberChunk()
+		, fm->getChunkSize(), fm->getFileSize()
+	);
+	
+	for (vector<vector<Entity*>* >::iterator itZone = pp->begin(); itZone != pp->end(); itZone++) 
+	{
+		for (vector<Entity*>::iterator it = (*itZone)->begin(); it != (*itZone)->end(); it++)
+		{
+			mg_printf(conn, "{\"name\":\"%s\", \"ip\":\"%s\", \"current\":\"%i\", \"total\":\"%lu\"}"
+				, (*it)->getName().c_str(), (*it)->getIP()->c_str()
+				, (*it)->getDeploymentState(fm->getIdFile())->getCurrentIdChunk()
+				, fm->getNumberChunk()
+			);
+			
+			if ((it + 1) != (*itZone)->end()) 
+			{
+				mg_printf(conn, ",");
+			}
+		}
+		
+		if ((itZone + 1) != pp->end()) 
+		{
+			mg_printf(conn, ",");
+		}
+	}
+	
+	mg_printf(conn, "]}");
 }
 
 void displayEntity(mg_connection* conn, Entity* entity)
@@ -194,6 +233,9 @@ void stop_route(mg_connection* conn, const mg_request_info* request_info)
 {
 	PolypeerServer* server = PolypeerServer::getInstance();
 	
+	mg_printf(conn, "%s", ajax_reply_start);
+	mg_printf(conn, "{\"state\":\"done\"}");
+	
 	server->stop();
 }
 
@@ -205,6 +247,9 @@ void pause_route(mg_connection* conn, const mg_request_info* request_info)
 void restart_route(mg_connection* conn, const mg_request_info* request_info)
 {
 	PolypeerServer* server = PolypeerServer::getInstance();
+	
+	mg_printf(conn, "%s", ajax_reply_start);
+	mg_printf(conn, "{\"state\":\"done\"}");
 	
 	server->restart();
 }

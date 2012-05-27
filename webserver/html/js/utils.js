@@ -154,8 +154,22 @@ var HashNav = {
 				Ajax.request('/ajax/deployment', 'id=' + id, function(content) {
 					var content = JSON.parse(content);
 					var result = '<h1>' + content.name + '</h1>';
-					result += '<p>Ceci est un déploiement...</p>';
-				
+					result += '<ul>';
+					result += '<li>Etat : ' + content.state + '</li>';
+					result += '<li>Taille : ' + content.size + ' o</li>';
+					result += '<li>Nombre de chunks : ' + content.nbchunk + '</li>';
+					result += '<li>Taille d\'un chunk : ' + content.chunksize + ' o</li>';
+					result += '</ul>';
+					
+					result += '<h2>Hotes incluses</h2>';
+					result += '<ul>';
+					
+					for (var i = 0; i < content.hosts.length; i++) {
+						result += '<li>@' + content.hosts[i].ip + ' ' + content.hosts[i].name + ' (' + content.hosts[i].current + '/' + content.hosts[i].total + ')</li>';
+					}
+					
+					result += '</ul>';
+					
 					$('#deployment').innerHTML = result;
 				});
 			});
