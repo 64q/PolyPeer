@@ -220,15 +220,15 @@ int FileManager::getIdFile()
 
 std::string FileManager::getFileName()
 {
-	int last = pathFileState.find_last_of("/");
+	int last = pathFile.find_last_of("/");
 
 	if(last > 0)
 	{
 		//le 6 correspond au .STATE
-		return pathFileState.substr( last,pathFileState.size() - last - 6);
+		return pathFile.substr( last,pathFile.size() - last);
 	}
 
-	return pathFileState.substr( 0,pathFileState.size() - 6);
+	return pathFile.substr( 0,pathFile.size() - 6);
 
 }
 

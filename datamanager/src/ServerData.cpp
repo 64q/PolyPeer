@@ -1,10 +1,12 @@
 #include <ServerData.hpp>
+#include <PolypeerServer.hpp>
 
 using namespace std;
 
 ServerData::ServerData()
 {
 	cM = new ConnectionManager(6666);
+	cM->start();
 	addressServ = "192.168.0.50";
 	xmlTool = new XMLTool(this);
 }
@@ -133,7 +135,10 @@ void ServerData::updateHost(string addressHost, int fileID, HostDeployState s)
 void ServerData::updateHost(string addressHost, HostState s)
 {
 	Entity* host = getHostByAddress(addressHost);
-	host->setHostState(s);
+	if(host != NULL)
+		host->setHostState(s);
+	else
+		PolypeerServer::getInstance()->getLogger() << "Un connard a essayé de se connecter !" << endlog;
 }
 
 

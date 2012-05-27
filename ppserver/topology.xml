@@ -6,6 +6,7 @@
 					<host name="IRC007-05" address="172.34.67.4" networkCapacity="1"/>
 					<host name="PC4" address="172.34.67.5" networkCapacity="1"/>
 					<host name="PC5" address="172.34.67.6" networkCapacity="1"/>
+					<host name="PC5" address="192.168.0.19" networkCapacity="1"/>
 				</zone>
 				<host name="IRC007-04" address="172.34.67.1" networkCapacity="1"/>
 				<host name="PC1" address="172.34.67.2" networkCapacity="1"/>
