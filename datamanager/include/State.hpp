@@ -1,6 +1,8 @@
 #ifndef __H_STATE__
 #define __H_STATE__
 
+#include <string>
+
 /**
 * Etat d'un Host
 */
@@ -30,6 +32,12 @@ std::string getStringHostDeployState(HostDeployState state);
  * Récupère sous forme de chaine de texte l'état
  */
 std::string getStringFileState(FileState state);
+
+/**
+ * Récupère le FIleState à partir d'une chaine de caractère
+ */
+FileState getFileStateString(std::string stringState);
+
 
 #endif
 

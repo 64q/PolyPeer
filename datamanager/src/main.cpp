@@ -4,10 +4,7 @@
 
 int main()
 {
-	vector<Entity*> deployOn;
-	Host* h = new Host("name", NULL, 1, "123");
-	deployOn.push_back(h);
-	
+
 	list<string> list;
 	ServerData* sData = new ServerData();
 	XMLTool* t = sData->getXMLTool();
@@ -30,10 +27,12 @@ int main()
 	vector<Entity*>* vEntity;
 	Entity* entity2;
 	vector<DeploymentState>* deploys;
-	
-	File* fileTest = new File(sData->getCurrentId()+1,"D4", "truc.png");
+		
+	File* fileTest = new File(sData->getCurrentId()+1,"D4", "file/truc3.png");
 	fileTest->addEntity(sData->public_getEntity("batiment_D"));
 	sData->addFileToAll(fileTest);
+	
+	sData->deleteFile(23);
 	
 	unsigned int i, j, k;
 	cout << endl;
@@ -41,9 +40,9 @@ int main()
 	{
 		cout << "id : " << ((*vFile)[i])->getFileManager()->getIdFile() <<endl;
 		cout << "name : " << ((*vFile)[i])->getName() << endl;
-		cout << "pointeur : " << &((*vFile)[i]) << endl;
 		cout << "path : " << ((*vFile)[i])->getFileManager()->getFileName() <<endl;
 		cout << "size : " << ((*vFile)[i])->getFileManager()->getFileSize() <<endl;
+		cout << "fileState : " << getStringFileState(((*vFile)[i])->getFileState()) << endl;
 		cout << "chunkSize : " << ((*vFile)[i])->getFileManager()->getChunkSize() <<endl;
 		vEntity = ((*vFile)[i])->getDeploysOn();
 		for (j=0; j < vEntity->size(); j++)
@@ -66,7 +65,7 @@ int main()
 	{
 		cout << ((*hosts)[i])->getName() << endl;
 	}
-	
+	cout << "lol" << endl;
 	/*Entity* entity10 = sData->public_getEntity("PC11");
 	Entity* entity20= sData->public_getEntity("batiment_C");
 	Entity* entity30 = sData->public_getEntity("PC40");
@@ -93,11 +92,12 @@ int main()
 	}*/
 	
 	Entity* e = sData->public_getEntity("PC2");
-	DeploymentState* ds = e->getDeploymentState(23);
+	DeploymentState* ds = e->getDeploymentState(24);
 	cout << ds->getCurrentState() << endl;
 	cout << ds->getRefFile()->getName() << endl;
 	
 	cout << "CurrentID : "<< sData->getCurrentId() << endl;
+	
 	
 	delete sData;
 		

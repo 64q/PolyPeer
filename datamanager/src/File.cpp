@@ -2,32 +2,58 @@
 #include <Zone.hpp>
 #include <OpenFileException.hpp>
 
+using namespace std;
+
+File::File(int id, string name, string path, int size, int chunkSize, FileState fs):
+	name(name), 
+	fState(fs)
+{
+	try 
+	{
+		fileM = new FileManager(path.data(), (long)size, (long)chunkSize, id);
+
+	} catch (OpenFileException)
+	{
+		fState = ERROR;
+		cout << "FAIL LOAD : Fichier " << path << " inexistant"<< endl;
+	}
+
+}
+
 File::File(int id, string name, string path, int size, int chunkSize):
 	name(name),
 	fState(READY)
 {
-	//try 
-	//{
-		fileM = new FileManager(path.data(), id, (long)chunkSize);
-		//fileM = new FileManager(path.data(), (long)chunkSize, id);
+	try 
+	{
+		fileM = new FileManager(path.data(), (long)size, (long)chunkSize, id);
 
-	/*} catch (OpenFileException)
+	} catch (OpenFileException)
 	{
 		fState = ERROR;
 		cout << "FAIL LOAD : Fichier " << path << " inexistant"<< endl;
-	}*/
+	}
 
 }
 
 File::File(int id, string name, string path):
-name(name)
+	name(name),
+	fState(READY)
 {
-	fileM= new FileManager(path.data(), id);
+	try 
+	{
+			fileM= new FileManager(path.data(), id);
+
+	} catch (OpenFileException)
+	{
+		fState = ERROR;
+		cout << "FAIL LOAD : Fichier " << path << " inexistant"<< endl;
+	}
 }
 
 File::~File()
 {
-	delete fileM;
+	delete (fileM);
 }
 
 void File::setFileState(FileState fs)
@@ -68,6 +94,16 @@ vector<vector<Entity*>* >* File::getSortedHosts()
 	return toReturn;
 }
 
+void File::deleteSortedHost(vector<vector<Entity*>* >* v)
+{
+	unsigned int i;
+	for(i=0; i < v->size(); i++)
+	{
+		delete ((*v)[i]);
+	}
+	delete v;
+}
+
 void File::addEntity(Entity* entity)
 {
 	map<string, Entity*>* entities;
@@ -97,3 +133,4 @@ void File::addEntity(Entity* entity)
 		}
 	}
 }
+
