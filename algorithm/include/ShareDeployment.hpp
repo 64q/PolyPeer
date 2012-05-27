@@ -88,7 +88,7 @@ private:
 	/**
 	 * Récupérer l'host le plus avancé de la zone
 	 */
-	Entity* getMaxZoneDeployment(std::vector<Entity*>* zone, int idFile);
+	Entity* getSeedZoneDeployment(std::vector<Entity*>* zone, int idFile, long chunkId);
 	
 		
 };

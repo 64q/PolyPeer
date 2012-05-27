@@ -65,6 +65,7 @@ void ShareDeployment::nextStep()
 	for (vector<File*>::iterator itFile = files->begin(); itFile != files->end(); itFile++) 
 	{
 		cout<< "\t Gestion deploiement : " << (*itFile)->getName() << endl;
+		int idFile = (*itFile)->getFileManager()->getIdFile();
 		
 		// Récupération des entités concernés par ce déploiement
 		entities = (*itFile)->getSortedHosts();
@@ -83,7 +84,7 @@ void ShareDeployment::nextStep()
 			case DEPLOYMENT:
 				
 				// vérifier qu'il reste des données à déployer
-				if(isEnd(entities, (*itFile)->getFileManager()->getIdFile()))
+				if(isEnd(entities, idFile))
 				{
 					(*itFile)->setFileState(FINISH);
 				}
@@ -93,16 +94,17 @@ void ShareDeployment::nextStep()
 				for (vector<vector<Entity*>* >::iterator itZone = entities->begin(); itZone != entities->end(); itZone++) 
 				{
 					// récupérer le maitre de zone
-					Entity* entity = selectZoneMaster((*itZone), (*itFile)->getFileManager()->getIdFile());
+					Entity* entity = selectZoneMaster((*itZone), idFile);
 					
 					if(entity != NULL)
 					{
-						if(entity->getHostState() == WAIT)
+						if((entity->getHostState() == WAIT) && (entity->getDeploymentState(idFile)->getCurrentState() != HDS_FINISH))
 						{
 							// envoie packet
 							cout<<"\t\t\t Envoie d'un nouveau Chunk sur le maitre de zone" << endl;
-							Chunk chunk = (*itFile)->getFileManager()->getChunk(entity->getDeploymentState((*itFile)->getFileManager()->getIdFile())->getCurrentIdChunk());
+							Chunk chunk = (*itFile)->getFileManager()->getChunk(entity->getDeploymentState(idFile)->getCurrentIdChunk()+1);
 							Packet p = PacketSendChunk(chunk);
+							// gestion débit
 							//if(canTakeBroadcastNetworkFromServerTo(entity, chunk.size()))
 							//{
 								sData->getConnectionManager()->sendTo((*(entity->getIP())), p);
@@ -116,20 +118,37 @@ void ShareDeployment::nextStep()
 						{
 							// ajout du déploiement sur forme d'arbre de la zone dans les actions en attentes
 							cout<<"\t\t\t Déploiement intrazone" << endl;
-						
-							for (vector<Entity*>::iterator itHost = (*itZone)->begin(); itHost != (*itZone)->end(); itHost++) 
+							Entity* minHost = NULL;
+							Entity* seedHost = NULL;
+							do
 							{
 								// récupérer l'host le moins avancé
+								minHost = getMinZoneDeployment((*itZone), idFile);
+								if(minHost != NULL)
+								{
+									int numChunkDL = (minHost->getDeploymentState(idFile)->getCurrentIdChunk())+1;
+									// prendre l'ordi le plus complet différent du maitre de zone si possible
+									seedHost = getSeedZoneDeployment((*itZone), idFile, numChunkDL);
 							
-								// prendre l'ordi le plus complet différent du maitre de zone si possible
-							
-								// SendOperation
-							}
+									// SendOperation
+									if(seedHost != NULL)
+									{
+										// gestion débit
+										//if(canTakeBroadcastNetworkFromServerTo(entity, chunk.size()))
+										//{
+											Chunk chunk = (*itFile)->getFileManager()->getChunk(numChunkDL);
+											sData->getConnectionManager()->sendTo((*(seedHost->getIP())), PacketSendOperation((*(minHost->getIP())), chunk));
+											//takeBroadcastNetworkFromServerTo(entity, chunk.size());
+											minHost->setHostState(DOWNLOAD);
+											seedHost->setHostState(DOWNLOAD);
+										//}
+									}
+								}
+							} while(seedHost != NULL);
 						}
 					}
 				}
 			
-			//getDeploymentState((*itFile)->getFileManager()->getIdFile())
 			
 				break;
 				
@@ -180,7 +199,7 @@ Entity* ShareDeployment::selectZoneMaster(std::vector<Entity*>* zone, int idFile
 		{
 			if((*itHost)->getDeploymentState(idFile)->getCurrentState() == HDS_FINISH)
 				toReturn = (*itHost);
-			else if(toReturn->getDeploymentState(idFile)->getCurrentIdChunk() > (*itHost)->getDeploymentState(idFile)->getCurrentIdChunk())
+			else if(toReturn->getDeploymentState(idFile)->getCurrentIdChunk() < (*itHost)->getDeploymentState(idFile)->getCurrentIdChunk())
 				toReturn = (*itHost);
 			else if((toReturn->getDeploymentState(idFile)->getCurrentIdChunk() == (*itHost)->getDeploymentState(idFile)->getCurrentIdChunk())
 						&& (toReturn->getHostState() == WAIT) && ((*itHost)->getHostState() == WAIT))
@@ -191,7 +210,7 @@ Entity* ShareDeployment::selectZoneMaster(std::vector<Entity*>* zone, int idFile
 		}
 		
 		// si l'host choisi est complet, on le choisi directement
-		if(toReturn->getDeploymentState(idFile)->getCurrentState() == HDS_FINISH)
+		if((toReturn != NULL) && (toReturn->getDeploymentState(idFile)->getCurrentState() == HDS_FINISH))
 			break;
 	}
 	return toReturn;
@@ -201,7 +220,6 @@ void ShareDeployment::networkScan(vector<vector<Entity*>* >* entities, File* f)
 {
 	for (vector<vector<Entity*>* >::iterator itZone = entities->begin(); itZone != entities->end(); itZone++) 
 	{
-	
 		for (vector<Entity*>::iterator itHost = (*itZone)->begin(); itHost != (*itZone)->end(); itHost++) 
 		{
 			// Envoie d'un packet d'initialisation avec le client
@@ -217,29 +235,42 @@ void ShareDeployment::networkScan(vector<vector<Entity*>* >* entities, File* f)
 Entity* ShareDeployment::getMinZoneDeployment(std::vector<Entity*>* zone, int idFile)
 {
 	Entity* toReturn = NULL;
+	
+	for (vector<Entity*>::iterator itHost = zone->begin(); itHost != zone->end(); itHost++) 
+	{
+		if( ((*itHost)->getDeploymentState(idFile)->getCurrentState() != HDS_FINISH) && ((*itHost)->getHostState() == WAIT) )
+		{
+			if(toReturn == NULL)
+				toReturn = (*itHost);
+			else if(toReturn->getDeploymentState(idFile)->getCurrentIdChunk() > (*itHost)->getDeploymentState(idFile)->getCurrentIdChunk())
+				toReturn = (*itHost);
+		}
+	}
+	
 	return toReturn;
 }
 
-Entity* ShareDeployment::getMaxZoneDeployment(std::vector<Entity*>* zone, int idFile)
+Entity* ShareDeployment::getSeedZoneDeployment(std::vector<Entity*>* zone, int idFile, long chunkId)
 {
 	Entity* toReturn = NULL;
+	
+	for (vector<Entity*>::iterator itHost = zone->begin(); itHost != zone->end(); itHost++) 
+	{
+		if((((*itHost)->getDeploymentState(idFile)->getCurrentState() == HDS_FINISH) || ((*itHost)->getDeploymentState(idFile)->getCurrentIdChunk() >= chunkId)) && ((*itHost)->getHostState() == WAIT))
+		{
+			if(toReturn == NULL)
+				toReturn = (*itHost);
+			else if(toReturn->getDeploymentState(idFile)->getCurrentIdChunk() < (*itHost)->getDeploymentState(idFile)->getCurrentIdChunk())
+				toReturn = (*itHost);
+		}
+		if((toReturn != NULL) && (toReturn->getDeploymentState(idFile)->getCurrentState() == HDS_FINISH))
+			break;
+	}
+	
 	return toReturn;
 }
 
-/*
-// Pour chaque zone qui ne contiennent pas de sous zone (ou voir def zone)
-for (vector<vector<Entity*>* >::iterator itZone = entities->begin(); itZone != entities->end(); itZone++) 
-{
-	
-	for (vector<Entity*>::iterator itHost = (*itZone)->begin(); itHost != (*itZone)->end(); itHost++) 
-	{
-	
-		cout<<"\t\t Nom zone cible : " <<  (*itHost)->getName() << endl;
-	
-		// Récupérer le PC le plus avancé ou le maitre de zone si l'info est sauvegardé
-		//cout<<"\t\t\t Nom host cible : " << endl;
-	}
-}*/
+
 
 
 
