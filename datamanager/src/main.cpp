@@ -46,17 +46,20 @@ int main()
 		cout << "fileState : " << getStringFileState(((*vFile)[i])->getFileState()) << endl;
 		cout << "chunkSize : " << ((*vFile)[i])->getFileManager()->getChunkSize() <<endl;
 		vEntity = ((*vFile)[i])->getDeploysOn();
-		for (j=0; j < vEntity->size(); j++)
+		if (vEntity != NULL)
 		{
-			entity2 = (*vEntity)[j];
-			cout << "     nom host : " << entity2->getName() << " | ";
-			cout << "address : " << *(entity2->getIP()) << " | ";
-			if (entity2->getParent()!=NULL)
-				cout << "parent : " << (entity2->getParent())->getName() << endl;
-			deploys = entity2->getDeploys();
-			for (k=0; k < deploys->size(); k++)
+			for (j=0; j < vEntity->size(); j++)
 			{
-				cout << "                   idFile : " << ((((*deploys)[k]).getRefFile())->getFileManager()->getIdFile())<< endl;
+				entity2 = (*vEntity)[j];
+				cout << "     nom host : " << entity2->getName() << " | ";
+				cout << "address : " << entity2->getIP() << " | ";
+				if (entity2->getParent()!=NULL)
+					cout << "parent : " << (entity2->getParent())->getName() << endl;
+				deploys = entity2->getDeploys();
+				for (k=0; k < deploys->size(); k++)
+				{
+					cout << "                   idFile : " << ((((*deploys)[k]).getRefFile())->getFileManager()->getIdFile())<< endl;
+				}
 			}
 		}
 	}
@@ -108,6 +111,7 @@ int main()
 	sData->updateNetworkCurrentBroadbandSpeed(e3,55);
 	sData->updateNetworkCurrentBroadbandSpeed(e4,34);
 	sData->updateNetworkCurrentBroadbandSpeed(e2,99);
+	
 	
 	sData->public_displayEntities();
 	
