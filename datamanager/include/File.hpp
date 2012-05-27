@@ -20,6 +20,8 @@ public :
 	~File();
 	string getName() { return name; }
 	FileManager* getFileManager() { return fileM; }
+	FileState getFileState() { return fState; }
+	void setFileState(FileState fs);
 	vector<Entity*>* getDeploysOn() { return &deploysOn; }
 	vector<vector<Entity*>* >* getSortedHosts();
 
@@ -29,6 +31,7 @@ protected :
 	
 	string name;
 	FileManager* fileM;
+	FileState fState;
 	vector<Entity*> deploysOn;
 	
 };

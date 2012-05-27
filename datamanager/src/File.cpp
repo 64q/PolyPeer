@@ -29,6 +29,11 @@ File::~File()
 	delete fileM;
 }
 
+void File::setFileState(FileState fs)
+{
+	fState = fs;
+}
+
 vector<vector<Entity*>* >* File::getSortedHosts()
 {
 	unsigned int i,j;
