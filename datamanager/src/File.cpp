@@ -17,7 +17,6 @@ File::File(int id, string name, string path, int size, int chunkSize, FileState 
 		fState = ERROR;
 		cout << "FAIL LOAD : Fichier " << path << " inexistant"<< endl;
 	}
-
 }
 
 File::File(int id, string name, string path, int size, int chunkSize):
@@ -94,14 +93,11 @@ vector<vector<Entity*>* >* File::getSortedHosts()
 	return toReturn;
 }
 
-void File::deleteSortedHost(vector<vector<Entity*>* >* v)
+void File::deleteSortedHost(vector<vector<Entity*>* >* entities)
 {
-	unsigned int i;
-	for(i=0; i < v->size(); i++)
-	{
-		delete ((*v)[i]);
-	}
-	delete v;
+	for (vector<vector<Entity*>* >::iterator itZone = entities->begin(); itZone != entities->end(); itZone++) 
+		delete (*itZone);
+	delete entities;
 }
 
 void File::addEntity(Entity* entity)

@@ -27,7 +27,7 @@ public :
 	void setFileState(FileState fs);
 	std::vector<Entity*>* getDeploysOn() { return &deploysOn; }
 	std::vector<std::vector<Entity*>* >* getSortedHosts();
-	void deleteSortedHost(std::vector<std::vector<Entity*>* >* v);
+	static void deleteSortedHost(std::vector<std::vector<Entity*>* >* v);
 	void addEntity(Entity* entity);
 
 	
