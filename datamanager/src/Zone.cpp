@@ -7,7 +7,7 @@ using namespace std;
 Zone::Zone(const std::string& name, Entity* parent, int networkCapacity) :
 	Entity(name, parent, networkCapacity)
 {
-
+	this->type = ZONE;
 }
 
 Zone::~Zone()
