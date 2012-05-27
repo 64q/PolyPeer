@@ -40,17 +40,24 @@ void deployments_route(mg_connection* conn, const mg_request_info* request_info)
 		{
 			FileManager* fm = (*it)->getFileManager();
 			
-			mg_printf(conn, "{\"id\":%i, \"name\":\"%s\", \"state\":\"%s\", \"filename\":\"%s\"}"
+			mg_printf(conn, "{\"id\":%i, \"name\":\"%s\", \"state\":\"%s\"}"
 				, fm->getIdFile()
 				, (*it)->getName().c_str()
 				, getStringFileState((*it)->getFileState()).c_str()
-				, fm->getFileName().c_str()
 			);
 	
 			if ((it + 1) != files->end()) 
 			{
 				mg_printf(conn, ",");
 			}
+		}
+		else 
+		{
+			mg_printf(conn, "{\"id\":%i, \"name\":\"%s\", \"state\":\"%s\"}"
+				, 0
+				, (*it)->getName().c_str()
+				, getStringFileState((*it)->getFileState()).c_str()
+			);
 		}
 	}
 	
@@ -65,8 +72,11 @@ void error_route(mg_connection* conn, const mg_request_info* request_info)
 
 void get_stats_route(mg_connection* conn, const mg_request_info* request_info)
 {
+	PolypeerServer* server = PolypeerServer::getInstance();
+	ServerData& data = server->getServerData();
+	
 	mg_printf(conn, "%s", ajax_reply_start);
-	mg_printf(conn, "{\"state\":\"online\", \"count_deployments\": 3}");
+	mg_printf(conn, "{\"state\":\"%s\", \"count_deployments\":%i, \"count_hosts\":%i}", "online", data.getDeployFiles()->size(), data.getEntities()->size());
 }
 
 void get_host_route(mg_connection* conn, const mg_request_info* request_info)
@@ -262,6 +272,8 @@ void new_deployment_route(mg_connection* conn, const mg_request_info* request_in
 		pch = strtok (NULL, ",");
 	}
 	
+	cout << string(qpath) << endl;
+	
 	File* file = new File(data.getCurrentId(), string(qname), string(qpath));
 
 	for (unsigned int i = 0; i < vzones.size(); i++) {
@@ -301,11 +313,11 @@ void restart_route(mg_connection* conn, const mg_request_info* request_info)
 
 void delete_deployment_route(mg_connection* conn, const mg_request_info* request_info)
 {
-	PolypeerServer* server = PolypeerServer::getInstance();
+	/*PolypeerServer* server = PolypeerServer::getInstance();
 	
 	ServerData& data = server->getServerData();
 	
-	
+	*/
 }
 
 void pause_deployment_route(mg_connection* conn, const mg_request_info* request_info)

@@ -118,8 +118,9 @@ var HashNav = {
 				Ajax.request('/ajax/get_stats', null, function(content) {
 					var content = JSON.parse(content);
 					var result = '<ul>';
-					result += '<li><strong>Etat du serveur : </strong>' + content.state + '</li>';
+					result += '<li><strong>Etat du serveur : </strong>' + printState(content.state) + '</li>';
 					result += '<li><strong>Nombre de déploiements en cours : </strong>' + content.count_deployments + '</li>';
+					result += '<li><strong>Nombre d\'entitées sur le réseau : </strong>' + content.count_hosts + '</li>';
 					result += '</ul>';
 				
 					$('#overview').innerHTML = result;
@@ -153,22 +154,28 @@ var HashNav = {
 				// Récupération des infos du déploiement cible
 				Ajax.request('/ajax/deployment', 'id=' + id, function(content) {
 					var content = JSON.parse(content);
-					var result = '<h1>' + content.name + '</h1>';
-					result += '<ul>';
-					result += '<li>Etat : ' + content.state + '</li>';
-					result += '<li>Taille : ' + content.size + ' o</li>';
-					result += '<li>Nombre de chunks : ' + content.nbchunk + '</li>';
-					result += '<li>Taille d\'un chunk : ' + content.chunksize + ' o</li>';
-					result += '</ul>';
+					var result;
 					
-					result += '<h2>Hotes incluses</h2>';
-					result += '<ul>';
+					if (content.state == 'error') {
+						result = notifyError('Impossible de récupérer le déploiement');
+					} else {
+						result = '<h1>' + content.name + '</h1>';
+						result += '<ul>';
+						result += '<li>Etat : ' + content.state + '</li>';
+						result += '<li>Taille : ' + content.size + ' o</li>';
+						result += '<li>Nombre de chunks : ' + content.nbchunk + '</li>';
+						result += '<li>Taille d\'un chunk : ' + content.chunksize + ' o</li>';
+						result += '</ul>';
 					
-					for (var i = 0; i < content.hosts.length; i++) {
-						result += '<li>@' + content.hosts[i].ip + ' ' + content.hosts[i].name + ' (' + content.hosts[i].current + '/' + content.hosts[i].total + ')</li>';
+						result += '<h2>Hotes incluses</h2>';
+						result += '<ul>';
+					
+						for (var i = 0; i < content.hosts.length; i++) {
+							result += '<li>@' + content.hosts[i].ip + ' ' + content.hosts[i].name + ' (' + content.hosts[i].current + '/' + content.hosts[i].total + ')</li>';
+						}
+					
+						result += '</ul>';
 					}
-					
-					result += '</ul>';
 					
 					$('#deployment').innerHTML = result;
 				});
