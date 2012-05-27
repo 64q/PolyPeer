@@ -88,7 +88,7 @@ void PolypeerServer::run()
 	
 	
 	cout<< "Lancement Algo de décision" << endl;
-	
+	sleep(10);
 	while (server->running)
 	{
 
@@ -142,9 +142,10 @@ void* thread_initConnection(void* data)
 		Socket* socket = new Socket(myHost->getIP(), (PolypeerServer::instance)->getClientPort());
 		cm->addConnection(myHost->getIP(), socket);
 		myHost->setHostState(WAIT);
+		(PolypeerServer::instance)->getLogger()<<"Connection to " << myHost->getIP() << " complete" <<endlog;
 	} catch(ConnectionException)
 	{
-		cout<<"ConnectionTo " << myHost->getIP() << " failed"<<endl;
+		(PolypeerServer::instance)->getLogger()<<"Connection to " << myHost->getIP() << " failed" <<endlog;
 	}
 
 	

@@ -64,7 +64,7 @@ void ShareDeployment::nextStep()
 	// Pour chaque fichier en cour de déploiement, recherche des nouvelles actions
 	for (vector<File*>::iterator itFile = files->begin(); itFile != files->end(); itFile++) 
 	{
-		//cout<< "\t Gestion deploiement : " << (*itFile)->getName() << endl;
+		cout<< "\t Gestion deploiement : " << (*itFile)->getName() << endl;
 		int idFile = (*itFile)->getFileManager()->getIdFile();
 		
 		// Récupération des entités concernés par ce déploiement
@@ -230,7 +230,7 @@ void ShareDeployment::networkScan(vector<vector<Entity*>* >* entities, File* f)
 			// Envoie d'un packet d'initialisation avec le client
 			// -> le client renvoie où il est rendu
 			// -> si le fichier n'existe pas, il est créé
-			
+			cout<<"IP : " <<(*itHost)->getIP()<<endl;
 			Packet p = PacketNewFile(f->getFileManager()->getIdFile(), f->getName(), f->getFileManager()->getFileSize(), f->getFileManager()->getChunkSize());
 			sData->getConnectionManager()->sendTo((*itHost)->getIP(), p);
 		}
