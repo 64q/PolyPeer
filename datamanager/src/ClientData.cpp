@@ -2,9 +2,9 @@
 
 ClientData::ClientData()
 {
-	connectionManager = new ConnectionManager(6666);
-	addressServ = "localhost";
-	portServ = 5656;
+	connectionManager = new ConnectionManager(5555);
+	addressServ = "192.168.0.50";
+	portServ = 6666;
 }
 
 ClientData::~ClientData()

@@ -5,7 +5,7 @@ using namespace std;
 ServerData::ServerData()
 {
 	cM = new ConnectionManager(6666);
-	addressServ = "192.168.0.1";
+	addressServ = "192.168.0.50";
 	xmlTool = new XMLTool(this);
 }
 
