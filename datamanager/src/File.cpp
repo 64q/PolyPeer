@@ -5,32 +5,55 @@
 using namespace std;
 
 File::File(int id, string name, string path, int size, int chunkSize, FileState fs):
-name(name)
+	name(name), 
+	fState(fs)
 {
-	/*try 
-	{*/
-		fileM = new FileManager(path.data(), id, (long)chunkSize);
-		fState = fs;
-		//fileM = new FileManager(path.data(), (long)chunkSize, id);
-
-	/*} catch (openFileException)
+	try 
 	{
-		cout << "Fichier " << path << " inexistant"<< endl;
+		fileM = new FileManager(path.data(), (long)size, (long)chunkSize, id);
+
+	} catch (OpenFileException)
+	{
+		fState = ERROR;
+		cout << "FAIL LOAD : Fichier " << path << " inexistant"<< endl;
 	}
-	fileM= new FileManager(path.data(),(long)size, (long)chunkSize, id);*/
+
+}
+
+File::File(int id, string name, string path, int size, int chunkSize):
+	name(name),
+	fState(READY)
+{
+	try 
+	{
+		fileM = new FileManager(path.data(), (long)size, (long)chunkSize, id);
+
+	} catch (OpenFileException)
+	{
+		fState = ERROR;
+		cout << "FAIL LOAD : Fichier " << path << " inexistant"<< endl;
+	}
 
 }
 
 File::File(int id, string name, string path):
-name(name)
+	name(name),
+	fState(READY)
 {
-	fileM= new FileManager(path.data(), id);
-	fState = READY;
+	try 
+	{
+			fileM= new FileManager(path.data(), id);
+
+	} catch (OpenFileException)
+	{
+		fState = ERROR;
+		cout << "FAIL LOAD : Fichier " << path << " inexistant"<< endl;
+	}
 }
 
 File::~File()
 {
-	delete fileM;
+	delete (fileM);
 }
 
 void File::setFileState(FileState fs)
@@ -111,15 +134,3 @@ void File::addEntity(Entity* entity)
 	}
 }
 
-FileState stringToEnum(string state)
-{
-	map<string, FileState> fsMap;
-	fsMap.insert(make_pair("READY",READY));
-	fsMap.insert(make_pair("DEPLOYMENT",DEPLOYMENT));
-	fsMap.insert(make_pair("FINISH",FINISH));
-	fsMap.insert(make_pair("ERROR",ERROR));
-	
-	map<string,FileState>::iterator s = fsMap.find(state);
-	
-	return s->second;
-}

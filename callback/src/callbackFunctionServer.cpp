@@ -53,7 +53,7 @@ int callbackMd5Error(Packet& p)
 
 	string src = p.getAddress();
 
-	sd.updateHost(src, pp.getIdFile(), WAIT);
+	sd.updateHost(src, WAIT);
 
 	return 1;
 }
@@ -68,7 +68,7 @@ int callbackPacketDiskFull(Packet& p)
 
 	string src = p.getAddress();
 
-	sd.updateHost(src, pp.getIdFile(), FULL);
+	sd.updateHost(src, FULL);
 
 	return 1;
 }

@@ -27,6 +27,8 @@ public :
 	void public_displayTopology();
 	void writeFileIntoDeployments(File* file);
 	void writeEntityIntoFile(int fileId, Entity* entity);
+	void removeDeployment(int id);
+	int getCurrentId();
 	
 protected :
 	std::string topologyFile;

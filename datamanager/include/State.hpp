@@ -1,7 +1,6 @@
 #ifndef __H_STATE__
 #define __H_STATE__
 
-#include <map>
 #include <string>
 
 /**
@@ -19,6 +18,25 @@ enum HostDeployState { HDS_DOWNLOAD=0, HDS_WAIT=1, HDS_FINISH=2 };
 */
 enum FileState { READY=0, DEPLOYMENT=1, FINISH=2, ERROR=3 };
 
+/**
+ * Récupère sous forme de chaine de texte l'état
+ */
+std::string getStringHostState(HostState state);
+
+/**
+ * Récupère sous forme de chaine de texte l'état
+ */
+std::string getStringHostDeployState(HostDeployState state);
+
+/**
+ * Récupère sous forme de chaine de texte l'état
+ */
+std::string getStringFileState(FileState state);
+
+/**
+ * Récupère le FIleState à partir d'une chaine de caractère
+ */
+FileState getFileStateString(std::string stringState);
 
 
 #endif

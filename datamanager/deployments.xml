@@ -1,12 +1,12 @@
 <deployments>
-    <file id="23" name="D1" path="file/text.png" size="5343" chunkSize="3000" state="DEPLOYMENT">
+    <file id="23" name="D1" path="file/text.png" size="5343" chunkSize="3000" state="deployment">
         <zone ref="batiment_C" />
         <host ref="PC11" />
     </file>
-    <file id="24" name="D2" path="file/truc.png" size="34535" chunkSize="13000" state="DEPLOYMENT">
+    <file id="24" name="D2" path="file/truc.png" size="34535" chunkSize="13000" state="deployment">
         <zone ref="virtual" />
     </file>
-    <file id="25" name="D3" path="file/truc2.png" size="34535" chunkSize="13000" state="FINISH">
+    <file id="25" name="D3" path="file/truc2.png" size="34535" chunkSize="13000" state="finished">
         <zone ref="PC2" />
     </file>
 </deployments>

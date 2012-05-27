@@ -122,11 +122,15 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 			TiXmlElement* elem = node->ToElement();
 			if (!(node->ValueStr().compare("file")))
 			{
-				elem->QueryIntAttribute("id", &id);
-				elem->QueryIntAttribute("size", &size);
-				elem->QueryIntAttribute("chunkSize", &chunkSize);
-				File *f = new File(id, elem->Attribute("name"), elem->Attribute("path"), size, chunkSize);
-				sData->addFile(f);
+				FileState fs =  getFileStateString(elem->Attribute("state"));
+				if (fs != FINISH)
+				{
+					elem->QueryIntAttribute("id", &id);
+					elem->QueryIntAttribute("size", &size);
+					elem->QueryIntAttribute("chunkSize", &chunkSize);
+					File *f = new File(id, elem->Attribute("name"), elem->Attribute("path"), size, chunkSize, fs);
+					sData->addFile(f);
+				}
 			}
 			if (!(node->ValueStr().compare("zone")) || !(node->ValueStr().compare("host")))
 			{
@@ -135,7 +139,8 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 				{
 					parentElem->QueryIntAttribute("id", &id);
 					File* f = sData->getFile(id);
-					f->addEntity(entity);
+					if (f != NULL)
+						f->addEntity(entity);
 				}
 			}
 		}
@@ -159,6 +164,7 @@ void XMLTool::writeFileIntoDeployments(File* file)
 	newFile.SetAttribute("path", (file->getFileManager())->getFileName());
 	newFile.SetAttribute("size", (file->getFileManager())->getFileSize());
 	newFile.SetAttribute("chunkSize", (file->getFileManager())->getChunkSize());
+	newFile.SetAttribute("state", getStringFileState(file->getFileState()));
 	f->InsertEndChild(newFile);
 	DOMDeployments.SaveFile(deploymentsFile);
 
@@ -193,17 +199,60 @@ void XMLTool::writeEntityIntoFile(int fileId, Entity* entity)
 			}
 			file = file->NextSiblingElement();
 		}
-	
-		if (!find)
-			cerr << "user inexistant" << endl;
+
 		DOMDeployments.SaveFile(deploymentsFile);
 	} 
 
 }
 	
+void XMLTool::removeDeployment(int fileId)
+{
+	bool find = false;
+	int id;
+	TiXmlHandle hdl(&DOMDeployments);
+	TiXmlElement *file = hdl.FirstChildElement().FirstChildElement().Element();
+
+	while(file && !find)
+	{
+		file->QueryIntAttribute("id", &id);
+		if(id == fileId)
+		{
+			find = true;
+		} else 
+		{
+			file = file->NextSiblingElement();
+		}
+	}
+
+	if (find)
+	{
+		TiXmlElement *f = DOMDeployments.FirstChildElement();
+		f->RemoveChild(file);
+		DOMDeployments.SaveFile(deploymentsFile);
+	}
+}
+
+int XMLTool::getCurrentId()
+{
+	int id;
+	int currentId=0;
+	TiXmlHandle hdl(&DOMDeployments);
+	TiXmlElement *file = hdl.FirstChildElement().FirstChildElement().Element();
+
+	while(file)
+	{
+		file->QueryIntAttribute("id", &id);
+		if (currentId < id)
+			currentId = id;
+		file = file->NextSiblingElement();
+	}
+	return currentId;
+}
+
 void XMLTool::public_displayTopology() 
 { 
 	displayTopology(DOMTopology.RootElement()); 
 }
+
 
 

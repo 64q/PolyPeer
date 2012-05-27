@@ -156,15 +156,7 @@ void ServerData::addFileToAll(File* f)
 
 int ServerData::getCurrentId()
 {
-	int currentId=0;
-	unsigned int i;
-	for (i=0;i<deployFiles.size();i++)
-	{
-		if (currentId < (deployFiles[i]->getFileManager())->getIdFile())
-			currentId = (deployFiles[i]->getFileManager())->getIdFile();
-	}
-	
-	return currentId;
+	return xmlTool->getCurrentId();
 }
 
 File* ServerData::getFile(int id)
@@ -183,6 +175,30 @@ File* ServerData::getFile(int id)
 		i++;
 	}
 	return toReturn;	
+}
+
+void ServerData::deleteFile(int id)
+{
+	File* f = getFile(id);
+	vector<File*>::iterator
+	vit (deployFiles.begin()),
+	vend(deployFiles.end());
+	
+	if (f != NULL)
+	{
+		if (f->getFileState() != FINISH)
+			xmlTool->removeDeployment(id);
+	}
+		
+	for(; vit!=vend; ++vit) 
+	{
+		if (((*vit)->getFileManager())->getIdFile() == id )
+		{
+			deployFiles.erase(vit);
+			break;
+		}
+	}
+	
 }
 
 Entity* ServerData::addHost(string name, Entity* parent, int networkCapacity, string address)

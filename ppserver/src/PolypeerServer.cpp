@@ -26,7 +26,6 @@ PolypeerServer::PolypeerServer() :
 
 	sData = new ServerData();
 	
-	
 	// initialisation du system de callBack
 	// -> permet l'appel "automatique des traitement pour un paquet
 	PacketCallback * pcb = PacketCallback::getPacketCallback();

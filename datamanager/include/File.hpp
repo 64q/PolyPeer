@@ -5,8 +5,10 @@
 #include <iostream>
 
 #include <Entity.hpp>
+#include <State.hpp>
 #include <FileManager.hpp>
 #include <State.hpp>
+
 
 class Entity;
 
@@ -16,6 +18,7 @@ class File
 public :
 
 	File(int id, std::string name, std::string path);
+	File(int id, std::string name, std::string path, int size, int chunkSize);
 	File(int id, std::string name, std::string path, int size, int chunkSize, FileState fs);
 	~File();
 	std::string getName() { return name; }
@@ -26,7 +29,7 @@ public :
 	std::vector<std::vector<Entity*>* >* getSortedHosts();
 	void deleteSortedHost(std::vector<std::vector<Entity*>* >* v);
 	void addEntity(Entity* entity);
-	FileState stringToEnum(std::string);
+
 	
 protected :
 	

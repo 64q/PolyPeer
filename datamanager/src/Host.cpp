@@ -7,9 +7,11 @@
 using namespace std;
 
 Host::Host(const std::string& name, Entity* parent, int networkCapacity, const std::string& ip):
-	Entity(name, parent, networkCapacity), ip(ip)
+	Entity(name, parent, networkCapacity), 
+	hostState(OFFLINE),
+	ip(ip)
 {
-	hostState = OFFLINE;
+	this->type = HOST;
 }
 
 Host::~Host()
