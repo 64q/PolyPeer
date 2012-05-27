@@ -55,7 +55,7 @@ void ShareDeployment::nextStep()
 	vector<vector<Entity*>* >* entities;
 	
 	
-	cout<< "DEBUT" << endl;
+	//cout<< "DEBUT" << endl;
 	
 	// Avant de créer de nouvelles actions (données à envoyer), on essaye de finir ce qui est en attente
 	tryLaunchWaitAction();
@@ -64,7 +64,7 @@ void ShareDeployment::nextStep()
 	// Pour chaque fichier en cour de déploiement, recherche des nouvelles actions
 	for (vector<File*>::iterator itFile = files->begin(); itFile != files->end(); itFile++) 
 	{
-		cout<< "\t Gestion deploiement : " << (*itFile)->getName() << endl;
+		//cout<< "\t Gestion deploiement : " << (*itFile)->getName() << endl;
 		int idFile = (*itFile)->getFileManager()->getIdFile();
 		
 		// Récupération des entités concernés par ce déploiement
@@ -75,7 +75,7 @@ void ShareDeployment::nextStep()
 		{
 			case READY:
 				// Faire un scan du réseau pour MAJ
-				cout<<"\t\t Premier passage -> MAJ du réseau" << endl;
+				//cout<<"\t\t Premier passage -> MAJ du réseau" << endl;
 				networkScan(entities, (*itFile));
 				// passer l'état en DEPLOYMENT
 				(*itFile)->setFileState(DEPLOYMENT);
@@ -89,7 +89,7 @@ void ShareDeployment::nextStep()
 					(*itFile)->setFileState(FINISH);
 				}
 				
-				cout<<"\t\t Traitement pour chaque zone" << endl;
+				//cout<<"\t\t Traitement pour chaque zone" << endl;
 				// Les traitements sont effectués par zone
 				for (vector<vector<Entity*>* >::iterator itZone = entities->begin(); itZone != entities->end(); itZone++) 
 				{
@@ -101,7 +101,7 @@ void ShareDeployment::nextStep()
 						if((entity->getHostState() == WAIT) && (entity->getDeploymentState(idFile)->getCurrentState() != HDS_FINISH))
 						{
 							// envoie packet
-							cout<<"\t\t\t Envoie d'un nouveau Chunk sur le maitre de zone" << endl;
+						//	cout<<"\t\t\t Envoie d'un nouveau Chunk sur le maitre de zone" << endl;
 							Chunk chunk = (*itFile)->getFileManager()->getChunk(entity->getDeploymentState(idFile)->getCurrentIdChunk()+1);
 							Packet p = PacketSendChunk(chunk);
 							// gestion débit
@@ -117,7 +117,7 @@ void ShareDeployment::nextStep()
 						if((*itZone)->size() > 1)
 						{
 							// ajout du déploiement sur forme d'arbre de la zone dans les actions en attentes
-							cout<<"\t\t\t Déploiement intrazone" << endl;
+						//	cout<<"\t\t\t Déploiement intrazone" << endl;
 							Entity* minHost = NULL;
 							Entity* seedHost = NULL;
 							do
@@ -167,7 +167,7 @@ void ShareDeployment::nextStep()
 	
 	File::deleteSortedHost(entities);
 
-	cout<< "FIN" << endl << endl;
+	//cout<< "FIN" << endl << endl;
 	
 }
 
