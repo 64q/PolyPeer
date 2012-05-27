@@ -161,6 +161,10 @@ void ShareDeployment::nextStep()
 				break;
 		}
 	}
+	
+	for (vector<vector<Entity*>* >::iterator itZone = entities->begin(); itZone != entities->end(); itZone++) 
+		delete (*itZone);
+	delete entities;
 		
 	cout<< "FIN" << endl << endl;
 	

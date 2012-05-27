@@ -103,7 +103,7 @@ void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
 			((*dState)[i]).setCurrentIdChunk(nbChunk);
 		}
 		i++;
-	}	
+	}
 }
 
 void ServerData::updateHost(string addressHost, int fileID, HostDeployState s)

@@ -17,7 +17,7 @@ int callbackReady(Packet& p)
 {
 	PacketReady pp (p);
 
-	cout << "callbackIsReady" << endl;
+	cout << "callbackReady" << endl;
 
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
 
