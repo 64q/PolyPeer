@@ -36,9 +36,6 @@ void deployments_route(mg_connection* conn, const mg_request_info* request_info)
 	
 	for (vector<File*>::iterator it = files->begin(); it != files->end(); it++) 
 	{
-		cout << "test" << endl;
-		
-
 		if ((*it)->getFileState() != F_ERROR)
 		{
 			FileManager* fm = (*it)->getFileManager();
