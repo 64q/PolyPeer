@@ -87,7 +87,8 @@ void PolypeerClient::run()
 {
 	// propre à 'instance client polypeer
 	//PolypeerClient* server = PolypeerClient::getInstance();
-
+	PolypeerClient::getInstance()->getClientData().getConnectionManager()->wait();
+	cout << "client terminé"<<endl;
 
 
 }

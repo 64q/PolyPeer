@@ -67,7 +67,7 @@ private:
 	/**
 	 * initialisation des connexions
 	 */
-	 void initConnecions();
+	 void initConnections();
 	
 	/**
 	 * Structure principale du programe

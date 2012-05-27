@@ -54,14 +54,14 @@ void* runFct(void* connectionManager)
 		sockTmp = connectionManagerTmp->serverSocket->accept();
 		connectionManagerTmp->addConnection(sockTmp->getIpAdress(), sockTmp);
 
-	}
+	}cout << "oo"<<endl;
 	return NULL;
+
 }
 
 
 void ConnectionManager::start()
 {
-
 	pthread_create(&thread, NULL, runFct, this);
 
 }
@@ -91,4 +91,7 @@ void ConnectionManager::sendTo(std::string dest, Packet packet)
 	}
 }
 
-
+void ConnectionManager::wait()
+{
+	pthread_join(thread, NULL);
+}

@@ -103,7 +103,7 @@ void PolypeerServer::stop()
 	this->running = false;
 }
 
-void  PolypeerServer::initConnecions()
+void  PolypeerServer::initConnections()
 {
 	// liste des déploiements
 	vector<File*>* files = sData->getDeployFiles();
