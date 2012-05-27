@@ -78,7 +78,7 @@ void get_host_route(mg_connection* conn, const mg_request_info* request_info)
 
 	mg_printf(conn, "%s", ajax_reply_start);
 	mg_printf(conn, "{\"ip\":\"%s\", \"name\":\"%s\", \"state\": \"%s\", \"deployments\": ["
-		, entity->getIP()->c_str(), entity->getName().c_str()
+		, entity->getIP().c_str(), entity->getName().c_str()
 		, getStringHostState(entity->getHostState()).c_str()
 	);
 	
@@ -129,7 +129,7 @@ void deployment_route(mg_connection* conn, const mg_request_info* request_info)
 		for (vector<Entity*>::iterator it = (*itZone)->begin(); it != (*itZone)->end(); it++)
 		{
 			mg_printf(conn, "{\"name\":\"%s\", \"ip\":\"%s\", \"current\":\"%i\", \"total\":\"%lu\"}"
-				, (*it)->getName().c_str(), (*it)->getIP()->c_str()
+				, (*it)->getName().c_str(), (*it)->getIP().c_str()
 				, (*it)->getDeploymentState(fm->getIdFile())->getCurrentIdChunk()
 				, fm->getNumberChunk()
 			);
@@ -172,7 +172,7 @@ void displayEntity(mg_connection* conn, Entity* entity)
 	else
 	{
 		mg_printf(conn, "{\"name\":\"%s\", \"type\":\"host\", \"ip\":\"%s\", \"state\":\"%s\"}"
-			, entity->getName().c_str(), entity->getIP()->c_str()
+			, entity->getName().c_str(), entity->getIP().c_str()
 			, getStringHostState(entity->getHostState()).c_str()
 		);
 	}
