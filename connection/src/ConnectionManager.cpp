@@ -28,7 +28,7 @@ ConnectionManager::ConnectionManager(int port)
 
 ConnectionManager::~ConnectionManager()
 {
-	//dtor
+	stop();
 }
 
 void ConnectionManager::addConnection(std::string name, Socket* socket)

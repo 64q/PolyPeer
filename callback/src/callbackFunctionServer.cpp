@@ -95,7 +95,7 @@ int callBackAddHost(Packet& p)
 	cout << "PacketAddHost" << endl;
 	
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
-	
+
 	sd.updateHost(pp.getIpAddress(), WAIT);
 	
 	return 1;

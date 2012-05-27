@@ -7,7 +7,7 @@ using namespace std;
 
 Connection::Connection(Socket* socket): socket(socket)
 {
-	//ctor
+	name = socket->getIpAdress();
 }
 
 Connection::~Connection()
@@ -65,6 +65,7 @@ Socket* Connection::getSocket()
 
 void Connection::throwUpdatePacket()
 {
+	
 	PacketAddHost packet(name);
 	PacketCallback::getPacketCallback()->packetOperation(packet);
 
