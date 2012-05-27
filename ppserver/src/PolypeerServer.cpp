@@ -18,7 +18,8 @@ using namespace std;
 PolypeerServer* PolypeerServer::instance = NULL;
 
 PolypeerServer::PolypeerServer() :
-	BaseServer("log/PolypeerServer.log")
+	BaseServer("log/PolypeerServer.log"),
+	clientPort(5555)
 {
 	logger.setVerboseMode(true);
 	logger << "Lancement du serveur Polypeer..."<<endlog;
@@ -56,6 +57,10 @@ void PolypeerServer::start()
 	this->running = true;
 	// Lancement du webserveur
 	webserver->start();
+	
+	// initialisation des connexions
+	
+	
 	// Lancement du server
 	this->run();
 }
@@ -96,5 +101,27 @@ void PolypeerServer::stop()
 {
 	webserver->stop();
 	this->running = false;
+}
+
+void  PolypeerServer::initConnecions()
+{
+	// liste des déploiements
+	vector<File*>* files = sData->getDeployFiles();
+	
+	ConnectionManager* cm = sData->getConnectionManager();
+	
+	for (vector<File*>::iterator itFile = files->begin(); itFile != files->end(); itFile++) 
+	{
+		vector<Entity*>* hosts = (*itFile)->getDeploysOn();
+		
+		for (vector<Entity*>::iterator itHost = hosts->begin(); itHost != hosts->end(); itHost++) 
+		{
+			if(cm->getConnection((*(*itHost)->getIP())) == NULL)
+			{
+				Socket* socket = new Socket((*(*itHost)->getIP()), clientPort);
+				cm->addConnection((*(*itHost)->getIP()), socket);
+			}
+		}
+	}
 }
 

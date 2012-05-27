@@ -65,6 +65,11 @@ private:
 	static void run();
 	
 	/**
+	 * initialisation des connexions
+	 */
+	 void initConnecions();
+	
+	/**
 	 * Structure principale du programe
 	 */
 	ServerData* sData;
@@ -73,6 +78,11 @@ private:
 	 * Instance du webserver
 	 */
 	WebServer* webserver;
+	
+	/**
+	 * port client
+	 */
+	int clientPort;
 	
 };
 
