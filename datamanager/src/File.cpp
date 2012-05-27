@@ -8,6 +8,10 @@ File::File(int id, string name, string path, int size, int chunkSize, FileState 
 	name(name),
 	fState(fs)
 {
+	// interdire d'autre state que FINISH et READY
+	if((fState != FINISH) && (fState != F_PAUSE))
+	fState = READY;
+
 	try
 	{
 		fileM= new FileManager(path.data(), id);

@@ -71,6 +71,9 @@ string getStringFileState(FileState state)
 		case F_ERROR:
 			result = "error";
 			break;
+		case F_PAUSE:
+			result = "pause";
+			break;
 		default:
 			result = "undefined";
 	}
