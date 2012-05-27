@@ -44,3 +44,36 @@ $('#new-deployment-form').addEventListener('submit', function(e) {
  	
  	e.preventDefault();
  });
+ 
+Ajax.request('/ajax/network', null, function(content) {
+	var content = JSON.parse(content);
+	var view = $('#zones-choice');
+	for (var i = 0; i < content.length; i++) {
+		if (content[i].type == "zone") {
+			createInputZone(view, content[i]);
+		}
+	}
+});
+
+function createInputZone(parent, item) {
+	
+	var zone = document.createElement('p');
+	var title = document.createElement('label');
+	var input = document.createElement('input');
+	
+	input.type = "checkbox"; input.value = item.name;
+	
+	title.appendChild(document.createTextNode(item.name));
+	
+	zone.appendChild(input);
+	zone.appendChild(title);
+	
+	for (var i = 0; i < item.hosts.length; i++) {
+		if (item.hosts[i].type == "zone") {
+			createInputZone(zone, item.hosts[i]);
+		}
+	}
+
+	parent.appendChild(zone);
+}
+

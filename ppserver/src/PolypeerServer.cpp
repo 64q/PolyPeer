@@ -35,6 +35,7 @@ PolypeerServer::PolypeerServer() :
 	pcb->addOperation (EMd5Error, callbackMd5Error);
 	pcb->addOperation (EDiskFull, callbackPacketDiskFull);
 	pcb->addOperation (ESendOperationFinished, callbackPacketSendOperationFinished);
+	pcb->addOperation (EAddHost, callBackAddHost);
 }
 
 PolypeerServer::~PolypeerServer()
@@ -59,7 +60,7 @@ void PolypeerServer::start()
 	webserver->start();
 	
 	// initialisation des connexions
-	
+	initConnections();
 	
 	// Lancement du server
 	this->run();
@@ -118,8 +119,13 @@ void  PolypeerServer::initConnections()
 		{
 			if(cm->getConnection((*itHost)->getIP()) == NULL)
 			{
+				cout << "aaa"<<(*itHost)->getIP()<<clientPort<<endl;
 				Socket* socket = new Socket((*itHost)->getIP(), clientPort);
+				cout << "dd"<<endl;
 				cm->addConnection((*itHost)->getIP(), socket);
+				cout << "bb"<<endl;
+				(*itHost)->setHostState(WAIT);
+				cout << "cc"<<endl;
 			}
 		}
 	}

@@ -33,7 +33,7 @@ SRC=src/
 INC=include/
 
 # Flag pour le linker
-LDFLAGS=-lpthread -pthread -ldl
+LDFLAGS=-lpthread -pthread -ldl -g
 # Flag préprocessing et compilation
 CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(ALGO)$(INC) -I$(TCP)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(WEB)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -I$(BASESERVER)$(INC) -D TIXML_USE_STL
 
@@ -203,7 +203,7 @@ FileManager.o: $(FM)$(SRC)FileManager.cpp
 #
 ############################
 
-PacketManager= Packet.o PacketReady.o PacketDiskFull.o PacketSendOperationFinished.o PacketMd5Error.o PacketSendChunk.o PacketSendOperation.o PacketChunkReceived.o PacketNewFile.o
+PacketManager= Packet.o PacketReady.o PacketDiskFull.o PacketSendOperationFinished.o PacketMd5Error.o PacketSendChunk.o PacketSendOperation.o PacketChunkReceived.o PacketNewFile.o PacketAddHost.o
 
 # Compilation du Packet
 Packet.o: $(PACKET)$(SRC)Packet.cpp
@@ -247,6 +247,11 @@ PacketChunkReceived.o: $(PACKET)$(SRC)PacketChunkReceived.cpp
 
 # Compilation du PacketNewFile
 PacketNewFile.o: $(PACKET)$(SRC)PacketNewFile.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+# Compilation du PacketNewFile
+PacketAddHost.o: $(PACKET)$(SRC)PacketAddHost.cpp
 	@echo $^
 	@$(CC) -c $^ $(CFLAGS)
 

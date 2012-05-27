@@ -7,4 +7,4 @@
 #include <PacketNewFile.hpp>
 #include <PacketDiskFull.hpp>
 #include <PacketSendOperationFinished.hpp>
-#include <PacketAddHost.cpp>
+#include <PacketAddHost.hpp>
