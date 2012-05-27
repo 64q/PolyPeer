@@ -33,21 +33,26 @@ void deployments_route(mg_connection* conn, const mg_request_info* request_info)
 	ServerData& data = server->getServerData();
 	
 	vector<File*>* files = data.getDeployFiles();
+	
 	for (vector<File*>::iterator it = files->begin(); it != files->end(); it++) 
 	{
+		cout << "test" << endl;
 		FileManager* fm = (*it)->getFileManager();
-		mg_printf(conn, "{\"id\":%i, \"name\":\"%s\", \"state\":\"%s\", \"filename\":\"%s\"}"
-			, fm->getIdFile()
-			, (*it)->getName().c_str()
-			, getStringFileState((*it)->getFileState()).c_str()
-			, fm->getFileName().c_str()
-		);
-		
-		if ((it + 1) != files->end()) 
+
+		if (fm != NULL)
 		{
-			mg_printf(conn, ",");
-		}
+			mg_printf(conn, "{\"id\":%i, \"name\":\"%s\", \"state\":\"%s\", \"filename\":\"%s\"}"
+				, fm->getIdFile()
+				, (*it)->getName().c_str()
+				, getStringFileState((*it)->getFileState()).c_str()
+				, fm->getFileName().c_str()
+			);
 	
+			if ((it + 1) != files->end()) 
+			{
+				mg_printf(conn, ",");
+			}
+		}
 	}
 	
 	mg_printf(conn, "]");
@@ -71,33 +76,49 @@ void get_host_route(mg_connection* conn, const mg_request_info* request_info)
 	
 	get_qsvar(request_info, "ip", qip, sizeof(qip));
 	
-	PolypeerServer* server = PolypeerServer::getInstance();
-	ServerData& data = server->getServerData();
-	Entity* entity = data.getHostByAddress(qip);
-	std::vector<DeploymentState>* deploys = entity->getDeploys();
-
 	mg_printf(conn, "%s", ajax_reply_start);
-	mg_printf(conn, "{\"ip\":\"%s\", \"name\":\"%s\", \"state\": \"%s\", \"deployments\": ["
-		, entity->getIP().c_str(), entity->getName().c_str()
-		, getStringHostState(entity->getHostState()).c_str()
-	);
 	
-	for (std::vector<DeploymentState>::iterator it = deploys->begin(); it != deploys->end(); it++) {
-		File* f = it->getRefFile();
-		mg_printf(conn, "{\"name\":\"%s\", \"state\":\"%s\", \"current\":\"%i\", \"total\":\"%lu\"}"
-			, f->getName().c_str()
-			, getStringHostDeployState(it->getCurrentState()).c_str()
-			, it->getCurrentIdChunk()
-			, f->getFileManager()->getNumberChunk()
-		);
+	if (strcmp(qip, "undefined") == 0) 
+	{
+		mg_printf(conn, "{\"state\":\"error\"}");	
+	} 
+	else
+	{
+		PolypeerServer* server = PolypeerServer::getInstance();
+		ServerData& data = server->getServerData();
+		Entity* entity = data.getHostByAddress(qip);
 		
-		if ((it + 1) != deploys->end()) 
+		if (entity == NULL)
 		{
-			mg_printf(conn, ",");
+			mg_printf(conn, "{\"state\":\"error\"}");	
+		}
+		else
+		{
+			std::vector<DeploymentState>* deploys = entity->getDeploys();
+
+			mg_printf(conn, "{\"ip\":\"%s\", \"name\":\"%s\", \"state\": \"%s\", \"deployments\": ["
+				, entity->getIP().c_str(), entity->getName().c_str()
+				, getStringHostState(entity->getHostState()).c_str()
+			);
+	
+			for (std::vector<DeploymentState>::iterator it = deploys->begin(); it != deploys->end(); it++) {
+				File* f = it->getRefFile();
+				mg_printf(conn, "{\"name\":\"%s\", \"state\":\"%s\", \"current\":\"%i\", \"total\":\"%lu\"}"
+					, f->getName().c_str()
+					, getStringHostDeployState(it->getCurrentState()).c_str()
+					, it->getCurrentIdChunk()
+					, f->getFileManager()->getNumberChunk()
+				);
+		
+				if ((it + 1) != deploys->end()) 
+				{
+					mg_printf(conn, ",");
+				}
+			}
+	
+			mg_printf(conn, "]}");
 		}
 	}
-	
-	mg_printf(conn, "]}");
 }
 
 void deployment_route(mg_connection* conn, const mg_request_info* request_info)
@@ -105,48 +126,68 @@ void deployment_route(mg_connection* conn, const mg_request_info* request_info)
 	char qid[16];
 	
 	get_qsvar(request_info, "id", qid, sizeof(qid));
-	std::istringstream iss(qid);
-	// convertir en un int
-	int id;
-	iss >> id;
 	
-	PolypeerServer* server = PolypeerServer::getInstance();
-	ServerData& data = server->getServerData();
-	File* file = data.getFile(id);
-	FileManager* fm = file->getFileManager();
-	std::vector<std::vector<Entity*>* >* pp = file->getSortedHosts();
+	mg_printf(conn, "%s", ajax_reply_start);	
 	
-	mg_printf(conn, "%s", ajax_reply_start);
-	mg_printf(conn, "{\"id\":\"%i\", \"name\":\"%s\", \"state\":\"%s\", \"nbchunk\":%lu, \"chunksize\":%lu, \"size\":%lu, \"hosts\":["
-		, id, file->getName().c_str()
-		, getStringFileState(file->getFileState()).c_str()
-		, fm->getNumberChunk()
-		, fm->getChunkSize(), fm->getFileSize()
-	);
-	
-	for (vector<vector<Entity*>* >::iterator itZone = pp->begin(); itZone != pp->end(); itZone++) 
+	if (strcmp(qid, "undefined") == 0) 
 	{
-		for (vector<Entity*>::iterator it = (*itZone)->begin(); it != (*itZone)->end(); it++)
-		{
-			mg_printf(conn, "{\"name\":\"%s\", \"ip\":\"%s\", \"current\":\"%i\", \"total\":\"%lu\"}"
-				, (*it)->getName().c_str(), (*it)->getIP().c_str()
-				, (*it)->getDeploymentState(fm->getIdFile())->getCurrentIdChunk()
-				, fm->getNumberChunk()
-			);
-			
-			if ((it + 1) != (*itZone)->end()) 
-			{
-				mg_printf(conn, ",");
-			}
-		}
+		mg_printf(conn, "{\"state\":\"error\"}");	
+	} 
+	else
+	{
+	
+		std::istringstream iss(qid);
+		// convertir en un int
+		int id;
+		iss >> id;
+	
+		PolypeerServer* server = PolypeerServer::getInstance();
+		ServerData& data = server->getServerData();
+		File* file = data.getFile(id);
 		
-		if ((itZone + 1) != pp->end()) 
+		if (file == NULL)
 		{
-			mg_printf(conn, ",");
+			mg_printf(conn, "{\"state\":\"error\"}");	
+		}
+		else
+		{
+			FileManager* fm = file->getFileManager();
+			std::vector<std::vector<Entity*>* >* pp = file->getSortedHosts();
+	
+			mg_printf(conn, "{\"id\":\"%i\", \"name\":\"%s\", \"state\":\"%s\", \"nbchunk\":%lu, \"chunksize\":%lu, \"size\":%lu, \"hosts\":["
+				, id, file->getName().c_str()
+				, getStringFileState(file->getFileState()).c_str()
+				, fm->getNumberChunk()
+				, fm->getChunkSize(), fm->getFileSize()
+			);
+	
+			for (vector<vector<Entity*>* >::iterator itZone = pp->begin(); itZone != pp->end(); itZone++) 
+			{
+				for (vector<Entity*>::iterator it = (*itZone)->begin(); it != (*itZone)->end(); it++)
+				{
+					mg_printf(conn, "{\"name\":\"%s\", \"ip\":\"%s\", \"current\":\"%i\", \"total\":\"%lu\"}"
+						, (*it)->getName().c_str(), (*it)->getIP().c_str()
+						, (*it)->getDeploymentState(fm->getIdFile())->getCurrentIdChunk()
+						, fm->getNumberChunk()
+					);
+			
+					if ((it + 1) != (*itZone)->end()) 
+					{
+						mg_printf(conn, ",");
+					}
+				}
+		
+				if ((itZone + 1) != pp->end()) 
+				{
+					mg_printf(conn, ",");
+				}
+			}
+	
+			File::deleteSortedHost(pp);
+	
+			mg_printf(conn, "]}");
 		}
 	}
-	
-	mg_printf(conn, "]}");
 }
 
 void displayEntity(mg_connection* conn, Entity* entity)
@@ -188,14 +229,14 @@ void network_route(mg_connection* conn, const mg_request_info* request_info)
 	mg_printf(conn, "[");
 	
 	for (map<string, Entity*>::const_iterator it = entities->begin(); it != entities->end();) 
+	{
+		displayEntity(conn, (*it).second);
+		
+		if ((++it) != entities->end()) 
 		{
-			displayEntity(conn, (*it).second);
-			
-			if ((++it) != entities->end()) 
-			{
-				mg_printf(conn, ",");
-			}
+			mg_printf(conn, ",");
 		}
+	}
 	
 	mg_printf(conn, "]");
 }
@@ -208,7 +249,8 @@ void new_deployment_route(mg_connection* conn, const mg_request_info* request_in
 	get_qsvar(request_info, "path", qpath, sizeof(qpath));
 	get_qsvar(request_info, "zones", qzones, sizeof(qzones));
 
-	cout << "sent: " << qname << ", " << qpath << ", " << qzones << endl;
+	PolypeerServer* server = PolypeerServer::getInstance();
+	ServerData& data = server->getServerData();
 
 	vector<string> vzones;
 
@@ -221,9 +263,13 @@ void new_deployment_route(mg_connection* conn, const mg_request_info* request_in
 		pch = strtok (NULL, ",");
 	}
 	
+	File* file = new File(data.getCurrentId(), string(qname), string(qpath));
+
 	for (unsigned int i = 0; i < vzones.size(); i++) {
-		cout << "Zone = " << vzones[i] << endl;
+		file->addEntity(data.public_getEntity(vzones[i]));
 	}
+	
+	data.addFile(file);
 	
 	mg_printf(conn, "%s", ajax_reply_start);
 	mg_printf(conn, "{\"state\":\"done\"}");
