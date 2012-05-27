@@ -16,10 +16,10 @@
 #include <ConnectionManager.hpp>
 #include <Packet.hpp>
 
-/**
- * Classe contenant les différentes structures de stockage des données ainsi que
- * les accesseurs associés
- */
+	/**
+	 * Classe contenant les différentes structures de stockage des données ainsi que
+	 * les accesseurs associés
+	 */
  
 class XMLTool;
 
@@ -33,47 +33,47 @@ public :
 	 */
 	ServerData();
 	
-	/**
+  /**
 	* Destructeur
 	*/
 	~ServerData();
 
-	/**
+  /**
 	* Retourne un pointeur vers xmlTool
 	*/
 	XMLTool* getXMLTool();
 	
-	/**
+  /**
 	* Retourne un pointeur vers la structure contenant la topologie du réseau
 	*/
 	map<string, Entity*>* getEntities();
 	
-	/**
+  /**
 	* Retourne un pointeur vers la structure contenant les différents fichiers
 	* à deployer
 	*/
 	vector<File*>* getDeployFiles();
 	
-	/**
+  /**
 	* Ajout d'un fichier de déploiement dans DeployFiles
 	* @param f
 	*	File à ajouter
 	*/
 	FileManager* addFile(File* f);
 	
-	/**
+  /**
 	* Ajout d'un fichier de déploiement dans DeployFiles ainsi que dans le fichier XML
 	* @param f
 	*	File à ajouter
 	*/
 	void addFileToAll(File* f);
 	
-	/**
+  /**
 	* Renvoi l'id courante qui sert lors de la création d'un nouveau déploiement
 	*/
 	int getCurrentId();
 	
-	/**
+  /**
 	* Cherche un fichier de déploiement dans DeployFiles en fonction de son id et
 	* retourne un pointeur vers cet objet
 	* @param id
@@ -81,7 +81,7 @@ public :
 	*/
 	File* getFile(int id);
 	
-	/**
+  /**
 	* Création et ajout d'un Host dans hosts et retourne un pointeur vers ce nouvel objet
 	* @param name
 	*	nom de l'Host à creer
@@ -90,32 +90,32 @@ public :
 	*/	
 	Entity* addHost(string name, Entity* parent,int networkCapacity, string address);
 	
-	/**
+  /**
 	* Supprime de la mémoire et du fichier XML le déploiement d'id passé en paramètre, si son 
 	* State = FINISH alors nous le conservons dans le fichier XML pour un historique
 	*/
 	void deleteFile(int id);
 	
-	/**
+  /**
 	* Récupération de la structure hosts stockant les Host du réseau
 	*/
 	vector<Entity*>* getHosts();
 	
-	/**
+  /**
 	* Recherche et retour d'un pointeur vers un Host en fonction de son nom
 	* @param name
 	*	nom de l'Host à rechercher
 	*/
 	Entity* getHostByName(string name);
 	
-	/**
+  /**
 	* Recherche et retour d'un pointeur vers un Host en fonction de son adresse
 	* @param address
 	*	address de l'Host à rechercher
 	*/
 	Entity* getHostByAddress(string address);
 	
-	/**
+  /**
 	* Recherche et retour d'un pointeur vers le fileManager du fichier
 	* qui a l'id spécifié
 	* @param fileID
@@ -123,17 +123,17 @@ public :
 	*/
 	FileManager* getFileManager(int fileID);
 	
-	/**
+  /**
 	* Retourne le connectionManager
 	*/		
 	ConnectionManager* getConnectionManager();
 	
-	/**
+  /**
 	* Retourne l'adresse du serveur
 	*/		
 	string getAddressServ();
 	
-	/**
+  /**
 	* Met à jour le numéro de Chunk du fichier passé en paramètre déjà 
 	* récupéré par l'Host qui est passé en paramètre
 	* @param addressHost
@@ -145,7 +145,7 @@ public :
 	*/
 	void updateHost(string addressHost, int fileID, int nbChunk);
 	
-	/**
+  /**
 	* Met à jour l'état de l'Host passé en paramètre, ainsi que le fichier 
 	* d'identifiant fileID
 	* @param addressHost
@@ -157,7 +157,7 @@ public :
 	*/
 	void updateHost(string addressHost, int fileID, HostDeployState s);
 	
-	/**
+  /**
 	* Met à jour l'état de l'Host passé en paramètre
 	* Spécifique à l'action envoie d'opération
 	* @param addressHost
@@ -167,7 +167,7 @@ public :
 	*/
 	void updateHost(string addressHost, HostState s);
 	
-	/**
+  /**
 	* Permet de mettre à jour les débits des entités traversées du serveur jusqu'a 
 	* l'entité cible
 	* @param entity
@@ -177,19 +177,19 @@ public :
 	*/
 	bool updateNetworkCurrentBroadbandSpeed(Entity* entity, double packetWeight);
 	
-	/**
+  /**
 	* Affichage de la structure contenant la topologie du réseau
 	*/	
 	void public_displayEntities();
 	
-	/**
+  /**
 	* Recherche et retourne un pointeur vers une entité en fonction de son nom
 	* @param entityName
 	*	nom de l'entitié recherchée
 	*/
 	Entity* public_getEntity(string entityName);
 	
-	/**
+  /**
 	* Récupère et stocke dans une liste les adresses contenues dans une entité
 	* en fonction de son nom
 	* @param entityName
@@ -228,7 +228,7 @@ protected :
 	 */
 	string addressServ;
 	
-	/**
+  /**
 	* Contient la DOM des fichiers de déploiement et de topologie
 	*/
 	XMLTool* xmlTool;

@@ -283,10 +283,18 @@ bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity, double packe
 {
 	bool possible = true;
 	Entity* e = entity;
-	while (e != NULL && possible == true)
+	
+	if ( packetWeight == 0 )
 	{
-		possible = e->setCurrentBroadbandSpeed(e->getCurrentBroadbandSpeed() + packetWeight);
-		e = e->getParent();
+		e->setCurrentBroadbandSpeed(0);
+		
+	} else
+	{
+		while (e != NULL && possible == true)
+		{
+			possible = e->setCurrentBroadbandSpeed(e->getCurrentBroadbandSpeed() + packetWeight);
+			e = e->getParent();
+		}
 	}
 	
 	return possible;	

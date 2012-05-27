@@ -6,50 +6,54 @@
 
 class File;
 
+  /**
+	*	Classe contenant les informations d'un Host au sujet d'un déploiement précis
+	*/
+
 class DeploymentState
 {
 	
 public:
 	
-	/**
+  /**
 	* Constructeur
-	*	@currentIdChunk
+	* @currentIdChunk
 	*		id du chunk courant
-	*	@file
+	* @file
 	*		pointeur vers le fichier de déploiement correspondant
-	*	@HostDeployState
+	* @HostDeployState
 	*		Etat courant du déploiement pour l'Host donné
 	*/
 	DeploymentState(const int currentIdChunk, File* file, HostDeployState s);
 	
-	/**
+  /**
 	* Retourne l'id du chunk courrant
 	*/
 	int getCurrentIdChunk() { return currentIdChunk; }
 	
-	/**
+  /**
 	* Retourne l'id du déploiement
 	*/
 	int getId();
 	
-	/**
+  /**
 	* Retourne un pointeur vers le déploiement
 	*/
 	File* getRefFile() { return refFile; }
 	
-	/**
+  /**
 	* Retourne l'etat courrant
 	*/
 	HostDeployState getCurrentState() { return currentState; }
 	
-	/**
+  /**
 	* Change l'id du chunk courrant
-	*	@id 
+	* @id 
 	*		nouvelle id du chunk courrant
 	*/
 	void setCurrentIdChunk(int id) { currentIdChunk = id; }
 	
-	/**
+  /**
 	* Change l'etat du déploiement 
 	*	@id 
 	*		nouvel etat du déploiement
@@ -58,17 +62,17 @@ public:
 
 private:
 
-	/**
+  /**
 	* Id du chunk auquel l'host est rendu
 	*/
 	int currentIdChunk;
 	
-	/**
+  /**
 	* Référence qui contient les informations du déploiement
 	*/
 	File* refFile;
 	
-	/**
+  /**
 	* Etat courant du déploiement pour l'Host donné
 	*/
 	HostDeployState currentState;
