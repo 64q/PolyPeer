@@ -10,6 +10,7 @@ Host::Host(const std::string& name, Entity* parent, int networkCapacity, const s
 	Entity(name, parent, networkCapacity), ip(ip)
 {
 	hostState = OFFLINE;
+	this->type = HOST;
 }
 
 Host::~Host()

@@ -15,6 +15,8 @@
 class DeploymentState;
 class File;
 
+enum EntityType { HOST = 0, ZONE };
+
 class Entity
 {
 public:
@@ -37,6 +39,7 @@ public:
 	virtual DeploymentState* getDeploymentState(int idFile) = 0;
 	virtual HostState getHostState() = 0;
 	virtual void setHostState(HostState) = 0;
+	EntityType getType() { return this->type; }
 	
 protected:
 	/**
@@ -46,6 +49,7 @@ protected:
 	Entity* parent;
 	double currentBroadbandSpeed; 
 	int networkCapacity;
+	EntityType type;
 };
 
 #endif
