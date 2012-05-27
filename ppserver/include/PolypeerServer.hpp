@@ -35,6 +35,8 @@ public:
 	 */
 	inline ServerData& getServerData() { return *(this->sData); }
 	
+	int getClientPort() {return clientPort; }
+	
 	/**
 	 * Destructeur de PolypeerServer
 	 */
@@ -45,6 +47,7 @@ public:
 	 */
 	static PolypeerServer* getInstance();
 	
+	friend void* thread_initConnection(void* data);
 	
 private:
 	/**
@@ -84,7 +87,11 @@ private:
 	 */
 	int clientPort;
 	
+	
 };
+
+// Fonction thread
+void* thread_initConnection(void* data);
 
 
 #endif //POLYPEERSERVER_H
