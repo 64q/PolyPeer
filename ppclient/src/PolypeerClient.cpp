@@ -32,6 +32,7 @@ PolypeerClient::PolypeerClient() :
 	// initialisation du system de callBack
 	// -> permet l'appel "automatique des traitement pour un paquet
 	PacketCallback * pcb = PacketCallback::getPacketCallback();
+	pcb->addOperation (ENewFile, callbackNewFile);
 	pcb->addOperation (ESendChunk, callbackSendChunk);
 	pcb->addOperation (ESendOperation, callbackSendOperation);
 

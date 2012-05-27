@@ -85,6 +85,7 @@ int callbackSendChunk(Packet& p)
 
 	if(tmp.isIntegrate())
     {
+
     	FileManager* fm = cd.getFileManager(tmp.getIdFile());
         fm->saveChunk(tmp);
 
@@ -92,7 +93,7 @@ int callbackSendChunk(Packet& p)
     }
     else
     {
-        // probleme de fichier
+        cout << "erreur du Chunk reçu" << endl;
         cd.getConnectionManager()->sendTo(cd.getAddressServ(), PacketMd5Error(tmp.getIdFile(), tmp.getNumber()));
     }
 

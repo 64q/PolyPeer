@@ -105,6 +105,8 @@ public:
 	 */
 	std::string getFileName();
 
+	std::string getFilePath();
+
 	/**
 	 * Renvoie la taille des Chunk(s) crées
 	 * @return long

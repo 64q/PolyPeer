@@ -11,6 +11,8 @@
 // forward declaration
 class Packet;
 
+int callbackNewFile(Packet& p);
+
 int callbackSendOperation(Packet& p);
 
 int callbackSendChunk(Packet& p);
