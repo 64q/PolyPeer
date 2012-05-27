@@ -37,10 +37,12 @@ void deployments_route(mg_connection* conn, const mg_request_info* request_info)
 	for (vector<File*>::iterator it = files->begin(); it != files->end(); it++) 
 	{
 		cout << "test" << endl;
-		FileManager* fm = (*it)->getFileManager();
+		
 
-		if (fm != NULL)
+		if ((*it)->getFileState() != F_ERROR)
 		{
+			FileManager* fm = (*it)->getFileManager();
+			
 			mg_printf(conn, "{\"id\":%i, \"name\":\"%s\", \"state\":\"%s\", \"filename\":\"%s\"}"
 				, fm->getIdFile()
 				, (*it)->getName().c_str()
@@ -269,7 +271,7 @@ void new_deployment_route(mg_connection* conn, const mg_request_info* request_in
 		file->addEntity(data.public_getEntity(vzones[i]));
 	}
 	
-	data.addFile(file);
+	data.addFileToAll(file);
 	
 	mg_printf(conn, "%s", ajax_reply_start);
 	mg_printf(conn, "{\"state\":\"done\"}");
