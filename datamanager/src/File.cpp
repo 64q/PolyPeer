@@ -6,6 +6,7 @@ using namespace std;
 
 File::File(int id, string name, string path, int size, int chunkSize, FileState fs):
 	name(name),
+	//fileM(NULL),
 	fState(fs)
 {
 	// interdire d'autre state que FINISH et READY
@@ -25,6 +26,7 @@ File::File(int id, string name, string path, int size, int chunkSize, FileState 
 
 File::File(int id, string name, string path, int size, int chunkSize):
 	name(name),
+	//fileM(NULL),
 	fState(READY)
 {
 	try
@@ -41,6 +43,7 @@ File::File(int id, string name, string path, int size, int chunkSize):
 
 File::File(int id, string name, string path):
 	name(name),
+	//fileM(NULL),
 	fState(READY)
 {
 	try

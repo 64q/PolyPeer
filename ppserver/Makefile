@@ -33,7 +33,7 @@ SRC=src/
 INC=include/
 
 # Flag pour le linker
-LDFLAGS=-lpthread -pthread -ldl
+LDFLAGS=-lpthread -pthread -ldl -g
 # Flag préprocessing et compilation
 CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(ALGO)$(INC) -I$(TCP)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(WEB)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -I$(BASESERVER)$(INC) -D TIXML_USE_STL
 

@@ -159,6 +159,9 @@ void ShareDeployment::nextStep()
 			case F_ERROR:
 				cout<<"\t\t ERROR"<<endl;
 				break;
+			case F_PAUSE:
+				cout<<"\t\t ERROR"<<endl;
+				break;
 		}
 	}
 	
