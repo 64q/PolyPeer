@@ -2,12 +2,15 @@
 #include <Zone.hpp>
 #include <OpenFileException.hpp>
 
-File::File(int id, string name, string path, int size, int chunkSize):
+using namespace std;
+
+File::File(int id, string name, string path, int size, int chunkSize, FileState fs):
 name(name)
 {
 	/*try 
 	{*/
 		fileM = new FileManager(path.data(), id, (long)chunkSize);
+		fState = fs;
 		//fileM = new FileManager(path.data(), (long)chunkSize, id);
 
 	/*} catch (openFileException)
@@ -22,6 +25,7 @@ File::File(int id, string name, string path):
 name(name)
 {
 	fileM= new FileManager(path.data(), id);
+	fState = READY;
 }
 
 File::~File()
@@ -67,6 +71,16 @@ vector<vector<Entity*>* >* File::getSortedHosts()
 	return toReturn;
 }
 
+void File::deleteSortedHost(vector<vector<Entity*>* >* v)
+{
+	unsigned int i;
+	for(i=0; i < v->size(); i++)
+	{
+		delete ((*v)[i]);
+	}
+	delete v;
+}
+
 void File::addEntity(Entity* entity)
 {
 	map<string, Entity*>* entities;
@@ -95,4 +109,17 @@ void File::addEntity(Entity* entity)
 			entity->addDeploymentState(0, this, HDS_WAIT);
 		}
 	}
+}
+
+FileState stringToEnum(string state)
+{
+	map<string, FileState> fsMap;
+	fsMap.insert(make_pair("READY",READY));
+	fsMap.insert(make_pair("DEPLOYMENT",DEPLOYMENT));
+	fsMap.insert(make_pair("FINISH",FINISH));
+	fsMap.insert(make_pair("ERROR",ERROR));
+	
+	map<string,FileState>::iterator s = fsMap.find(state);
+	
+	return s->second;
 }

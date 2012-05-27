@@ -17,7 +17,7 @@ public:
 	File* getRefFile() { return refFile; }
 	HostDeployState getCurrentState() { return currentState; }
 	void setCurrentIdChunk(int id) { currentIdChunk = id; }
-	void setCurrentState(HostDeployState s) { currentState = s; }
+	void setCurrentState(HostDeployState s);
 
 private:
 	int currentIdChunk;

@@ -13,7 +13,6 @@
 #include <File.hpp>
 #include <ServerData.hpp>
 
-using namespace std;
 class ServerData;
 
 class XMLTool 
@@ -30,14 +29,14 @@ public :
 	void writeEntityIntoFile(int fileId, Entity* entity);
 	
 protected :
-	string topologyFile;
-	string deploymentsFile;
+	std::string topologyFile;
+	std::string deploymentsFile;
 	TiXmlDocument DOMTopology;
 	TiXmlDocument DOMDeployments;
 	
 private :
 	void displayTopology(TiXmlNode* node, int level = 0);
-	void readTopology(ServerData* sData, TiXmlNode* node, map<string, Entity*>* entities, Entity* parent);
+	void readTopology(ServerData* sData, TiXmlNode* node, std::map<std::string, Entity*>* entities, Entity* parent);
 	void readDeployments(ServerData* sData, TiXmlNode* node);
 	
 };
