@@ -25,19 +25,19 @@ DeploymentState* Zone::getDeploymentState(int idFile)
 }
 
 
-std::map<std::string, Entity*>* Zone::getEntities()
+map<std::string, Entity*>* Zone::getEntities()
 {
 	return &entities;
 }
 
-std::vector<DeploymentState>* Zone::getDeploys()
+vector<DeploymentState>* Zone::getDeploys()
 {
 	return NULL;
 }
 
-std::string* Zone::getIP()
+string Zone::getIP()
 {
-	return NULL;
+	return string("");
 }
 
 HostState Zone::getHostState()

@@ -5,32 +5,31 @@
 using namespace std;
 
 File::File(int id, string name, string path, int size, int chunkSize, FileState fs):
-	name(name), 
+	name(name),
 	fState(fs)
 {
-	try 
+	try
 	{
-		fileM = new FileManager(path.data(), (long)size, (long)chunkSize, id);
+		fileM= new FileManager(path.data(), id);
 
 	} catch (OpenFileException)
 	{
-		fState = ERROR;
+		fState = F_ERROR;
 		cout << "FAIL LOAD : Fichier " << path << " inexistant"<< endl;
 	}
-
 }
 
 File::File(int id, string name, string path, int size, int chunkSize):
 	name(name),
 	fState(READY)
 {
-	try 
+	try
 	{
-		fileM = new FileManager(path.data(), (long)size, (long)chunkSize, id);
+		fileM= new FileManager(path.data(), id);
 
 	} catch (OpenFileException)
 	{
-		fState = ERROR;
+		fState = F_ERROR;
 		cout << "FAIL LOAD : Fichier " << path << " inexistant"<< endl;
 	}
 
@@ -40,13 +39,13 @@ File::File(int id, string name, string path):
 	name(name),
 	fState(READY)
 {
-	try 
+	try
 	{
 			fileM= new FileManager(path.data(), id);
 
 	} catch (OpenFileException)
 	{
-		fState = ERROR;
+		fState = F_ERROR;
 		cout << "FAIL LOAD : Fichier " << path << " inexistant"<< endl;
 	}
 }
@@ -66,10 +65,10 @@ vector<vector<Entity*>* >* File::getSortedHosts()
 	unsigned int i,j;
 
 	vector<vector<Entity*>* >* toReturn = new vector<vector<Entity*>* >();
-	
+
 	bool find = false;
-	
-	for(i=0;i<deploysOn.size();i++) 
+
+	for(i=0;i<deploysOn.size();i++)
 	{
 		Entity* host = deploysOn[i];
 
@@ -82,32 +81,29 @@ vector<vector<Entity*>* >* File::getSortedHosts()
 				((*toReturn)[j])->push_back(host);
 				find = true;
 			}
-			
+
 		}
 		if (find == false)
 		{
 			toReturn->push_back(new vector<Entity*> (1,host));
 		}
-	
+
 	}
-	
+
 	return toReturn;
 }
 
-void File::deleteSortedHost(vector<vector<Entity*>* >* v)
+void File::deleteSortedHost(vector<vector<Entity*>* >* entities)
 {
-	unsigned int i;
-	for(i=0; i < v->size(); i++)
-	{
-		delete ((*v)[i]);
-	}
-	delete v;
+	for (vector<vector<Entity*>* >::iterator itZone = entities->begin(); itZone != entities->end(); itZone++) 
+		delete (*itZone);
+	delete entities;
 }
 
 void File::addEntity(Entity* entity)
 {
 	map<string, Entity*>* entities;
-	
+
 	if (entity != NULL)
 	{
 		entities = entity->getEntities();
@@ -116,9 +112,10 @@ void File::addEntity(Entity* entity)
 			map<std::string,Entity*>::const_iterator
 			mit (entities->begin()),
 			mend(entities->end());
-			for(; mit!=mend; ++mit) 
-			{	
-				if (mit->second->getIP() != NULL)
+
+			for(; mit!=mend; ++mit)
+			{
+				if (mit->second->getType() == HOST)
 				{
 					deploysOn.push_back(mit->second);
 					mit->second->addDeploymentState(0, this, HDS_WAIT);
@@ -126,7 +123,7 @@ void File::addEntity(Entity* entity)
 				if (mit->second->getEntities() != NULL)
 					addEntity(mit->second);
 			}
-		} else 
+		} else
 		{
 			deploysOn.push_back(entity);
 			entity->addDeploymentState(0, this, HDS_WAIT);

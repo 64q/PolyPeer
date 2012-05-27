@@ -185,7 +185,7 @@ void XMLTool::writeEntityIntoFile(int fileId, Entity* entity)
 			if(id == fileId)
 			{
 				find = true;
-				if (entity->getIP() != NULL)
+				if (entity->getType() == HOST)
 				{
 					TiXmlElement newEntity ("host");
 					newEntity.SetAttribute("ref", entity->getName());				

@@ -43,9 +43,9 @@ std::vector<DeploymentState>* Host::getDeploys()
 	return &deploys;
 }
 
-std::string* Host::getIP()
+std::string Host::getIP()
 {
-	return &ip;
+	return ip;
 }
 
 map<std::string, Entity*>* Host::getEntities()

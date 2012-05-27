@@ -19,7 +19,7 @@ public:
 	DeploymentState* getDeploymentState(int idFile);
 	std::map<std::string, Entity*>* getEntities();
 	std::vector<DeploymentState>* getDeploys();
-	std::string* getIP();
+	std::string getIP();
 	HostState getHostState();
 	void setHostState(HostState);
 	

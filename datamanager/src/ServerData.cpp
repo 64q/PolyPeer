@@ -221,7 +221,7 @@ Entity* ServerData::getHostByAddress(string address)
 
 	while( (i < hosts.size()) && (find == false) )
 	{
-		if (!((*(hosts[i]->getIP())).compare(address)))
+		if (!((hosts[i]->getIP()).compare(address)))
 		{
 			find = true;
 			toReturn = hosts[i];
@@ -266,7 +266,20 @@ FileManager* ServerData::getFileManager(int id)
 	}
 	return toReturn;		
 }
+
+bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity, double packetWeight)
+{
+	bool possible = true;
+	Entity* e = entity;
+	while (e != NULL && possible == true)
+	{
+		possible = e->setCurrentBroadbandSpeed(e->getCurrentBroadbandSpeed() + packetWeight);
+		e = e->getParent();
+	}
 	
+	return possible;	
+}
+
 void ServerData::displayEntities(map<string, Entity*>* entities, int level)
 {
 	unsigned int i;
@@ -276,8 +289,10 @@ void ServerData::displayEntities(map<string, Entity*>* entities, int level)
 		
 	for(; mit!=mend; ++mit) 
 	{
+		cout << string( level*3, ' ' ) << mit->first << " | " << "capacity : "<< mit->second->getNetworkCapacity()<<"  | " << "broadbandSpeed : "<< mit->second->getCurrentBroadbandSpeed();
 		if (mit->second->getParent() != NULL)
-			cout << string( level*3, ' ' ) << mit->first << " | " << "capacity : "<< mit->second->getNetworkCapacity()<< " " << " | " << "parent : "<< (mit->second->getParent())->getName();		
+			cout << "  | "<< "parent : "<< (mit->second->getParent())->getName();
+					
 		if (mit->second->getEntities() != NULL)
 		{
 			cout << endl;
@@ -337,13 +352,13 @@ void ServerData::fillAddressList(Entity* entity, list<string> &list)
 			mend(entities->end());
 			for(; mit!=mend; ++mit) 
 			{	
-				if (mit->second->getIP() != NULL)
-					list.push_back(*(mit->second->getIP()));
+				if (mit->second->getType() != HOST)
+					list.push_back(mit->second->getIP());
 				if (mit->second->getEntities() != NULL)
 					fillAddressList(mit->second, list);
 			}
 		} else 
-			list.push_back(*(entity->getIP()));
+			list.push_back(entity->getIP());
 	}
 }
 
