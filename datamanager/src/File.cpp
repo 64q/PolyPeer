@@ -129,9 +129,33 @@ void File::addEntity(Entity* entity)
 			}
 		} else
 		{
-			deploysOn.push_back(entity);
-			entity->addDeploymentState(0, this, HDS_WAIT);
+			if (getEntity(entity->getName()) == NULL)
+			{
+				deploysOn.push_back(entity);
+				entity->addDeploymentState(0, this, HDS_WAIT);
+			}
 		}
 	}
+}
+
+Entity* File::getEntity(string name)
+{
+	unsigned int i=0;
+	bool find = false;
+	Entity* toReturn = NULL;
+
+	while( (i < deploysOn.size()) && (find == false) )
+	{
+		if (deploysOn[i]->getFileManager())
+		{
+			if (!((deploysOn[i]->getFileManager())->getIdFile().compare(name)))
+			{
+				find = true;
+				toReturn = deploysOn[i];
+			}
+			i++;
+		}
+	}
+	return toReturn;	
 }
 

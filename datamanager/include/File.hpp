@@ -9,7 +9,10 @@
 #include <FileManager.hpp>
 #include <State.hpp>
 
-
+  /**
+	*	Classe contenant les informations d'un déploiement
+	*/
+	
 class Entity;
 
 class File
@@ -29,7 +32,7 @@ public :
 	std::vector<std::vector<Entity*>* >* getSortedHosts();
 	static void deleteSortedHost(std::vector<std::vector<Entity*>* >* v);
 	void addEntity(Entity* entity);
-
+	Entity* getEntity(int id);
 	
 protected :
 	
