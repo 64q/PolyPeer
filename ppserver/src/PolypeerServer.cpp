@@ -121,7 +121,7 @@ void  PolypeerServer::initConnections()
 				Socket* socket = new Socket((*itHost)->getIP(), clientPort);
 				cm->addConnection((*itHost)->getIP(), socket);
 				
-				
+				(*itHost)->setHostState(WAIT);
 				
 			}
 		}
