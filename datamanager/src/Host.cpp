@@ -16,9 +16,9 @@ Host::~Host()
 {
 }
 
-void Host::addDeploymentState(const int cid, File* file, State s)
+void Host::addDeploymentState(const int cid, File* file, HostDeployState hds)
 {
-	deploys.push_back(DeploymentState(cid, file, s));
+	deploys.push_back(DeploymentState(cid, file, hds));
 }
 
 DeploymentState* Host::getDeploymentState(int idFile)
@@ -51,12 +51,12 @@ map<std::string, Entity*>* Host::getEntities()
 	return NULL;
 }
 
-State Host::getHostState()
+HostState Host::getHostState()
 {
 	return hostState;
 }
 
-void Host::setHostState(State s)
+void Host::setHostState(HostState s)
 {
 	hostState = s;
 }

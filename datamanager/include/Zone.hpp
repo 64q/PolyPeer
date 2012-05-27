@@ -15,14 +15,13 @@ public:
 	 */
 	Zone(const std::string& name, Entity* parent, int networkCapacity);
 	~Zone();
-	void addDeploymentState(const int, File*, State);
+	void addDeploymentState(const int, File*, HostDeployState hds);
 	DeploymentState* getDeploymentState(int idFile);
 	std::map<std::string, Entity*>* getEntities();
-	
 	std::vector<DeploymentState>* getDeploys();
 	std::string* getIP();
-	State getHostState();
-	void setHostState(State);
+	HostState getHostState();
+	void setHostState(HostState);
 	
 private:
 	std::map<std::string, Entity*> entities;

@@ -11,18 +11,18 @@ class DeploymentState
 	
 public:
 	
-	DeploymentState(const int currentIdChunk, File* file, State s);
+	DeploymentState(const int currentIdChunk, File* file, HostDeployState s);
 	int getCurrentIdChunk() { return currentIdChunk; }
 	int getId();
 	File* getRefFile() { return refFile; }
-	State getCurrentState() { return currentState; }
+	HostDeployState getCurrentState() { return currentState; }
 	void setCurrentIdChunk(int id) { currentIdChunk = id; }
-	void setCurrentState(State s) { currentState = s; }
+	void setCurrentState(HostDeployState s) { currentState = s; }
 
 private:
 	int currentIdChunk;
 	File* refFile;
-	State currentState;
+	HostDeployState currentState;
 	
 };
 

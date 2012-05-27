@@ -4,7 +4,7 @@
 
 using namespace std;
 
-DeploymentState::DeploymentState(const int currentIdChunk, File* file, State s):
+DeploymentState::DeploymentState(const int currentIdChunk, File* file, HostDeployState s):
 	currentIdChunk(currentIdChunk), currentState(s)
 {
 	refFile = file;

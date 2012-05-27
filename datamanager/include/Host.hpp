@@ -13,16 +13,16 @@ public:
 
 	Host(const std::string& name, Entity* parent, int networkCapacity, const std::string& ip);
 	~Host();
-	void addDeploymentState(const int, File* file, State);
+	void addDeploymentState(const int cid, File* file, HostDeployState hds);
 	DeploymentState* getDeploymentState(int idFile);
 	std::vector<DeploymentState>* getDeploys();
 	std::string* getIP();
-	State getHostState();
-	void setHostState(State);
+	HostState getHostState();
+	void setHostState(HostState);
 	std::map<std::string, Entity*>* getEntities();
 
 private:
-	State hostState;
+	HostState hostState;
 	std::string ip;
 	std::vector<DeploymentState> deploys;
 

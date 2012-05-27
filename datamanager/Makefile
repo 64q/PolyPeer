@@ -110,7 +110,7 @@ mongoose.o: $(WEB)$(SRC)mongoose.c
 #
 ############################
 
-MainStruct=Zone.o Host.o Entity.o File.o DeploymentState.o XMLTool.o ServerData.o
+MainStruct=Zone.o Host.o Entity.o File.o DeploymentState.o XMLTool.o ServerData.o ClientData.o
 
 # Compilation de Zone
 Zone.o: $(XML)$(SRC)Zone.cpp
@@ -144,6 +144,11 @@ XMLTool.o: $(XML)$(SRC)XMLTool.cpp
 	
 # Compilation de ServerData
 ServerData.o: $(XML)$(SRC)ServerData.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+# Compilation de ClientData
+ClientData.o: $(XML)$(SRC)ClientData.cpp
 	@echo $^
 	@$(CC) -c $^ $(CFLAGS)
 

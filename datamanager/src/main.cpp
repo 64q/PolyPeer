@@ -1,5 +1,6 @@
 #include <XMLTool.hpp>
 #include <ServerData.hpp>
+#include <ClientData.hpp>
 
 int main()
 {
@@ -11,7 +12,7 @@ int main()
 	ServerData* sData = new ServerData();
 	XMLTool* t = sData->getXMLTool();
 	sData->updateHost(string("132.34.67.10"), 23, 15);
-	sData->updateHost(string("132.34.67.10"), 23, FINISH);
+	sData->updateHost(string("132.34.67.10"), 23, HDS_FINISH);
 	
 	t->public_displayTopology();
 	sData->public_displayEntities();

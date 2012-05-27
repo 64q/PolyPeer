@@ -106,14 +106,17 @@ void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
 	}	
 }
 
-void ServerData::updateHost(string addressHost, int fileID, State s)
+void ServerData::updateHost(string addressHost, int fileID, HostDeployState s)
 {
 	unsigned int i=0;
 	bool find = false;
 	Entity* host = getHostByAddress(addressHost);
 	vector<DeploymentState>* dState = host->getDeploys();
 	
-	host->setHostState(s);
+	if ( s == HDS_DOWNLOAD)
+		host->setHostState(DOWNLOAD);
+	if ( s == HDS_FINISH)
+		host->setHostState(WAIT);
 	
 	while( (i < dState->size()) && (find == false) )
 	{
@@ -127,7 +130,7 @@ void ServerData::updateHost(string addressHost, int fileID, State s)
 }
 
 
-void ServerData::updateHost(string addressHost, State s)
+void ServerData::updateHost(string addressHost, HostState s)
 {
 	Entity* host = getHostByAddress(addressHost);
 	host->setHostState(s);

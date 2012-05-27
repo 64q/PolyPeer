@@ -149,7 +149,7 @@ public :
 	* @param s
 	*	nouvel état
 	*/
-	void updateHost(string addressHost, int fileID, State s);
+	void updateHost(string addressHost, int fileID, HostDeployState s);
 	
 	/**
 	* Met à jour l'état de l'Host passé en paramètre
@@ -159,7 +159,7 @@ public :
 	* @param s
 	*	nouvel état -> WAIT
 	*/
-	void updateHost(string addressHost, State s);
+	void updateHost(string addressHost, HostState s);
 	
 	/**
 	* Affichage de la structure contenant la topologie du réseau

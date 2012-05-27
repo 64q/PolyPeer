@@ -79,7 +79,7 @@ void File::addEntity(Entity* entity)
 				if (mit->second->getIP() != NULL)
 				{
 					deploysOn.push_back(mit->second);
-					mit->second->addDeploymentState(0, this, OFFLINE);
+					mit->second->addDeploymentState(0, this, HDS_WAIT);
 				}
 				if (mit->second->getEntities() != NULL)
 					addEntity(mit->second);
@@ -87,7 +87,7 @@ void File::addEntity(Entity* entity)
 		} else 
 		{
 			deploysOn.push_back(entity);
-			entity->addDeploymentState(0, this, OFFLINE);
+			entity->addDeploymentState(0, this, HDS_WAIT);
 		}
 	}
 }

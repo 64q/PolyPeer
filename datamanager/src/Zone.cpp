@@ -14,7 +14,7 @@ Zone::~Zone()
 {
 }
 
-void Zone::addDeploymentState(const int, File*, State)
+void Zone::addDeploymentState(const int, File*, HostDeployState)
 {
 
 }
@@ -40,12 +40,12 @@ std::string* Zone::getIP()
 	return NULL;
 }
 
-State Zone::getHostState()
+HostState Zone::getHostState()
 {
 	return OFFLINE;
 }
 
-void Zone::setHostState(State)
+void Zone::setHostState(HostState)
 {
 }
 
