@@ -5,6 +5,8 @@ ClientData::ClientData()
 	connectionManager = new ConnectionManager(5555);
 	addressServ = "192.168.0.50";
 	portServ = 6666;
+
+	connectionManager->start();
 }
 
 ClientData::~ClientData()
