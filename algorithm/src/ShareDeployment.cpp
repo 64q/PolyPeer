@@ -107,7 +107,7 @@ void ShareDeployment::nextStep()
 							// gestion débit
 							//if(canTakeBroadcastNetworkFromServerTo(entity, chunk.size()))
 							//{
-								sData->getConnectionManager()->sendTo((*(entity->getIP())), p);
+								sData->getConnectionManager()->sendTo((entity->getIP()), p);
 								//takeBroadcastNetworkFromServerTo(entity, chunk.size());
 								entity->setHostState(DOWNLOAD);
 							//}
@@ -137,7 +137,7 @@ void ShareDeployment::nextStep()
 										//if(canTakeBroadcastNetworkFromServerTo(entity, chunk.size()))
 										//{
 											Chunk chunk = (*itFile)->getFileManager()->getChunk(numChunkDL);
-											sData->getConnectionManager()->sendTo((*(seedHost->getIP())), PacketSendOperation((*(minHost->getIP())), chunk));
+											sData->getConnectionManager()->sendTo((seedHost->getIP()), PacketSendOperation((minHost->getIP()), chunk));
 											//takeBroadcastNetworkFromServerTo(entity, chunk.size());
 											minHost->setHostState(DOWNLOAD);
 											seedHost->setHostState(DOWNLOAD);
@@ -156,7 +156,7 @@ void ShareDeployment::nextStep()
 				cout<<"\t\t FINISH"<<endl;
 				break;
 				
-			case ERROR:
+			case F_ERROR:
 				cout<<"\t\t ERROR"<<endl;
 				break;
 		}
@@ -229,7 +229,7 @@ void ShareDeployment::networkScan(vector<vector<Entity*>* >* entities, File* f)
 			// -> si le fichier n'existe pas, il est créé
 			
 			Packet p = PacketNewFile(f->getFileManager()->getIdFile(), f->getName(), f->getFileManager()->getFileSize(), f->getFileManager()->getChunkSize());
-			sData->getConnectionManager()->sendTo((*(*itHost)->getIP()), p);
+			sData->getConnectionManager()->sendTo((*itHost)->getIP(), p);
 		}
 	}
 }
