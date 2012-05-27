@@ -11,6 +11,7 @@ int main()
 	sData->updateHost(string("132.34.67.10"), 23, 15);
 	sData->updateHost(string("132.34.67.10"), 23, HDS_FINISH);
 	
+	
 	t->public_displayTopology();
 	sData->public_displayEntities();
 	
@@ -28,11 +29,11 @@ int main()
 	Entity* entity2;
 	vector<DeploymentState>* deploys;
 		
-	File* fileTest = new File(sData->getCurrentId()+1,"D4", "file/truc3.png");
+	/*File* fileTest = new File(sData->getCurrentId()+1,"D4", "file/truc3.png");
 	fileTest->addEntity(sData->public_getEntity("batiment_D"));
 	sData->addFileToAll(fileTest);
 	
-	sData->deleteFile(23);
+	sData->deleteFile(23);*/
 	
 	unsigned int i, j, k;
 	cout << endl;
@@ -92,11 +93,23 @@ int main()
 	}*/
 	
 	Entity* e = sData->public_getEntity("PC2");
+	Entity* e2 = sData->public_getEntity("PC1");
+	Entity* e3 = sData->public_getEntity("PC4");
+	Entity* e4 = sData->public_getEntity("PC5");
+	
 	DeploymentState* ds = e->getDeploymentState(24);
 	cout << ds->getCurrentState() << endl;
 	cout << ds->getRefFile()->getName() << endl;
 	
 	cout << "CurrentID : "<< sData->getCurrentId() << endl;
+	
+	sData->updateNetworkCurrentBroadbandSpeed(e,1);
+	sData->updateNetworkCurrentBroadbandSpeed(e2,99);
+	sData->updateNetworkCurrentBroadbandSpeed(e3,55);
+	sData->updateNetworkCurrentBroadbandSpeed(e4,34);
+	sData->updateNetworkCurrentBroadbandSpeed(e2,99);
+	
+	sData->public_displayEntities();
 	
 	
 	delete sData;

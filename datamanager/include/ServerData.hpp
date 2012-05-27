@@ -168,6 +168,16 @@ public :
 	void updateHost(string addressHost, HostState s);
 	
 	/**
+	* Permet de mettre à jour les débits des entités traversées du serveur jusqu'a 
+	* l'entité cible
+	* @param entity
+	* pointeur de l'entité cible
+	* @param packetWeight
+	* réel à enlever de currentBroadbandSpeed pour chaque entité
+	*/
+	bool updateNetworkCurrentBroadbandSpeed(Entity* entity, double packetWeight);
+	
+	/**
 	* Affichage de la structure contenant la topologie du réseau
 	*/	
 	void public_displayEntities();
@@ -189,7 +199,6 @@ public :
 	*/
 	void public_fillAddressList(string entityName, list<string> &list);
 	
-
 
 protected :
 	/**

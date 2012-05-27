@@ -7,7 +7,7 @@ using namespace std;
 Entity::Entity(const std::string& name, Entity* parent, int networkCapacity) :
 	name(name), parent(parent), networkCapacity(networkCapacity)
 {
-
+	currentBroadbandSpeed = 0;
 }
 
 Entity::~Entity()
@@ -29,10 +29,14 @@ double Entity::getCurrentBroadbandSpeed()
 	return currentBroadbandSpeed;
 }
 
-void Entity::setCurrentBroadbandSpeed(double bbs)
+bool Entity::setCurrentBroadbandSpeed(double bbs)
 {
 	if ((bbs <= networkCapacity) && (bbs >= 0))
+	{
 		currentBroadbandSpeed = bbs;
+		return true;
+	} else 
+		return false;
 }
 	
 int Entity::getNetworkCapacity()
