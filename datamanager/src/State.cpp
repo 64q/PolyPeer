@@ -68,7 +68,7 @@ string getStringFileState(FileState state)
 		case FINISH:
 			result = "finished";
 			break;
-		case ERROR:
+		case F_ERROR:
 			result = "error";
 			break;
 		default:
@@ -85,7 +85,7 @@ FileState getFileStateString(string stringState)
 	fsMap.insert(make_pair("ready",READY));
 	fsMap.insert(make_pair("deployment",DEPLOYMENT));
 	fsMap.insert(make_pair("finished",FINISH));
-	fsMap.insert(make_pair("error",ERROR));
+	fsMap.insert(make_pair("error",F_ERROR));
 	
 	map<string,FileState>::iterator s = fsMap.find(stringState);
 	

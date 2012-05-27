@@ -116,10 +116,10 @@ void  PolypeerServer::initConnections()
 		
 		for (vector<Entity*>::iterator itHost = hosts->begin(); itHost != hosts->end(); itHost++) 
 		{
-			if(cm->getConnection((*(*itHost)->getIP())) == NULL)
+			if(cm->getConnection((*itHost)->getIP()) == NULL)
 			{
-				Socket* socket = new Socket((*(*itHost)->getIP()), clientPort);
-				cm->addConnection((*(*itHost)->getIP()), socket);
+				Socket* socket = new Socket((*itHost)->getIP(), clientPort);
+				cm->addConnection((*itHost)->getIP(), socket);
 			}
 		}
 	}
