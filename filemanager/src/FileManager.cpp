@@ -232,6 +232,12 @@ std::string FileManager::getFileName()
 
 }
 
+std::string FileManager::getFilePath()
+{
+	return pathFile;
+
+}
+
 long FileManager::getChunkSize()
 {
 	return sizeChunk;

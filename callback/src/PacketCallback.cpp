@@ -25,7 +25,7 @@ void PacketCallback::addOperation(PacketType type, pOperation pOp)
 
 int PacketCallback::packetOperation(Packet& p)
 {
-	cout<<p.getType()<<endl;
+	cout<<"Type "<<p.getType()<<endl;
 	int type = p.getType();
 	if(type > int(EUndefined) && type < int(End_PaquetType))
 	{
