@@ -23,6 +23,8 @@ int callbackPacketDiskFull(Packet& p);
 
 int callbackPacketSendOperationFinished(Packet& p);
 
+int callBackAddHost(Packet& p);
+
 
 
 #endif // CALLBACKFUNCTION_H

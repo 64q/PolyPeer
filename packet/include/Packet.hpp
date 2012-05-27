@@ -50,6 +50,7 @@ typedef enum
     EMd5Error,
     EDiskFull,
     ESendOperationFinished,
+    EAddHost,
 
     End_PaquetType, // Doit rester en derniere position, pour avoir la taille du tableau
 } PacketType;
@@ -68,7 +69,7 @@ private:
 
 	// validité du paquet
 	bool valid;
-	
+
 	// adresse de la source
 	std::string address;
 
@@ -121,12 +122,12 @@ public:
 	 *	vrai su le paquet est utilisable
 	 */
 	 bool isValid ();
-	 
+
 	 /**
 	 * affecter l'adresse
 	 */
 	 void setAddress (std::string addr);
-	 
+
 	 /**
 	 * Récupérer l'adresse
 	 * @return string

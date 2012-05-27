@@ -35,6 +35,7 @@ void ConnectionManager::addConnection(std::string name, Socket* socket)
 {
 
 	Connection* tmp = new Connection(socket);
+	tmp->throwUpdatePacket();
 	listConnections[name] = tmp;
 	tmp->start();
 }
@@ -54,7 +55,7 @@ void* runFct(void* connectionManager)
 		sockTmp = connectionManagerTmp->serverSocket->accept();
 		connectionManagerTmp->addConnection(sockTmp->getIpAdress(), sockTmp);
 
-	}cout << "oo"<<endl;
+	}
 	return NULL;
 
 }

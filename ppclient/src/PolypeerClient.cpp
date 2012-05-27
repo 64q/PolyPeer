@@ -63,6 +63,7 @@ void PolypeerClient::start()
 		Socket sock(getClientData().getAddressServ(), getClientData().getPortServ());
 		logger << "connexion au serveur "<<getClientData().getAddressServ()<<":"<<getClientData().getPortServ()<<" réussie"<<endlog;
 		getClientData().getConnectionManager()->addConnection(getClientData().getAddressServ(), &sock);
+		logger << "tentative réussi contact du serveur!" << endlog;
 	}
 	catch(HostNotFoundException)
 	{
@@ -86,7 +87,6 @@ void PolypeerClient::restart()
 void PolypeerClient::run()
 {
 	// propre à 'instance client polypeer
-	//PolypeerClient* server = PolypeerClient::getInstance();
 	PolypeerClient::getInstance()->getClientData().getConnectionManager()->wait();
 	cout << "client terminé"<<endl;
 
