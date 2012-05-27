@@ -15,12 +15,13 @@ File::File(int id, string name, string path, int size, int chunkSize, FileState 
 
 	try
 	{
-		fileM= new FileManager(path.data(), id);
+		fileM = new FileManager(path.data(), id);
 
 	} catch (OpenFileException)
 	{
+		fileM = NULL;
 		fState = F_ERROR;
-		cout << "FAIL LOAD : Fichier " << path << " inexistant"<< endl;
+		cout << "FAIL LOAD : Fichier " << path << " inexistant ou déjà ouvert par un autre déploiement "<< endl;
 	}
 }
 
@@ -35,6 +36,7 @@ File::File(int id, string name, string path, int size, int chunkSize):
 
 	} catch (OpenFileException)
 	{
+		fileM = NULL;
 		fState = F_ERROR;
 		cout << "FAIL LOAD : Fichier " << path << " inexistant"<< endl;
 	}
@@ -48,10 +50,11 @@ File::File(int id, string name, string path):
 {
 	try
 	{
-			fileM= new FileManager(path.data(), id);
+		fileM= new FileManager(path.data(), id);
 
 	} catch (OpenFileException)
 	{
+		fileM = NULL;
 		fState = F_ERROR;
 		cout << "FAIL LOAD : Fichier " << path << " inexistant"<< endl;
 	}
