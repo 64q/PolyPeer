@@ -284,7 +284,7 @@ bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity, double packe
 	bool possible = true;
 	Entity* e = entity;
 	
-	if ( packetWeight = 0 )
+	if ( packetWeight == 0 )
 	{
 		e->setCurrentBroadbandSpeed(0);
 		

@@ -149,15 +149,13 @@ Entity* File::getEntity(string name)
 
 	while( (i < deploysOn.size()) && (find == false) )
 	{
-		if (deploysOn[i]->getFileManager())
+		if (!((deploysOn[i]->getName()).compare(name)))
 		{
-			if (!((deploysOn[i]->getFileManager())->getIdFile().compare(name)))
-			{
-				find = true;
-				toReturn = deploysOn[i];
-			}
-			i++;
+			find = true;
+			toReturn = deploysOn[i];
 		}
+		i++;
+		
 	}
 	return toReturn;	
 }
