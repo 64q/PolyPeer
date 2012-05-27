@@ -46,6 +46,8 @@ class Connection
 		 */
 		Socket* getSocket();
 
+		void throwUpdatePacket();
+
 	private:
 		Socket* socket;
 		std::string name;

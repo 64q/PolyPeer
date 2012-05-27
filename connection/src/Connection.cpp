@@ -1,5 +1,6 @@
 #include <Connection.hpp>
 #include <PacketCallback.hpp>
+#include <PacketAddHost.hpp>
 #include <iostream>
 
 using namespace std;
@@ -62,4 +63,10 @@ Socket* Connection::getSocket()
 }
 
 
+void Connection::throwUpdatePacket()
+{
+	PacketAddHost packet(name);
+	PacketCallback::getPacketCallback()->packetOperation(packet);
 
+
+}
