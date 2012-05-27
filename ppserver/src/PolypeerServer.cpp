@@ -96,7 +96,7 @@ void PolypeerServer::run()
 		algo->nextStep();
 		
 		// waiting time
-		sleep(5);
+		sleep(1);
 	}
 	
 	delete algo;
