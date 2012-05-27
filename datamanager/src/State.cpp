@@ -52,7 +52,7 @@ string getStringHostDeployState(HostDeployState state)
 	return result;
 }
 
-string getStringFileState(HostDeployState state)
+string getStringFileState(FileState state)
 {
 	string result;
 	

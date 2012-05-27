@@ -29,7 +29,7 @@ std::string getStringHostDeployState(HostDeployState state);
 /**
  * Récupère sous forme de chaine de texte l'état
  */
-std::string getStringFileState(HostDeployState state);
+std::string getStringFileState(FileState state);
 
 #endif
 
