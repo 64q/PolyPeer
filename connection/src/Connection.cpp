@@ -55,6 +55,7 @@ void Connection::stop()
 {
 	run = false;
 	socket->close();
+	throwRemoveConnection();
 }
 
 
