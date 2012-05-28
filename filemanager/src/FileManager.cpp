@@ -231,7 +231,7 @@ std::string FileManager::getFileName()
 	if(last > 0)
 	{
 		//le 6 correspond au .STATE
-		return pathFile.substr( last,pathFile.size() - last);
+		return pathFile.substr( last + 1,pathFile.size() - last);
 	}
 
 	return pathFile.substr( 0,pathFile.size() - 6);
@@ -251,7 +251,14 @@ long FileManager::getChunkSize()
 
 long FileManager::getCurrentNumberChunk()
 {
-	return currentChunk;
+	if(!isComplete)
+	{
+		return currentChunk;
+	}else
+	{
+		return getNumberChunk();
+	}
+
 }
 
 int64_t FileManager::getFreeDiskSpace()

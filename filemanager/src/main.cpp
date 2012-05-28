@@ -11,7 +11,7 @@ using namespace std;
 int main()
 {
 
-
+/*
     char file1[] = "../filemanager/dossier/a.png";
     char file2[] = "./media/DCED-6AD4/dossier/test.png";
 
@@ -64,8 +64,11 @@ int main()
     }
 
 
+*/
 
-
+	FileManager fm("./dossier/a.png", 0, 1000, 1);
+	cout << fm.getCurrentNumberChunk() << endl;
+	cout << fm.getFileName() << endl;
 
 
 
