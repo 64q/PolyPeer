@@ -8,8 +8,8 @@ int main()
 	list<string> list;
 	ServerData* sData = new ServerData();
 	XMLTool* t = sData->getXMLTool();
-	sData->updateHost(string("132.34.67.10"), 23, 15);
-	sData->updateHost(string("132.34.67.10"), 23, HDS_FINISH);
+	/*sData->updateHost(string("132.34.67.10"), 23, 15);
+	sData->updateHost(string("132.34.67.10"), 23, HDS_FINISH);*/
 	
 	
 	t->public_displayTopology();
@@ -29,7 +29,7 @@ int main()
 	Entity* entity2;
 	vector<DeploymentState>* deploys;
 		
-	File* fileTest = new File(sData->getCurrentId()+1,"D4", "file/truc3.png");
+	File* fileTest = new File(sData->getCurrentId()+1,"D4", "file/truc2.png");
 	fileTest->addEntity(sData->public_getEntity("batiment_D"));
 	sData->addFileToAll(fileTest);
 	
@@ -100,7 +100,7 @@ int main()
 			}
 		}
 	}*/
-	
+	/*
 	Entity* e = sData->public_getEntity("PC2");
 	Entity* e2 = sData->public_getEntity("PC1");
 	Entity* e3 = sData->public_getEntity("PC4");
@@ -118,7 +118,7 @@ int main()
 	sData->updateNetworkCurrentBroadbandSpeed(e4,34);
 	sData->updateNetworkCurrentBroadbandSpeed(e2,99);
 	
-	
+	*/
 	sData->public_displayEntities();
 	
 		cout << "lol" << endl;
