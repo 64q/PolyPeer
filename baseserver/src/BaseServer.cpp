@@ -19,3 +19,13 @@ Logger& BaseServer::getLogger()
 }
 
 BaseServer::~BaseServer() {}
+
+void BaseServer::multiSleep(int millisecond)
+{
+	 #ifdef WIN32
+		Sleep(millisecond);
+    #elif defined (linux)
+		usleep(millisecond*1000);
+    #endif
+}
+

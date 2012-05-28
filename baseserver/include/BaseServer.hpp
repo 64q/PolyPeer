@@ -51,6 +51,12 @@ protected:
 	BaseServer& operator=(const BaseServer&);
 	
 	/**
+	 * Fonction de pause
+	 */
+	void multiSleep(int millisecond);
+	
+	
+	/**
 	 * Logger du server, sert à stocker dans un fichier texte les actions du serv.
 	 */
 	Logger logger;

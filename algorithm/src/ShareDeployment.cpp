@@ -28,26 +28,6 @@ ShareDeployment::~ShareDeployment()
 
 void ShareDeployment::nextStep()
 {
-	/*
-	Regles :
-		-> une action ne doit intervenir que sur des pc en etat d'attente (dialogue entre client)
-		-> prise en compte du débit très importante
-		-> eviter le dialogue entre zone
-
-
-
-		
-		
-		// PRETRAITEMENT
-		
-		//	regarder l'état d'avancement
-		//		si fini faire des vérif d'état des clients suivant un timer (5min, 1h, ...)
-		//		si 0%, demander la création de tous les fichiers
-		//		si reprise reverifier l'etat
-
-	*/
-
-
 	// liste des déploiements
 	vector<File*>* files = sData->getDeployFiles();
 	
@@ -61,11 +41,7 @@ void ShareDeployment::nextStep()
 	for (vector<File*>::iterator itFile = files->begin(); itFile != files->end(); itFile++) 
 	{
 		cout<< "\t Gestion deploiement : " << (*itFile)->getName() << endl;
-		int idFile = (*itFile)->getFileManager()->getIdFile();
-		
-		// Récupération des entités concernés par ce déploiement
-		entities = (*itFile)->getSortedHosts();
-		
+		int idFile;
 		
 		switch((*itFile)->getFileState())
 		{
@@ -75,6 +51,10 @@ void ShareDeployment::nextStep()
 				break;
 				
 			case DEPLOYMENT:
+				// variable très utilisé
+				idFile = (*itFile)->getFileManager()->getIdFile();
+				// Récupération des entités concernés par ce déploiement
+				entities = (*itFile)->getSortedHosts();
 				
 				// Faire un scan du réseau pour MAJ -> envoie du paquet d'initialisation si besoin
 				networkScan(entities, (*itFile));
@@ -147,7 +127,8 @@ void ShareDeployment::nextStep()
 					}
 				}
 			
-			
+				// désallocation
+				File::deleteSortedHost(entities);
 				break;
 				
 			case FINISH:
@@ -163,8 +144,6 @@ void ShareDeployment::nextStep()
 		}
 	}
 	
-	File::deleteSortedHost(entities);
-
 	cout<< "FIN" << endl << endl;
 	
 }

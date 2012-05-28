@@ -77,7 +77,7 @@ void PolypeerServer::start()
 void PolypeerServer::restart()
 {
 	stop();
-	sleep(10);
+	multiSleep(10000);
 	start();
 }
 
@@ -92,8 +92,7 @@ void PolypeerServer::run()
 	
 	
 	PolypeerServer::getInstance()->logger<< "waiting 5 seconds to bind socket..." << endlog;
-
-	sleep(5);
+	PolypeerServer::getInstance()->multiSleep(5000);
 
 	while (server->running)
 	{
@@ -102,7 +101,7 @@ void PolypeerServer::run()
 		algo->nextStep();
 		
 		// waiting time
-		sleep(5);
+		PolypeerServer::getInstance()->multiSleep(5000);
 	}
 	
 	delete algo;
@@ -126,11 +125,14 @@ void  PolypeerServer::initConnections()
 	
 	for (vector<File*>::iterator itFile = files->begin(); itFile != files->end(); itFile++) 
 	{
-		vector<Entity*>* hosts = (*itFile)->getDeploysOn();
-		
-		for (vector<Entity*>::iterator itHost = hosts->begin(); itHost != hosts->end(); itHost++) 
+		if(((*itFile)->getFileState() == READY) || ((*itFile)->getFileState() == DEPLOYMENT))
 		{
-			myHostSet.insert((*itHost));
+			vector<Entity*>* hosts = (*itFile)->getDeploysOn();
+		
+			for (vector<Entity*>::iterator itHost = hosts->begin(); itHost != hosts->end(); itHost++) 
+			{
+				myHostSet.insert((*itHost));
+			}
 		}
 	}
 	

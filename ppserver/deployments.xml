@@ -8,6 +8,21 @@
     </file>
     <file id="25" name="D3" path="file/truc2.png" size="34535" chunkSize="13000" state="finished">
         <zone ref="PC2" />
+        <host ref="IRC007-05" />
+        <host ref="PC4" />
+        <host ref="PC5" />
+        <host ref="IRC007-04" />
+        <host ref="PC1" />
+        <host ref="PC2" />
+        <host ref="PC6" />
+        <host ref="PC7" />
+        <host ref="PC8" />
+        <host ref="PC11" />
+        <host ref="PC2" />
+        <host ref="PC6" />
+        <host ref="PC7" />
+        <host ref="PC8" />
+        <host ref="PC11" />
     </file>
-
+    <file id="25" name="Test" path="/mont.png" size="260471" chunkSize="1000" state="ready" />
 </deployments>
