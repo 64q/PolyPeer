@@ -22,6 +22,8 @@ public:
 	std::string getIP();
 	HostState getHostState();
 	void setHostState(HostState);
+	void setTimerState();
+	double getTimerState();
 	
 private:
 	std::map<std::string, Entity*> entities;

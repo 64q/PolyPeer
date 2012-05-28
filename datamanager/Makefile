@@ -212,7 +212,7 @@ FileManager.o: $(FM)$(SRC)FileManager.cpp
 #
 ############################
 
-PacketManager= Packet.o PacketReady.o PacketDiskFull.o PacketSendOperationFinished.o PacketMd5Error.o PacketSendChunk.o PacketSendOperation.o PacketChunkReceived.o PacketNewFile.o PacketAddHost.o
+PacketManager= Packet.o PacketReady.o PacketDiskFull.o PacketSendOperationFinished.o PacketMd5Error.o PacketSendChunk.o PacketSendOperation.o PacketChunkReceived.o PacketNewFile.o PacketAddHost.o PacketRemoveHost.o
 
 # Compilation du Packet
 Packet.o: $(PACKET)$(SRC)Packet.cpp
@@ -261,6 +261,11 @@ PacketNewFile.o: $(PACKET)$(SRC)PacketNewFile.cpp
 	
 # Compilation du PacketAddHost
 PacketAddHost.o: $(PACKET)$(SRC)PacketAddHost.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+# Compilation du PacketRemoveHost
+PacketRemoveHost.o: $(PACKET)$(SRC)PacketRemoveHost.cpp
 	@echo $^
 	@$(CC) -c $^ $(CFLAGS)
 
