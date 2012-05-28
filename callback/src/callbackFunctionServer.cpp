@@ -83,7 +83,9 @@ int callBackAddHost(Packet& p)
 	PacketAddHost pp (p);
 	
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
-
+	
+	 PolypeerServer::getInstance()->multiSleep(2500);
+	
 	cout << "PacketAddHost" << pp.getIpAddress() << endl;
 	sd.updateHost(pp.getIpAddress(), WAIT);
 	
@@ -93,7 +95,7 @@ int callBackAddHost(Packet& p)
 int callbackRemoveHost(Packet& p)
 {
 	PacketRemoveHost pp(p);
-
+	
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
 	ConnectionManager* cm = sd.getConnectionManager();
 	cm->removeConnection(pp.getIpAddress());

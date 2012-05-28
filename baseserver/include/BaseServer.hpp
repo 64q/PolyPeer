@@ -41,6 +41,11 @@ public:
 	 */
 	virtual ~BaseServer();
 	
+	/**
+	 * Fonction de pause
+	 */
+	void multiSleep(int millisecond);
+	
 protected:
 	/**
 	 * Le constructeur, le constructeur par copie et l'opérateur = sont privés
@@ -49,11 +54,6 @@ protected:
 	BaseServer(const std::string);
 	BaseServer(const BaseServer&);
 	BaseServer& operator=(const BaseServer&);
-	
-	/**
-	 * Fonction de pause
-	 */
-	void multiSleep(int millisecond);
 	
 	
 	/**
