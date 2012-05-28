@@ -17,7 +17,7 @@ ConnectionManager::ConnectionManager(int port)
 			bind = true;
 		}catch(BindException)
 		{
-			cout << "impossible de lier le port du serveur numéro :" << port << endl;
+			cout << "impossible de lier le port d'écoute numéro :" << port << endl;
 			cout << "tentative de reconnexion dans 5 secondes" << endl;
 			sleep(5);
 		}
