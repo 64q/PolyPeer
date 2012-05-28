@@ -37,7 +37,7 @@ void FileManager::init(const char* path, long size, long sizeChunk, int idFile)
 
 	checkDirectory(pathStrTmp);
 
-
+	//phase de vérification de la présence des fichiers
 	if(!isComplete)
 	{
 		string pathStr(path);
@@ -45,14 +45,20 @@ void FileManager::init(const char* path, long size, long sizeChunk, int idFile)
 
 		pathFileState.assign(pathStr);
 
-		//on vérifi si le fichier d'enregistrement de l'état existe
-
+		//on vérifie si le fichier d'enregistrement de l'état existe
 		if (!existFile(pathFileState.c_str()))
 		{
-			//si non, on le crée et on l'initialise à 0
-			ofstream tmp(pathStr.c_str());
-			tmp << 0;
-			tmp.close();
+			//si non, on vérifie que le fichier n'est pas déjà fini de télécharger (donc sans extension .TMP)
+			if (!existFile(pathFile.c_str()))
+			{
+				//si non, on crée le fichier .STATE et on l'initialise à 0
+				ofstream tmp(pathStr.c_str());
+				tmp << 0;
+				tmp.close();
+			}else
+			{
+				isComplete = true;
+			}
 
 		}
 		else
@@ -66,7 +72,7 @@ void FileManager::init(const char* path, long size, long sizeChunk, int idFile)
 		}
 	}
 
-
+	//phase d'ouverture des fichiers
 	if(!isComplete)
 	{
 		pathStrTmp+=".TMP";
