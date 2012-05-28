@@ -12,15 +12,20 @@ XMLTool::XMLTool(ServerData* sData)
 	DOMTopology = DOMT;
 	DOMDeployments = DOMD;
 	if(!DOMTopology.LoadFile())
-		cout << "Erreur lors du chargement du fichier : " << topologyFile << endl;
+		cout << "Erreur lors du chargement du fichier de topologie" << topologyFile << endl;
+	else 
+	{
+		//Création de la topologie dans la map
+		readTopology(sData, DOMTopology.RootElement(), sData->getEntities(), NULL);
+	}
+	
 	if(!DOMDeployments.LoadFile())
 		cout << "Erreur lors du chargement du fichier : " << deploymentsFile << endl;
-
-	//Création de la topologie dans la map
-	readTopology(sData, DOMTopology.RootElement(), sData->getEntities(), NULL);
-
-	//Ajout des états de déploiement dans la map
-	readDeployments(sData, DOMDeployments.RootElement());
+	else 
+	{
+		//Ajout des états de déploiement dans la map
+		readDeployments(sData, DOMDeployments.RootElement());
+	}
 
 }
 
@@ -113,7 +118,7 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 	Entity* entity = NULL;
 
 	string name ="";
-	
+
 	try
 	{
 		if ( node->ToElement() )
@@ -144,11 +149,14 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 				}
 			}
 		}
+		
 		for(TiXmlNode* element = node->FirstChild(); element; element = element->NextSibling())
 		{
 			if ( node->ToElement() )
 				readDeployments(sData, element);
 		}
+		
+		
 	} catch (OpenFileException)
 	{
 		cout << "Fail load : " << name << endl;
