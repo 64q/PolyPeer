@@ -199,6 +199,8 @@ public :
 	*/
 	void public_fillAddressList(string entityName, list<string> &list);
 	
+	
+	int getClientPort() {return clientPort;}
 
 protected :
 	/**
@@ -227,6 +229,12 @@ protected :
 	 * Adresse du serveur principal
 	 */
 	string addressServ;
+	
+	
+	/**
+	 * Port pour le client
+	 */
+	int clientPort;
 	
   /**
 	* Contient la DOM des fichiers de déploiement et de topologie

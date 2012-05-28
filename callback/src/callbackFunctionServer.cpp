@@ -68,7 +68,7 @@ int callbackPacketDiskFull(Packet& p)
 
 	string src = p.getAddress();
 
-	sd.updateHost(src, FULL);
+	sd.updateHost(src, pp.getIdFile(), HDS_DISKFULL);
 
 	return 1;
 }

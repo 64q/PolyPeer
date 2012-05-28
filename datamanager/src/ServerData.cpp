@@ -3,11 +3,13 @@
 
 using namespace std;
 
-ServerData::ServerData()
+ServerData::ServerData() :
+	addressServ("192.168.0.50"),
+	clientPort(5555)
 {
 	cM = new ConnectionManager(6666);
 	cM->start();
-	addressServ = "192.168.0.50";
+	
 	xmlTool = new XMLTool(this);
 }
 
@@ -92,7 +94,19 @@ string ServerData::getAddressServ()
 
 void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
 {
-	unsigned int i=0;
+	Entity* host = getHostByAddress(addressHost);
+	if(host != NULL)
+	{
+		// Actualiser le nombre de chunck pour l'host
+		host->getDeploymentState(fileID)->setCurrentIdChunk(nbChunk);
+		// Actualiser l'état du fichier POUR L'Host
+		if(nbChunk >= getFile(fileID)->getFileManager()->getNumberChunk())
+			host->getDeploymentState(fileID)->setCurrentState(HDS_FINISH);
+		else
+			host->getDeploymentState(fileID)->setCurrentState(HDS_WAIT);
+	}
+	
+	/*unsigned int i=0;
 	bool find = false;
 	Entity* host = getHostByAddress(addressHost);
 	vector<DeploymentState>* dState = host->getDeploys();
@@ -105,18 +119,25 @@ void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
 			((*dState)[i]).setCurrentIdChunk(nbChunk);
 		}
 		i++;
-	}
+	}*/
 }
 
 void ServerData::updateHost(string addressHost, int fileID, HostDeployState s)
 {
+	Entity* host = getHostByAddress(addressHost);
+	if(host != NULL)
+	{
+		// Actualiser l'état du fichier POUR L'Host
+			host->getDeploymentState(fileID)->setCurrentState(HDS_DISKFULL);
+	}
+/*
 	unsigned int i=0;
 	bool find = false;
 	Entity* host = getHostByAddress(addressHost);
 	vector<DeploymentState>* dState = host->getDeploys();
 	
-	if ( s == HDS_DOWNLOAD)
-		host->setHostState(DOWNLOAD);
+	//if ( s == HDS_DOWNLOAD)
+		//host->setHostState(DOWNLOAD);
 	if ( s == HDS_FINISH)
 		host->setHostState(WAIT);
 	
@@ -128,7 +149,7 @@ void ServerData::updateHost(string addressHost, int fileID, HostDeployState s)
 			((*dState)[i]).setCurrentState(s);
 		}
 		i++;
-	}
+	}*/
 }
 
 
@@ -137,8 +158,8 @@ void ServerData::updateHost(string addressHost, HostState s)
 	Entity* host = getHostByAddress(addressHost);
 	if(host != NULL)
 		host->setHostState(s);
-	else
-		PolypeerServer::getInstance()->getLogger() << "Un connard a essayé de se connecter !" << endlog;
+
+	//PolypeerServer::getInstance()->getLogger() << "Un ******* a essayé de se connecter !" << endlog;
 }
 
 

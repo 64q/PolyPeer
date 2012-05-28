@@ -128,7 +128,7 @@ void File::addEntity(Entity* entity)
 				if (mit->second->getType() == HOST)
 				{
 					deploysOn.push_back(mit->second);
-					mit->second->addDeploymentState(0, this, HDS_WAIT);
+					mit->second->addDeploymentState(0, this, HDS_INIT);
 				}
 				if (mit->second->getEntities() != NULL)
 					addEntity(mit->second);
@@ -138,7 +138,7 @@ void File::addEntity(Entity* entity)
 			if (getEntity(entity->getName()) == NULL)
 			{
 				deploysOn.push_back(entity);
-				entity->addDeploymentState(0, this, HDS_WAIT);
+				entity->addDeploymentState(0, this, HDS_INIT);
 			}
 		}
 	}

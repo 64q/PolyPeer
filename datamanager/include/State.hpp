@@ -6,12 +6,12 @@
 /**
  * Etat d'un Host
  */
-enum HostState { DOWNLOAD=0, WAIT=1, OFFLINE=3, FULL=4 };
+enum HostState { DOWNLOAD=0, WAIT=1, OFFLINE=3 };
 
 /**
  * Etat du déploiement sur un Host donné
  */
-enum HostDeployState { HDS_DOWNLOAD=0, HDS_WAIT=1, HDS_FINISH=2 };
+enum HostDeployState { HDS_INIT=0, HDS_WAIT=1, HDS_FINISH=2, HDS_DISKFULL=3 };
 
 /**
  * Etat du déploiement dans sa globalité

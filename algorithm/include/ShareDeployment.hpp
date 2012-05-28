@@ -66,11 +66,6 @@ private:
 	void networkScan(std::vector<std::vector<Entity*>* >* entities, File* f);
 	
 	/**
-	 * Essaye de lancer les actions en attente
-	 */
-	void tryLaunchWaitAction();
-	
-	/**
 	 * vérifie que le déploiement est bien fini
 	 */
 	bool isEnd(std::vector<std::vector<Entity*>* >* entities, int idFile);
@@ -89,8 +84,13 @@ private:
 	 * Récupérer l'host le plus avancé de la zone
 	 */
 	Entity* getSeedZoneDeployment(std::vector<Entity*>* zone, int idFile, long chunkId);
-	
 		
+	/**
+	 * Essaye de lancer les actions en attente
+	 */
+	 
+	 
+	 
 };
 
 

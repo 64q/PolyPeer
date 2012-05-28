@@ -19,7 +19,7 @@ ConnectionManager::ConnectionManager(int port)
 		{
 			cout << "impossible de lier le port du serveur numéro :" << port << endl;
 			cout << "tentative de reconnexion dans 5 secondes" << endl;
-			sleep(5000);
+			sleep(5);
 		}
 	}
 

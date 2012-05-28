@@ -21,9 +21,6 @@ string getStringHostState(HostState state)
 		case OFFLINE:
 			result = "offline";
 			break;
-		case FULL:
-			result = "full";
-			break;
 		default:
 			result = "undefined";
 	}
@@ -37,14 +34,17 @@ string getStringHostDeployState(HostDeployState state)
 	
 	switch (state)
 	{
-		case HDS_DOWNLOAD:
-			result = "download";
-			break;
 		case HDS_WAIT:
 			result = "wait";
 			break;
 		case HDS_FINISH:
 			result = "finished";
+			break;
+		case HDS_INIT:
+			result = "init";
+			break;
+		case HDS_DISKFULL:
+			result = "disk full";
 			break;
 		default:
 			result = "undefined";

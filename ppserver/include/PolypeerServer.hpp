@@ -35,7 +35,6 @@ public:
 	 */
 	inline ServerData& getServerData() { return *(this->sData); }
 	
-	int getClientPort() {return clientPort; }
 	
 	/**
 	 * Destructeur de PolypeerServer
@@ -81,12 +80,6 @@ private:
 	 * Instance du webserver
 	 */
 	WebServer* webserver;
-	
-	/**
-	 * port client
-	 */
-	int clientPort;
-	
 	
 };
 

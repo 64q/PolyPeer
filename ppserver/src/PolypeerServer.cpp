@@ -3,6 +3,7 @@
 
 // STL
 #include <iostream>
+#include <set>
 
 // C lib
 #include <pthread.h>
@@ -22,13 +23,15 @@ using namespace std;
 PolypeerServer* PolypeerServer::instance = NULL;
 
 PolypeerServer::PolypeerServer() :
-	BaseServer("log/PolypeerServer.log"),
-	clientPort(5555)
+	BaseServer("log/PolypeerServer.log")
 {
 	logger.setVerboseMode(true);
 	logger << "Lancement du serveur Polypeer..."<<endlog;
+	
+	// récupération du logger
 	webserver = WebServer::getInstance();
 
+	// création de notre structure principale
 	sData = new ServerData();
 	
 	// initialisation du system de callBack
@@ -88,7 +91,9 @@ void PolypeerServer::run()
 	
 	
 	cout<< "Lancement Algo de décision" << endl;
-	sleep(10);
+
+	sleep(2);
+
 	while (server->running)
 	{
 
@@ -96,7 +101,7 @@ void PolypeerServer::run()
 		algo->nextStep();
 		
 		// waiting time
-		sleep(1);
+		sleep(5);
 	}
 	
 	delete algo;
@@ -116,17 +121,24 @@ void  PolypeerServer::initConnections()
 	
 	ConnectionManager* cm = sData->getConnectionManager();
 	
+	set<Entity*> myHostSet;
+	
 	for (vector<File*>::iterator itFile = files->begin(); itFile != files->end(); itFile++) 
 	{
 		vector<Entity*>* hosts = (*itFile)->getDeploysOn();
 		
 		for (vector<Entity*>::iterator itHost = hosts->begin(); itHost != hosts->end(); itHost++) 
 		{
-			if(cm->getConnection((*itHost)->getIP()) == NULL)
-			{
-				pthread_t myThread;
-				pthread_create(&myThread, NULL, thread_initConnection, (*itHost));
-			}
+			myHostSet.insert((*itHost));
+		}
+	}
+	
+	for (set<Entity*>::iterator itHost = myHostSet.begin(); itHost != myHostSet.end(); itHost++) 
+	{
+		pthread_t myThread;
+		if(cm->getConnection((*itHost)->getIP()) == NULL)
+		{
+			pthread_create(&myThread, NULL, thread_initConnection, (*itHost));
 		}
 	}
 }
@@ -136,10 +148,9 @@ void* thread_initConnection(void* data)
 {
 	ConnectionManager* cm = (PolypeerServer::instance)->getServerData().getConnectionManager();
 	Host* myHost = (Host*)data;
-	
 	try
 	{	
-		Socket* socket = new Socket(myHost->getIP(), (PolypeerServer::instance)->getClientPort());
+		Socket* socket = new Socket(myHost->getIP(), (PolypeerServer::instance)->getServerData().getClientPort());
 		cm->addConnection(myHost->getIP(), socket);
 		myHost->setHostState(WAIT);
 		(PolypeerServer::instance)->getLogger()<<"Connection to " << myHost->getIP() << " complete" <<endlog;
