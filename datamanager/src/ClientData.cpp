@@ -11,6 +11,7 @@ ClientData::ClientData()
 
 ClientData::~ClientData()
 {
+	cout << "CD detruit"<<endl<<flush;
 	unsigned int i;
 	for (i=0;i<deploys.size();i++)
 	{

@@ -33,7 +33,7 @@ public:
 	/**
 	 * Récupérer la structure principale
 	 */
-	inline ClientData& getClientData() { return *(this->cData); }
+	inline ClientData* getClientData() { return (this->cData); }
 
 	/**
 	 * Destructeur de PolypeerClient
