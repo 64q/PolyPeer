@@ -182,6 +182,7 @@ void ShareDeployment::networkScan(vector<vector<Entity*>* >* entities, File* f)
 			{
 				Packet p = PacketNewFile(f->getFileManager()->getIdFile(), f->getFileManager()->getFilePath(), f->getFileManager()->getFileSize(), f->getFileManager()->getChunkSize());
 				sData->getConnectionManager()->sendTo((*itHost)->getIP(), p);
+				(*itHost)->setHostState(DOWNLOAD);
 			}
 		}
 	}
