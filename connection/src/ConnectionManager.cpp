@@ -28,6 +28,7 @@ ConnectionManager::ConnectionManager(int port)
 
 ConnectionManager::~ConnectionManager()
 {
+	cout << "CM detruit"<<endl<<flush;
 	stop();
 }
 
