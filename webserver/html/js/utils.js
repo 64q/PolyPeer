@@ -171,7 +171,7 @@ var HashNav = {
 						result += '<ul>';
 					
 						for (var i = 0; i < content.hosts.length; i++) {
-							result += '<li>@' + content.hosts[i].ip + ' ' + content.hosts[i].name + ' (' + content.hosts[i].current + '/' + content.hosts[i].total + ')</li>';
+							result += '<li>@' + content.hosts[i].ip + ' ' + content.hosts[i].name + ' [' + content.hosts[i].state + '] (' + content.hosts[i].current + '/' + content.hosts[i].total + ')</li>';
 						}
 					
 						result += '</ul>';
@@ -213,7 +213,7 @@ var HashNav = {
 					var result = '<ul>';
 				
 					for (var i = 0; i < content.deployments.length; i++) {
-						result += '<li>' + content.deployments[i].name + ' (' + content.deployments[i].current + '/' + content.deployments[i].total + ')</li>';
+						result += '<li>' + content.deployments[i].name + ' [' + content.deployments[i].state + '] (' + content.deployments[i].current + '/' + content.deployments[i].total + ')</li>';
 					}
 				
 					$('#host-info').innerHTML = '<ul><li><strong>Nom : </strong>' + content.name + '</li><li><strong>IP : </strong>' + content.ip + '</li><li><strong>Etat : </strong>' + printState(content.state) + '</li></ul>';

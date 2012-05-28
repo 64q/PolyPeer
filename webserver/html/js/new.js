@@ -6,6 +6,7 @@
 $('#new-deployment-form').addEventListener('submit', function(e) {
  	var name = $('#name');
  	var path = $('#path');
+ 	var cpath = $('#cpath');
  	var error = false;
  	
  	var checkboxes = qsa('#new-deployment-form input[type="checkbox"]');
@@ -28,10 +29,13 @@ $('#new-deployment-form').addEventListener('submit', function(e) {
  	} else if (path == "") {
  		notifyError('Veuillez donner un chemin vers le fichier');
  		error = true;
+ 	} else if (cpath == "") {
+ 		notifyError('Veuillez donner un chemin où mettre le fichier chez le client');
+ 		error = true;
  	}
  	
  	if (!error) {
-	 	Ajax.request('/ajax/new_deployment', 'name=' + name.value + '&path=' + path.value + '&zones=' + str_zones, function(content) {
+	 	Ajax.request('/ajax/new_deployment', 'name=' + name.value + '&path=' + path.value + '&zones=' + str_zones + '&cpath=' + cpath, function(content) {
 	 		var content = JSON.parse(content);
 	 		
 	 		if (content.state == "done") {

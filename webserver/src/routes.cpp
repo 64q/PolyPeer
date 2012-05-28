@@ -76,7 +76,7 @@ void get_stats_route(mg_connection* conn, const mg_request_info* request_info)
 	ServerData& data = server->getServerData();
 	
 	mg_printf(conn, "%s", ajax_reply_start);
-	mg_printf(conn, "{\"state\":\"%s\", \"count_deployments\":%i, \"count_hosts\":%i}", "online", data.getDeployFiles()->size(), data.getEntities()->size());
+	mg_printf(conn, "{\"state\":\"%s\", \"count_deployments\":%lu, \"count_hosts\":%lu}", "online", data.getDeployFiles()->size(), data.getEntities()->size());
 }
 
 void get_host_route(mg_connection* conn, const mg_request_info* request_info)
@@ -174,8 +174,9 @@ void deployment_route(mg_connection* conn, const mg_request_info* request_info)
 			{
 				for (vector<Entity*>::iterator it = (*itZone)->begin(); it != (*itZone)->end(); it++)
 				{
-					mg_printf(conn, "{\"name\":\"%s\", \"ip\":\"%s\", \"current\":\"%i\", \"total\":\"%lu\"}"
+					mg_printf(conn, "{\"name\":\"%s\", \"ip\":\"%s\", \"state\":\"%s\", \"current\":\"%i\", \"total\":\"%lu\"}"
 						, (*it)->getName().c_str(), (*it)->getIP().c_str()
+						, getStringHostDeployState((*it)->getDeploymentState(fm->getIdFile())->getCurrentState()).c_str()
 						, (*it)->getDeploymentState(fm->getIdFile())->getCurrentIdChunk()
 						, fm->getNumberChunk()
 					);
