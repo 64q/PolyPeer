@@ -105,7 +105,6 @@ void ConnectionManager::removeConnection(std::string ip)
 	Connection* connec = listConnections[ip];
 	if(connec != NULL)
 	{
-		connec->stop();
 		listConnections.erase(ip);
 	}
 }
