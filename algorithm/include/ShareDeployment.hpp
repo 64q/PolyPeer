@@ -85,11 +85,6 @@ private:
 	 */
 	Entity* getSeedZoneDeployment(std::vector<Entity*>* zone, int idFile, long chunkId);
 		
-	/**
-	 * Essaye de lancer les actions en attente
-	 */
-	 
-	 
 	 
 };
 

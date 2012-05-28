@@ -26,7 +26,7 @@ PolypeerServer::PolypeerServer() :
 	BaseServer("log/PolypeerServer.log")
 {
 	logger.setVerboseMode(true);
-	logger << "Lancement du serveur Polypeer..."<<endlog;
+	logger << "Launch PolypeerServer..."<<endlog;
 	
 	// récupération du logger
 	webserver = WebServer::getInstance();
@@ -48,6 +48,7 @@ PolypeerServer::PolypeerServer() :
 PolypeerServer::~PolypeerServer()
 {
 	delete sData;
+	delete webserver;
 }
 
 PolypeerServer* PolypeerServer::getInstance()
@@ -90,9 +91,9 @@ void PolypeerServer::run()
 	DeploymentAlgorithm* algo = new ShareDeployment(server, &data);
 	
 	
-	cout<< "Lancement Algo de décision" << endl;
+	logger<< "waiting 5 seconds to bind socket..." << endlog;
 
-	sleep(2);
+	sleep(5);
 
 	while (server->running)
 	{
