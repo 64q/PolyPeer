@@ -17,12 +17,10 @@ int callbackReady(Packet& p)
 {
 	PacketReady pp (p);
 
-	cout << "callbackReady" << endl;
-
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
 
 	string src = p.getAddress();
-
+	cout << "callbackReady : " << src << endl;
 	sd.updateHost (src, pp.getIdFile(), pp.getChunkNumber());
 
 	return 1;
@@ -32,12 +30,10 @@ int callbackChunkReceived(Packet& p)
 {
 	PacketChunkReceived pp (p);
 
-	cout << "callbackChunkReceived" << endl;
-
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
 
 	string src = p.getAddress();
-
+	cout << "callbackChunkReceived : " << src << endl;
 	sd.updateHost(src, pp.getIdFile(), pp.getChunkNumber());
 
 	return 1;
@@ -47,12 +43,10 @@ int callbackMd5Error(Packet& p)
 {
 	PacketMd5Error pp (p);
 
-	cout << "callbackMd5Error" << endl;
-
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
 
 	string src = p.getAddress();
-
+	cout << "callbackMd5Error : " << src << endl;
 	sd.updateHost(src, WAIT);
 
 	return 1;
@@ -62,12 +56,10 @@ int callbackPacketDiskFull(Packet& p)
 {
 	PacketDiskFull pp (p);
 
-	cout << "callbackPacketDiskFull5Error" << endl;
-
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
 
 	string src = p.getAddress();
-
+	cout << "callbackPacketDiskFull5Error : " << src << endl;
 	sd.updateHost(src, pp.getIdFile(), HDS_DISKFULL);
 
 	return 1;
@@ -77,12 +69,10 @@ int callbackPacketSendOperationFinished(Packet& p)
 {
 	PacketSendOperationFinished pp (p);
 
-	cout << "callbackPacketSendOperationFinished" << endl;
-
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
 
 	string src = p.getAddress();
-
+	cout << "callbackPacketSendOperationFinished : " << src << endl;
 	sd.updateHost(src, WAIT);
 
 	return 1;
