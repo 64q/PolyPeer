@@ -5,7 +5,7 @@
 
 
 #include <ConnectionManager.hpp>
-#include <PolypeerClient.hpp>
+
 
 
 ConnectionManager::ConnectionManager(int port)
