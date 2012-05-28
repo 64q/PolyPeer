@@ -7,6 +7,7 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <ctime>
 
 #include <DeploymentState.hpp>
 #include <State.hpp>
@@ -28,10 +29,14 @@ public:
 	Entity(const std::string& name, Entity* parent, int networkCapacity);
 	std::string getName();
 	Entity* getParent();
-	double getCurrentBroadbandSpeed();
-	bool setCurrentBroadbandSpeed(double bbs);
+	int getCurrentBroadbandSpeed();
+	bool setCurrentBroadbandSpeed(int bbs);
 	int getNetworkCapacity();
+	void setTimerSpeed();
+	double getTimerSpeed();
+	EntityType getType();
 	~Entity();
+	
 	virtual std::map<std::string, Entity*>* getEntities() = 0;
 	virtual std::vector<DeploymentState>* getDeploys() = 0;
 	virtual std::string getIP() = 0;
@@ -39,7 +44,9 @@ public:
 	virtual DeploymentState* getDeploymentState(int idFile) = 0;
 	virtual HostState getHostState() = 0;
 	virtual void setHostState(HostState) = 0;
-	EntityType getType() { return this->type; }
+	virtual void setTimerState() = 0;
+	virtual double getTimerState() = 0;
+
 	
 protected:
 	/**
@@ -47,7 +54,8 @@ protected:
 	 */
 	std::string name;
 	Entity* parent;
-	double currentBroadbandSpeed; 
+	int currentBroadbandSpeed; 
+	time_t timerSpeed;
 	int networkCapacity;
 	EntityType type;
 };

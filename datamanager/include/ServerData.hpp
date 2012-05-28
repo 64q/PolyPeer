@@ -170,14 +170,33 @@ public :
 	void updateHostInit(string addressHost);
 	
   /**
-	* Permet de mettre à jour les débits des entités traversées du serveur jusqu'a 
-	* l'entité cible
+	* Permet de mettre à jour les débits des entités traversées du serveur jusqu'à l'entité cible
 	* @param entity
 	* pointeur de l'entité cible
 	* @param packetWeight
-	* réel à enlever de currentBroadbandSpeed pour chaque entité
+	* entier à enlever de currentBroadbandSpeed pour chaque entité
 	*/
-	bool updateNetworkCurrentBroadbandSpeed(Entity* entity, double packetWeight);
+	bool updateNetworkCurrentBroadbandSpeed(Entity* entity, int packetWeight);
+
+  /**
+	* Permet de mettre à jour les débits des entités traversées entre deux entités cibles
+	* @param entity1
+	* pointeur de la première entité cible
+	* @param entity2
+	* pointeur de la seconde entité cible
+	* @param packetWeight
+	* entier à enlever de currentBroadbandSpeed pour chaque entité
+	*/
+	bool updateNetworkCurrentBroadbandSpeed(Entity* entity1, Entity* entity2, int packetWeight);
+	
+  /**
+	* Recherche le parent commun entre deux entités cibles
+	* @param entity1
+	* pointeur de la première entité cible
+	* @param entity2
+	* pointeur de la seconde entité cible
+	*/	
+	Entity* getCommonParent(Entity* entity1, Entity* entity2);
 	
   /**
 	* Affichage de la structure contenant la topologie du réseau

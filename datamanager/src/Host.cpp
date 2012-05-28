@@ -11,6 +11,7 @@ Host::Host(const std::string& name, Entity* parent, int networkCapacity, const s
 	hostState(OFFLINE),
 	ip(ip)
 {
+	setTimerState();
 	this->type = HOST;
 }
 
@@ -63,4 +64,18 @@ HostState Host::getHostState()
 void Host::setHostState(HostState s)
 {
 	hostState = s;
+}
+
+void Host::setTimerState()
+{
+	time_t currentTime;
+	time ( &currentTime );
+	timerState = currentTime;
+}
+
+double Host::getTimerState()
+{
+	time_t currentTime;
+	time ( &currentTime );
+	return difftime (currentTime,timerState);
 }

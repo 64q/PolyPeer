@@ -20,9 +20,12 @@ public:
 	HostState getHostState();
 	void setHostState(HostState);
 	std::map<std::string, Entity*>* getEntities();
-
+	void setTimerState();
+	double getTimerState();
+	
 private:
 	HostState hostState;
+	time_t timerState;
 	std::string ip;
 	std::vector<DeploymentState> deploys;
 

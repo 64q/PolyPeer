@@ -49,4 +49,12 @@ void Zone::setHostState(HostState)
 {
 }
 
+void Zone::setTimerState()
+{
+}
+
+double Zone::getTimerState()
+{
+	return 0;
+}
 
