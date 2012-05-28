@@ -272,7 +272,7 @@ function printState(state) {
 	if (state == 'offline') {
 		return '<span class="error">Hors-ligne</span>';
 	} else if (state == 'online') {
-		return '<span class="success">En ligne</span>' }
+		return '<span class="success">En ligne</span>';
 	} else if (state == 'download') {
 		return '<span class="info">Download</span>';
 	} else {

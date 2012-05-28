@@ -89,12 +89,15 @@ void ShareDeployment::nextStep()
 								sData->getConnectionManager()->sendTo((entity->getIP()), p);
 								entity->setHostState(DOWNLOAD);
 							//}
+						} else
+						{
+							cout<<"\t\t\t\t Aucun envoi" << endl;
 						}
 						
 						// si il y a plus d'un host sur la zone
 						if((*itZone)->size() > 1)
 						{
-							cout<<"\t\t\t Intrazone :" << entity->getIP() << endl;
+							cout<<"\t\t\t Intrazone :" << endl;
 							// ajout du déploiement sur forme d'arbre de la zone dans les actions en attentes
 							Entity* minHost = NULL;
 							Entity* seedHost = NULL;
@@ -123,7 +126,13 @@ void ShareDeployment::nextStep()
 									}
 								}
 							} while(seedHost != NULL);
+						} else
+						{
+							cout<< "\t\t\t\t Moins d'un host"<<endl;
 						}
+					} else
+					{
+						cout<<"\t\t\t Pas de Maitre" << endl;
 					}
 				}
 			
@@ -159,6 +168,7 @@ void ShareDeployment::networkScan(vector<vector<Entity*>* >* entities, File* f)
 			// -> si le fichier n'existe pas, il est créé
 			if(((*itHost)->getHostState() == WAIT) && ((*itHost)->getDeploymentState(f->getFileManager()->getIdFile())->getCurrentState() == HDS_INIT))
 			{
+				cout<<"SEND NEWFILE to "<< (*itHost)->getIP() <<endl;
 				Packet p = PacketNewFile(f->getFileManager()->getIdFile(), f->getFileManager()->getFilePath(), f->getFileManager()->getFileSize(), f->getFileManager()->getChunkSize());
 				sData->getConnectionManager()->sendTo((*itHost)->getIP(), p);
 				(*itHost)->setHostState(DOWNLOAD);
