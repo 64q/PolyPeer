@@ -17,7 +17,7 @@ int callbackSendOperation(Packet& p);
 
 int callbackSendChunk(Packet& p);
 
-
+int callbackRemoveHost(Packet& p);
 
 
 

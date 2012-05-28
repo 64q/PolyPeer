@@ -47,6 +47,7 @@ class Connection
 		Socket* getSocket();
 
 		void throwUpdatePacket();
+		void throwRemoveConnection();
 
 	private:
 		Socket* socket;

@@ -51,6 +51,7 @@ typedef enum
     EDiskFull,
     ESendOperationFinished,
     EAddHost,
+    ERemoveHost,
 
     End_PaquetType, // Doit rester en derniere position, pour avoir la taille du tableau
 } PacketType;

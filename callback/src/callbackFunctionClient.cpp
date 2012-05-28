@@ -100,7 +100,17 @@ int callbackSendChunk(Packet& p)
 	return 1;
 }
 
+int callbackRemoveHost(Packet& p)
+{
+	PacketRemoveHost pp(p);
 
+	cout << "callbackRemoveHost" << endl;
+
+	ClientData cd = PolypeerClient::getInstance()->getClientData();
+	ConnectionManager* cm = cd.getConnectionManager();
+	cm->removeConnection(pp.getIpAddress());
+
+}
 
 
 

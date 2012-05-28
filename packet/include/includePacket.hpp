@@ -8,3 +8,4 @@
 #include <PacketDiskFull.hpp>
 #include <PacketSendOperationFinished.hpp>
 #include <PacketAddHost.hpp>
+#include <PacketRemoveHost.hpp>

@@ -98,3 +98,13 @@ void ConnectionManager::wait()
 {
 	pthread_join(thread, NULL);
 }
+
+void ConnectionManager::removeConnection(std::string ip)
+{
+	Connection* connec = listConnections[ip];
+	if(connec != NULL)
+	{
+		connec->stop();
+		listConnections.erase(ip);
+	}
+}

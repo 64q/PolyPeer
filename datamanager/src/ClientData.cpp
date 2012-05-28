@@ -3,7 +3,7 @@
 ClientData::ClientData()
 {
 	connectionManager = new ConnectionManager(5555);
-	addressServ = "192.168.0.14";
+	addressServ = "192.168.0.7";
 	portServ = 6666;
 
 	connectionManager->start();

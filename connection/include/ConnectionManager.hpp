@@ -59,6 +59,8 @@ class ConnectionManager
 
 		void wait();
 
+		void removeConnection(std::string);
+
 	private:
 		std::map<std::string, Connection*> listConnections;
 
