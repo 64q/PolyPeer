@@ -198,7 +198,6 @@ Entity* ShareDeployment::selectZoneMaster(std::vector<Entity*>* zone, int idFile
 	Entity* toReturn = NULL;
 	for (vector<Entity*>::iterator itHost = zone->begin(); itHost != zone->end(); itHost++) 
 	{
-		cout<<"Zone Master search : "<< (*itHost)->getName()<<endl;
 		if(((*itHost)->getHostState() != OFFLINE) && (((*itHost)->getDeploymentState(idFile)->getCurrentState() == HDS_FINISH) 
 			|| ((*itHost)->getDeploymentState(idFile)->getCurrentState() == HDS_WAIT)))
 		{	
@@ -222,7 +221,10 @@ Entity* ShareDeployment::selectZoneMaster(std::vector<Entity*>* zone, int idFile
 		
 			// si l'host choisi est complet, on le choisi directement
 			if((toReturn != NULL) && (toReturn->getDeploymentState(idFile)->getCurrentState() == HDS_FINISH))
+			{
+				cout<<"Zone Master : "<< (*itHost)->getName()<<endl;
 				break;
+			}
 		}
 	}
 	return toReturn;

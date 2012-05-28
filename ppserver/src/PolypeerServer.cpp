@@ -43,6 +43,7 @@ PolypeerServer::PolypeerServer() :
 	pcb->addOperation (EDiskFull, callbackPacketDiskFull);
 	pcb->addOperation (ESendOperationFinished, callbackPacketSendOperationFinished);
 	pcb->addOperation (EAddHost, callBackAddHost);
+	pcb->addOperation (ERemoveHost, callbackRemoveHost);
 }
 
 PolypeerServer::~PolypeerServer()

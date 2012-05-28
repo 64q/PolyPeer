@@ -25,6 +25,8 @@ int callbackPacketSendOperationFinished(Packet& p);
 
 int callBackAddHost(Packet& p);
 
+int callbackRemoveHost(Packet& p);
+
 
 
 #endif // CALLBACKFUNCTION_H

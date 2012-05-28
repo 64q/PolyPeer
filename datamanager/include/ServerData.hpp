@@ -167,6 +167,8 @@ public :
 	*/
 	void updateHost(string addressHost, HostState s);
 	
+	void updateHostInit(string addressHost);
+	
   /**
 	* Permet de mettre à jour les débits des entités traversées du serveur jusqu'a 
 	* l'entité cible

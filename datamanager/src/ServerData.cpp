@@ -99,6 +99,8 @@ void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
 	{
 		// Actualiser le nombre de chunck pour l'host
 		host->getDeploymentState(fileID)->setCurrentIdChunk(nbChunk);
+		// l'host a fini son operation
+		host->setHostState(WAIT);
 		// Actualiser l'état du fichier POUR L'Host
 		if(nbChunk >= getFile(fileID)->getFileManager()->getNumberChunk())
 			host->getDeploymentState(fileID)->setCurrentState(HDS_FINISH);
@@ -127,6 +129,8 @@ void ServerData::updateHost(string addressHost, int fileID, HostDeployState s)
 	Entity* host = getHostByAddress(addressHost);
 	if(host != NULL)
 	{
+		// l'host a fini son operation
+		host->setHostState(WAIT);
 		// Actualiser l'état du fichier POUR L'Host
 			host->getDeploymentState(fileID)->setCurrentState(HDS_DISKFULL);
 	}
@@ -162,6 +166,19 @@ void ServerData::updateHost(string addressHost, HostState s)
 	//PolypeerServer::getInstance()->getLogger() << "Un ******* a essayé de se connecter !" << endlog;
 }
 
+
+void ServerData::updateHostInit(string addressHost)
+{
+	Entity* host = getHostByAddress(addressHost);
+	if(host != NULL)
+	{
+		host->setHostState(WAIT);
+		for (vector<DeploymentState>::iterator itDeploy = host->getDeploys()->begin(); itDeploy != host->getDeploys()->end(); itDeploy++)
+		{
+			(*itDeploy).setCurrentState(HDS_INIT);
+		}
+	}
+}
 
 FileManager* ServerData::addFile(File* f)
 {
