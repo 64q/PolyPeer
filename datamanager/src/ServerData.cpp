@@ -108,20 +108,6 @@ void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
 			host->getDeploymentState(fileID)->setCurrentState(HDS_WAIT);
 	}
 	
-	/*unsigned int i=0;
-	bool find = false;
-	Entity* host = getHostByAddress(addressHost);
-	vector<DeploymentState>* dState = host->getDeploys();
-	
-	while( (i < dState->size()) && (find == false) )
-	{
-		if (((*dState)[i]).getId() == fileID )
-		{
-			find = true;
-			((*dState)[i]).setCurrentIdChunk(nbChunk);
-		}
-		i++;
-	}*/
 }
 
 void ServerData::updateHost(string addressHost, int fileID, HostDeployState s)
@@ -134,26 +120,6 @@ void ServerData::updateHost(string addressHost, int fileID, HostDeployState s)
 		// Actualiser l'état du fichier POUR L'Host
 			host->getDeploymentState(fileID)->setCurrentState(HDS_DISKFULL);
 	}
-/*
-	unsigned int i=0;
-	bool find = false;
-	Entity* host = getHostByAddress(addressHost);
-	vector<DeploymentState>* dState = host->getDeploys();
-	
-	//if ( s == HDS_DOWNLOAD)
-		//host->setHostState(DOWNLOAD);
-	if ( s == HDS_FINISH)
-		host->setHostState(WAIT);
-	
-	while( (i < dState->size()) && (find == false) )
-	{
-		if (((*dState)[i]).getId() == fileID )
-		{
-			find = true;
-			((*dState)[i]).setCurrentState(s);
-		}
-		i++;
-	}*/
 }
 
 
