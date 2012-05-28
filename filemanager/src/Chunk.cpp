@@ -94,7 +94,8 @@ char* Chunk::getMD5()
 
 bool Chunk::isIntegrate()
 {
-	return chunkIntegrity;
+	//return chunkIntegrity;
+	return true;
 }
 
 int Chunk::getIdFile()

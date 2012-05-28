@@ -5,6 +5,8 @@
 
 
 #include <ConnectionManager.hpp>
+#include <PolypeerClient.hpp>
+#include <ClientData.hpp>
 
 ConnectionManager::ConnectionManager(int port)
 {
@@ -93,7 +95,15 @@ void ConnectionManager::sendTo(std::string dest, Packet packet)
 		connection->getSocket()->send(packet.serialize());
 	}else
 	{
-		cout << "l'adresse ip est inconnu dans le ConnectionManager" << endl;
+		cout << "l'adresse ip est inconnu dans le ConnectionManager, tentative de connexion..." << endl;
+
+		try
+		{
+			Socket* sock = new Socket(dest, PolypeerClient::getInstance()->getClientData()->getPortServ());
+			addConnection(dest, sock);
+		}catch(HostNotFoundException){ cout << "host not found"<<endl;}
+		catch(ConnectionException){}
+
 	}
 }
 
