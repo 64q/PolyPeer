@@ -11,7 +11,7 @@ PacketAddHost::PacketAddHost(std::string ipAddress): Packet()
 	setType (EAddHost);
 
 	(*this) << ipAddress;
-	std::cout<<ipAddress<<std::endl;
+
 }
 
 PacketAddHost::PacketAddHost(const Packet& p) : Packet(p)

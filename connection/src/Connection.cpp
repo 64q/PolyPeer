@@ -13,6 +13,7 @@ Connection::Connection(Socket* socket): socket(socket)
 
 Connection::~Connection()
 {
+	cout << "TZZ"<<endl<<flush;
 	stop();
 }
 
@@ -28,7 +29,7 @@ void* listenSocket(void* connection)
 	{
 
 		size = connectionTmp->socket->read(buffer, 20000);
-
+		cout << "size "<<size<<endl<<flush;
 		if (size > 0)
 		{
 			Packet tmp(buffer, size);
@@ -40,6 +41,7 @@ void* listenSocket(void* connection)
 		}
 		else
 		{
+			cout << "TT"<<endl<<flush;
 			connectionTmp->stop();
 		}
 	}

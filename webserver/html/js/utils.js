@@ -178,6 +178,9 @@ var HashNav = {
 					}
 					
 					$('#deployment').innerHTML = result;
+					$('#refresh-button').addEventListener('click', function() {
+						HashNav.callbacks.deployment(id);
+					});
 				});
 			});
 		},
@@ -218,6 +221,9 @@ var HashNav = {
 				
 					$('#host-info').innerHTML = '<ul><li><strong>Nom : </strong>' + content.name + '</li><li><strong>IP : </strong>' + content.ip + '</li><li><strong>Etat : </strong>' + printState(content.state) + '</li></ul>';
 					$('#host-deployments').innerHTML = result;
+					$('#refresh-button').addEventListener('click', function() {
+						HashNav.callbacks.host(ip);
+					});
 				});
 			});
 		},

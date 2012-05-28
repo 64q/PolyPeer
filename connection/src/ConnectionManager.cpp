@@ -28,6 +28,7 @@ ConnectionManager::ConnectionManager(int port)
 
 ConnectionManager::~ConnectionManager()
 {
+	cout << "CM detruit"<<endl<<flush;
 	stop();
 }
 
@@ -72,6 +73,7 @@ void ConnectionManager::start()
 
 void ConnectionManager::stop()
 {
+	cout << "CM stop"<<endl<<flush;
 	run = false;
 
 	std::map<std::string, Connection*>::const_iterator itr;
@@ -84,7 +86,7 @@ void ConnectionManager::stop()
 }
 
 void ConnectionManager::sendTo(std::string dest, Packet packet)
-{
+{cout << "CM sento"<<endl<<flush;
 	Connection* connection = listConnections[dest];
 	if(connection != NULL)
 	{
@@ -105,7 +107,6 @@ void ConnectionManager::removeConnection(std::string ip)
 	Connection* connec = listConnections[ip];
 	if(connec != NULL)
 	{
-		connec->stop();
 		listConnections.erase(ip);
 	}
 }
