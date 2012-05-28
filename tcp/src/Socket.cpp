@@ -12,7 +12,7 @@ Socket::Socket(std::string address, int port)
 	connect(address, port);
 }
 
-Socket::Socket(int descripteur, std::string ipAdress)
+Socket::Socket(int descripteur, std::string ipAdress):ipAdress(ipAdress)
 {
 	this->descripteur = descripteur;
 
