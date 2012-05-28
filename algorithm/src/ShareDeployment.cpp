@@ -35,12 +35,9 @@ void ShareDeployment::nextStep()
 	vector<vector<Entity*>* >* entities;
 	
 	
-	cout<< "DEBUT" << endl;
-	
 	// Pour chaque fichier en cour de déploiement, recherche des nouvelles actions
 	for (vector<File*>::iterator itFile = files->begin(); itFile != files->end(); itFile++) 
 	{
-		cout<< "\t Gestion deploiement : " << (*itFile)->getName() << endl;
 		int idFile;
 		
 		switch((*itFile)->getFileState())
@@ -56,6 +53,9 @@ void ShareDeployment::nextStep()
 				// Récupération des entités concernés par ce déploiement
 				entities = (*itFile)->getSortedHosts();
 				
+				// Repasser un host en status WAIT (pret) si il	est bloqué
+				resetBreakHost(entities);	
+								
 				// Faire un scan du réseau pour MAJ -> envoie du paquet d'initialisation si besoin
 				networkScan(entities, (*itFile));
 				
@@ -68,37 +68,23 @@ void ShareDeployment::nextStep()
 				// Les traitements sont effectués par zone
 				for (vector<vector<Entity*>* >::iterator itZone = entities->begin(); itZone != entities->end(); itZone++) 
 				{
-					cout<<"\t\t Zone :" << endl;
 					// récupérer le maitre de zone
 					Entity* entity = selectZoneMaster((*itZone), idFile);
 					
 					// si il n'y a pas de master, c'est qu'aucun Host n'est dispo
 					if(entity != NULL)
 					{
-						cout<<"\t\t\t Maitre" << entity->getIP() << endl;
-						if((entity->getHostState() == WAIT) && (entity->getDeploymentState(idFile)->getCurrentState() != HDS_FINISH))
-						{
-							// envoie packet
-							
-							Chunk chunk = (*itFile)->getFileManager()->getChunk(entity->getDeploymentState(idFile)->getCurrentIdChunk()+1);
-							Packet p = PacketSendChunk(chunk);
-							// gestion débit
-							//if(canTakeBroadcastNetworkFromServerTo(entity, chunk.size()))
-							//{
-								cout<< "\t\t\t\t Envoie sur master"<<endl;
-								sData->getConnectionManager()->sendTo((entity->getIP()), p);
-								entity->setHostState(DOWNLOAD);
-							//}
-						} else
-						{
-							cout<<"\t\t\t\t Aucun envoi" << endl;
-						}
-						
 						// si il y a plus d'un host sur la zone
 						if((*itZone)->size() > 1)
 						{
-							cout<<"\t\t\t Intrazone :" << endl;
-							// ajout du déploiement sur forme d'arbre de la zone dans les actions en attentes
+							// On essaye de créer un deuxieme HOST pour seed
+							// car le maitre est tjs pris par le serveur
+							
+						
+							// on essaye d'envoyer sur le maitre de zone
+							sendOnMaster(entity, (*itFile));
+						
+							// ajout du déploiement sur forme d'arbre dans la zone
 							Entity* minHost = NULL;
 							Entity* seedHost = NULL;
 							do
@@ -107,19 +93,22 @@ void ShareDeployment::nextStep()
 								minHost = getMinZoneDeployment((*itZone), idFile);
 								if(minHost != NULL)
 								{
+									// num chunk minimum pour l'host seed
 									int numChunkDL = (minHost->getDeploymentState(idFile)->getCurrentIdChunk())+1;
-									// prendre l'ordi le plus complet différent du maitre de zone si possible
+									// prendre l'ordi le plus complet si possible
 									seedHost = getSeedZoneDeployment((*itZone), idFile, numChunkDL);
 							
 									// SendOperation
-									if(seedHost != NULL)
+									if((seedHost != NULL) && (seedHost != minHost))
 									{
+										Chunk chunk = (*itFile)->getFileManager()->getChunk(numChunkDL);
+										Packet pSOP = PacketSendOperation((minHost->getIP()), chunk);
 										// gestion débit
-										//if(canTakeBroadcastNetworkFromServerTo(entity, chunk.size()))
+										//if(canTakeBroadcastNetworkFromServerTo(entity, pSOP.size()))
 										//{
-											Chunk chunk = (*itFile)->getFileManager()->getChunk(numChunkDL);
-											sData->getConnectionManager()->sendTo((seedHost->getIP()), PacketSendOperation((minHost->getIP()), chunk));
-											cout<< "\t\t\t\t Envoie sur zone"<<endl;
+											cout<< "\t Envoie intra-zone : "<< (seedHost->getIP()) << " -> "<< (minHost->getIP()) <<endl;
+											sData->getConnectionManager()->sendTo((seedHost->getIP()), pSOP);
+											
 											minHost->setHostState(DOWNLOAD);
 											seedHost->setHostState(DOWNLOAD);
 										//}
@@ -128,12 +117,10 @@ void ShareDeployment::nextStep()
 							} while(seedHost != NULL);
 						} else
 						{
-							cout<< "\t\t\t\t Moins d'un host"<<endl;
+							//l'Host est seul sur la zone, il est le seul maitre
+							sendOnMaster(entity, (*itFile));
 						}
-					} else
-					{
-						cout<<"\t\t\t Pas de Maitre" << endl;
-					}
+					} 
 				}
 			
 				// désallocation
@@ -141,20 +128,56 @@ void ShareDeployment::nextStep()
 				break;
 				
 			case FINISH:
-				cout<<"\t\t FINISH"<<endl;
 				break;
 				
 			case F_ERROR:
-				cout<<"\t\t ERROR"<<endl;
 				break;
 			case F_PAUSE:
-				cout<<"\t\t PAUSE"<<endl;
 				break;
 		}
+		PolypeerServer::getInstance()->multiSleep(50);
 	}
-	
-	cout<< "FIN" << endl << endl;
-	
+}
+
+
+void ShareDeployment::sendOnMaster(Entity* entity, File* file)
+{
+	int idFile = file->getFileManager()->getIdFile();
+	if((entity->getHostState() == WAIT) && (entity->getDeploymentState(idFile)->getCurrentState() != HDS_FINISH))
+	{
+		Chunk chunk = file->getFileManager()->getChunk(entity->getDeploymentState(idFile)->getCurrentIdChunk());
+		Packet pSC = PacketSendChunk(chunk);
+		
+		
+		// gestion débit
+		//if(canTakeBroadcastNetworkFromServerTo(entity, pSC.size()))
+		//{
+			cout<< "\t Envoie sur master"<<endl;
+			sData->getConnectionManager()->sendTo((entity->getIP()), pSC);
+			entity->setHostState(DOWNLOAD);
+		//}
+	} 
+
+}
+
+
+void ShareDeployment::resetBreakHost(vector<vector<Entity*>* >* entities)
+{
+	for (vector<vector<Entity*>* >::iterator itZone = entities->begin(); itZone != entities->end(); itZone++) 
+	{
+		for (vector<Entity*>::iterator itHost = (*itZone)->begin(); itHost != (*itZone)->end(); itHost++) 
+		{
+			if((*itHost)->getHostState() == WAIT)
+			{
+				// si on dépasse les 20 secondes en mode DOWNLOAD, il y a un pb
+				if((*itHost)->getTimerState() > 20)
+				{
+					cout<<"BREAK DOWNLOAD "<< (*itHost)->getIP() <<endl;
+					(*itHost)->setHostState(WAIT);
+				}
+			}
+		}
+	}
 }
 
 void ShareDeployment::networkScan(vector<vector<Entity*>* >* entities, File* f)
@@ -201,7 +224,6 @@ Entity* ShareDeployment::selectZoneMaster(std::vector<Entity*>* zone, int idFile
 		if(((*itHost)->getHostState() != OFFLINE) && (((*itHost)->getDeploymentState(idFile)->getCurrentState() == HDS_FINISH) 
 			|| ((*itHost)->getDeploymentState(idFile)->getCurrentState() == HDS_WAIT)))
 		{	
-			cout<<"Zone Master : "<< (*itHost)->getName()<<endl;
 			if(toReturn == NULL)
 			{
 				toReturn = (*itHost);
@@ -221,10 +243,7 @@ Entity* ShareDeployment::selectZoneMaster(std::vector<Entity*>* zone, int idFile
 		
 			// si l'host choisi est complet, on le choisi directement
 			if((toReturn != NULL) && (toReturn->getDeploymentState(idFile)->getCurrentState() == HDS_FINISH))
-			{
-				cout<<"Zone Master : "<< (*itHost)->getName()<<endl;
 				break;
-			}
 		}
 	}
 	return toReturn;

@@ -69,7 +69,7 @@ void PolypeerServer::start()
 	webserver->start();
 	
 	// initialisation des connexions
-	//initConnections();
+	initConnections();
 	
 	// Lancement du server
 	this->run();
@@ -92,8 +92,8 @@ void PolypeerServer::run()
 	DeploymentAlgorithm* algo = new ShareDeployment(server, &data);
 	
 	
-	PolypeerServer::getInstance()->logger<< "waiting 5 seconds to bind socket..." << endlog;
-	PolypeerServer::getInstance()->multiSleep(5000);
+	PolypeerServer::getInstance()->logger<< "waiting 2 seconds to bind socket..." << endlog;
+	PolypeerServer::getInstance()->multiSleep(2000);
 
 	while (server->running)
 	{
@@ -102,7 +102,7 @@ void PolypeerServer::run()
 		algo->nextStep();
 		
 		// waiting time
-		PolypeerServer::getInstance()->multiSleep(5000);
+		//PolypeerServer::getInstance()->multiSleep(100);
 	}
 	
 	delete algo;

@@ -4,6 +4,7 @@
 			<host name="Erwan" address="192.168.0.8" networkCapacity="100"/>
 			<host name="Charles" address="192.168.0.20" networkCapacity="100"/>
 			<host name="Quentin" address="192.168.0.5" networkCapacity="100"/>
+			<host name="QuentinBIS" address="192.168.0.128" networkCapacity="100"/>
 		</zone>
 	</real>
 </network>

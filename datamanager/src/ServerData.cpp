@@ -128,8 +128,6 @@ void ServerData::updateHost(string addressHost, HostState s)
 	Entity* host = getHostByAddress(addressHost);
 	if(host != NULL)
 		host->setHostState(s);
-
-	//PolypeerServer::getInstance()->getLogger() << "Un ******* a essayé de se connecter !" << endlog;
 }
 
 
@@ -138,10 +136,11 @@ void ServerData::updateHostInit(string addressHost)
 	Entity* host = getHostByAddress(addressHost);
 	if(host != NULL)
 	{
-		host->setHostState(WAIT);
+		host->setHostState(OFFLINE);
 		for (vector<DeploymentState>::iterator itDeploy = host->getDeploys()->begin(); itDeploy != host->getDeploys()->end(); itDeploy++)
 		{
-			(*itDeploy).setCurrentState(HDS_INIT);
+			if((*itDeploy).getCurrentState() != HDS_FINISH)
+				(*itDeploy).setCurrentState(HDS_INIT);
 		}
 	}
 }

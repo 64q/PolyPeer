@@ -66,6 +66,13 @@ private:
 	void networkScan(std::vector<std::vector<Entity*>* >* entities, File* f);
 	
 	/**
+	 * Break des download failed
+	 */
+	void resetBreakHost(std::vector<std::vector<Entity*>* >* entities);
+	
+	void sendOnMaster(Entity* entity, File* file);
+	
+	/**
 	 * vérifie que le déploiement est bien fini
 	 */
 	bool isEnd(std::vector<std::vector<Entity*>* >* entities, int idFile);

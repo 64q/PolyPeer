@@ -64,6 +64,7 @@ HostState Host::getHostState()
 void Host::setHostState(HostState s)
 {
 	hostState = s;
+	setTimerState();
 }
 
 void Host::setTimerState()
