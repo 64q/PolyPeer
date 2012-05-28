@@ -91,7 +91,7 @@ void PolypeerServer::run()
 	DeploymentAlgorithm* algo = new ShareDeployment(server, &data);
 	
 	
-	logger<< "waiting 5 seconds to bind socket..." << endlog;
+	PolypeerServer::getInstance()->logger<< "waiting 5 seconds to bind socket..." << endlog;
 
 	sleep(5);
 
