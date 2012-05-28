@@ -89,12 +89,12 @@ int callbackSendChunk(Packet& p)
     	FileManager* fm = cd->getFileManager(tmp.getIdFile());
         fm->saveChunk(tmp);
 
-        cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketChunkReceived(tmp.getIdFile(), tmp.getNumber()));
+        cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketChunkReceived(tmp.getIdFile(), fm.getCurrentNumberChunk()));
     }
     else
     {
         cout << "erreur du Chunk reçu" << endl;
-        cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketMd5Error(tmp.getIdFile(), tmp.getNumber()));
+        cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketMd5Error(tmp.getIdFile(), fm.getCurrentNumberChunk()));
     }
 
 	return 1;
