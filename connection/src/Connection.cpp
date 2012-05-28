@@ -13,7 +13,6 @@ Connection::Connection(Socket* socket): socket(socket)
 
 Connection::~Connection()
 {
-	cout << "TZZ"<<endl<<flush;
 	stop();
 }
 
@@ -41,7 +40,7 @@ void* listenSocket(void* connection)
 		}
 		else
 		{
-			cout << "TT"<<endl<<flush;
+
 			connectionTmp->stop();
 		}
 	}
