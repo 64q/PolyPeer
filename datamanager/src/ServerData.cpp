@@ -271,25 +271,72 @@ FileManager* ServerData::getFileManager(int id)
 	return toReturn;		
 }
 
-bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity, double packetWeight)
+bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity, int packetWeight)
 {
 	bool possible = true;
 	Entity* e = entity;
 	
-	if ( packetWeight == 0 )
+	while (e != NULL && possible == true)
 	{
-		e->setCurrentBroadbandSpeed(0);
-		
-	} else
-	{
-		while (e != NULL && possible == true)
-		{
+		if ( packetWeight == 0 )
+			e->setCurrentBroadbandSpeed(0);
+		else
 			possible = e->setCurrentBroadbandSpeed(e->getCurrentBroadbandSpeed() + packetWeight);
-			e = e->getParent();
-		}
+		e = e->getParent();
 	}
 	
 	return possible;	
+}
+
+bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity1, Entity* entity2, int packetWeight)
+{
+	bool possible = true;
+	Entity* e1 = entity1;
+	Entity* e2 = entity2;
+	Entity* parent = getCommonParent(e1,e2);
+	
+	while ((e1 != parent || e2 != parent) && possible == true)
+	{
+		if ( packetWeight == 0 )
+		{
+			e1->setCurrentBroadbandSpeed(0);
+			e2->setCurrentBroadbandSpeed(0);
+		}
+		else
+		{
+			possible = e1->setCurrentBroadbandSpeed(e1->getCurrentBroadbandSpeed() + packetWeight);
+			possible = e2->setCurrentBroadbandSpeed(e2->getCurrentBroadbandSpeed() + packetWeight);
+		}
+		if (e1 != parent )
+			e1 = e1->getParent();
+		if (e2 != parent )
+			e2 = e2->getParent();
+	}
+	
+	return possible;
+}
+
+Entity* ServerData::getCommonParent(Entity* entity1, Entity* entity2)
+{
+	Entity* e1 = entity1;
+	Entity* e2 = entity2;
+	Entity* parent = NULL;
+	
+	while (e1 != NULL && parent == NULL)
+	{
+		while(e2 != NULL && parent == NULL)
+		{
+			if ( e1 == e2 )
+				parent = e1;
+			e2 = e2->getParent();
+		}
+		
+		e2 = entity2;
+		e1 = e1->getParent();
+
+	}
+	
+	return parent;
 }
 
 void ServerData::displayEntities(map<string, Entity*>* entities, int level)

@@ -29,7 +29,7 @@ int main()
 	Entity* entity2;
 	vector<DeploymentState>* deploys;
 		
-	File* fileTest = new File(sData->getCurrentId()+1,"D4", "file/truc2.png");
+	File* fileTest = new File(sData->getCurrentId()+1,"D4", "file/truc2d.png");
 	fileTest->addEntity(sData->public_getEntity("batiment_D"));
 	sData->addFileToAll(fileTest);
 	
@@ -70,11 +70,12 @@ int main()
 			}
 		}
 	}
-	
+	sleep(2);
 	vector<Entity*>* hosts = sData->getHosts();
 	for (i=0;i < hosts->size(); i++)
 	{
-		cout << ((*hosts)[i])->getName() << endl;
+		cout << ((*hosts)[i])->getName();
+		cout << " TIME : " << ((*hosts)[i])->getTimerState() << endl;
 	}
 	/*Entity* entity10 = sData->public_getEntity("PC11");
 	Entity* entity20= sData->public_getEntity("batiment_C");
@@ -100,28 +101,17 @@ int main()
 			}
 		}
 	}*/
-	/*
-	Entity* e = sData->public_getEntity("PC2");
-	Entity* e2 = sData->public_getEntity("PC1");
-	Entity* e3 = sData->public_getEntity("PC4");
-	Entity* e4 = sData->public_getEntity("PC5");
 	
-	DeploymentState* ds = e->getDeploymentState(24);
-	cout << ds->getCurrentState() << endl;
-	cout << ds->getRefFile()->getName() << endl;
-	
+	Entity* e1 = sData->public_getEntity("PC1");
+	Entity* e2 = sData->public_getEntity("PC5");
+		
 	cout << "CurrentID : "<< sData->getCurrentId() << endl;
 	
-	sData->updateNetworkCurrentBroadbandSpeed(e,1);
-	sData->updateNetworkCurrentBroadbandSpeed(e2,99);
-	sData->updateNetworkCurrentBroadbandSpeed(e3,55);
-	sData->updateNetworkCurrentBroadbandSpeed(e4,34);
-	sData->updateNetworkCurrentBroadbandSpeed(e2,99);
+	sData->updateNetworkCurrentBroadbandSpeed(e1,e2,1);
 	
-	*/
+	
 	sData->public_displayEntities();
 	
-		cout << "lol" << endl;
 	delete sData;
 
 }
