@@ -217,7 +217,7 @@ Data.o: $(DATA)$(SRC)Data.cpp
 #
 ############################
 
-ConnectionManager=ConnectionManager.o Connection.o BaseSocket.o ServerSocket.o Socket.o
+ConnectionManager=ConnectionManager.o Connection.o BaseSocket.o ServerSocket.o Socket.o PacketRemoveHost.cpp
 
 
 # Compilation du ConnectionManager
@@ -245,6 +245,10 @@ Socket.o: $(TCP)$(SRC)Socket.cpp
 	@echo $^
 	@$(CC) -c $^ $(CFLAGS)
 
+# Compilation du PacketReady
+PacketRemoveHost.o: $(PACKET)$(SRC)PacketRemoveHost.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
 ############################
 #
