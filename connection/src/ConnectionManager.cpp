@@ -6,7 +6,7 @@
 
 #include <ConnectionManager.hpp>
 #include <PolypeerClient.hpp>
-#include <ClientData.hpp>
+
 
 ConnectionManager::ConnectionManager(int port)
 {
@@ -99,7 +99,7 @@ void ConnectionManager::sendTo(std::string dest, Packet packet)
 
 		try
 		{
-			Socket* sock = new Socket(dest, PolypeerClient::getInstance()->getClientData()->getPortServ());
+			Socket* sock = new Socket(dest, 5555);
 			addConnection(dest, sock);
 		}catch(HostNotFoundException){ cout << "host not found"<<endl;}
 		catch(ConnectionException){}
