@@ -26,7 +26,7 @@ Socket::Socket()
 Socket::~Socket()
 {
 
-	//cout<<"client closed"<<endl;
+	cout<<"client closed"<<endl;
 
 }
 
