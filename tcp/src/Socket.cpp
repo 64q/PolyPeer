@@ -12,7 +12,7 @@ Socket::Socket(std::string address, int port)
 	connect(address, port);
 }
 
-Socket::Socket(int descripteur, std::string ipAdress):ipAdress(ipAdress)
+Socket::Socket(int descripteur, std::string ipAdress)
 {
 	this->descripteur = descripteur;
 
@@ -32,6 +32,7 @@ Socket::~Socket()
 
 void Socket::connect(std::string address, int port)
 {
+	ipAdress = address;
 	struct hostent *hostinfo = NULL;
 	SOCKADDR_IN sin = { 0 }; /* initialise la structure avec des 0 */
 	const char *hostname = address.c_str();
