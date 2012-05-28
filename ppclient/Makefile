@@ -1,4 +1,4 @@
-# Makefile de céation du serveur polypeer
+# Makefile de céation du client polypeer
 #
 # Auteur: Equipe de dev
 # Date: lun. 21 mai 2012 18:48:11 CEST 
@@ -125,7 +125,7 @@ FileManager.o: $(FM)$(SRC)FileManager.cpp
 #
 ############################
 
-PacketManager= Packet.o PacketReady.o PacketDiskFull.o PacketSendOperationFinished.o PacketMd5Error.o PacketSendChunk.o PacketSendOperation.o PacketChunkReceived.o PacketNewFile.o PacketAddHost.o
+PacketManager= Packet.o PacketReady.o PacketDiskFull.o PacketSendOperationFinished.o PacketMd5Error.o PacketSendChunk.o PacketSendOperation.o PacketChunkReceived.o PacketNewFile.o PacketAddHost.o PacketRemoveHost.o
 
 # Compilation du Packet
 Packet.o: $(PACKET)$(SRC)Packet.cpp
@@ -178,6 +178,11 @@ PacketAddHost.o: $(PACKET)$(SRC)PacketAddHost.cpp
 	@$(CC) -c $^ $(CFLAGS)
 
 
+# Compilation du PacketReady
+PacketRemoveHost.o: $(PACKET)$(SRC)PacketRemoveHost.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
 ############################
 #
 #      CALLBACK MANAGER
@@ -217,7 +222,7 @@ Data.o: $(DATA)$(SRC)Data.cpp
 #
 ############################
 
-ConnectionManager=ConnectionManager.o Connection.o BaseSocket.o ServerSocket.o Socket.o PacketRemoveHost.cpp
+ConnectionManager=ConnectionManager.o Connection.o BaseSocket.o ServerSocket.o Socket.o 
 
 
 # Compilation du ConnectionManager
@@ -245,10 +250,6 @@ Socket.o: $(TCP)$(SRC)Socket.cpp
 	@echo $^
 	@$(CC) -c $^ $(CFLAGS)
 
-# Compilation du PacketReady
-PacketRemoveHost.o: $(PACKET)$(SRC)PacketRemoveHost.cpp
-	@echo $^
-	@$(CC) -c $^ $(CFLAGS)
 
 ############################
 #
