@@ -16,7 +16,7 @@
 	id.appendChild(document.createTextNode(item.id));
 	date.appendChild(document.createTextNode(item.date));
 	name.appendChild(document.createTextNode(item.name));
-	state.appendChild(document.createTextNode(item.state));
+	state.innerHTML = printFileState(item.state);
 
 	view.appendChild(document.createTextNode('Consulter #' + item.id));
 	view.href = '#deployment';

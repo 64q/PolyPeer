@@ -1,6 +1,10 @@
 /* Fichier principal JS */
 
+/**
+ * Environnement PolyPeer Client Web
+ */
 var PolyPeer = {
+
 	/**
 	 * Stats du serveur
 	 */
@@ -20,8 +24,11 @@ var PolyPeer = {
 		Ajax.request('/ajax/get_stats', null, function(content) {
 			var stats = JSON.parse(content);
 			PolyPeer.stats = stats
-			$("#state").innerHTML = "<strong>Etat : </strong>" + stats.state;
-		});
+			$("#state").innerHTML = "<strong>Etat : </strong>" + printServerState(stats.state);
+		}, function() {
+			$("#state").innerHTML = "<strong>Etat : </strong>" + printServerState("offline");
+		}
+		);
 	},
 };
 
@@ -31,6 +38,15 @@ var PolyPeer = {
 window.addEventListener('load', function() {
 	PolyPeer.init();
 	HashNav.init();
+	
+	window.setInterval(function() {
+		updateStatus();
+	}, 2000);
+	
 });
+
+function updateStatus() {
+	PolyPeer.fillStats();
+}
 
 /* EOF */

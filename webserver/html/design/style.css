@@ -154,3 +154,13 @@ form label {
 	border: 1px solid red;
 	padding: 3px;
 }
+
+.status {
+	font-weight: bold;
+	color: #11476E;
+}
+
+.server-state {
+	font-weight: bold;
+	color: orange;
+}

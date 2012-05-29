@@ -23,19 +23,19 @@ $('#new-deployment-form').addEventListener('submit', function(e) {
  	if (zones.length == 0) {
  		notifyError('Veuillez cocher au moins une zone');
  		error = true;
- 	} else if (name == "") {
+ 	} else if (name.value == "") {
  		notifyError('Veuillez donner un nom au déploiement');
  		error = true;
- 	} else if (path == "") {
+ 	} else if (path.value == "") {
  		notifyError('Veuillez donner un chemin vers le fichier');
  		error = true;
- 	} else if (cpath == "") {
+ 	} else if (cpath.value == "") {
  		notifyError('Veuillez donner un chemin où mettre le fichier chez le client');
  		error = true;
  	}
  	
  	if (!error) {
-	 	Ajax.request('/ajax/new_deployment', 'name=' + name.value + '&path=' + path.value + '&zones=' + str_zones + '&cpath=' + cpath, function(content) {
+	 	Ajax.request('/ajax/new_deployment', 'name=' + name.value + '&path=' + path.value + '&zones=' + str_zones + '&cpath=' + cpath.value, function(content) {
 	 		var content = JSON.parse(content);
 	 		
 	 		if (content.state == "done") {

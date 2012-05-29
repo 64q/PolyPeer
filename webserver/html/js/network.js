@@ -5,21 +5,15 @@
 
 function createZone(parent, item) {
 	
-	var zone = document.createElement('div');
-	var title = document.createElement('h2');
-	
-	title.appendChild(document.createTextNode('Zone : ' + item.name + ' (Capacité : ' + item.cbbs + '/' + item.nc + ')'));
-	
-	var ul = document.createElement('ul');
-	
-	zone.appendChild(title);
-	zone.appendChild(ul);
+	var zone = document.createElement('table');
+	zone.innerHTML = '<tr><th colspan="4">Zone &laquo; ' + item.name + ' &raquo; \
+		(Capacité : ' + item.cbbs + '/' + item.nc + ')'; 
 	
 	for (var i = 0; i < item.hosts.length; i++) {
 		if (item.hosts[i].type == "zone") {
 			createZone(zone, item.hosts[i]);
 		} else {
-			ul.appendChild(createHostLine('li', item.hosts[i]));
+			zone.appendChild(createHostLine('tr', item.hosts[i]));
 		}
 	}
 
@@ -28,12 +22,18 @@ function createZone(parent, item) {
 
 function createHostLine(type, item) {
 	var line = document.createElement(type);
+	var ip = document.createElement('td');
+	var name = document.createElement('td');
+	var state = document.createElement('td');
+	var link = document.createElement('td');
 	var view = document.createElement('a');
-
-	line.appendChild(document.createTextNode('@' + item.ip + ' ' + item.name + ' '));
-	line.innerHTML += printState(item.state) + ' ';
 	
-	view.appendChild(document.createTextNode('[+]'));
+	ip.appendChild(document.createTextNode(item.ip));
+	name.appendChild(document.createTextNode(item.name));
+	state.innerHTML = printHostState(item.state);
+	
+	// Configuration du lien dynamique
+	view.appendChild(document.createTextNode('Détails'));
 	view.href = '#host';
 	view.addEventListener('click', {
 		ip: item.ip,
@@ -42,7 +42,12 @@ function createHostLine(type, item) {
 		}
 	});
 
-	line.appendChild(view);
+	// Attachement des entités
+	link.appendChild(view);
+	line.appendChild(ip);
+	line.appendChild(name);
+	line.appendChild(state);
+	line.appendChild(link);
 	
 	return line;
 }

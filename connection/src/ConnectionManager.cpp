@@ -11,7 +11,8 @@
 ConnectionManager::ConnectionManager(int port)
 {
 	bool bind = false;
-	while(!bind)
+	run = true;
+	while(!bind && run)
 	{
 		try
 		{
@@ -100,6 +101,7 @@ void ConnectionManager::sendTo(std::string dest, Packet packet)
 		try
 		{
 			Socket* sock = new Socket(dest, 5555);
+			sleep(5);
 			addConnection(dest, sock);
 		}catch(HostNotFoundException){ cout << "host not found"<<endl;}
 		catch(ConnectionException){}
