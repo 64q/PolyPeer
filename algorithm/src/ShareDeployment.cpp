@@ -34,7 +34,7 @@ void ShareDeployment::nextStep()
 	// liste temporaire des entités du déploiement
 	vector<vector<Entity*>* >* entities;
 	
-	
+	cout<<"DEBUT"<<endl;
 	// Pour chaque fichier en cour de déploiement, recherche des nouvelles actions
 	for (vector<File*>::iterator itFile = files->begin(); itFile != files->end(); itFile++) 
 	{
@@ -48,6 +48,7 @@ void ShareDeployment::nextStep()
 				break;
 				
 			case DEPLOYMENT:
+				cout<<"\tDEBUT"<<endl;
 				// variable très utilisé
 				idFile = (*itFile)->getFileManager()->getIdFile();
 				// Récupération des entités concernés par ce déploiement
@@ -87,8 +88,12 @@ void ShareDeployment::nextStep()
 							// ajout du déploiement sur forme d'arbre dans la zone
 							Entity* minHost = NULL;
 							Entity* seedHost = NULL;
+							bool isSend;
 							do
 							{
+								// vérifier qu'un envoi est fait
+								isSend = false;
+								
 								// récupérer l'host le moins avancé
 								minHost = getMinZoneDeployment((*itZone), idFile);
 								if(minHost != NULL)
@@ -101,6 +106,7 @@ void ShareDeployment::nextStep()
 									// SendOperation
 									if((seedHost != NULL) && (seedHost != minHost))
 									{
+										
 										Chunk chunk = (*itFile)->getFileManager()->getChunk(numChunkDL);
 										Packet pSOP = PacketSendOperation((minHost->getIP()), chunk);
 										// gestion débit
@@ -109,12 +115,13 @@ void ShareDeployment::nextStep()
 											cout<< "\t Envoie intra-zone : "<< (seedHost->getIP()) << " -> "<< (minHost->getIP()) <<endl;
 											sData->getConnectionManager()->sendTo((seedHost->getIP()), pSOP);
 											
+											isSend = true;
 											minHost->setHostState(DOWNLOAD);
 											seedHost->setHostState(DOWNLOAD);
 										//}
 									}
 								}
-							} while(seedHost != NULL);
+							} while(isSend);
 						} else
 						{
 							//l'Host est seul sur la zone, il est le seul maitre
@@ -122,7 +129,7 @@ void ShareDeployment::nextStep()
 						}
 					} 
 				}
-			
+				cout<<"\tFIN"<<endl;
 				// désallocation
 				File::deleteSortedHost(entities);
 				break;
@@ -137,6 +144,7 @@ void ShareDeployment::nextStep()
 		}
 		PolypeerServer::getInstance()->multiSleep(50);
 	}
+	cout<<"FIN"<<endl;
 }
 
 
@@ -167,10 +175,10 @@ void ShareDeployment::resetBreakHost(vector<vector<Entity*>* >* entities)
 	{
 		for (vector<Entity*>::iterator itHost = (*itZone)->begin(); itHost != (*itZone)->end(); itHost++) 
 		{
-			if((*itHost)->getHostState() == WAIT)
+			if((*itHost)->getHostState() == DOWNLOAD)
 			{
 				// si on dépasse les 20 secondes en mode DOWNLOAD, il y a un pb
-				if((*itHost)->getTimerState() > 20)
+				if((*itHost)->getTimerState() > 20.0)
 				{
 					cout<<"BREAK DOWNLOAD "<< (*itHost)->getIP() <<endl;
 					(*itHost)->setHostState(WAIT);
