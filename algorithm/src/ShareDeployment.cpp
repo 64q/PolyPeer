@@ -255,13 +255,15 @@ bool ShareDeployment::isEnd(vector<vector<Entity*>* >* entities, int idFile)
 }
 
 
-Entity* ShareDeployment::selectZoneMaster(std::vector<Entity*>* zone, int idFile)
+Entity* ShareDeployment::selectZoneMaster(std::vector<Entity*>* zone, int idFile, Entity* forbidenHost)
 {
 	Entity* toReturn = NULL;
 	for (vector<Entity*>::iterator itHost = zone->begin(); itHost != zone->end(); itHost++) 
 	{
-		if(((*itHost)->getHostState() != OFFLINE) && (((*itHost)->getDeploymentState(idFile)->getCurrentState() == HDS_FINISH) 
-			|| ((*itHost)->getDeploymentState(idFile)->getCurrentState() == HDS_WAIT)))
+		if(((*itHost)->getHostState() != OFFLINE)
+			&& ((*itHost) != forbidenHost)
+			&& (((*itHost)->getDeploymentState(idFile)->getCurrentState() == HDS_FINISH) 
+				|| ((*itHost)->getDeploymentState(idFile)->getCurrentState() == HDS_WAIT)))
 		{	
 			if(toReturn == NULL)
 			{
@@ -292,6 +294,12 @@ Entity* ShareDeployment::selectZoneMaster(std::vector<Entity*>* zone, int idFile
 Entity* ShareDeployment::selectSeedHostOnZone(std::vector<Entity*>* zone, int idFile, Entity* hostMaster)
 {
 	Entity* toReturn = NULL;
+	
+	// chercher un deuxieme master pour la zone
+	Entity* secondMaster = selectZoneMaster(zone, idFile, hostMaster);
+	
+	toReturn = secondMaster;
+	
 	return toReturn;
 }
 

@@ -22,6 +22,7 @@
 #include <DeploymentAlgorithm.hpp>
 
 // STL
+#include <iostream> // pour le NULL
 #include <vector>
 
 // forward declaration
@@ -90,7 +91,7 @@ private:
 	/**
 	 * sélectionner le maitre d'une zone
 	 */
-	Entity* selectZoneMaster(std::vector<Entity*>* zone, int idFile);
+	Entity* selectZoneMaster(std::vector<Entity*>* zone, int idFile, Entity* forbidenHost=NULL);
 	
 	/**
 	 * Récupérer l'host le moins avancé de la zone
