@@ -30,7 +30,7 @@ public:
 	* Création d'un PacketSendOperation pret à être envoyé
 	* 
 	*/
-	PacketSendOperation(std::string target, Chunk& chunk);
+	PacketSendOperation(std::string target, int idfile, int numChunk);
 	
 	/**
 	* Constructeur sur un Packet (une maniere de caster un Packet)
@@ -45,7 +45,9 @@ public:
 	
 	std::string getTarget ();
 	
-	Chunk getChunk ();
+	int getIdFile ();
+	
+	int getNumChunk ();
 	
 
 private:
