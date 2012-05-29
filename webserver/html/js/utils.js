@@ -169,10 +169,11 @@ var HashNav = {
 					} else {
 						result = '<h1>' + content.name + '</h1>';
 						result += '<ul>';
-						result += '<li>Etat : ' + content.state + '</li>';
-						result += '<li>Taille : ' + content.size + ' o</li>';
-						result += '<li>Nombre de chunks : ' + content.nbchunk + '</li>';
-						result += '<li>Taille d\'un chunk : ' + content.chunksize + ' o</li>';
+						result += '<li><strong>Fichier : </strong>' + content.filename + '</li>';
+						result += '<li><strong>Etat : </strong>' + content.state + '</li>';
+						result += '<li><strong>Taille : </strong>' + content.size + ' o</li>';
+						result += '<li><strong>Nombre de chunks : </strong>' + content.nbchunk + '</li>';
+						result += '<li><strong>Taille d\'un chunk : </strong>' + content.chunksize + ' o</li>';
 						result += '</ul>';
 					
 						result += '<h2>Hotes incluses</h2>';
