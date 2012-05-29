@@ -129,6 +129,7 @@ public:
 	int64_t getFreeDiskSpace();
 
 protected:
+	std::filebuf *pbuf;
 	std::fstream file;
 	int idFile;
 	std::string pathFile;

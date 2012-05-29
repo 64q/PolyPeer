@@ -93,6 +93,7 @@ void FileManager::init(const char* path, long size, long sizeChunk, int idFile)
 
 		//on ouvre le fichier en mode binaire
 		file.open(pathStrTmp.c_str(),ios::binary|ios::in|ios::out|ios::ate);
+		pbuf = file.rdbuf();
 		if (!file)
 		{
 			throw OpenFileException();
@@ -102,6 +103,7 @@ void FileManager::init(const char* path, long size, long sizeChunk, int idFile)
 	{
 
 		file.open(pathFile.c_str(),ios::binary|ios::in|ios::ate);
+		pbuf = file.rdbuf();
 		if (!file)
 		{
 			throw OpenFileException();
@@ -148,9 +150,10 @@ Chunk FileManager::getChunk(long number)
 {
 	if(number <= getNumberChunk())
 	{
-		file.seekp(number*sizeChunk, ios::beg);
-		file.read(currentData, sizeChunk);
-
+		//file.seekp(number*sizeChunk, ios::beg);
+		//file.read(currentData, sizeChunk);
+		pbuf->pubseekpos(currentChunk*sizeChunk);
+		pbuf->sgetn (currentData,sizeChunk);
 		if (getNumberChunk()-1==number)
 		{
 			return Chunk(number, sizeFile-number*sizeChunk, currentData, idFile);
@@ -174,9 +177,10 @@ bool FileManager::saveChunk(Chunk &chunk)
 
 		if (currentChunk == chunk.getNumber())
 		{
-			file.seekp(currentChunk*sizeChunk, ios::beg);
-			file.write(chunk.getData(), chunk.getSize());
-
+			//file.seekp(currentChunk*sizeChunk, ios::beg);
+			//file.write(chunk.getData(), chunk.getSize());
+			pbuf->pubseekpos(currentChunk*sizeChunk);
+			pbuf->sputn(chunk.getData(), chunk.getSize());
 			currentChunk++;
 			saveState();
 
