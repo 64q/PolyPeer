@@ -84,6 +84,8 @@ void WebServer::stop()
 	mg_stop(this->context);
 	
 	logger << notice << "Le serveur web a été arrêté." << endlog;
+	
+	cout << "Arrête toi connard" << endl;
 }
 
 void WebServer::restart()

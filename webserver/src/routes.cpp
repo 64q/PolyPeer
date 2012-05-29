@@ -163,8 +163,8 @@ void deployment_route(mg_connection* conn, const mg_request_info* request_info)
 			FileManager* fm = file->getFileManager();
 			std::vector<std::vector<Entity*>* >* pp = file->getSortedHosts();
 	
-			mg_printf(conn, "{\"id\":\"%i\", \"name\":\"%s\", \"state\":\"%s\", \"nbchunk\":%lu, \"chunksize\":%lu, \"size\":%lu, \"hosts\":["
-				, id, file->getName().c_str()
+			mg_printf(conn, "{\"id\":\"%i\", \"name\":\"%s\", \"filename\":\"%s\", \"state\":\"%s\", \"nbchunk\":%lu, \"chunksize\":%lu, \"size\":%lu, \"hosts\":["
+				, id, file->getName().c_str(), fm->getFileName().c_str()
 				, getStringFileState(file->getFileState()).c_str()
 				, fm->getNumberChunk()
 				, fm->getChunkSize(), fm->getFileSize()
@@ -253,10 +253,11 @@ void network_route(mg_connection* conn, const mg_request_info* request_info)
 
 void new_deployment_route(mg_connection* conn, const mg_request_info* request_info)
 {
-	char qname[32], qpath[64], qzones[1024];
+	char qname[32], qcpath[64], qspath[64], qzones[1024];
 	
 	get_qsvar(request_info, "name", qname, sizeof(qname));
-	get_qsvar(request_info, "path", qpath, sizeof(qpath));
+	get_qsvar(request_info, "cpath", qcpath, sizeof(qcpath));
+	get_qsvar(request_info, "spath", qspath, sizeof(qspath));
 	get_qsvar(request_info, "zones", qzones, sizeof(qzones));
 
 	PolypeerServer* server = PolypeerServer::getInstance();
@@ -273,9 +274,7 @@ void new_deployment_route(mg_connection* conn, const mg_request_info* request_in
 		pch = strtok (NULL, ",");
 	}
 	
-	cout << string(qpath) << endl;
-	
-	File* file = new File(data.getCurrentId(), string(qname), string(qpath));
+	File* file = new File(data.getCurrentId(), string(qname), string(qspath), string(qcpath));
 
 	for (unsigned int i = 0; i < vzones.size(); i++) {
 		file->addEntity(data.public_getEntity(vzones[i]));
@@ -287,22 +286,7 @@ void new_deployment_route(mg_connection* conn, const mg_request_info* request_in
 	mg_printf(conn, "{\"state\":\"done\"}");
 }
 
-void stop_route(mg_connection* conn, const mg_request_info* request_info)
-{
-	PolypeerServer* server = PolypeerServer::getInstance();
-	
-	mg_printf(conn, "%s", ajax_reply_start);
-	mg_printf(conn, "{\"state\":\"done\"}");
-	
-	server->stop();
-}
-
-void pause_route(mg_connection* conn, const mg_request_info* request_info)
-{
-	// TODO
-}
-
-void restart_route(mg_connection* conn, const mg_request_info* request_info)
+void pause_deployments_route(mg_connection* conn, const mg_request_info* request_info)
 {
 	PolypeerServer* server = PolypeerServer::getInstance();
 	
