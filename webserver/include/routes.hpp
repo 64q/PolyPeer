@@ -42,19 +42,9 @@ void network_route(mg_connection* conn, const mg_request_info* request_info);
 void new_deployment_route(mg_connection* conn, const mg_request_info* request_info);
 
 /**
- * Route pour stopper le serveur
- */
-void stop_route(mg_connection* conn, const mg_request_info* request_info);
-
-/**
  * Route pour pauser le serveur
  */
-void pause_route(mg_connection* conn, const mg_request_info* request_info);
-
-/**
- * Route pour redémarrer le serveur
- */
-void restart_route(mg_connection* conn, const mg_request_info* request_info);
+void pause_deployments_route(mg_connection* conn, const mg_request_info* request_info);
 
 /**
  * Route pour delete un déploiement

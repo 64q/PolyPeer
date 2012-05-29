@@ -36,3 +36,15 @@
 	
 	return line;
 }
+
+$('#pause-button').addEventListener('click', function() {
+	if (confirm('Etes-vous sûr de vouloir mettre en pause le serveur ?')) {
+		Ajax.request('/ajax/pause_deployments', null, function(content) {
+			if (content.state == "done") {
+				notifySuccess("Les déploiements ont été mis en pause");
+			} else {
+				notifyError("Le serveur n'a pas pu mettre les déploiements en pause");
+			}
+		});
+	}
+});

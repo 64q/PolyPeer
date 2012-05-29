@@ -133,7 +133,7 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 					elem->QueryIntAttribute("id", &id);
 					elem->QueryIntAttribute("size", &size);
 					elem->QueryIntAttribute("chunkSize", &chunkSize);
-					File *f = new File(id, elem->Attribute("name"), elem->Attribute("path"), size, chunkSize, fs);
+					File *f = new File(id, elem->Attribute("name"), elem->Attribute("serverPath"), elem->Attribute("clientPath"), size, chunkSize, fs);
 					sData->addFile(f);
 				}
 			}
@@ -159,7 +159,7 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 		
 	} catch (OpenFileException)
 	{
-		cout << "Fail load : " << name << endl;
+		cout << "Problème dans le fichier de déploiement : " << name << endl;
 	}
 }
 
@@ -171,7 +171,8 @@ void XMLTool::writeFileIntoDeployments(File* file)
 	{
 		newFile.SetAttribute("id", (file->getFileManager())->getIdFile());
 		newFile.SetAttribute("name", file->getName());
-		newFile.SetAttribute("path", (file->getFileManager())->getFileName());
+		newFile.SetAttribute("serverPath", (file->getFileManager())->getFilePath());
+		newFile.SetAttribute("clientPath", file->getClientPath());
 		newFile.SetAttribute("size", (file->getFileManager())->getFileSize());
 		newFile.SetAttribute("chunkSize", (file->getFileManager())->getChunkSize());
 		newFile.SetAttribute("state", getStringFileState(file->getFileState()));

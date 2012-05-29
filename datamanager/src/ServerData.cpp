@@ -139,8 +139,7 @@ void ServerData::updateHostInit(string addressHost)
 		host->setHostState(OFFLINE);
 		for (vector<DeploymentState>::iterator itDeploy = host->getDeploys()->begin(); itDeploy != host->getDeploys()->end(); itDeploy++)
 		{
-			if((*itDeploy).getCurrentState() != HDS_FINISH)
-				(*itDeploy).setCurrentState(HDS_INIT);
+			(*itDeploy).setCurrentState(HDS_INIT);
 		}
 	}
 }
@@ -185,8 +184,8 @@ File* ServerData::getFile(int id)
 				find = true;
 				toReturn = deployFiles[i];
 			}
-			i++;
 		}
+		i++;
 	}
 	return toReturn;	
 }

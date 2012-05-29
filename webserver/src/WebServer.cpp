@@ -39,9 +39,7 @@ WebServer::WebServer() :
 	routes.insert(pair<string, route_handler>("/ajax/deployments", deployments_route));
 	routes.insert(pair<string, route_handler>("/ajax/network", network_route));
 	routes.insert(pair<string, route_handler>("/ajax/new_deployment", new_deployment_route));
-	routes.insert(pair<string, route_handler>("/ajax/restart_srv", restart_route));
-	routes.insert(pair<string, route_handler>("/ajax/stop_srv", stop_route));
-	routes.insert(pair<string, route_handler>("/ajax/pause_srv", pause_route));
+	routes.insert(pair<string, route_handler>("/ajax/pause_deployments", pause_deployments_route));
 }
 
 WebServer::~WebServer()
@@ -84,6 +82,8 @@ void WebServer::stop()
 	mg_stop(this->context);
 	
 	logger << notice << "Le serveur web a été arrêté." << endlog;
+	
+	cout << "Arrête toi connard" << endl;
 }
 
 void WebServer::restart()

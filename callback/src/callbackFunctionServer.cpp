@@ -33,7 +33,7 @@ int callbackChunkReceived(Packet& p)
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
 
 	string src = p.getAddress();
-	cout << "callbackChunkReceived : " << src << endl;
+	//cout << "callbackChunkReceived : " << src << endl;
 	sd.updateHost(src, pp.getIdFile(), pp.getChunkNumber());
 
 	return 1;
@@ -46,7 +46,7 @@ int callbackMd5Error(Packet& p)
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
 
 	string src = p.getAddress();
-	cout << "callbackMd5Error : " << src << endl;
+	//cout << "callbackMd5Error : " << src << endl;
 	sd.updateHost(src, WAIT);
 
 	return 1;
@@ -59,7 +59,7 @@ int callbackPacketDiskFull(Packet& p)
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
 
 	string src = p.getAddress();
-	cout << "callbackPacketDiskFull5Error : " << src << endl;
+	//cout << "callbackPacketDiskFull5Error : " << src << endl;
 	sd.updateHost(src, pp.getIdFile(), HDS_DISKFULL);
 
 	return 1;
@@ -72,7 +72,7 @@ int callbackPacketSendOperationFinished(Packet& p)
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
 
 	string src = p.getAddress();
-	cout << "callbackPacketSendOperationFinished : " << src << endl;
+	//cout << "callbackPacketSendOperationFinished : " << src << endl;
 	sd.updateHost(src, WAIT);
 
 	return 1;
@@ -86,7 +86,7 @@ int callBackAddHost(Packet& p)
 	
 	 PolypeerServer::getInstance()->multiSleep(2500);
 	
-	cout << "PacketAddHost" << pp.getIpAddress() << endl;
+	//cout << "PacketAddHost" << pp.getIpAddress() << endl;
 	sd.updateHost(pp.getIpAddress(), WAIT);
 	
 	return 1;
@@ -100,8 +100,7 @@ int callbackRemoveHost(Packet& p)
 	ConnectionManager* cm = sd.getConnectionManager();
 	cm->removeConnection(pp.getIpAddress());
 	
-	cout << "callbackRemoveHost" << pp.getIpAddress() << endl;
-	
+	//cout << "callbackRemoveHost" << pp.getIpAddress() << endl;
 	
 	sd.updateHostInit(pp.getIpAddress());
 	

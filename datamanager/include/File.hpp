@@ -20,13 +20,14 @@ class File
 
 public :
 
-	File(int id, std::string name, std::string path);
-	File(int id, std::string name, std::string path, int size, int chunkSize);
-	File(int id, std::string name, std::string path, int size, int chunkSize, FileState fs);
+	File(int id, std::string name, std::string serverPath, std::string clientPath);
+	File(int id, std::string name, std::string serverPath, std::string clientPath, int size, int chunkSize);
+	File(int id, std::string name, std::string serverPath, std::string clientPath, int size, int chunkSize, FileState fs);
 	~File();
 	std::string getName() { return name; }
 	FileManager* getFileManager() { return fileM; }
 	FileState getFileState() { return fState; }
+	std::string getClientPath() { return clientPath; }
 	void setFileState(FileState fs);
 	std::vector<Entity*>* getDeploysOn() { return &deploysOn; }
 	std::vector<std::vector<Entity*>* >* getSortedHosts();
@@ -37,6 +38,7 @@ public :
 protected :
 	
 	std::string name;
+	std::string clientPath;
 	FileManager* fileM;
 	FileState fState;
 	std::vector<Entity*> deploysOn;
