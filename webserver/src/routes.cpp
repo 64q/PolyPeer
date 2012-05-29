@@ -206,7 +206,7 @@ void displayEntity(mg_connection* conn, Entity* entity)
 	{
 		map<string, Entity*>* entities = entity->getEntities();
 		
-		mg_printf(conn, "{\"name\":\"%s\", \"type\":\"zone\", \"nc\":%i, \"cbbs\":%f, \"hosts\":[", entity->getName().c_str(), entity->getNetworkCapacity(), entity->getCurrentBroadbandSpeed());
+		mg_printf(conn, "{\"name\":\"%s\", \"type\":\"zone\", \"nc\":%i, \"cbbs\":%i, \"hosts\":[", entity->getName().c_str(), entity->getNetworkCapacity(), entity->getCurrentBroadbandSpeed());
 		
 		for (map<string, Entity*>::iterator it = entities->begin(); it != entities->end();) 
 		{
