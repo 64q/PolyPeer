@@ -277,6 +277,7 @@ void new_deployment_route(mg_connection* conn, const mg_request_info* request_in
 	File* file = new File(data.getCurrentId()+1, string(qname), string(qspath), string(qcpath));
 
 	for (unsigned int i = 0; i < vzones.size(); i++) {
+		cout << vzones[i] << endl;
 		file->addEntity(data.public_getEntity(vzones[i]));
 	}
 	
