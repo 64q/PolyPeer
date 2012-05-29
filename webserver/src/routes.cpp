@@ -274,7 +274,7 @@ void new_deployment_route(mg_connection* conn, const mg_request_info* request_in
 		pch = strtok (NULL, ",");
 	}
 	
-	File* file = new File(data.getCurrentId(), string(qname), string(qspath), string(qcpath));
+	File* file = new File(data.getCurrentId()+1, string(qname), string(qspath), string(qcpath));
 
 	for (unsigned int i = 0; i < vzones.size(); i++) {
 		file->addEntity(data.public_getEntity(vzones[i]));
