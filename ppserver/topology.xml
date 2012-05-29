@@ -1,10 +1,22 @@
 <network>
 	<real>
-		<zone name="QuentinHouse" networkCapacity="100000" >
-			<host name="Erwan" address="192.168.0.8" networkCapacity="100"/>
-			<host name="Charles" address="192.168.0.20" networkCapacity="100"/>
-			<host name="Quentin" address="192.168.0.5" networkCapacity="100"/>
-			<host name="QuentinBIS" address="192.168.0.128" networkCapacity="100"/>
+		<zone name="C007" networkCapacity="100000" >
+			<host name="PC1" address="192.168.0.1" networkCapacity="100"/>
+			<host name="PC2" address="192.168.0.2" networkCapacity="100"/>
+			<host name="PC3" address="192.168.0.3" networkCapacity="100"/>
+			<host name="PC4" address="192.168.0.4" networkCapacity="100"/>
+			<host name="PC5" address="192.168.0.5" networkCapacity="100"/>
+			<host name="PC6" address="192.168.0.6" networkCapacity="100"/>
+			<host name="PC7" address="192.168.0.7" networkCapacity="100"/>
+			<host name="PC8" address="192.168.0.8" networkCapacity="100"/>
+			<host name="PC9" address="192.168.0.9" networkCapacity="100"/>
+			<host name="PC10" address="192.168.0.10" networkCapacity="100"/>
+			<host name="PC11" address="192.168.0.11" networkCapacity="100"/>
+			<host name="PC12" address="192.168.0.12" networkCapacity="100"/>
+			<host name="PC13" address="192.168.0.13" networkCapacity="100"/>
+			<host name="PC14" address="192.168.0.14" networkCapacity="100"/>
+			<host name="PC15" address="192.168.0.15" networkCapacity="100"/>
+			<host name="PC16" address="192.168.0.16" networkCapacity="100"/>
 		</zone>
 	</real>
 </network>

@@ -20,7 +20,7 @@ int callbackReady(Packet& p)
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
 
 	string src = p.getAddress();
-	cout << "callbackReady : " << src << endl;
+	cout << "callbackReady : " << src << " Num : " << pp.getChunkNumber() << endl;
 	sd.updateHost (src, pp.getIdFile(), pp.getChunkNumber());
 
 	return 1;
