@@ -34,6 +34,7 @@ int callbackNewFile(Packet& p)
 		{
 			fm = new FileManager(pp.getFileName().c_str(), pp.getFileSize(), pp.getChunkSize(), pp.getIdFile());
 			cd->addFileManager(fm);
+			cout << "création du fichier"<<endl;
 		} catch (DiskFullException e)
 		{
 			// Création du paquet d'erreur
@@ -44,7 +45,7 @@ int callbackNewFile(Packet& p)
 
 	// -> récuppérer le chunk courant
 	pReturn = PacketReady (pp.getIdFile(), fm->getCurrentNumberChunk());
-
+	cout << "chunk désiré n° " << fm->getCurrentNumberChunk() << endl;
 	// -> créer le nouveau paquet PacketReady
 	cd->getConnectionManager()->sendTo(cd->getAddressServ(), pReturn);
 
