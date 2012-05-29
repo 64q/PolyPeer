@@ -5,4 +5,7 @@
      <file id="30" name="Alba" path="file/text.png" size="5343" chunkSize="3000" state="ready">
         <zone ref="C007" />
     </file>
+    <file id="35" name="Diablo" path="file/daemon.mp4" size="5343" chunkSize="3000" state="ready">
+        <zone ref="C007" />
+    </file>
 </deployments>
