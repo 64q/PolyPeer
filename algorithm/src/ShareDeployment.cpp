@@ -139,7 +139,7 @@ void ShareDeployment::nextStep()
 			case F_PAUSE:
 				break;
 		}
-		PolypeerServer::getInstance()->multiSleep(20);
+		PolypeerServer::getInstance()->multiSleep(1000);
 	}
 }
 
