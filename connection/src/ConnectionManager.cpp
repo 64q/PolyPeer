@@ -11,6 +11,7 @@
 ConnectionManager::ConnectionManager(int port)
 {
 	bool bind = false;
+	run = true;
 	while(!bind && run)
 	{
 		try
