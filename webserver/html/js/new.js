@@ -67,9 +67,10 @@ function createInputZone(parent, item) {
 	
 	input.type = "checkbox"; input.value = item.name;
 	
+	title.className = "checkbox";
+	title.appendChild(input);
 	title.appendChild(document.createTextNode(item.name));
 	
-	zone.appendChild(input);
 	zone.appendChild(title);
 	
 	for (var i = 0; i < item.hosts.length; i++) {

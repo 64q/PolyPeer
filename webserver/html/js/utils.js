@@ -158,6 +158,11 @@ var HashNav = {
 		 * Affichage de l'onglet #deployment
 		 */
 		deployment: function(id) {
+			if (id == undefined) {
+				$('#content').innerHTML = '<h1>Page introuvable</h1><p class="alert alert-error">La page demandée est introuvable.</p>';
+				return;
+			}
+			
 			callPage('#deployment', null, function() {		
 				// Récupération des infos du déploiement cible
 				Ajax.request('/ajax/deployment', 'id=' + id, function(content) {
@@ -170,14 +175,16 @@ var HashNav = {
 						result = '<h1>' + content.name + '</h1>';
 						result += '<ul>';
 						result += '<li><strong>Fichier : </strong>' + content.filename + '</li>';
-						result += '<li><strong>Etat : </strong>' + content.state + '</li>';
+						result += '<li><strong>Etat : </strong>' + printFileState(content.state) + '</li>';
 						result += '<li><strong>Taille : </strong>' + content.size + ' o</li>';
 						result += '<li><strong>Nombre de chunks : </strong>' + content.nbchunk + '</li>';
 						result += '<li><strong>Taille d\'un chunk : </strong>' + content.chunksize + ' o</li>';
 						result += '</ul>';
-					
-						result += '<h2>Hotes incluses</h2>';
-						result += '<table>';
+						result += '<h3>Actions</h3>';
+						result += '<p><button class="btn btn-warning" id="pause-button">Pause</button>&nbsp; \
+							<button class="btn btn-danger" id="delete-button">Supprimer</button></p>';
+						result += '<h3>Hotes incluses</h3>';
+						result += '<table class="table table-striped">';
 						
 						for (var i = 0; i < content.hosts.length; i++) {
 							result += '<tr><td>' + content.hosts[i].ip + '</td><td>' + content.hosts[i].name + '</td><td>' + printDeployState(content.hosts[i].state) + '</td><td>' + content.hosts[i].current + '/' + content.hosts[i].total + '</td></tr>';
@@ -228,13 +235,18 @@ var HashNav = {
 		 * Affichage de l'onglet #host
 		 */
 		host: function(ip) {
+			if (ip == undefined) {
+				$('#content').innerHTML = '<h1>Page introuvable</h1><p class="alert alert-error">La page demandée est introuvable.</p>';
+				return;
+			}
+			
 			callPage('#host', null, function() {
 				Ajax.request('/ajax/get_host', 'ip=' + ip, function(content) {
 					var content = JSON.parse(content);
-					var result = '<ul>';
+					var result = '<table class="table table-striped">';
 				
 					for (var i = 0; i < content.deployments.length; i++) {
-						result += '<li>' + content.deployments[i].name + ' [' + printDeployState(content.deployments[i].state) + '] (' + content.deployments[i].current + '/' + content.deployments[i].total + ')</li>';
+						result += '<tr><td>' + content.deployments[i].name + '</td><td>' + printDeployState(content.deployments[i].state) + '</td><td>' + content.deployments[i].current + '/' + content.deployments[i].total + '</td></tr>';
 					}
 				
 					$('#host-info').innerHTML = '<ul><li><strong>Nom : </strong>' + content.name + '</li><li><strong>IP : </strong>' + content.ip + '</li><li><strong>Etat : </strong>' + printHostState(content.state) + '</li></ul>';
@@ -268,7 +280,7 @@ function getTargetFromHash(hash) {
 function callPage(tab, args, callback) {
 	Ajax.request('/pages/' + getTargetFromHash(tab) + '.html', args, function(content) {
 		if (PolyPeer.stats.state == "offline") {
-			$('#content').innerHTML = '<h1>Erreur du serveur</h1><p>Le serveur web ne répond pas !</p>';
+			$('#content').innerHTML = '<h1>Erreur du serveur</h1><p class="alert alert-error">Le serveur web ne répond pas !</p>';
 		} else {
 			$('#content').innerHTML = content;
 			HashNav.activate('#content'); // Important, après un chargement, il faut activer les hash links
@@ -292,14 +304,14 @@ function loadScript(target, callback) {
  * Affichage d'un succès
  */
 function notifySuccess(msg) {
-	$('#notifs').innerHTML = '<p class="success">' + msg + '</p>';
+	$('#notifs').innerHTML = '<div class="alert alert-success"><strong>Succès !</strong> ' + msg + '</div>';
 }
 
 /**
  * Affichage d'une erreur
  */
 function notifyError(msg) {
-	$('#notifs').innerHTML = '<p class="error">' + msg + '</p>';
+	$('#notifs').innerHTML = '<div class="alert alert-error"><strong>Erreur !</strong> ' + msg + '</div>';
 }
 
 /**

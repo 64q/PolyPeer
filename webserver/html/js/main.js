@@ -24,12 +24,11 @@ var PolyPeer = {
 		Ajax.request('/ajax/get_stats', null, function(content) {
 			var stats = JSON.parse(content);
 			PolyPeer.stats = stats
-			$("#state").innerHTML = "<strong>Etat : </strong>" + printServerState(stats.state);
+			$("#state").innerHTML = printServerState(stats.state);
 		}, function() {
-			$("#state").innerHTML = "<strong>Etat : </strong>" + printServerState("offline");
+			$("#state").innerHTML = printServerState("offline");
 			PolyPeer.stats.state = "offline";
-		}
-		);
+		});
 	},
 };
 
