@@ -89,7 +89,7 @@ void ConnectionManager::stop()
 }
 
 void ConnectionManager::sendTo(std::string dest, Packet packet)
-{cout << "CM sento"<<endl<<flush;
+{//cout << "CM sento"<<endl<<flush;
 	Connection* connection = listConnections[dest];
 	if(connection != NULL)
 	{

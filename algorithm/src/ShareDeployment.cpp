@@ -110,7 +110,7 @@ void ShareDeployment::nextStep()
 										// gestion débit
 										//if(canTakeBroadcastNetworkFromServerTo(entity, pSOP.size()))
 										//{
-											cout<< "\t Envoie intra-zone : "<< (seedHost->getIP()) << " -> "<< (minHost->getIP()) <<endl;
+											//cout<< "\t Envoie intra-zone : "<< (seedHost->getIP()) << " -> "<< (minHost->getIP()) <<endl;
 											sData->getConnectionManager()->sendTo((seedHost->getIP()), pSOP);
 											
 											isSend = true;
@@ -139,7 +139,7 @@ void ShareDeployment::nextStep()
 			case F_PAUSE:
 				break;
 		}
-		PolypeerServer::getInstance()->multiSleep(15);
+		PolypeerServer::getInstance()->multiSleep(20);
 	}
 }
 
@@ -156,7 +156,7 @@ void ShareDeployment::sendOnMaster(Entity* entity, File* file)
 		// gestion débit
 		//if(canTakeBroadcastNetworkFromServerTo(entity, pSC.size()))
 		//{
-			cout<< "\t Envoie sur master : " << entity->getIP() <<endl;
+			//cout<< "\t Envoie sur master : " << entity->getIP() <<endl;
 			sData->getConnectionManager()->sendTo((entity->getIP()), pSC);
 			entity->setHostState(DOWNLOAD);
 		//}
