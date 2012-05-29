@@ -9,6 +9,9 @@ function $(t) {
 	return document.querySelector(t); 
 }
 
+/**
+ * Wrapper de querySelectorAll
+ */
 function qsa(t) {
 	return document.querySelectorAll(t);
 }
@@ -23,12 +26,16 @@ var Ajax = {
 	 * @param callback
 	 * 	fonction executée à la fin de l'appel
 	 */
-	request: function(target, params, callback) {
+	request: function(target, params, callback, fail) {
 		var xhr = this.getXMLHttpRequest();
 
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
-				callback(xhr.responseText);
+				if (xhr.responseText == "") {
+					fail();
+				} else {
+					callback(xhr.responseText);
+				}
 			}
 		};
 		
@@ -109,6 +116,7 @@ var HashNav = {
 	 * Callbacks sur les adresses
 	 */
 	callbacks: {
+	
 		/**
 		 * Effectue des actions pour afficher l'onglet #home
 		 */
@@ -118,7 +126,7 @@ var HashNav = {
 				Ajax.request('/ajax/get_stats', null, function(content) {
 					var content = JSON.parse(content);
 					var result = '<ul>';
-					result += '<li><strong>Etat du serveur : </strong>' + printState(content.state) + '</li>';
+					result += '<li><strong>Etat du serveur : </strong>' + printServerState(content.state) + '</li>';
 					result += '<li><strong>Nombre de déploiements en cours : </strong>' + content.count_deployments + '</li>';
 					result += '<li><strong>Nombre d\'entitées sur le réseau : </strong>' + content.count_hosts + '</li>';
 					result += '</ul>';
@@ -128,12 +136,18 @@ var HashNav = {
 			});
 		},
 		
+		/**
+		 * Affichage de l'onglet #admin
+		 */
 		admin: function() {
 			callPage('#admin', null, function() { 
 				loadScript('js/admin.js');
 			});
 		},
 		
+		/**
+		 * Affichage de l'onglet #deployements
+		 */
 		deployments: function() {
 			callPage('#deployments', null, function() {
 				// Récupération des déploiements sur le serveur
@@ -149,6 +163,9 @@ var HashNav = {
 			});
 		},
 		
+		/**
+		 * Affichage de l'onglet #deployment
+		 */
 		deployment: function(id) {
 			callPage('#deployment', null, function() {		
 				// Récupération des infos du déploiement cible
@@ -171,7 +188,7 @@ var HashNav = {
 						result += '<ul>';
 					
 						for (var i = 0; i < content.hosts.length; i++) {
-							result += '<li>@' + content.hosts[i].ip + ' ' + content.hosts[i].name + ' [' + content.hosts[i].state + '] (' + content.hosts[i].current + '/' + content.hosts[i].total + ')</li>';
+							result += '<li>@' + content.hosts[i].ip + ' ' + content.hosts[i].name + ' [' + printDeployState(content.hosts[i].state) + '] (' + content.hosts[i].current + '/' + content.hosts[i].total + ')</li>';
 						}
 					
 						result += '</ul>';
@@ -185,6 +202,9 @@ var HashNav = {
 			});
 		},
 		
+		/**
+		 * Affichage de l'onglet #network
+		 */
 		network: function() {
 			callPage('#network', null, function() {
 				Ajax.request('/ajax/network', null, function(content) {
@@ -203,12 +223,18 @@ var HashNav = {
 			});
 		},
 		
+		/**
+		 * Affichage de l'onglet #new
+		 */
 		new: function() {
 			callPage('#new', null, function() {
 				loadScript('js/new.js');
 			});
 		},
 		
+		/**
+		 * Affichage de l'onglet #host
+		 */
 		host: function(ip) {
 			callPage('#host', null, function() {
 				Ajax.request('/ajax/get_host', 'ip=' + ip, function(content) {
@@ -216,10 +242,10 @@ var HashNav = {
 					var result = '<ul>';
 				
 					for (var i = 0; i < content.deployments.length; i++) {
-						result += '<li>' + content.deployments[i].name + ' [' + content.deployments[i].state + '] (' + content.deployments[i].current + '/' + content.deployments[i].total + ')</li>';
+						result += '<li>' + content.deployments[i].name + ' [' + printDeployState(content.deployments[i].state) + '] (' + content.deployments[i].current + '/' + content.deployments[i].total + ')</li>';
 					}
 				
-					$('#host-info').innerHTML = '<ul><li><strong>Nom : </strong>' + content.name + '</li><li><strong>IP : </strong>' + content.ip + '</li><li><strong>Etat : </strong>' + printState(content.state) + '</li></ul>';
+					$('#host-info').innerHTML = '<ul><li><strong>Nom : </strong>' + content.name + '</li><li><strong>IP : </strong>' + content.ip + '</li><li><strong>Etat : </strong>' + printHostState(content.state) + '</li></ul>';
 					$('#host-deployments').innerHTML = result;
 					$('#refresh-button').addEventListener('click', function() {
 						HashNav.callbacks.host(ip);
@@ -266,22 +292,113 @@ function loadScript(target, callback) {
    scriptElement.onload = callback;
 }
 
+/**
+ * Affichage d'un succès
+ */
 function notifySuccess(msg) {
 	$('#notifs').innerHTML = '<p class="success">' + msg + '</p>';
 }
 
+/**
+ * Affichage d'une erreur
+ */
 function notifyError(msg) {
 	$('#notifs').innerHTML = '<p class="error">' + msg + '</p>';
 }
 
-function printState(state) {
-	if (state == 'offline') {
-		return '<span class="error">Hors-ligne</span>';
-	} else if (state == 'online') {
-		return '<span class="success">En ligne</span>';
-	} else if (state == 'download') {
-		return '<span class="info">Download</span>';
-	} else {
-		return state;
+/**
+ * Affichage host state formaté
+ */
+function printHostState(state)
+{
+	var result;
+	
+	switch (state)
+	{
+		case 'download':
+			result = 'Téléchargement';
+			break;
+		case 'wait':
+			result = 'En attente';
+			break;
+		case 'offline':
+			result = 'Hors ligne';
+			break;
+		default:
+			result = 'En ligne';
 	}
+	
+	return '<span class="status">' + result + '</span>';
+}
+
+/**
+ * Affichage deployment state formaté
+ */
+function printDeployState(state)
+{
+	var result;
+	
+	switch (state)
+	{
+		case 'wait':
+			result = 'En attente';
+			break;
+		case 'finished':
+			result = 'Fini';
+			break;
+		case 'init':
+			result = 'Initialisation';
+			break;
+		case 'disk full':
+			result = 'Disque plein';
+			break;
+		default:
+			result = 'Non défini';
+	}
+	
+	return '<span class="status">' + result + '</span>';
+}
+
+/**
+ * Affichage file state formaté
+ */
+function printFileState(state)
+{
+	var result;
+	
+	switch (state)
+	{
+		case 'ready':
+			result = 'Prêt';
+			break;
+		case 'deployment':
+			result = 'En déploiement';
+			break;
+		case 'finished':
+			result = 'Fini';
+			break;
+		case 'error':
+			result = 'En erreur';
+			break;
+		case 'pause':
+			result = 'En pause';
+			break;
+		default:
+			result = 'Non défini';
+	}
+	
+	return '<span class="status">' + result + '</span>';
+}
+
+function printServerState(state)
+{
+	var result;
+	
+	if (state == "online") {
+		result = "En ligne";
+	} else {
+		result = "Hors-ligne";
+	}
+	
+	return '<span class="server-state">' + result + '</span>';
 }
