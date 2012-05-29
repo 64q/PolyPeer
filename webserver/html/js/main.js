@@ -27,6 +27,7 @@ var PolyPeer = {
 			$("#state").innerHTML = "<strong>Etat : </strong>" + printServerState(stats.state);
 		}, function() {
 			$("#state").innerHTML = "<strong>Etat : </strong>" + printServerState("offline");
+			PolyPeer.stats.state = "offline";
 		}
 		);
 	},

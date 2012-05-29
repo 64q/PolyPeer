@@ -35,7 +35,7 @@ $('#new-deployment-form').addEventListener('submit', function(e) {
  	}
  	
  	if (!error) {
-	 	Ajax.request('/ajax/new_deployment', 'name=' + name.value + '&path=' + path.value + '&zones=' + str_zones + '&cpath=' + cpath.value, function(content) {
+	 	Ajax.request('/ajax/new_deployment', 'name=' + name.value + '&spath=' + path.value + '&zones=' + str_zones + '&cpath=' + cpath.value, function(content) {
 	 		var content = JSON.parse(content);
 	 		
 	 		if (content.state == "done") {

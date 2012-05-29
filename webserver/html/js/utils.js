@@ -137,15 +137,6 @@ var HashNav = {
 		},
 		
 		/**
-		 * Affichage de l'onglet #admin
-		 */
-		admin: function() {
-			callPage('#admin', null, function() { 
-				loadScript('js/admin.js');
-			});
-		},
-		
-		/**
 		 * Affichage de l'onglet #deployements
 		 */
 		deployments: function() {
@@ -185,10 +176,10 @@ var HashNav = {
 						result += '</ul>';
 					
 						result += '<h2>Hotes incluses</h2>';
-						result += '<ul>';
-					
+						result += '<table>';
+						
 						for (var i = 0; i < content.hosts.length; i++) {
-							result += '<li>@' + content.hosts[i].ip + ' ' + content.hosts[i].name + ' [' + printDeployState(content.hosts[i].state) + '] (' + content.hosts[i].current + '/' + content.hosts[i].total + ')</li>';
+							result += '<tr><td>' + content.hosts[i].ip + '</td><td>' + content.hosts[i].name + '</td><td>' + printDeployState(content.hosts[i].state) + '</td><td>' + content.hosts[i].current + '/' + content.hosts[i].total + '</td></tr>';
 						}
 					
 						result += '</ul>';
@@ -275,9 +266,13 @@ function getTargetFromHash(hash) {
  */
 function callPage(tab, args, callback) {
 	Ajax.request('/pages/' + getTargetFromHash(tab) + '.html', args, function(content) {
-		$('#content').innerHTML = content;
-		HashNav.activate('#content'); // Important, après un chargement, il faut activer les hash links
-		callback();
+		if (PolyPeer.stats.state == "offline") {
+			$('#content').innerHTML = '<h1>Erreur du serveur</h1><p>Le serveur web ne répond pas !</p>';
+		} else {
+			$('#content').innerHTML = content;
+			HashNav.activate('#content'); // Important, après un chargement, il faut activer les hash links
+			callback();
+		}
 	});
 }
 
@@ -316,19 +311,19 @@ function printHostState(state)
 	switch (state)
 	{
 		case 'download':
-			result = 'Téléchargement';
+			result = '<span class="status download">En téléchargement</span>';
 			break;
 		case 'wait':
-			result = 'En attente';
+			result = '<span class="status wait">En attente</span>';
 			break;
 		case 'offline':
-			result = 'Hors ligne';
+			result = '<span class="status offline">Hors ligne</span>';
 			break;
 		default:
-			result = 'En ligne';
+			result = '<span class="status undefined">Non défini</span>';
 	}
 	
-	return '<span class="status">' + result + '</span>';
+	return result;
 }
 
 /**
@@ -341,22 +336,22 @@ function printDeployState(state)
 	switch (state)
 	{
 		case 'wait':
-			result = 'En attente';
+			result = '<span class="status wait">En attente</span>';
 			break;
 		case 'finished':
-			result = 'Fini';
+			result = '<span class="status finished">Fini</span>';
 			break;
 		case 'init':
-			result = 'Initialisation';
+			result = '<span class="status init">Initialisation</span>';
 			break;
 		case 'disk full':
-			result = 'Disque plein';
+			result = '<span class="status full">Disque plein</span>';
 			break;
 		default:
-			result = 'Non défini';
+			result = '<span class="status undefined">Non défini</span>';
 	}
 	
-	return '<span class="status">' + result + '</span>';
+	return result;
 }
 
 /**
@@ -369,22 +364,22 @@ function printFileState(state)
 	switch (state)
 	{
 		case 'ready':
-			result = 'Prêt';
+			result = '<span class="status ready">Prêt</span>';
 			break;
 		case 'deployment':
-			result = 'En déploiement';
+			result = '<span class="status deploy">En déploiement</span>';
 			break;
 		case 'finished':
-			result = 'Fini';
+			result = '<span class="status finished">Fini</span>';
 			break;
 		case 'error':
-			result = 'En erreur';
+			result = '<span class="status err">En erreur</span>';
 			break;
 		case 'pause':
-			result = 'En pause';
+			result = '<span class="status pause">En pause</span>';
 			break;
 		default:
-			result = 'Non défini';
+			result = '<span class="status undefined">Non défini</span>';
 	}
 	
 	return '<span class="status">' + result + '</span>';
@@ -395,10 +390,10 @@ function printServerState(state)
 	var result;
 	
 	if (state == "online") {
-		result = "En ligne";
+		result = '<span class="server-state online">En ligne</span>';
 	} else {
-		result = "Hors-ligne";
+		result ='<span class="server-state offline">Hors ligne</span>';
 	}
 	
-	return '<span class="server-state">' + result + '</span>';
+	return result;
 }

@@ -157,10 +157,48 @@ form label {
 
 .status {
 	font-weight: bold;
-	color: #11476E;
 }
 
 .server-state {
 	font-weight: bold;
+}
+
+.online {
+	color: green;
+}
+
+.offline {
+	color: red;
+}
+
+.ready {
+	color: #3DBBCC;
+}
+
+.wait {
+	color: #D446DB;
+}
+
+.download {
+	color: #D446DB;
+}
+
+.err {
+	color: red;
+}
+
+.finished {
+	color: green;
+}
+
+.deploy {
 	color: orange;
+}
+
+.full {
+	color: #DBC046;
+}
+
+.init {
+	color: #DE1D7D;
 }
