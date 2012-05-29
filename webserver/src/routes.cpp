@@ -288,12 +288,10 @@ void new_deployment_route(mg_connection* conn, const mg_request_info* request_in
 
 void pause_deployments_route(mg_connection* conn, const mg_request_info* request_info)
 {
-	PolypeerServer* server = PolypeerServer::getInstance();
+	//PolypeerServer* server = PolypeerServer::getInstance();
 	
 	mg_printf(conn, "%s", ajax_reply_start);
 	mg_printf(conn, "{\"state\":\"done\"}");
-	
-	server->restart();
 }
 
 void delete_deployment_route(mg_connection* conn, const mg_request_info* request_info)
