@@ -184,8 +184,8 @@ File* ServerData::getFile(int id)
 				find = true;
 				toReturn = deployFiles[i];
 			}
-			i++;
 		}
+		i++;
 	}
 	return toReturn;	
 }
