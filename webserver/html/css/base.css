@@ -1,0 +1,91 @@
+/*
+ * Ajout feuille de style PolyPeer
+ */
+
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+
+body .navbar-fixed-top .brand {
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 30px rgba(255, 255, 255, 0.125);
+	color: #000000;
+	float: right;
+	font-weight: bold;
+	margin-left: 10px;
+}
+
+body li#state {
+	line-height: 19px;
+	padding: 9px 10px 11px;
+	text-decoration: none;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+body #network-view div {
+	margin: 5px;
+	margin-left: 15px;
+	border: 1px solid black;
+	background: silver;
+}
+
+body #zones-choice p {
+	margin-left: 15px;
+	padding: 10px;
+	background: silver;
+	border: 1px solid gray;
+}
+
+.tiny-column {
+	width: 10%;
+}
+
+/* Gestion coloration états */
+
+.status {
+	font-weight: bold;
+}
+
+.server-state {
+	
+}
+
+.online {
+	color: green;
+}
+
+.offline {
+	color: red;
+}
+
+.ready {
+	color: #3DBBCC;
+}
+
+.wait {
+	color: #D446DB;
+}
+
+.download {
+	color: #D446DB;
+}
+
+.err {
+	color: red;
+}
+
+.finished {
+	color: green;
+}
+
+.deploy {
+	color: orange;
+}
+
+.full {
+	color: #DBC046;
+}
+
+.init {
+	color: #DE1D7D;
+}

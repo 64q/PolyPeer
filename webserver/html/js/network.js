@@ -6,8 +6,9 @@
 function createZone(parent, item) {
 	
 	var zone = document.createElement('table');
-	zone.innerHTML = '<tr><th colspan="4">Zone &laquo; ' + item.name + ' &raquo; \
-		(Capacité : ' + item.cbbs + '/' + item.nc + ')'; 
+	zone.className = 'table table-striped';
+	zone.innerHTML = '<tr><th colspan="3">Zone &laquo; ' + item.name + ' &raquo; \
+		<th>Capacité : ' + item.cbbs + '/' + item.nc + '</th></tr>'; 
 	
 	for (var i = 0; i < item.hosts.length; i++) {
 		if (item.hosts[i].type == "zone") {

@@ -1,26 +1,44 @@
-<div id="new" class="tab">
+<div id="new">
 	<h1>Nouveau déploiement</h1>
 	<div id="notifs"></div>
 	<p>
 		Pour créer un déploiement, merci de remplir le formulaire ci-dessous.
 	</p>
-	<form id="new-deployment-form">
-		<h2>Informations</h2>
-		<p>
-			<label>Nom du déploiement</label><input type="text" id="name" name="name" />
-		</p>
-		<p>
-			<label>Chemin du fichier</label><input type="text" id="path" name="path" />
-		</p>
-		<p>
-			<label>Emplacement sur les clients</label><input type="text" id="cpath" name="cpath" />
-		</p>
-		<h2>Zones à sélectionner</h2>
-		<div id="zones-choice">
+	<form class="form-horizontal" id="new-deployment-form">
+		<fieldset>
+			<legend>Informations générales</legend>
+			<div class="control-group">
+				<label class="control-label">Nom du déploiement</label>
+				<div class="controls">
+					<input class="input-xlarge" type="text" id="name" name="name" />
+					<p class="help-block">Veuillez entrer le nom du déploiement, sans espaces.</p>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Chemin du fichier</label>
+				<div class="controls">
+					<input class="input-xlarge" type="text" id="path" name="path" />
+					<p class="help-block">Entrez un chemin de fichier valide sans espaces.</p>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Emplacement sur les clients</label>
+				<div class="controls">
+					<input class="input-xlarge" type="text" id="cpath" name="cpath" />
+					<p class="help-block">Indiquez l'emplacement où sera téléchargé le fichier chez le client.</p>
+				</div>
+			</div>
+			<legend>Zones à sélectionner</legend>
+			<p>
+				Vous allez maintenant choisir une ou plusieurs zones où déployer le fichier dans la liste ci-dessous.
+			</p>
+			<div id="zones-choice">
 			
-		</div>
-		<p>
-			<input type="submit" value="Créer un nouveau déploiement" />
-		</p>
+			</div>
+			<div class="form-actions">
+				<input type="submit" class="btn btn-primary" value="Créer un nouveau déploiement" />
+				<input type="reset" class="btn" value="Effacer" />
+			</div>
+		</fieldset>
 	</form>
 </div>

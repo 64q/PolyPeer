@@ -4,30 +4,48 @@
 		<!-- headers standards -->
 		<meta charset="utf-8" />
 		<title>PolyPeer WebServer</title>
-		<link rel="stylesheet" href="design/style.css" />
+		<!-- Feuilles de style -->
+		<link rel="stylesheet" href="css/base.css" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<!-- Scripts JS -->
+		<script src="js/bootstrap.min.js"></script>
 		<script src="js/json.js"></script>
 		<script src="js/utils.js"></script>
 		<script src="js/main.js"></script>
 	</head>
 	<body>
-		<header>
-			<div id="state">Chargement en cours...</div>
-			<h1>PolyPeer WebServer</h1>
-		</header>
-		<nav>
-			<ul>
-				<li><a href="#home" class="link">Accueil</a></li>
-				<li><a href="#deployments" class="link">Déploiements</a></li>
-				<li><a href="#network" class="link">Réseau</a></li>
-				<li><a href="#new" class="link">Nouveau déploiement</a></li>
-			</ul>
-		</nav>
-		<div id="content">
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</a>
+					<a class="brand link" href="#home">PolyPeer</a>
+					<div class="nav-collapse">
+						<ul class="nav pull-right">
+							<li id="state">
+								Chargement de l'état en cours...
+							</li>
+						</ul>
+						<ul class="nav">
+							<li><a class="link" href="#home">Home</a></li>
+							<li><a class="link" href="#deployments">Déploiements</a></li>
+							<li><a class="link" href="#network">Réseau</a></li>
+							<li><a class="link" href="#new">Nouveau déploiement</a></li>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+		<div class="container" id="content">
 			Chargement du contenu en cours ...
 		</div>
+		<!-- Footer -->
+		<hr>
 		<footer>
-			WebServer powered by Mongoose &ndash; PolyPeer 2012
+			<p>PolyPeer &ndash; 2012</p>
 		</footer>
 	</body>
 </html>
