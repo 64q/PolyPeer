@@ -70,7 +70,17 @@ private:
 	 */
 	void resetBreakHost(std::vector<std::vector<Entity*>* >* entities);
 	
-	void sendOnMaster(Entity* entity, File* file);
+	/**
+	 * Envoi d'un chunk du serveur vers un maitre de zone
+	 *  l'envoi se fait que si les hosts sont disponibles
+	 */
+	bool sendOnMaster(Entity* entity, File* file);
+	
+	/**
+	 * demande à entitySrc d'envoyer un chunk à entityDst
+	 *  l'envoi se fait que si les hosts sont disponibles
+	 */
+	bool sendOperationOnHosts(Entity* entitySrc, Entity* entityDst, File* file);
 	
 	/**
 	 * vérifie que le déploiement est bien fini
@@ -88,10 +98,14 @@ private:
 	Entity* getMinZoneDeployment(std::vector<Entity*>* zone, int idFile);
 
 	/**
-	 * Récupérer l'host le plus avancé de la zone
+	 * Récupérer l'host le plus avancé de la zone pour envoyer à un autre host de sa zone
 	 */
-	Entity* getSeedZoneDeployment(std::vector<Entity*>* zone, int idFile, long chunkId);
-		
+	Entity* getSeedZoneDeployment(std::vector<Entity*>* zone, int idFile, Entity* minHost);
+	
+	/**
+	 * Rechercher un second host sur la zone pour seeder
+	 */
+	Entity* selectSeedHostOnZone(std::vector<Entity*>* zone, int idFile, Entity* hostMaster);
 	 
 };
 

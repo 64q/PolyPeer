@@ -105,9 +105,12 @@ vector<vector<Entity*>* >* File::getSortedHosts()
 
 void File::deleteSortedHost(vector<vector<Entity*>* >* entities)
 {
-	for (vector<vector<Entity*>* >::iterator itZone = entities->begin(); itZone != entities->end(); itZone++) 
-		delete (*itZone);
-	delete entities;
+	if(entities != NULL)
+	{
+		for (vector<vector<Entity*>* >::iterator itZone = entities->begin(); itZone != entities->end(); itZone++) 
+			delete (*itZone);
+		delete entities;
+	}
 }
 
 void File::addEntity(Entity* entity)
