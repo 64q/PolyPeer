@@ -10,12 +10,13 @@
 
 using namespace std;
 
-PacketSendOperation::PacketSendOperation(string target, Chunk& chunk) : Packet()
+PacketSendOperation::PacketSendOperation(string target, int idFile, int numChunk) : Packet()
 {
 	setType (ESendOperation);
 
 	(*this) << target;
-	(*this) << chunk.serialize();
+	(*this) << idFile;
+	(*this) << numChunk;
 }
 
 PacketSendOperation::PacketSendOperation(const Packet& p) : Packet(p)
@@ -36,10 +37,18 @@ string PacketSendOperation::getTarget ()
 	return chaine;
 }
 
-Chunk PacketSendOperation::getChunk ()
+int PacketSendOperation::getIdFile ()
 {
-	setPosition (0);
-	Data d;
-	(*this) >> d;
-	return Chunk(d);
+	setPosition (1);
+	int idFile;
+	(*this) >> idFile;
+	return idFile;
+}
+
+int PacketSendOperation::getNumChunk ()
+{
+	setPosition (2);
+	int numChunk;
+	(*this) >> numChunk;
+	return numChunk;
 }

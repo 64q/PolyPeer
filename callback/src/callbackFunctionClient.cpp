@@ -62,12 +62,15 @@ int callbackSendOperation(Packet& p)
 
 	// vérifier que l'on possède bien le chunk en question
 	// --
-	Chunk c = pp.getChunk();
+	
+	Chunk c = cd->getFileManager(pp.getIdFile())->getChunk((long)pp.getNumChunk());
+	cout << "Chunk prêt à envoyer n°" << c.getNumber()<<endl;
 	// envoie à la cible
 	cd->getConnectionManager()->sendTo(pp.getTarget(), PacketSendChunk(c));
-
+	cout << "Chunk envoyé"<<endl;
 	// réponse au serveur du travail effectué
 	cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketSendOperationFinished());
+	cout << "serveur prévenu"<<endl;
 
 	return 1;
 }
@@ -109,7 +112,8 @@ int callbackRemoveHost(Packet& p)
 	ClientData* cd = PolypeerClient::getInstance()->getClientData();
 	ConnectionManager* cm = cd->getConnectionManager();
 	cm->removeConnection(pp.getIpAddress());
-
+	
+	return 1;
 }
 
 
