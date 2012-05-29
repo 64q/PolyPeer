@@ -28,13 +28,13 @@ void* listenSocket(void* connection)
 	{
 
 		size = connectionTmp->socket->read(buffer, 20000);
-		cout << "size "<<size<<endl<<flush;
+		//cout << "size "<<size<<endl<<flush;
 		if (size > 0)
 		{
 			Packet tmp(buffer, size);
 			//on ajoute l'adresse ip d'où provient le paquet
 			tmp.setAddress(connectionTmp->socket->getIpAdress());
-			cout << "------>" << connectionTmp->socket->getIpAdress() << endl;
+			//cout << "------>" << connectionTmp->socket->getIpAdress() << endl;
 			//on agit suivant le paquet
 			PacketCallback::getPacketCallback()->packetOperation(tmp);
 		}

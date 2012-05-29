@@ -4,59 +4,59 @@
 
 using namespace std;
 
-File::File(int id, string name, string path, int size, int chunkSize, FileState fs):
+File::File(int id, string name, string serverPath, string clientPath, int size, int chunkSize, FileState fs):
 	name(name),
-	//fileM(NULL),
+	clientPath(clientPath),
 	fState(fs)
 {
 	// interdire d'autre state que FINISH et READY
 	if((fState != FINISH) && (fState != F_PAUSE))
-	fState = READY;
+		fState = READY;
 
 	try
 	{
-		fileM = new FileManager(path.data(), id);
+		fileM = new FileManager(serverPath.data(), id);
 
 	} catch (OpenFileException)
 	{
 		fileM = NULL;
 		fState = F_ERROR;
-		cout << "FAIL LOAD : Fichier " << path << " inexistant ou déjà ouvert par un autre déploiement "<< endl;
+		cout << "FAIL LOAD : Fichier " << serverPath << " inexistant ou déjà ouvert par un autre déploiement "<< endl;
 	}
 }
 
-File::File(int id, string name, string path, int size, int chunkSize):
+File::File(int id, string name, string serverPath, string clientPath, int size, int chunkSize):
 	name(name),
-	//fileM(NULL),
+	clientPath(clientPath),
 	fState(READY)
 {
 	try
 	{
-		fileM= new FileManager(path.data(), id);
+		fileM= new FileManager(serverPath.data(), id);
 
 	} catch (OpenFileException)
 	{
 		fileM = NULL;
 		fState = F_ERROR;
-		cout << "FAIL LOAD : Fichier " << path << " inexistant"<< endl;
+		cout << "FAIL LOAD : Fichier " << serverPath << " inexistant"<< endl;
 	}
 
 }
 
-File::File(int id, string name, string path):
+File::File(int id, string name, string serverPath, string clientPath):
 	name(name),
-	//fileM(NULL),
+	clientPath(clientPath),
 	fState(READY)
 {
 	try
 	{
-		fileM= new FileManager(path.data(), id);
+		fileM= new FileManager(serverPath.data(), id);
 
 	} catch (OpenFileException)
 	{
 		fileM = NULL;
 		fState = F_ERROR;
-		cout << "FAIL LOAD : Fichier " << path << " inexistant"<< endl;
+		cout << "FAIL LOAD : Fichier2 " << serverPath << " inexistant"<< endl;
 	}
 }
 
