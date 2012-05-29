@@ -38,6 +38,7 @@ int callbackNewFile(Packet& p)
 		} catch (DiskFullException e)
 		{
 			// Création du paquet d'erreur
+			cout << "full"<<endl;
 			pReturn = PacketDiskFull (pp.getIdFile());
 			return 0;
 		}

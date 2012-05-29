@@ -27,6 +27,7 @@ FileManager::FileManager(const char* path, long size, long sizeChunk, int idFile
 
 void FileManager::init(const char* path, long size, long sizeChunk, int idFile)
 {
+	currentChunk = 0;
 	this->idFile = idFile;
 	this->sizeChunk = sizeChunk;
 	this->sizeFile = size;
@@ -145,16 +146,22 @@ FileManager::~FileManager()
 
 Chunk FileManager::getChunk(long number)
 {
-	file.seekp(number*sizeChunk, ios::beg);
-	file.read(currentData, sizeChunk);
+	if(number <= getNumberChunk())
+	{
+		file.seekp(number*sizeChunk, ios::beg);
+		file.read(currentData, sizeChunk);
 
-	if (getNumberChunk()-1==number)
+		if (getNumberChunk()-1==number)
+		{
+			return Chunk(number, sizeFile-number*sizeChunk, currentData, idFile);
+		}
+		else
+		{
+			return Chunk(number, sizeChunk, currentData, idFile);
+		}
+	}else
 	{
-		return Chunk(number, sizeFile-number*sizeChunk, currentData, idFile);
-	}
-	else
-	{
-		return Chunk(number, sizeChunk, currentData, idFile);
+		cout << "dépassement de chunk" << endl;
 	}
 }
 bool FileManager::saveChunk(Chunk &chunk)
@@ -265,17 +272,17 @@ int64_t FileManager::getFreeDiskSpace()
 {
 	 int64_t available;
 
-int ind = pathFile.find_last_of("/\\");
-        string tmp;
+	int ind = pathFile.find_last_of("/\\");
+	string tmp;
 
-        if(ind>0)
-        {
-            tmp = pathFile.substr(0,ind);
-        }
-        else
-        {
-            tmp = "./";
-        }
+	if(ind>0)
+	{
+		tmp = pathFile.substr(0,ind);
+	}
+	else
+	{
+		tmp = "./";
+	}
     #ifdef WIN32
 
 		GetDiskFreeSpaceEx(tmp.c_str(),(PULARGE_INTEGER)&available,NULL,NULL);
