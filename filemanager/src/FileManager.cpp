@@ -151,10 +151,13 @@ Chunk FileManager::getChunk(long number)
 {
 	if(number <= getNumberChunk())
 	{
+	
 		//file.seekp(number*sizeChunk, ios::beg);
 		//file.read(currentData, sizeChunk);
-		pbuf->pubseekpos(currentChunk*sizeChunk);
+		pbuf->pubseekpos(number*sizeChunk);
 		pbuf->sgetn (currentData,sizeChunk);
+		
+		
 		if (getNumberChunk()-1==number)
 		{
 			return Chunk(number, sizeFile-number*sizeChunk, currentData, idFile);

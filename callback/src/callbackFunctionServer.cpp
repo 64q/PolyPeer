@@ -46,7 +46,7 @@ int callbackMd5Error(Packet& p)
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
 
 	string src = p.getAddress();
-	cout << "callbackMd5Error : " << src << endl;
+	//cout << "callbackMd5Error : " << src << endl;
 	sd.updateHost(src, WAIT);
 
 	return 1;

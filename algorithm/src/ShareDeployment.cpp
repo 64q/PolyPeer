@@ -147,19 +147,34 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 		int idFile = file->getFileManager()->getIdFile();
 		if((entity->getHostState() == WAIT) && (entity->getDeploymentState(idFile)->getCurrentState() != HDS_FINISH))
 		{
-			// récupération du chunk
-			Chunk chunk = file->getFileManager()->getChunk(entity->getDeploymentState(idFile)->getCurrentIdChunk());
-			
-			// création du paquet
-			Packet pSC = PacketSendChunk(chunk);
 		
-			// gestion du débit
-			//if(canTakeBroadcastNetworkFromServerTo(entity, pSC.size()))
-			//{
-				sData->getConnectionManager()->sendTo((entity->getIP()), pSC);
-				entity->setHostState(DOWNLOAD);
-				toReturn = true;
-			//}
+			// vérif du num du chunk (dépassement)
+			int numChunk = entity->getDeploymentState(idFile)->getCurrentIdChunk();
+			if(numChunk <= file->getFileManager()->getNumberChunk())
+			{
+				// récupération du chunk
+				Chunk chunk = file->getFileManager()->getChunk(numChunk);
+			
+				//cout<< chunk.getData()[0]<< " NumSend : "<< entity->getDeploymentState(idFile)->getCurrentIdChunk() <<endl;
+			
+				//cout<<"DEBUT "<< idFile <<"-------"<<endl;
+				//cout.write(chunk.getData(), 500);
+				//cout<<"-------FIN"<<endl;
+				// création du paquet
+				Packet pSC = PacketSendChunk(chunk);
+		
+				// gestion du débit
+				//if(canTakeBroadcastNetworkFromServerTo(entity, pSC.size()))
+				//{
+					sData->getConnectionManager()->sendTo((entity->getIP()), pSC);
+					entity->setHostState(DOWNLOAD);
+					toReturn = true;
+				//}
+			} else
+			{
+				// traitement
+				//entity->getDeploymentState(idFile)->setCurrentIdChunk(file->getFileManager()->getNumberChunk());
+			}
 		}
 	}
 	return toReturn;
@@ -179,9 +194,6 @@ bool ShareDeployment::sendOperationOnHosts(Entity* entitySrc, Entity* entityDst,
 		{
 			// Récupérer le chunk dont l'Host de destination a besoin
 			int numNeededChunk = entityDst->getDeploymentState(idFile)->getCurrentIdChunk();
-		
-			// récupération du chunk
-			Chunk chunk = file->getFileManager()->getChunk(numNeededChunk);
 		
 			// création du paquet
 			Packet pSOP = PacketSendOperation(entityDst->getIP(), idFile, numNeededChunk);
