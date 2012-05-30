@@ -5,9 +5,28 @@
 /**
  * Raccourcissement de la fonction querySelector
  */
-function $(t) { 
-	return document.querySelector(t); 
+
+function $(selector, el) {
+	if (!el) {
+		el = document;
+	}
+	
+	this.el = el.querySelector(selector);
+	
+	if (this.el !=  undefined) {
+		this.el.text = function(content) {
+			this.innerHTML = content;
+		}
+	}
+	
+	return this.el;
 }
+
+function $$(selector, el) {
+	if (!el) {el = document;}
+	return Array.prototype.slice.call(el.querySelectorAll(selector));
+}
+
 
 /**
  * Wrapper de querySelectorAll
@@ -16,297 +35,116 @@ function qsa(t) {
 	return document.querySelectorAll(t);
 }
 
-var Ajax = {
-	/**
-	 * Fonction d'appel AJAX
-	 * @param file
-	 * 	fichier à appeler
-	 * @param params
-	 * 	paramètres à envoyer
-	 * @param callback
-	 * 	fonction executée à la fin de l'appel
-	 */
-	request: function(target, params, callback, fail) {
-		var xhr = this.getXMLHttpRequest();
-
-		xhr.onreadystatechange = function() {
-			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
-				if (xhr.responseText == "") {
-					fail();
-				} else {
-					callback(xhr.responseText);
-				}
-			}
-		};
-		
-		if (params != undefined) {
-			xhr.open('GET', target + '?' + params, true);
-		} else {
-			xhr.open('GET', target, true);
-		}
-		xhr.send(null);
-	},
-
-	/**
-	 * Fonction XMLHttpRequest
-	 * @return xhr
-	 */
-	getXMLHttpRequest: function() {
-		var xhr = null;
-
-		if (window.XMLHttpRequest || window.ActiveXObject) {
-			if (window.ActiveXObject) {
-				try {
-					xhr = new ActiveXObject("Msxml2.XMLHTTP");
-				} catch(e) {
-					xhr = new ActiveXObject("Microsoft.XMLHTTP");
-				}
-			} else {
-				xhr = new XMLHttpRequest(); 
-			}
-		} else {
-			alert("Votre navigateur ne supporte pas l'objet XMLHTTPRequest...");
-			return null;
-		}
-
-		return xhr;
-	}
-};
+function $$(t) {
+	return document.querySelectorAll(t);
+}
 
 /**
- * Gestion de la navigation par hash
+ * Utilitaire de gestion des requêtes Ajax selon le principe suivant :
+ * Requête GET sur le serveur avec deux fonctions de callback
+ * Une success, déclenchée quand succès de la requête, sinon
+ * Une error, déclenchée quand echec de la requête
+ * @param file
+ * 	chemin vers le serveur
+ * @param params
+ * 	paramètres de la requête
+ * @param success
+ * 	callback en cas de succès
+ * @param error
+ * 	callback en cas d'echec (optionnel)
  */
-var HashNav = {
+PolyPeerJS.Ajax = function(file, params, success, error, isParsable) {
+	var xhr = new XMLHttpRequest();
+	var sent = file;
 	
+	if (params != null) {
+		sent += '?' + params;
+	}
+	
+	if (isParsable == null) {
+		isParsable = true;
+	}
+	
+	xhr.open('GET', sent);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			if (xhr.responseText.length != 0) {
+				// Les données reçues sont du JSON
+				if (isParsable) {
+					var parsed = JSON.parse(xhr.responseText);
+					if (parsed.state != undefined && parsed.state == "error" && error != null) {
+						error();
+					} else {
+						success(parsed);
+					}
+				} 
+				// Sinon c'est autre chose, on ne parse pas
+				else {
+					success(xhr.responseText);
+				}
+			} else { // Si la requête ne renvoie rien, cela signife souvent que le serveur est down
+				error();
+			}
+		} else if (xhr.readyState == 4 && xhr.status == 404) {
+			PolyPeerJS.Utils.error('404'); // Erreur 404, page introuvable
+		}
+	};
+
+	xhr.send(null);
+};
+
+PolyPeerJS.HashNav = {
 	current: null,
 	vars: null,
+	callbacks: null,
+	root: null,
 	
 	/**
-	 * Initialise la navigation par hash, notamment l'activation des liens spéciaux
+	 * Initialisation de la HashNav - Chargement des Cb
+	 * et définition de la page courante
+	 * @param cbs
+	 * 	les callbacks de la HashNav
 	 */
-	init: function() {
-		this.evaluate();
+	init: function(cbs, root) {
+		this.callbacks = cbs;
+		this.root = root;
+		
+		// init de la nav
+		window.addEventListener('hashchange', this.onChange);
+		this.onChange(); // Forcage d'analyse au chargement
 	},
 	
 	/**
-	 * Active les liens hash de la page
+	 * Cette fonction est appelée a chaque changement sur la page
+	 * On va alors regarder le Hash et lancer la requête
 	 */
-	activate: function(trg) {
-		var links = qsa(trg + ' .link');
+	onChange: function() {
+		var addr = location.hash;
+		var that = PolyPeerJS.HashNav;
 		
-		for (var i = 0; i < links.length; i++) {
-			// Définition du callback de click
-			links[i].addEventListener('click', function() {
-				var target = getTargetFromHash(this.hash);
-				HashNav.callbacks[target]();
-				HashNav.current = target;
-			});
-		}
-	},
-	
-	/**
-	 * Evalue un lien hashé
-	 */
-	evaluate: function() {
-		// Traitement du hash composé
-		vars = location.hash.split('/');
-		
-		// Init du tab courant (pour reprise)
-		if (location.hash.length > 0) {
-			this.current = getTargetFromHash(vars[0]);
+		if (addr.length > 1) {
+			if (addr.charAt(1) == '!') { // analyse des adresses commençant par "#!/"
+				that.vars = addr.split('/'); that.vars.shift()
+				that.current = that.vars.shift();
+				
+				if (that.callbacks[that.current] != undefined) {
+					that.callbacks[that.current](that.vars);
+				} else {
+					that.notFound();
+				}
+			}
 		} else {
-			this.current = "home";
-		}
-		
-		vars.shift();
-		
-		if (HashNav.callbacks[this.current] != undefined) {
-			HashNav.callbacks[this.current](vars);
+			that.root();
 		}
 	},
 	
 	/**
-	 * Callbacks sur les adresses
+	 * Méthode appelée uniquement si l'analyseur n'a pas trouvé de route
 	 */
-	callbacks: {
-	
-		/**
-		 * Effectue des actions pour afficher l'onglet #home
-		 */
-		home: function() {
-			callPage('#home', null, function() {
-				// Récupération des informations dynamiques
-				Ajax.request('/ajax/get_stats', null, function(content) {
-					var content = JSON.parse(content);
-					var result = '<dl>';
-					result += '<dt>Etat du serveur</dt><dd>L\'état du serveur est ' + printServerState(content.state) + '</dd>';
-					result += '<dt>Nombre de déploiements en cours</dt><dd>Il y a actuellement ' + content.count_deployments + ' en cours</dd>';
-					result += '<dt>Nombre d\'entitées sur le réseau</dt><dd>Il y a ' + content.count_hosts + ' hotes sur le réseau</dd>';
-					result += '</dl>';
-				
-					$('#overview').innerHTML = result;
-				});
-			});
-		},
-		
-		/**
-		 * Affichage de l'onglet #deployements
-		 */
-		deployments: function() {
-			callPage('#deployments', null, function() {
-				// Récupération des déploiements sur le serveur
-				Ajax.request('/ajax/deployments', null, function(content) {
-					var content = JSON.parse(content);
-					loadScript('js/deployments.js', function() {
-						var contentTab = $("#deployments>table");
-						for (var i = 0; i < content.length; i++) {
-							contentTab.appendChild(createDeploymentLine(content[i]));
-						}
-					});
-				});
-			});
-		},
-		
-		/**
-		 * Affichage de l'onglet #deployment
-		 */
-		deployment: function(id) {
-			if (id[1] == undefined) {
-				$('#content').innerHTML = '<h1>Page introuvable</h1><p class="alert alert-error">La page demandée est introuvable.</p>';
-				return;
-			}
-			
-			callPage('#deployment', null, function() {		
-				// Récupération des infos du déploiement cible
-				Ajax.request('/ajax/deployment', 'id=' + id[1], function(content) {
-					var content = JSON.parse(content);
-					var result;
-					
-					if (content.state == 'error') {
-						result = notifyError('Impossible de récupérer le déploiement');
-					} else {
-						result = '<div class="page-header"><h1>' + content.name + '</h1></div>';
-						result += '<ul>';
-						result += '<li><strong>Fichier : </strong>' + content.filename + '</li>';
-						result += '<li><strong>Etat : </strong>' + printFileState(content.state) + '</li>';
-						result += '<li><strong>Taille : </strong>' + content.size + ' o</li>';
-						result += '<li><strong>Nombre de chunks : </strong>' + content.nbchunk + '</li>';
-						result += '<li><strong>Taille d\'un chunk : </strong>' + content.chunksize + ' o</li>';
-						result += '</ul>';
-						result += '<h3>Actions</h3>';
-						result += '<p><button class="btn btn-warning" id="pause-button">Pause</button>&nbsp; \
-							<button class="btn btn-danger" id="delete-button">Supprimer</button></p>';
-						result += '<h3>Hotes incluses</h3>';
-						result += '<table class="table table-striped">';
-						
-						for (var i = 0; i < content.hosts.length; i++) {
-							var width = (content.hosts[i].current / content.hosts[i].total) * 100;
-							result += '<tr><td>' + content.hosts[i].ip + '</td><td>' + content.hosts[i].name + '</td><td>' + printDeployState(content.hosts[i].state) + '</td><td class="large-column">\
-								<div class="progress progress-striped active"> \
-    								<div class="bar" style="width: ' + width + '%;"></div></div></td><td><span style="float: left;margin-right: 5px;">' + content.hosts[i].current + '/' + content.hosts[i].total + '</span></td></tr>';
-						}
-					
-						result += '</ul>';
-					}
-					
-					$('#deployment').innerHTML = result;
-					$('#refresh-button').addEventListener('click', function() {
-						HashNav.callbacks.deployment(id[1]);
-					});
-				});
-			});
-		},
-		
-		/**
-		 * Affichage de l'onglet #network
-		 */
-		network: function() {
-			callPage('#network', null, function() {
-				Ajax.request('/ajax/network', null, function(content) {
-					var content = JSON.parse(content);
-					loadScript('js/network.js', function() {
-						var view = $('#network-view');
-						for (var i = 0; i < content.length; i++) {
-							if (content[i].type == "zone") {
-								createZone(view, content[i]);
-							} else {
-								view.appendChild(createHostLine('p', content[i]));
-							}
-						}
-					});
-				});
-			});
-		},
-		
-		/**
-		 * Affichage de l'onglet #new
-		 */
-		new: function() {
-			callPage('#new', null, function() {
-				loadScript('js/new.js');
-			});
-		},
-		
-		/**
-		 * Affichage de l'onglet #host
-		 */
-		host: function(ip) {
-			if (ip[1] == undefined) {
-				$('#content').innerHTML = '<h1>Page introuvable</h1><p class="alert alert-error">La page demandée est introuvable.</p>';
-				return;
-			}
-			
-			callPage('#host', null, function() {
-				Ajax.request('/ajax/get_host', 'ip=' + ip[1], function(content) {
-					var content = JSON.parse(content);
-					var result = '<table class="table table-striped">';
-				
-					for (var i = 0; i < content.deployments.length; i++) {
-						var width = (content.deployments[i].current / content.deployments[i].total) * 100;
-						result += '<tr><td>' + content.deployments[i].name + '</td><td>' + printDeployState(content.deployments[i].state) + '</td>\
-						<td class="large-column"><div class="progress progress-striped active"> \
-    								<div class="bar" style="width: ' + width + '%;"></div></div></td><td><span>' + content.deployments[i].current + '/' + content.deployments[i].total + '</span></td></tr>';
-					}
-				
-					$('#host-info').innerHTML = '<ul><li><strong>Nom : </strong>' + content.name + '</li><li><strong>IP : </strong>' + content.ip + '</li><li><strong>Etat : </strong>' + printHostState(content.state) + '</li></ul>';
-					$('#host-deployments').innerHTML = result;
-					$('#refresh-button').addEventListener('click', function() {
-						HashNav.callbacks.host(ip[1]);
-					});
-				});
-			});
-		},
-		
-		/**
-		 * Effectue des actions pour afficher l'onglet #doc
-		 */
-		doc: function() {
-			callPage('#doc', null, function() {});
-		},
+	notFound: function() {
+		PolyPeerJS.Utils.error('404');
 	},
 };
-
-/**
- * Retourne la cible d'un lien "hashé"
- */
-function getTargetFromHash(hash) {
-	return hash.substring(1);
-}
-
-/**
- * Appelle la ressource sur le serveur
- */
-function callPage(tab, args, callback) {
-	Ajax.request('/pages/' + getTargetFromHash(tab) + '.html', args, function(content) {
-		if (PolyPeer.stats.state == "offline") {
-			$('#content').innerHTML = '<h1>Erreur du serveur</h1><p class="alert alert-error">Le serveur web ne répond pas !</p>';
-		} else {
-			$('#content').innerHTML = content;
-			HashNav.activate('#content'); // Important, après un chargement, il faut activer les hash links
-			callback();
-		}
-	});
-}
 
 /**
  * Charge un script JS dynamiquement
