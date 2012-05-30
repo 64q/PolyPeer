@@ -125,11 +125,11 @@ var HashNav = {
 				// Récupération des informations dynamiques
 				Ajax.request('/ajax/get_stats', null, function(content) {
 					var content = JSON.parse(content);
-					var result = '<ul>';
-					result += '<li><strong>Etat du serveur : </strong>' + printServerState(content.state) + '</li>';
-					result += '<li><strong>Nombre de déploiements en cours : </strong>' + content.count_deployments + '</li>';
-					result += '<li><strong>Nombre d\'entitées sur le réseau : </strong>' + content.count_hosts + '</li>';
-					result += '</ul>';
+					var result = '<dl>';
+					result += '<dt>Etat du serveur</dt><dd>L\'état du serveur est ' + printServerState(content.state) + '</dd>';
+					result += '<dt>Nombre de déploiements en cours</dt><dd>Il y a actuellement ' + content.count_deployments + ' en cours</dd>';
+					result += '<dt>Nombre d\'entitées sur le réseau</dt><dd>Il y a ' + content.count_hosts + ' hotes sur le réseau</dd>';
+					result += '</dl>';
 				
 					$('#overview').innerHTML = result;
 				});
@@ -172,7 +172,7 @@ var HashNav = {
 					if (content.state == 'error') {
 						result = notifyError('Impossible de récupérer le déploiement');
 					} else {
-						result = '<h1>' + content.name + '</h1>';
+						result = '<div class="page-header"><h1>' + content.name + '</h1></div>';
 						result += '<ul>';
 						result += '<li><strong>Fichier : </strong>' + content.filename + '</li>';
 						result += '<li><strong>Etat : </strong>' + printFileState(content.state) + '</li>';
@@ -187,7 +187,10 @@ var HashNav = {
 						result += '<table class="table table-striped">';
 						
 						for (var i = 0; i < content.hosts.length; i++) {
-							result += '<tr><td>' + content.hosts[i].ip + '</td><td>' + content.hosts[i].name + '</td><td>' + printDeployState(content.hosts[i].state) + '</td><td>' + content.hosts[i].current + '/' + content.hosts[i].total + '</td></tr>';
+							var width = (content.hosts[i].current / content.hosts[i].total) * 100;
+							result += '<tr><td>' + content.hosts[i].ip + '</td><td>' + content.hosts[i].name + '</td><td>' + printDeployState(content.hosts[i].state) + '</td><td class="large-column">\
+								<div class="progress progress-striped active"> \
+    								<div class="bar" style="width: ' + width + '%;"></div></div></td><td><span style="float: left;margin-right: 5px;">' + content.hosts[i].current + '/' + content.hosts[i].total + '</span></td></tr>';
 						}
 					
 						result += '</ul>';
@@ -246,7 +249,10 @@ var HashNav = {
 					var result = '<table class="table table-striped">';
 				
 					for (var i = 0; i < content.deployments.length; i++) {
-						result += '<tr><td>' + content.deployments[i].name + '</td><td>' + printDeployState(content.deployments[i].state) + '</td><td>' + content.deployments[i].current + '/' + content.deployments[i].total + '</td></tr>';
+						var width = (content.deployments[i].current / content.deployments[i].total) * 100;
+						result += '<tr><td>' + content.deployments[i].name + '</td><td>' + printDeployState(content.deployments[i].state) + '</td>\
+						<td class="large-column"><div class="progress progress-striped active"> \
+    								<div class="bar" style="width: ' + width + '%;"></div></div></td><td><span>' + content.deployments[i].current + '/' + content.deployments[i].total + '</span></td></tr>';
 					}
 				
 					$('#host-info').innerHTML = '<ul><li><strong>Nom : </strong>' + content.name + '</li><li><strong>IP : </strong>' + content.ip + '</li><li><strong>Etat : </strong>' + printHostState(content.state) + '</li></ul>';

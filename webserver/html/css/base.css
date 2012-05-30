@@ -36,8 +36,17 @@ body #zones-choice p {
 	border: 1px solid gray;
 }
 
+body footer {
+	text-align: center;
+	color: silver;
+}
+
 .tiny-column {
 	width: 10%;
+}
+
+.large-column {
+	width: 25%;
 }
 
 /* Gestion coloration états */

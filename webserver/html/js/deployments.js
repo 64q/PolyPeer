@@ -18,8 +18,9 @@
 	name.appendChild(document.createTextNode(item.name));
 	state.innerHTML = printFileState(item.state);
 
-	view.appendChild(document.createTextNode('Consulter #' + item.id));
+	view.appendChild(document.createTextNode('Consulter'));
 	view.href = '#deployment';
+	view.className = 'btn';
 	view.addEventListener('click', {
 		id: item.id,
 		handleEvent: function(event) {

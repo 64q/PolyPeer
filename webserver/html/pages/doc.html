@@ -1,12 +1,14 @@
 <div id="doc">
-	<h1>Centre de documentation</h1>
+	<div class="page-header">
+		<h1>Centre de documentation <small>Retrouvez les infos les plus importantes</small></h1>
+	</div>
 	<p>
 		Retrouvez toute l'aide nécessaire pour configurer et gérer votre serveur PolyPeer.
 	</p>
 	<ul>
 		<li><a href="#doc_starting">Démarrer</a></li>
 		<li><a href="#doc_create">Créer un déploiement</a></li>
-		<li><a href="#doc_modify">Modifier un déploiement</a></li>
+		<li><a href="#doc_actions">Intéragir avec un déploiement</a></li>
 	</ul>
 	<div id="doc_starting">
 		<h2>Démarrer</h2>
@@ -15,7 +17,51 @@
 		</p>
 		<ul>
 			<li>Un serveur dédié sous Linux (noyau >= 2.6)</li>
-			<li>Des clients sous Linux ou Window</li>
+			<li>Des clients sous Linux ou Windows (XP)</li>
 		</ul>
+		<p>
+			Pour lancer le serveur, rien de plus simple, prenez un invite de commande Bash et entrez <code>./polypeer</code>.
+		</p>
+		<p>
+			Après une phase d'initialisation, le serveur sera prêt à déployer les fichiers !
+		</p>
+		<p>
+			Pour lancer le client, vous avez juste aussi à lancer le client <code>./ppclient</code> en spécifiant ou non l'option de démon/service.
+		</p>
+	</div>
+	<hr>
+	<div id="doc_create">
+		<h2>Créer un déploiement</h2>
+		<p>
+			Afin de créer un nouveau déploiement vous devez vous rendre sur <a href="#new" class="link btn btn-mini">Nouveau déploiement</a>.
+		</p>
+		<p>
+			Il va falloir remplir les champs demandés avec des informations valides :
+		</p>
+		<ul>
+			<li>Le nom du déploiement doit être sans majuscules</li>
+			<li>Le chemin d'accès au fichier sur le serveur doit être valide (et exister)</li>
+			<li>Le chemin de destination chez le client doit lui aussi exister</li>
+		</ul>
+		<p>
+			Une fois cela fait, il vous reste à choisir au moins un ordinateur dans la topologie du réseau pour déployer le fichier !
+		</p>
+	</div>
+	<hr>
+	<div id="doc_actions">
+		<h2>Actions sur les déploiements</h2>
+		<p>
+			Tout au long de vos déploiements, vous pourriez être amené a en supprimer ou stopper certains.
+		</p>
+		<p>
+			Ainsi, vous disposez d'un bouton d'arrêt général des déploiements sur la page de visualisation des déploiements.
+			Cela aura pour effet de mettre en pause les déploiements en cours chez les clients. Vous pourrez reprendre à n'importe quel
+			moment les déploiements en recliquant dessus.
+		</p>
+		<p>
+			Lorsque vous cliquez sur un déploiement, deux autres actions sont aussi disponibles. Vous pouvez choisir de mettre en pause le déploiement
+			ou de le supprimer.
+		</p>
+		<div class="alert alert-error"><strong>Attention !</strong> Supprimer un déploiement est irréversible.</div>
 	</div>
 </div>

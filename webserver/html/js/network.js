@@ -36,6 +36,7 @@ function createHostLine(type, item) {
 	// Configuration du lien dynamique
 	view.appendChild(document.createTextNode('Détails'));
 	view.href = '#host';
+	view.className = 'btn';
 	view.addEventListener('click', {
 		ip: item.ip,
 		handleEvent: function(event) {
