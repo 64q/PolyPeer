@@ -147,17 +147,6 @@ PolyPeerJS.HashNav = {
 };
 
 /**
- * Charge un script JS dynamiquement
- */
-function loadScript(target, callback) {
-	var scriptElement = document.createElement('script');
-   scriptElement.src = target;
-   document.body.appendChild(scriptElement);
-   
-   scriptElement.onload = callback;
-}
-
-/**
  * Affichage d'un succès
  */
 function notifySuccess(msg) {
