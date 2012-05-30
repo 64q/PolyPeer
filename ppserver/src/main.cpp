@@ -14,6 +14,9 @@
 
 // C library
 #include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 // Project header
 #include <PolypeerServer.hpp>
@@ -22,50 +25,81 @@
 using namespace std;
 
 // prototype
-void args(int argc, char* argv[], bool& deamon, bool& stop);
+bool args(int argc, char* argv[], bool& deamon);
 void kill_handler(int sig);
-void writePid();
 void defineHandleStop();
+void writePid(string fileName);
+bool daemon_conf ();
 
 int main(int argc, char* argv[])
 {
 	// variables
 	bool daemon = false;
-	bool stop	= false;
+	int pid;
 	
 	// Récupération des paramètres
-	args(argc, argv, daemon, stop);
-	
-	// si demande d'arret sur les arguments
-	if (stop)
+	if (!args(argc, argv, daemon))
 		return 0;
-	
-	// programme principale
-	cout << "+---------------------------------+" << endl;
-	cout << "|         Server PolyPeer         |" << endl;
-	cout << "+---------------------------------+" << endl;
-	cout << "Serveur de distribution de fichiers volumineux en réseau" << endl;
-	cout << "Pour les modalités d'utilisation des sources, veuillez lire" << endl;
-	cout << "le fichier LICENCE, inclu dans le projet." << endl << endl;
-	
-	cout << "Fichier de log : ./log/PolypeerServer.log" << endl;
-	cout << "Fichier de pid : ./ppserver.pid" << endl;
-	
-	// pretraitement
-	writePid(); // créer le fichier avec le pid du programme
-	defineHandleStop();	// mise en place de l'interception d'un signal
 	
 	// gestion du mode demon
 	if(daemon)
 	{
+		// création d'un processus
+		pid=fork();
+		if (pid==-1)
+		{
+			cout<<"Erreur sur le fork()"<<endl;
+			
+		} else if (pid==0) // config du fils = daemon
+		{
+			// variable principale
+			PolypeerServer* server = PolypeerServer::getInstance();
 		
+			// conf
+			if(!daemon_conf ())
+			{
+				cout<<"Configuration du démon échoué"<<endl;
+				return 0;
+			}
+			
+			// message
+			(server->getLogger())<< "Lancement du serveur Polypeer en mode démon"<<endlog;
+			
+			// run
+			server->start();
+			
+			// vidage mémoire
+			delete server;
+			
+		} else
+		{
+			// Quitter le père pour que le demon soit récupéré par le proces init
+			return 0;
+		}
 	} else
 	{
+		// variable principale
 		PolypeerServer* server = PolypeerServer::getInstance();
+	
+		// mise en place de l'interception d'un signal
+		defineHandleStop();
+		// pid du processus
+		writePid("ppserver.pid");
+	
+		// programme principale
+		cout << "+---------------------------------+" << endl;
+		cout << "|         Server PolyPeer         |" << endl;
+		cout << "+---------------------------------+" << endl;
+		cout << "Serveur de distribution de fichiers volumineux en réseau" << endl;
+		cout << "Pour les modalités d'utilisation des sources, veuillez lire" << endl;
+		cout << "le fichier LICENCE, inclu dans le projet." << endl << endl;
+	
+		cout << "Fichier de log : ./log/PolypeerServer.log" << endl;
+		cout << "Fichier de pid : ./ppserver.pid" << endl;
+		cout << "PID 			: " << getpid() << endl;
 		
-		(server->getLogger())<< "Le main va lancer la boucle principale !"<<endlog;
 		
-		// Lancement du serveur
+		(server->getLogger())<< "Lancement du serveur Polypeer en mode normal"<<endlog;
 		server->start();
 	
 		cout << "Serveur Polypeer terminé" << endl;
@@ -79,25 +113,28 @@ int main(int argc, char* argv[])
 
 
 
-void args(int argc, char* argv[], bool& daemon, bool& stop)
+bool args(int argc, char* argv[], bool& daemon)
 {
 	int i = 1;
+	bool toReturn = true;
 	while(i < argc)
 	{
-		if(string(argv[i]).compare("--deamon") == 0)
+		if(string(argv[i]).compare("--daemon") == 0)
 			daemon = true;
-		else if(string(argv[i]).compare("help") == 0)
+		else if((string(argv[i]).compare("help") == 0) || (string(argv[i]).compare("-h") == 0))
 		{
 			cout << "Serveur Polypeer" << endl;
 			cout << "Options :" << endl;
-			cout << "\t--deamon : lancer en service" << endl;
-			//cout << "\t--verbose : mode verbeux" << endl;
+			cout << "\t--daemon : lancer en service" << endl;
+			//cout << "\t-wd : choisir le repertoire de travail pour le service" << endl;
 			cout << "\thelp     : cette aide" << endl;
-			stop = true;
+			toReturn = true;
 		}
 		i++;
 	}
+	return toReturn;
 }
+
 
 void defineHandleStop()
 {
@@ -117,15 +154,46 @@ void kill_handler(int sig)
 	server->stop();
 }
 
-void writePid()
+void writePid(string fileName)
 {
 	ofstream file;
-	file.open("ppserver.pid", fstream::trunc);
+	file.open(fileName.c_str(), fstream::trunc);
 	if (file.is_open()) 
 	{
 		file << getpid();
 		file.close();
 	}
 }
+
+
+bool daemon_conf ()
+{
+	// change the file mode mask
+	//umask (0); 
+	
+	// Create a new SID for the child process
+	int sid = setsid ();
+	if (sid < 0)
+		return false;
+	
+	// pid du processus
+	writePid("ppserver.pid");
+	
+	// mise en place de l'interception d'un signal
+	defineHandleStop();
+	
+	
+	// change the current working directory
+	//if ((chdir("/tmp")) < 0)
+	//	return false;
+	
+	// close out the standart file descriptor
+	close (STDIN_FILENO);
+	close (STDOUT_FILENO);
+	close (STDERR_FILENO);
+	
+	return true;
+}
+
 
 

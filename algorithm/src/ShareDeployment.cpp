@@ -172,8 +172,10 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 				//}
 			} else
 			{
-				// traitement
-				//entity->getDeploymentState(idFile)->setCurrentIdChunk(file->getFileManager()->getNumberChunk());
+				// traitement erreur dépassement par RAZ
+				entity->getDeploymentState(idFile)->setCurrentIdChunk(0);
+				entity->getDeploymentState(idFile)->setCurrentState(HDS_INIT);
+				cout <<"Dépassement max chunk"<<endl;
 			}
 		}
 	}
@@ -194,18 +196,27 @@ bool ShareDeployment::sendOperationOnHosts(Entity* entitySrc, Entity* entityDst,
 		{
 			// Récupérer le chunk dont l'Host de destination a besoin
 			int numNeededChunk = entityDst->getDeploymentState(idFile)->getCurrentIdChunk();
+			// vérif du num du chunk (dépassement)
+			if(numNeededChunk <= file->getFileManager()->getNumberChunk())
+			{
+				// création du paquet
+				Packet pSOP = PacketSendOperation(entityDst->getIP(), idFile, numNeededChunk);
 		
-			// création du paquet
-			Packet pSOP = PacketSendOperation(entityDst->getIP(), idFile, numNeededChunk);
-		
-			// gestion du débit
-			//if(canTakeBroadcastNetworkFromServerTo(entity, pSOP.size()))
-			//{
-				sData->getConnectionManager()->sendTo(entitySrc->getIP(), pSOP);
-				entitySrc->setHostState(DOWNLOAD);
-				entityDst->setHostState(DOWNLOAD);
-				toReturn = true;
-			//}
+				// gestion du débit
+				//if(canTakeBroadcastNetworkFromServerTo(entity, pSOP.size()))
+				//{
+					sData->getConnectionManager()->sendTo(entitySrc->getIP(), pSOP);
+					entitySrc->setHostState(DOWNLOAD);
+					entityDst->setHostState(DOWNLOAD);
+					toReturn = true;
+				//}
+			} else
+			{
+				// traitement erreur dépassement par RAZ
+				entityDst->getDeploymentState(idFile)->setCurrentIdChunk(0);
+				entityDst->getDeploymentState(idFile)->setCurrentState(HDS_INIT);
+				cout <<"Dépassement max chunk"<<endl;
+			}
 		}
 	}
 	return toReturn;
