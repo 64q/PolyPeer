@@ -142,6 +142,7 @@ void FileManager::reserveFile(const char* path, long size)
 
 FileManager::~FileManager()
 {
+	pbuf->close();
 	file.close();
 	delete [] currentData;
 }
