@@ -19,14 +19,8 @@
 	state.innerHTML = printFileState(item.state);
 
 	view.appendChild(document.createTextNode('Consulter'));
-	view.href = '#deployment';
+	view.href = '#deployment/id/' + item.id;
 	view.className = 'btn';
-	view.addEventListener('click', {
-		id: item.id,
-		handleEvent: function(event) {
-			HashNav.callbacks['deployment'](this.id);
-		}
-	}, true);
 
 	line.appendChild(id);
 	line.appendChild(date);

@@ -35,14 +35,8 @@ function createHostLine(type, item) {
 	
 	// Configuration du lien dynamique
 	view.appendChild(document.createTextNode('Détails'));
-	view.href = '#host';
+	view.href = '#host/ip/' + item.ip;
 	view.className = 'btn';
-	view.addEventListener('click', {
-		ip: item.ip,
-		handleEvent: function(event) {
-			HashNav.callbacks['host'](this.ip);
-		}
-	});
 
 	// Attachement des entités
 	link.appendChild(view);
