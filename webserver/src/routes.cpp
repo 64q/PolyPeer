@@ -8,6 +8,7 @@
 #include <PolypeerServer.hpp>
 #include <ServerData.hpp>
 #include <routes.hpp>
+#include <CreateFileException.hpp>
 
 using namespace std;
 
@@ -274,16 +275,20 @@ void new_deployment_route(mg_connection* conn, const mg_request_info* request_in
 		pch = strtok (NULL, ",");
 	}
 	
-	File* file = new File(data.getCurrentId()+1, string(qname), string(qspath), string(qcpath));
-
-	for (unsigned int i = 0; i < vzones.size(); i++) {
-		file->addEntity(data.public_getEntity(vzones[i]));
-	}
-	
-	data.addFileToAll(file);
-	
 	mg_printf(conn, "%s", ajax_reply_start);
-	mg_printf(conn, "{\"state\":\"done\"}");
+	
+	try {
+		File* file = new File(data.getCurrentId() + 1, string(qname), string(qspath), string(qcpath));
+	
+		for (unsigned int i = 0; i < vzones.size(); i++) {
+			file->addEntity(data.public_getEntity(vzones[i]));
+		}
+	
+		data.addFileToAll(file);
+		mg_printf(conn, "{\"state\":\"done\"}");
+	} catch (CreateFileException e) {
+		mg_printf(conn, "{\"state\":\"error\"}");
+	}
 }
 
 void pause_deployments_route(mg_connection* conn, const mg_request_info* request_info)
