@@ -1,6 +1,7 @@
 #include <XMLTool.hpp>
 #include <ServerData.hpp>
 #include <ClientData.hpp>
+#include <CreateFileException.hpp>
 
 int main()
 {
@@ -29,10 +30,14 @@ int main()
 	Entity* entity2;
 	vector<DeploymentState>* deploys;
 		
-	File* fileTest = new File(sData->getCurrentId()+1,"D4", "file/truc2d.png");
-	fileTest->addEntity(sData->public_getEntity("batiment_D"));
-	sData->addFileToAll(fileTest);
-	
+	try{
+		File* fileTest = new File(sData->getCurrentId()+1,"D4","file/truc2d.png", "file/truc2d.png");
+		fileTest->addEntity(sData->public_getEntity("batiment_D"));
+		sData->addFileToAll(fileTest);
+	} catch (CreateFileException)
+	{
+		cout << "OPENFILEEXCEPTION" << endl;
+	}
 	/*sData->deleteFile(23);*/
 	
 	unsigned int i, j, k;

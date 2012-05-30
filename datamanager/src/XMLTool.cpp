@@ -1,5 +1,6 @@
 #include <XMLTool.hpp>
 #include <OpenFileException.hpp>
+#include <CreateFileException.hpp>
 
 using namespace std;
 
@@ -133,8 +134,13 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 					elem->QueryIntAttribute("id", &id);
 					elem->QueryIntAttribute("size", &size);
 					elem->QueryIntAttribute("chunkSize", &chunkSize);
-					File *f = new File(id, elem->Attribute("name"), elem->Attribute("serverPath"), elem->Attribute("clientPath"), size, chunkSize, fs);
-					sData->addFile(f);
+					try {
+						File *f = new File(id, elem->Attribute("name"), elem->Attribute("serverPath"), elem->Attribute("clientPath"), size, chunkSize, fs);
+						sData->addFile(f);
+					} catch (CreateFileException)
+					{
+						cout << "CREATEFILEEXCEPTION" << endl;
+					}
 				}
 			}
 			if (!(node->ValueStr().compare("zone")) || !(node->ValueStr().compare("host")))

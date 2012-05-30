@@ -1,6 +1,7 @@
 #include <File.hpp>
 #include <Zone.hpp>
 #include <OpenFileException.hpp>
+#include <CreateFileException.hpp>
 
 using namespace std;
 
@@ -22,6 +23,7 @@ File::File(int id, string name, string serverPath, string clientPath, int size, 
 		fileM = NULL;
 		fState = F_ERROR;
 		cout << "FAIL LOAD : Fichier " << serverPath << " inexistant ou déjà ouvert par un autre déploiement "<< endl;
+		throw CreateFileException();
 	}
 }
 
@@ -39,6 +41,7 @@ File::File(int id, string name, string serverPath, string clientPath, int size, 
 		fileM = NULL;
 		fState = F_ERROR;
 		cout << "FAIL LOAD : Fichier " << serverPath << " inexistant"<< endl;
+		throw CreateFileException();
 	}
 
 }
@@ -57,6 +60,7 @@ File::File(int id, string name, string serverPath, string clientPath):
 		fileM = NULL;
 		fState = F_ERROR;
 		cout << "FAIL LOAD : Fichier2 " << serverPath << " inexistant"<< endl;
+		throw CreateFileException();
 	}
 }
 
