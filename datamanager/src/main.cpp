@@ -41,7 +41,10 @@ int main()
 	/*sData->deleteFile(23);*/
 	
 	unsigned int i, j, k;
-	cout << endl;
+
+	cout << "SIZE " << vFile->size() << endl; 
+	
+	
 	for (i=0; i < vFile->size(); i++)
 	{
 			cout << "name : " << ((*vFile)[i])->getName() << endl;
