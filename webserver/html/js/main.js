@@ -36,10 +36,6 @@ var PolyPeer = {
  * Déclenché au chargement de la page
  */
 window.addEventListener('load', function() {
-	
-	// Traitement du hash composé
-	var vars = location.hash.split('/');
-	
 	PolyPeer.init();
 	HashNav.init();
 	
@@ -47,6 +43,10 @@ window.addEventListener('load', function() {
 		updateStatus();
 	}, 2000);
 	
+});
+
+window.addEventListener('hashchange', function() {
+	HashNav.evaluate();
 });
 
 function updateStatus() {

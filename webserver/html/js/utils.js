@@ -79,21 +79,13 @@ var Ajax = {
 var HashNav = {
 	
 	current: null,
+	vars: null,
 	
 	/**
 	 * Initialise la navigation par hash, notamment l'activation des liens spéciaux
 	 */
 	init: function() {
-		this.activate('body');
-		
-		// Init du tab courant (pour reprise)
-		if (location.hash.length > 0) {
-			this.current = getTargetFromHash(location.hash);
-		} else {
-			this.current = "home";
-		}
-		
-		HashNav.callbacks[this.current]();
+		this.evaluate();
 	},
 	
 	/**
@@ -109,6 +101,27 @@ var HashNav = {
 				HashNav.callbacks[target]();
 				HashNav.current = target;
 			});
+		}
+	},
+	
+	/**
+	 * Evalue un lien hashé
+	 */
+	evaluate: function() {
+		// Traitement du hash composé
+		vars = location.hash.split('/');
+		
+		// Init du tab courant (pour reprise)
+		if (location.hash.length > 0) {
+			this.current = getTargetFromHash(vars[0]);
+		} else {
+			this.current = "home";
+		}
+		
+		vars.shift();
+		
+		if (HashNav.callbacks[this.current] != undefined) {
+			HashNav.callbacks[this.current](vars);
 		}
 	},
 	
@@ -158,14 +171,14 @@ var HashNav = {
 		 * Affichage de l'onglet #deployment
 		 */
 		deployment: function(id) {
-			if (id == undefined) {
+			if (id[1] == undefined) {
 				$('#content').innerHTML = '<h1>Page introuvable</h1><p class="alert alert-error">La page demandée est introuvable.</p>';
 				return;
 			}
 			
 			callPage('#deployment', null, function() {		
 				// Récupération des infos du déploiement cible
-				Ajax.request('/ajax/deployment', 'id=' + id, function(content) {
+				Ajax.request('/ajax/deployment', 'id=' + id[1], function(content) {
 					var content = JSON.parse(content);
 					var result;
 					
@@ -198,7 +211,7 @@ var HashNav = {
 					
 					$('#deployment').innerHTML = result;
 					$('#refresh-button').addEventListener('click', function() {
-						HashNav.callbacks.deployment(id);
+						HashNav.callbacks.deployment(id[1]);
 					});
 				});
 			});
@@ -238,13 +251,13 @@ var HashNav = {
 		 * Affichage de l'onglet #host
 		 */
 		host: function(ip) {
-			if (ip == undefined) {
+			if (ip[1] == undefined) {
 				$('#content').innerHTML = '<h1>Page introuvable</h1><p class="alert alert-error">La page demandée est introuvable.</p>';
 				return;
 			}
 			
 			callPage('#host', null, function() {
-				Ajax.request('/ajax/get_host', 'ip=' + ip, function(content) {
+				Ajax.request('/ajax/get_host', 'ip=' + ip[1], function(content) {
 					var content = JSON.parse(content);
 					var result = '<table class="table table-striped">';
 				
@@ -258,7 +271,7 @@ var HashNav = {
 					$('#host-info').innerHTML = '<ul><li><strong>Nom : </strong>' + content.name + '</li><li><strong>IP : </strong>' + content.ip + '</li><li><strong>Etat : </strong>' + printHostState(content.state) + '</li></ul>';
 					$('#host-deployments').innerHTML = result;
 					$('#refresh-button').addEventListener('click', function() {
-						HashNav.callbacks.host(ip);
+						HashNav.callbacks.host(ip[1]);
 					});
 				});
 			});
