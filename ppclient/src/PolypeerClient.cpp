@@ -82,7 +82,7 @@ void PolypeerClient::start()
 void PolypeerClient::restart()
 {
 	stop();
-	sleep(5000);
+	sleep(5);
 	start();
 }
 
@@ -96,4 +96,5 @@ void PolypeerClient::run()
 void PolypeerClient::stop()
 {
 	this->running = false;
+	delete cData;
 }

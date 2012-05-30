@@ -5,7 +5,7 @@
 
 
 #include <ConnectionManager.hpp>
-
+#include <signal.h>
 
 
 ConnectionManager::ConnectionManager(int port)
@@ -86,6 +86,8 @@ void ConnectionManager::stop()
 	}
 
 	serverSocket->close();
+	kill(thread, 9);
+	cout << "serverSocketClose"<<endl;
 }
 
 void ConnectionManager::sendTo(std::string dest, Packet packet)
@@ -112,6 +114,7 @@ void ConnectionManager::sendTo(std::string dest, Packet packet)
 void ConnectionManager::wait()
 {
 	pthread_join(thread, NULL);
+	cout << "ok"<<endl;
 }
 
 void ConnectionManager::removeConnection(std::string ip)
