@@ -21,8 +21,9 @@ XMLTool::XMLTool(ServerData* sData)
 	}
 	
 	if(!DOMDeployments.LoadFile())
+	{
 		cout << "Erreur lors du chargement du fichier : " << deploymentsFile << endl;
-	else 
+	} else 
 	{
 		//Ajout des états de déploiement dans la map
 		readDeployments(sData, DOMDeployments.RootElement());
@@ -134,13 +135,9 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 					elem->QueryIntAttribute("id", &id);
 					elem->QueryIntAttribute("size", &size);
 					elem->QueryIntAttribute("chunkSize", &chunkSize);
-					try {
+
 						File *f = new File(id, elem->Attribute("name"), elem->Attribute("serverPath"), elem->Attribute("clientPath"), size, chunkSize, fs);
 						sData->addFile(f);
-					} catch (CreateFileException)
-					{
-						cout << "CREATEFILEEXCEPTION" << endl;
-					}
 				}
 			}
 			if (!(node->ValueStr().compare("zone")) || !(node->ValueStr().compare("host")))
@@ -158,6 +155,7 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 		
 		for(TiXmlNode* element = node->FirstChild(); element; element = element->NextSibling())
 		{
+			cout << element->ValueStr() << endl;
 			if ( node->ToElement() )
 				readDeployments(sData, element);
 		}
@@ -166,6 +164,9 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 	} catch (OpenFileException)
 	{
 		cout << "Problème dans le fichier de déploiement : " << name << endl;
+	} catch (CreateFileException)
+	{
+		cout << "CREATEFILEEXCEPTION" << endl;
 	}
 }
 
