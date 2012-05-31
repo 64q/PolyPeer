@@ -34,7 +34,7 @@ std::string getStringHostDeployState(HostDeployState state);
 std::string getStringFileState(FileState state);
 
 /**
- * Récupère le FIleState à partir d'une chaine de caractère
+ * Récupère le FileState à partir d'une chaine de caractère
  */
 FileState getFileStateString(std::string stringState);
 

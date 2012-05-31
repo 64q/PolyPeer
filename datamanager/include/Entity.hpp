@@ -17,6 +17,10 @@
 class DeploymentState;
 class File;
 
+/**
+ * Une entité peut être une zone ou un client
+ */
+ 
 enum EntityType { HOST = 0, ZONE };
 
 class Entity
@@ -24,8 +28,12 @@ class Entity
 public:
 	/**
 	 * Contructeur d'une entité
-	 * @param string name
+	 * @param name
 	 * 	nom de l'entité
+	 * @param parent
+	 *	 pointeur vers l'entité contenant l'entité à créer
+	 * @param networkCapacity
+	 *	 capacité réseau entre l'entité et son père
 	 */
 	Entity(const std::string& name, Entity* parent, int networkCapacity);
 	std::string getName();

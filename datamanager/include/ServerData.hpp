@@ -15,6 +15,7 @@
 #include <FileManager.hpp>
 #include <ConnectionManager.hpp>
 #include <Packet.hpp>
+#include <mutex>
 
 	/**
 	 * Classe contenant les différentes structures de stockage des données ainsi que
@@ -257,11 +258,16 @@ protected :
 	 */
 	int clientPort;
 	
-  /**
+   /**
 	* Contient la DOM des fichiers de déploiement et de topologie
 	*/
 	XMLTool* xmlTool;
 
+   /**
+	* Mutex limitant l'accès à deployFiles
+	*/
+	Mutex mutex_deployFiles;
+	
 private :
 
 	void deleteMap(map<string, Entity*>* entities, vector<string> &alreadyDelete);
