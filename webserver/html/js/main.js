@@ -6,11 +6,11 @@
 /**
  * Déclenché au chargement de la page
  */
-window.addEventListener('load', function() {
-	PolyPeerJS.init();
+pp.ready(function() {
+	pp.init();
 	
 	window.setInterval(function() { // Définition du rafraichissement du state
-		PolyPeerJS.Utils.updateStatus();
+		pp.Utils.updateStatus();
 	}, 2000);	
 });
 

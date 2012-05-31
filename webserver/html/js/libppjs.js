@@ -219,3 +219,13 @@ PolyPeerJS.HashRoutes = {
  * dynamiquement dans le DOM (network, host, etc)
  */
 var pp = PolyPeerJS;
+
+/**
+ * Raccourci pour accès aux fonctions utilitaires
+ */
+var ppu = PolyPeerJS.Utils;
+
+/**
+ * Raccourci pour accès à la fonction d'Ajax
+ */
+var ppa = PolyPeerJS.Ajax;
