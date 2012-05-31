@@ -1,14 +1,16 @@
-/* Fichier principal JS */
+/* 
+ * Fichier principal JS, initisalisation des bibliothèques
+ * Quentin Lebourgeois - 2012
+ */
 
 /**
  * Déclenché au chargement de la page
  */
-window.addEventListener('load', function() {
-	PolyPeerJS.init();
+pp.ready(function() {
+	pp.init();
 	
-	window.setInterval(function() {
-		PolyPeerJS.Utils.updateStatus();
+	window.setInterval(function() { // Définition du rafraichissement du state
+		pp.Utils.updateStatus();
 	}, 2000);	
 });
 
-/* EOF */

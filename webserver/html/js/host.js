@@ -1,5 +1,6 @@
 /*
- * Fichier spécifique à l'host
+ * Fichier spécifique à la visualisation d'un host
+ * Quentin Lebourgeois - 2012
  */
 
 (function(){
@@ -11,7 +12,7 @@
 	
 	pp.Ajax('/ajax/get_host', args[0] + '=' + args[1], 
 		function(content) {
-			var result;
+			var result = '';
 
 			for (var i = 0; i < content.deployments.length; i++) {
 				var width = (content.deployments[i].current / content.deployments[i].total) * 100;
@@ -41,7 +42,7 @@
 	function updateHostDeployments(type, ref) {
 		if (!pp.hasChanged) {
 			pp.Ajax('/ajax/get_host', type + '=' + ref, function(content) {
-				var result;
+				var result = '';
 
 				for (var i = 0; i < content.deployments.length; i++) {
 					var width = (content.deployments[i].current / content.deployments[i].total) * 100;

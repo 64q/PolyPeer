@@ -9,6 +9,9 @@
 #include <BaseServer.hpp>
 #include <Logger.hpp>
 
+/** 
+ * Typedef pour créer facilement des handlers sur les routes appelées par le client web
+ */
 typedef void (*route_handler)(mg_connection*, const mg_request_info*);
 
 /**
@@ -41,6 +44,8 @@ public:
 	
 	/**
 	 * Renvoie l'état du serveur (en debug ou pas)
+	 * @return bool
+	 * 	etat debug
 	 */
 	bool isDebug();
 	
@@ -83,14 +88,21 @@ protected:
 	 * Instance du WebServer
 	 */
 	static WebServer* instance;
-	
-	pthread_t thread;
-	
+
+	/**
+	 * Fonction amie pour accéder facilement aux attrs du webserver
+	 */
 	friend void* eventHandler(mg_event, mg_connection*, const mg_request_info*);
 };
 
 /**
  * Fonction d'handle des events sur le serveur web
+ * @param mg_event
+ * 	evenement déclenché par une requête
+ * @param mg_connection*
+ * 	connexion courante
+ * @param mg_request*
+ * 	contient tous les paramètres de la requête reçue
  */
 void* eventHandler(mg_event event, mg_connection *conn, const mg_request_info *request_info);
 

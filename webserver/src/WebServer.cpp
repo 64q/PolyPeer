@@ -46,7 +46,7 @@ WebServer::WebServer() :
 
 WebServer::~WebServer()
 {
-
+	// Rien de particulier à faire !
 }
 
 WebServer* WebServer::getInstance()
@@ -74,7 +74,7 @@ void WebServer::start()
 
 void WebServer::run()
 {
-	// Non implémenté
+	// Non implémenté ici à cause de Mongoose
 }
 
 void WebServer::stop()
@@ -84,8 +84,6 @@ void WebServer::stop()
 	mg_stop(this->context);
 	
 	logger << notice << "Le serveur web a été arrêté." << endlog;
-	
-	cout << "Arrête toi connard" << endl;
 }
 
 void WebServer::restart()
