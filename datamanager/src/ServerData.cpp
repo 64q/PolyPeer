@@ -98,14 +98,22 @@ void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
 	if(host != NULL)
 	{
 		// Actualiser le nombre de chunck pour l'host
-		host->getDeploymentState(fileID)->setCurrentIdChunk(nbChunk);
+		if (host->getDeploymentState(fileID) != NULL)
+		{
+			host->getDeploymentState(fileID)->setCurrentIdChunk(nbChunk);
+			// l'host a fini son operation
+			host->setHostState(WAIT);
+			// Actualiser l'état du fichier POUR L'Host
+			if(nbChunk >= getFile(fileID)->getFileManager()->getNumberChunk())
+				host->getDeploymentState(fileID)->setCurrentState(HDS_FINISH);
+			else
+				host->getDeploymentState(fileID)->setCurrentState(HDS_WAIT);
+		} else 
+		{
+			cout << "Le fichier d'id donné n'existe pas ("<<fileID<<")" << endl;
+		}
 		// l'host a fini son operation
 		host->setHostState(WAIT);
-		// Actualiser l'état du fichier POUR L'Host
-		if(nbChunk >= getFile(fileID)->getFileManager()->getNumberChunk())
-			host->getDeploymentState(fileID)->setCurrentState(HDS_FINISH);
-		else
-			host->getDeploymentState(fileID)->setCurrentState(HDS_WAIT);
 	}
 	
 }
@@ -118,6 +126,7 @@ void ServerData::updateHost(string addressHost, int fileID, HostDeployState s)
 		// l'host a fini son operation
 		host->setHostState(WAIT);
 		// Actualiser l'état du fichier POUR L'Host
+		if(host->getDeploymentState(fileID) != NULL)
 			host->getDeploymentState(fileID)->setCurrentState(HDS_DISKFULL);
 	}
 }
@@ -290,13 +299,22 @@ bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity, int packetWe
 {
 	bool possible = true;
 	
+	// racine de l'arbre
 	if(entity != NULL)
 	{
-		possible = updateNetworkCurrentBroadbandSpeed(entity->getParent(),packetWeight);
-		if(possible)
+		// si on peut envoyer
+		if(entity->getTimerState())
 		{
-			// calcul
-			entity->setCurrentBroadbandSpeed(entity->getCurrentBroadbandSpeed() + packetWeight);
+			possible = updateNetworkCurrentBroadbandSpeed(entity->getParent(),packetWeight);
+			if(possible)
+			{
+				//int capacite = entity->getNetworkCapacity();
+				//int neededTimeMs = (packetWeight*1000)/capacite;
+				entity->setCurrentBroadbandSpeed(entity->getCurrentBroadbandSpeed() + packetWeight);
+			}
+		} else
+		{
+			possible = false;
 		}
 	}
 	

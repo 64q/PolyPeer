@@ -44,8 +44,7 @@
 
 	$('#pause-button').addEventListener('click', function() {
 		if (confirm('Etes-vous sûr de vouloir mettre en pause le serveur ?')) {
-			Ajax.request('/ajax/pause_deployments', null, function(content) {
-				var content = JSON.parse(content);
+			pp.Ajax('/ajax/pause_deployments', null, function(content) {
 				if (content.state == "done") {
 					notifySuccess("Les déploiements ont été mis en pause");
 				} else {
