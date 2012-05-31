@@ -7,7 +7,9 @@
 #include <exception>
 #include <sstream>
 
-#include <windows.h>
+#ifdef WIN32
+	#include <windows.h>
+#endif
 
 // C library
 #include <ctime>

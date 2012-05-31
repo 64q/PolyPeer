@@ -84,7 +84,7 @@ int callBackAddHost(Packet& p)
 	
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
 	
-	 PolypeerServer::getInstance()->multiSleep(2500);
+	 //PolypeerServer::getInstance()->multiSleep(2500);
 	
 	//cout << "PacketAddHost" << pp.getIpAddress() << endl;
 	sd.updateHost(pp.getIpAddress(), WAIT);

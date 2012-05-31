@@ -25,6 +25,7 @@ TCPEXCEPT=../tcp/include/Exceptions/
 WEB=../webserver/
 BASESERVER=../baseserver/
 ALGO=../algorithm/
+MUTEX=../mutex/
 
 # Variables de nomage et de localisation
 CC=g++
@@ -35,7 +36,7 @@ INC=include/
 # Flag pour le linker
 LDFLAGS=-lpthread -pthread -ldl -g
 # Flag préprocessing et compilation
-CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(ALGO)$(INC) -I$(TCP)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(WEB)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -I$(BASESERVER)$(INC) -D TIXML_USE_STL
+CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(MUTEX)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(ALGO)$(INC) -I$(TCP)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(WEB)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -I$(BASESERVER)$(INC) -D TIXML_USE_STL
 
 
 # commande par defaut
@@ -359,6 +360,19 @@ Logger.o:  $(LOG)$(SRC)Logger.cpp
 	@echo $^
 	@$(CC) -c $^ $(CFLAGS)
 
+############################
+#
+#      MUTEX
+#
+############################
+
+Mutex=Mutex.o
+
+# Compilation du Logger
+Mutex.o:  $(MUTEX)$(SRC)Mutex.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
 
 ############################
 #
@@ -368,7 +382,7 @@ Logger.o:  $(LOG)$(SRC)Logger.cpp
 ############################
 
 
-polypeer: main.o PolypeerServer.o $(BaseServ) $(MainStruct) $(LibXML) $(FileManager) $(PacketManager) $(CallbackManager) $(Data) $(ConnectionManager) $(Logger) $(WebServ) $(Algorithm)
+polypeer: main.o PolypeerServer.o $(BaseServ) $(MainStruct) $(LibXML) $(Mutex) $(FileManager) $(PacketManager) $(CallbackManager) $(Data) $(ConnectionManager)  $(Algorithm) $(Logger) $(WebServ)
 	@echo "Link output files..."
 	@$(CC) -o $@  $^ $(LDFLAGS)
 	@echo "OK"
