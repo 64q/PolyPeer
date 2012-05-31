@@ -7,6 +7,23 @@
 using namespace std;
 MD5 Chunk::encoder;
 
+
+Chunk::Chunk(const Chunk& c) : number(c.number), size(c.size), chunkIntegrity(chunkIntegrity), idFile(idFile) 
+{
+	
+	for (int i = 0; i < size; i++)
+	{
+		this->data[i] = c.data[i];
+	}
+	
+	for (int i = 0; i < 32; i++)
+	{
+		this->md5[i] = c.md5[i];
+	}
+	
+} 
+
+
 Chunk::Chunk(long number, long size, char* data, int idfile, char* crc)
 {
 	initialiser(number, size, data, idFile);
@@ -30,7 +47,7 @@ void Chunk::checkIntegrity(char* crc)
 		{
 			equal = false;
 		}
-	}
+	} 
 	if(!equal)
 	{
 		chunkIntegrity = false;

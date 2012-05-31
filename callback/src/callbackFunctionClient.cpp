@@ -64,15 +64,27 @@ int callbackSendOperation(Packet& p)
 
 	// vérifier que l'on possède bien le chunk en question
 	// --
+	FileManager* fm = cd->getFileManager(pp.getIdFile());
 	
-	Chunk c = cd->getFileManager(pp.getIdFile())->getChunk((long)pp.getNumChunk());
-	cout << "Chunk prêt à envoyer n°" << c.getNumber()<<endl;
-	// envoie à la cible
-	cd->getConnectionManager()->sendTo(pp.getTarget(), PacketSendChunk(c));
-	cout << "Chunk envoyé"<<endl;
-	// réponse au serveur du travail effectué
-	cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketSendOperationFinished());
-	cout << "serveur prévenu"<<endl;
+	cout <<" on demande a envoyé le "<<pp.getNumChunk()<<" du fichier "<< pp.getIdFile() <<endl;
+	
+	if(fm!=NULL)
+	{
+		Chunk c = fm->getChunk((long)pp.getNumChunk());
+		cout << "Chunk prêt à envoyer n°" << c.getNumber()<<endl;
+		// envoie à la cible
+		cd->getConnectionManager()->sendTo(pp.getTarget(), PacketSendChunk(c));
+		cout << "Chunk envoyé"<<endl;
+		// réponse au serveur du travail effectué
+		cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketSendOperationFinished());
+		cout << "serveur prévenu"<<endl;
+	
+	}else
+	{
+	
+		cout << "Ce fichier n'existe pas"<<endl;
+	}
+	
 
 	return 1;
 }
@@ -98,7 +110,8 @@ int callbackSendChunk(Packet& p)
     }
     else
     {
-        cout << "erreur du Chunk reçu" << endl;
+        cout << "erreur du Chunk reçu :";
+        cout << tmp.getNumber()<<endl;
         cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketMd5Error(tmp.getIdFile(), tmp.getNumber()));
     }
 
