@@ -10,22 +10,21 @@ MD5 Chunk::encoder;
 
 Chunk::Chunk(const Chunk& c) : number(c.number), size(c.size), chunkIntegrity(chunkIntegrity), idFile(idFile) 
 {
-	
+	cout << "constructeur par recopie utilisé" << endl;
+	this->data = new char[size];
 	for (int i = 0; i < size; i++)
 	{
 		this->data[i] = c.data[i];
 	}
-	
-	for (int i = 0; i < 32; i++)
-	{
-		this->md5[i] = c.md5[i];
-	}
+	this->md5 = new char[32];
+	md5copy(c.md5);
 	
 } 
 
 
 Chunk::Chunk(long number, long size, char* data, int idfile, char* crc)
 {
+	this->md5 = new char[32];
 	initialiser(number, size, data, idFile);
 	checkIntegrity(crc);
 
@@ -33,6 +32,7 @@ Chunk::Chunk(long number, long size, char* data, int idfile, char* crc)
 
 Chunk::Chunk(long number, long size, char* data, int idFile)
 {
+	this->md5 = new char[32];
 	initialiser(number, size, data, idFile);
 	chunkIntegrity = true;
 }
@@ -81,12 +81,13 @@ void Chunk::initialiser(long number, long size, char* data, int idFile)
 	}
 
 	//calcul du code correspondant à data
-	this->md5 = encoder.digestString(data, size);
+	md5copy(encoder.digestString(data, size));
 }
 
 Chunk::~Chunk()
 {
 	delete[] data;
+	delete [] md5;
 
 }
 
@@ -112,7 +113,6 @@ char* Chunk::getMD5()
 bool Chunk::isIntegrate()
 {
 	return chunkIntegrity;
-	//return true;
 }
 
 int Chunk::getIdFile()
@@ -182,7 +182,12 @@ Chunk::Chunk(char* serializedChunk, int sizeString)
 
 
 	//calcul du code correspondant à data
-	this->md5 = encoder.digestString(data, size);
+	char* tmp = encoder.digestString(data, size);
+	md5 = new char[32];
+	for(int i = 0; i<32; i++)
+	{
+		this->md5[i] = tmp[i];
+	}
 	checkIntegrity(crc);
 }
 
@@ -228,13 +233,20 @@ Chunk::Chunk(Data& d)
 
 
 	//calcul du code correspondant à data
-	this->md5 = encoder.digestString(data, size);
+	md5 = new char[32];
+	md5copy(encoder.digestString(data, size));
 	checkIntegrity(crc);
 
 	// vidage
 	delete [] serializedChunk;
 }
 
-
+void Chunk::md5copy(char* md5)
+{	
+	for(int i = 0; i<32; i++)
+	{
+		this->md5[i] = md5[i];
+	}	
+}
 
 

@@ -126,6 +126,7 @@ private:
 	static MD5 encoder;
 	void initialiser(long number, long size, char* data, int idFile);
 	void checkIntegrity(char* crc);
+	void md5copy(char* md5);
 
 };
 

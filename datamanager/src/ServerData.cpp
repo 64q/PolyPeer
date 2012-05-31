@@ -98,14 +98,20 @@ void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
 	if(host != NULL)
 	{
 		// Actualiser le nombre de chunck pour l'host
-		host->getDeploymentState(fileID)->setCurrentIdChunk(nbChunk);
-		// l'host a fini son operation
-		host->setHostState(WAIT);
-		// Actualiser l'état du fichier POUR L'Host
-		if(nbChunk >= getFile(fileID)->getFileManager()->getNumberChunk())
-			host->getDeploymentState(fileID)->setCurrentState(HDS_FINISH);
-		else
-			host->getDeploymentState(fileID)->setCurrentState(HDS_WAIT);
+		if (host->getDeploymentState(fileID) != NULL)
+		{
+			host->getDeploymentState(fileID)->setCurrentIdChunk(nbChunk);
+			// l'host a fini son operation
+			host->setHostState(WAIT);
+			// Actualiser l'état du fichier POUR L'Host
+			if(nbChunk >= getFile(fileID)->getFileManager()->getNumberChunk())
+				host->getDeploymentState(fileID)->setCurrentState(HDS_FINISH);
+			else
+				host->getDeploymentState(fileID)->setCurrentState(HDS_WAIT);
+		} else 
+		{
+			cout << "Le fichier d'id donné n'existe pas" << endl;
+		}
 	}
 	
 }

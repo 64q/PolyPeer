@@ -2,7 +2,7 @@
 #include <ServerData.hpp>
 #include <ClientData.hpp>
 #include <CreateFileException.hpp>
-
+#include <sys/time.h>
 
 int main()
 {
@@ -84,13 +84,13 @@ int main()
 			}
 		}
 	}
-	sleep(2);
+	/*sleep(2);
 	vector<Entity*>* hosts = sData->getHosts();
 	for (i=0;i < hosts->size(); i++)
 	{
 		cout << ((*hosts)[i])->getName();
 		cout << " TIME : " << ((*hosts)[i])->getTimerState() << endl;
-	}
+	}*/
 	/*Entity* entity10 = sData->public_getEntity("PC11");
 	Entity* entity20= sData->public_getEntity("batiment_C");
 	Entity* entity30 = sData->public_getEntity("PC40");
@@ -123,6 +123,13 @@ int main()
 	
 	sData->updateNetworkCurrentBroadbandSpeed(e1,e2,1);
 
+     timeval tim;
+     gettimeofday(&tim, NULL);
+     double t1=tim.tv_sec+(tim.tv_usec/1000000.0);
+     sleep(0);
+     gettimeofday(&tim, NULL);
+     double t2=tim.tv_sec+(tim.tv_usec/1000000.0);
+     printf("%.6lf seconds elapsed\n", t2-t1);
 	
 	delete sData;
 

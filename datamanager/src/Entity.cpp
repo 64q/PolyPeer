@@ -7,7 +7,7 @@ using namespace std;
 Entity::Entity(const std::string& name, Entity* parent, int networkCapacity) :
 	name(name), parent(parent), networkCapacity(networkCapacity)
 {
-	setTimerSpeed();
+	gettimeofday(&timerSpeed, NULL);
 	currentBroadbandSpeed = 0;
 }
 
@@ -45,18 +45,23 @@ int Entity::getNetworkCapacity()
 	return networkCapacity;
 }
 
-void Entity::setTimerSpeed()
+void Entity::setTimerSpeed(int seconds, int milliseconds)
 {
-	time_t currentTime;
-	time ( &currentTime );
-	timerSpeed = currentTime;	
+	gettimeofday(&timerSpeed, NULL);
+	timerSpeed.tv_sec += seconds;
+	// On multiplie par 1000 pour avoir des u-seconds
+	timerSpeed.tv_usec += (milliseconds*1000);	
 }
 
-double Entity::getTimerSpeed()
+bool Entity::getTimerSpeed()
 {
-	time_t currentTime;
-	time ( &currentTime );
-	return difftime (currentTime,timerSpeed);
+	timeval currentTime;
+	gettimeofday(&currentTime, NULL);
+	
+	double saveTimer = timerSpeed.tv_sec + (timerSpeed.tv_usec/1000000.0);
+	double currentTimer = currentTime.tv_sec + (currentTime.tv_usec/1000000.0);
+	
+	return (saveTimer <= currentTimer);
 }
 
 EntityType Entity::getType() 

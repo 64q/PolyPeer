@@ -147,7 +147,7 @@ FileManager::~FileManager()
 	delete [] currentData;
 }
 
-Chunk FileManager::getChunk(long number)
+Chunk* FileManager::getChunk(long number)
 {
 	if(number <= getNumberChunk())
 	{
@@ -160,15 +160,15 @@ Chunk FileManager::getChunk(long number)
 		
 		if (getNumberChunk()-1==number)
 		{
-			return Chunk(number, sizeFile-number*sizeChunk, currentData, idFile);
+			return new Chunk(number, sizeFile-number*sizeChunk, currentData, idFile);
 		}
 		else
 		{
-			return Chunk(number, sizeChunk, currentData, idFile);
+			return new Chunk(number, sizeChunk, currentData, idFile);
 		}
 	}else
 	{
-		cout << "dépassement de chunk" << endl;
+		return NULL;
 	}
 }
 bool FileManager::saveChunk(Chunk &chunk)
