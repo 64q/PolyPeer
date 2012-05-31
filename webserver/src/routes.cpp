@@ -173,9 +173,18 @@ void deployment_route(mg_connection* conn, const mg_request_info* request_info)
 		{
 			FileManager* fm = file->getFileManager();
 			std::vector<std::vector<Entity*>* >* pp = file->getSortedHosts();
-	
-			mg_printf(conn, "{\"id\":\"%i\", \"name\":\"%s\", \"filename\":\"%s\", \"state\":\"%s\", \"nbchunk\":%lu, \"chunksize\":%lu, \"size\":%lu, \"hosts\":["
-				, id, file->getName().c_str(), fm->getFileName().c_str()
+			
+			struct tm * timeinfo;
+			time_t rawtime = (time_t)(file->getDate());
+			char buffer[80];
+			time (&rawtime);
+			timeinfo = localtime(&rawtime);
+			
+			strftime (buffer,80,"%c",timeinfo);
+			
+			mg_printf(conn, "{\"id\":\"%i\", \"name\":\"%s\", \"date\":\"%s\", \"filename\":\"%s\", \"state\":\"%s\", \"nbchunk\":%lu, \"chunksize\":%lu, \"size\":%lu, \"hosts\":["
+				, id, file->getName().c_str(), buffer
+				, fm->getFileName().c_str()
 				, getStringFileState(file->getFileState()).c_str()
 				, fm->getNumberChunk()
 				, fm->getChunkSize(), fm->getFileSize()
