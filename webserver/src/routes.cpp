@@ -2,6 +2,7 @@
 #include <cstring>
 #include <vector>
 #include <string>
+#include <ctime>
 
 #include <mongoose.h>
 
@@ -41,9 +42,18 @@ void deployments_route(mg_connection* conn, const mg_request_info* request_info)
 		{
 			FileManager* fm = (*it)->getFileManager();
 			
-			mg_printf(conn, "{\"id\":%i, \"name\":\"%s\", \"state\":\"%s\"}"
+			struct tm * timeinfo;
+			time_t rawtime = (time_t)((*it)->getDate());
+			char buffer[80];
+			time (&rawtime);
+			timeinfo = localtime(&rawtime);
+			
+			strftime (buffer,80,"%c",timeinfo);
+			
+			mg_printf(conn, "{\"id\":%i, \"name\":\"%s\", \"date\":\"%s\", \"state\":\"%s\"}"
 				, fm->getIdFile()
 				, (*it)->getName().c_str()
+				, buffer
 				, getStringFileState((*it)->getFileState()).c_str()
 			);
 	
@@ -163,9 +173,18 @@ void deployment_route(mg_connection* conn, const mg_request_info* request_info)
 		{
 			FileManager* fm = file->getFileManager();
 			std::vector<std::vector<Entity*>* >* pp = file->getSortedHosts();
-	
-			mg_printf(conn, "{\"id\":\"%i\", \"name\":\"%s\", \"filename\":\"%s\", \"state\":\"%s\", \"nbchunk\":%lu, \"chunksize\":%lu, \"size\":%lu, \"hosts\":["
-				, id, file->getName().c_str(), fm->getFileName().c_str()
+			
+			struct tm * timeinfo;
+			time_t rawtime = (time_t)(file->getDate());
+			char buffer[80];
+			time (&rawtime);
+			timeinfo = localtime(&rawtime);
+			
+			strftime (buffer,80,"%c",timeinfo);
+			
+			mg_printf(conn, "{\"id\":\"%i\", \"name\":\"%s\", \"date\":\"%s\", \"filename\":\"%s\", \"state\":\"%s\", \"nbchunk\":%lu, \"chunksize\":%lu, \"size\":%lu, \"hosts\":["
+				, id, file->getName().c_str(), buffer
+				, fm->getFileName().c_str()
 				, getStringFileState(file->getFileState()).c_str()
 				, fm->getNumberChunk()
 				, fm->getChunkSize(), fm->getFileSize()
@@ -294,7 +313,18 @@ void new_deployment_route(mg_connection* conn, const mg_request_info* request_in
 
 void pause_deployments_route(mg_connection* conn, const mg_request_info* request_info)
 {
-	//PolypeerServer* server = PolypeerServer::getInstance();
+	PolypeerServer* server = PolypeerServer::getInstance();
+	ServerData& data = server->getServerData();
+	
+	vector<File*>* files = data.getDeployFiles();
+	
+	for (vector<File*>::iterator it = files->begin(); it != files->end(); it++) 
+	{
+		if ((*it)->getFileState() != F_ERROR && (*it)->getFileState() != F_PAUSE)
+		{
+			(*it)->setFileState(F_PAUSE);
+		}
+	}
 	
 	mg_printf(conn, "%s", ajax_reply_start);
 	mg_printf(conn, "{\"state\":\"done\"}");
@@ -311,6 +341,55 @@ void delete_deployment_route(mg_connection* conn, const mg_request_info* request
 
 void pause_deployment_route(mg_connection* conn, const mg_request_info* request_info)
 {
-	// TODO
+	char qid[32];
+	int id;
+	
+	get_qsvar(request_info, "id", qid, sizeof(qid));
+	
+	std::istringstream iss(qid);
+	iss >> id;
+	
+	PolypeerServer* server = PolypeerServer::getInstance();
+	ServerData& data = server->getServerData();
+	
+	File* file = data.getFile(id);
+	
+	mg_printf(conn, "%s", ajax_reply_start);
+	
+	if (file != NULL) {
+		if (file->getFileState() != F_PAUSE) {
+			file->setFileState(F_PAUSE);
+		}
+		mg_printf(conn, "{\"state\":\"done\"}");
+	} else {
+		mg_printf(conn, "{\"state\":\"error\"}");
+	}
+}
+
+void unpause_deployment_route(mg_connection* conn, const mg_request_info* request_info)
+{
+	char qid[32];
+	int id;
+	
+	get_qsvar(request_info, "id", qid, sizeof(qid));
+	
+	std::istringstream iss(qid);
+	iss >> id;
+	
+	PolypeerServer* server = PolypeerServer::getInstance();
+	ServerData& data = server->getServerData();
+	
+	File* file = data.getFile(id);
+	
+	mg_printf(conn, "%s", ajax_reply_start);
+	
+	if (file != NULL) {
+		if (file->getFileState() == F_PAUSE) {
+			file->setFileState(READY);
+		}
+		mg_printf(conn, "{\"state\":\"done\"}");
+	} else {
+		mg_printf(conn, "{\"state\":\"error\"}");
+	}
 }
 

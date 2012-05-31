@@ -17,6 +17,7 @@
 			notifyError('Impossible de récupérer le déploiement');
 		} else {
 			$('#deployment-filename').text(content.filename);
+			$('#deployment-date').text(content.date);
 			$('#deployment-state').text(printFileState(content.state));
 			$('#deployment-size').text(content.size);
 			$('#deployment-nb-chunks').text(content.nbchunk);
@@ -46,6 +47,30 @@
 			window.setTimeout(function() {
 				updateHosts(args[0], args[1]);
 			}, 1000);
+		}
+	});
+	
+	$('#pause-button').addEventListener('click', function() {
+		if (confirm('Êtes-vous sûr de vouloir mettre le déploiement en pause ?')) {
+			pp.Ajax('/ajax/pause_deployment', args[0] + '=' + args[1], function(content) {
+				if (content.state == "done") {
+					notifySuccess('Le déploiement a été mis en pause avec succès.');
+				} else {
+					notifyError('Le déploiement n\'a pas pu être mis en pause.');
+				}
+			});
+		}
+	});
+	
+	$('#unpause-button').addEventListener('click', function() {
+		if (confirm('Êtes-vous sûr de vouloir remettre en route le déploiement ?')) {
+			pp.Ajax('/ajax/unpause_deployment', args[0] + '=' + args[1], function(content) {
+				if (content.state == "done") {
+					notifySuccess('Le déploiement a été mis remis en route avec succès.');
+				} else {
+					notifyError('Le déploiement n\'a pas pu être remis en route.');
+				}
+			});
 		}
 	});
 	

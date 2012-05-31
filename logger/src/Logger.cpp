@@ -11,10 +11,32 @@
 #include <ctime>
 #include <cstdlib>
 
+#include <sys/stat.h>
+#include <sys/types.h>
+
 // Project header
 #include <OpenFileException.hpp>
 
 using namespace std;
+
+
+void createDir(string pathDirectory, string currentPath)
+{
+	//on découpe la chaîne par le séparateur / ou \ pour pouvoir créer dosier par dossier en caas d'imbrication
+	int ind = pathDirectory.find_first_of("/\\");
+
+	//si il y a un séparateur de dossier c'est qu'il faut en crée un
+	if(ind>0)
+	{
+		string tmp = currentPath + pathDirectory.substr(0,ind);
+	 #ifdef WIN32
+		CreateDirectory(tmp.c_str(), NULL);
+	 #elif defined(linux)
+	     mkdir(tmp.c_str(),S_IRWXU|S_IRWXG|S_IRWXO);
+	 #endif
+		createDir(pathDirectory.substr(ind+1), tmp+"/");
+	}
+}
 
 Logger::Logger(const string& path) : stringSave(""), typeSave(normal), verbose(false)
 {
@@ -22,7 +44,14 @@ Logger::Logger(const string& path) : stringSave(""), typeSave(normal), verbose(f
 	
 	if (!this->file.is_open()) 
 	{
-		throw OpenFileException();
+		createDir("./log/", "");
+		
+		this->file.open(path.c_str(), fstream::app);
+		
+		if (!this->file.is_open()) // Seconde ouverture en echec
+		{
+			throw OpenFileException();
+		}
 	}
 }
 
@@ -87,6 +116,7 @@ string Logger::getType(const ELogImportance logType)
 			break;
 		case notice:
 			toReturn = "notice";
+			break;
 		default :
 			toReturn = "undefined";
 	}

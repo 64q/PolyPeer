@@ -105,24 +105,24 @@ int callbackSendChunk(Packet& p)
 
 	// récupérer singleton serveur
 	ClientData* cd = PolypeerClient::getInstance()->getClientData();
+	cout << "ici"<<endl;
+	Chunk* tmp = pp.getChunk();
 
-	Chunk tmp(pp.getChunk());
-
-	if(tmp.isIntegrate())
+	if(tmp->isIntegrate())
     {
 
-    	FileManager* fm = cd->getFileManager(tmp.getIdFile());
-        fm->saveChunk(tmp);
+    	FileManager* fm = cd->getFileManager(tmp->getIdFile());
+        fm->saveChunk(*tmp);
 
-        cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketChunkReceived(tmp.getIdFile(), fm->getCurrentNumberChunk()));
+        cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketChunkReceived(tmp->getIdFile(), fm->getCurrentNumberChunk()));
     }
     else
     {
         cout << "erreur du Chunk reçu :";
-        cout << tmp.getNumber()<<endl;
-        cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketMd5Error(tmp.getIdFile(), tmp.getNumber()));
+        cout << tmp->getNumber()<<endl;
+        cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketMd5Error(tmp->getIdFile(), tmp->getNumber()));
     }
-
+	delete tmp;
 	return 1;
 }
 

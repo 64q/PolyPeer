@@ -17,9 +17,6 @@ class Chunk
 {
 public:
 
-
-	Chunk(const Chunk& c);
-
 	/**
 	 * Constructeur initialisant un Chunk.
 	 * On peut vérifier la validité du Chunk crée avec la fonction isIntegrate()
@@ -126,8 +123,8 @@ private:
 	static MD5 encoder;
 	void initialiser(long number, long size, char* data, int idFile);
 	void checkIntegrity(char* crc);
-	void md5copy(char* md5);
 
 };
 
 #endif // CHUNK_H
+

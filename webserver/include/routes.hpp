@@ -56,4 +56,9 @@ void delete_deployment_route(mg_connection* conn, const mg_request_info* request
  */
 void pause_deployment_route(mg_connection* conn, const mg_request_info* request_info);
 
+/**
+ * Route pour remettre en route un déploiement
+ */
+void unpause_deployment_route(mg_connection* conn, const mg_request_info* request_info);
+
 #endif

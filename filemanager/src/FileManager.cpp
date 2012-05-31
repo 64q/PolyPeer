@@ -142,7 +142,6 @@ void FileManager::reserveFile(const char* path, long size)
 
 FileManager::~FileManager()
 {
-	pbuf->close();
 	file.close();
 	delete [] currentData;
 }
@@ -151,13 +150,10 @@ Chunk* FileManager::getChunk(long number)
 {
 	if(number <= getNumberChunk())
 	{
-	
 		//file.seekp(number*sizeChunk, ios::beg);
 		//file.read(currentData, sizeChunk);
 		pbuf->pubseekpos(number*sizeChunk);
 		pbuf->sgetn (currentData,sizeChunk);
-		
-		
 		if (getNumberChunk()-1==number)
 		{
 			return new Chunk(number, sizeFile-number*sizeChunk, currentData, idFile);
@@ -168,6 +164,7 @@ Chunk* FileManager::getChunk(long number)
 		}
 	}else
 	{
+		cout << "dépassement de chunk" << endl;
 		return NULL;
 	}
 }
@@ -187,7 +184,9 @@ bool FileManager::saveChunk(Chunk &chunk)
 			pbuf->sputn(chunk.getData(), chunk.getSize());
 			currentChunk++;
 			saveState();
-
+	cout << "pos" << currentChunk*sizeChunk<<endl;
+	cout << "data";
+	cout.write(chunk.getData(), chunk.getSize());cout <<endl;
 
 			if(currentChunk == getNumberChunk())
 			{
@@ -344,6 +343,7 @@ void FileManager::createDirectory(std::string pathDirectory, std::string current
 
 
 }
+
 
 
 

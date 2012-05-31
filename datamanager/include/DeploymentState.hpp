@@ -51,7 +51,7 @@ public:
 	* @id 
 	*	 nouvelle id du chunk courrant
 	*/
-	void setCurrentIdChunk(int id) { currentIdChunk = id; }
+	void setCurrentIdChunk(int id) { currentIdChunk = id;}
 	
   /**
 	* Change l'etat du déploiement 

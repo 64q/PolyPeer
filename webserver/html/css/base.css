@@ -53,6 +53,10 @@ body #network-view div h3 {
 	width: 25%;
 }
 
+.medium-column {
+	width: 15%;
+}
+
 /* Gestion coloration états */
 
 .status {

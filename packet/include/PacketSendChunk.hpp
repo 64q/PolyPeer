@@ -44,7 +44,7 @@ public:
 	*/
 	virtual ~PacketSendChunk();
 	
-	Chunk getChunk ();
+	Chunk* getChunk ();
 
 private:
 	PacketSendChunk() {};
