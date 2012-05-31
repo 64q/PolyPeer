@@ -1,5 +1,6 @@
 /*
- * Fichier spécifique à l'host
+ * Fichier spécifique à la visualisation d'un host
+ * Quentin Lebourgeois - 2012
  */
 
 (function(){

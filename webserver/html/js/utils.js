@@ -1,11 +1,19 @@
 /*
- * Utilitaires JS - Quentin Lebourgeois 2012
+ * Utilitaires JS
+ * Définition d'une partie de PolyPeerJS :
+ * - HashNav
+ * - Ajax
+ * Quentin Lebourgeois - 2012
  */
 
 /**
- * Raccourcissement de la fonction querySelector
+ * Raccourcissement de la fonction querySelector, à laquelle j'ai
+ * ajouté une fonction text() permettant d'inserer du contenu HTML
+ * @param selector
+ * 	un selecteur (#div, .class, elem)
+ * @param el
+ *		un élement optionnel (par défaut document)
  */
-
 function $(selector, el) {
 	if (!el) {
 		el = document;
@@ -22,21 +30,16 @@ function $(selector, el) {
 	return this.el;
 }
 
+/**
+ * Wrapper pour querySelectorAll
+ * @param selector
+ * 	un selecteur (#div, .class, elem)
+ * @param el
+ *		un élement optionnel (par défaut document)
+ */
 function $$(selector, el) {
 	if (!el) {el = document;}
 	return Array.prototype.slice.call(el.querySelectorAll(selector));
-}
-
-
-/**
- * Wrapper de querySelectorAll
- */
-function qsa(t) {
-	return document.querySelectorAll(t);
-}
-
-function $$(t) {
-	return document.querySelectorAll(t);
 }
 
 /**
@@ -97,17 +100,38 @@ PolyPeerJS.Ajax = function(file, params, success, error, isParsable) {
 	xhr.send(null);
 };
 
+/**
+ * PolyPeerJS HashNav, gestion complète d'une navigation par hash
+ * Simple et flexible.
+ */
 PolyPeerJS.HashNav = {
+	/**
+	 * Page courante
+	 */
 	current: null,
+	
+	/**
+	 * Variables paramètres (après la page courante #!/page/param1/param2)
+	 */
 	vars: null,
+	
+	/**
+	 * Fonctions de callback chargées 
+	 */
 	callbacks: null,
+	
+	/**
+	 * Racine de la navigation
+	 */
 	root: null,
 	
 	/**
-	 * Initialisation de la HashNav - Chargement des Cb
+	 * Initialisation de la HashNav, chargement des callbacks
 	 * et définition de la page courante
 	 * @param cbs
 	 * 	les callbacks de la HashNav
+	 * @param root
+	 * 	un callback vers la racine (page d'accueil)
 	 */
 	init: function(cbs, root) {
 		this.callbacks = cbs;
@@ -148,12 +172,14 @@ PolyPeerJS.HashNav = {
 	 * Méthode appelée uniquement si l'analyseur n'a pas trouvé de route
 	 */
 	notFound: function() {
-		PolyPeerJS.Utils.error('404');
+		PolyPeerJS.Utils.error('404'); // Lance une erreur 404
 	},
 };
 
 /**
  * Affichage d'un succès
+ * @param msg
+ * 	un message à transmettre
  */
 function notifySuccess(msg) {
 	$('#notifs').innerHTML = '<div class="alert alert-success"><strong>Succès !</strong> ' + msg + '</div>';
@@ -161,6 +187,8 @@ function notifySuccess(msg) {
 
 /**
  * Affichage d'une erreur
+ * @param msg
+ * 	un message à transmettre
  */
 function notifyError(msg) {
 	$('#notifs').innerHTML = '<div class="alert alert-error"><strong>Erreur !</strong> ' + msg + '</div>';
@@ -168,6 +196,8 @@ function notifyError(msg) {
 
 /**
  * Affichage host state formaté
+ * @param state
+ * 	etat de l'hote
  */
 function printHostState(state)
 {
@@ -193,6 +223,8 @@ function printHostState(state)
 
 /**
  * Affichage deployment state formaté
+ * @param state
+ * 	etat du déploiement chez l'hote
  */
 function printDeployState(state)
 {
@@ -221,6 +253,8 @@ function printDeployState(state)
 
 /**
  * Affichage file state formaté
+ * @param state
+ * 	etat du déploiement
  */
 function printFileState(state)
 {
@@ -250,6 +284,11 @@ function printFileState(state)
 	return '<span class="status">' + result + '</span>';
 }
 
+/** 
+ * Affichage formaté de l'état du serveur
+ * @param state
+ * 	l'état courant du serveur
+ */ 
 function printServerState(state)
 {
 	var result;

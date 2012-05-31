@@ -1,5 +1,6 @@
 /*
  * Fichier JS spécifique à un déploiement
+ * Quentin Lebourgeois - 2012
  */
 
 (function() {
