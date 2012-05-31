@@ -61,4 +61,9 @@ void pause_deployment_route(mg_connection* conn, const mg_request_info* request_
  */
 void unpause_deployment_route(mg_connection* conn, const mg_request_info* request_info);
 
+/** 
+ * Route pour accéder à un fichier de log
+ */
+void log_route(mg_connection* conn, const mg_request_info* request_info);
+
 #endif

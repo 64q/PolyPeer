@@ -31,12 +31,11 @@ void deployments_route(mg_connection* conn, const mg_request_info* request_info)
 	mg_printf(conn, "[");
 
 	PolypeerServer* server = PolypeerServer::getInstance();
-	
 	ServerData& data = server->getServerData();
-	
 	vector<File*>* files = data.getDeployFiles();
+	vector<File*>::const_iterator it = files->begin();
 	
-	for (vector<File*>::iterator it = files->begin(); it != files->end(); it++) 
+	for (; it != files->end(); it++) 
 	{
 		if ((*it)->getFileState() != F_ERROR)
 		{
@@ -47,7 +46,6 @@ void deployments_route(mg_connection* conn, const mg_request_info* request_info)
 			char buffer[80];
 			time (&rawtime);
 			timeinfo = localtime(&rawtime);
-			
 			strftime (buffer,80,"%c",timeinfo);
 			
 			mg_printf(conn, "{\"id\":%i, \"name\":\"%s\", \"date\":\"%s\", \"state\":\"%s\"}"
@@ -87,7 +85,10 @@ void get_stats_route(mg_connection* conn, const mg_request_info* request_info)
 	ServerData& data = server->getServerData();
 	
 	mg_printf(conn, "%s", ajax_reply_start);
-	mg_printf(conn, "{\"state\":\"%s\", \"count_deployments\":%lu, \"count_hosts\":%lu}", "online", data.getDeployFiles()->size(), data.getEntities()->size());
+	mg_printf(conn, "{\"state\":\"%s\", \"count_deployments\":%lu, \"count_hosts\":%lu}"
+		, "online", data.getDeployFiles()->size()
+		, data.getEntities()->size()
+	);
 }
 
 void get_host_route(mg_connection* conn, const mg_request_info* request_info)
@@ -115,13 +116,14 @@ void get_host_route(mg_connection* conn, const mg_request_info* request_info)
 		else
 		{
 			std::vector<DeploymentState>* deploys = entity->getDeploys();
-
+			std::vector<DeploymentState>::iterator it = deploys->begin();
+			
 			mg_printf(conn, "{\"ip\":\"%s\", \"name\":\"%s\", \"state\": \"%s\", \"deployments\": ["
 				, entity->getIP().c_str(), entity->getName().c_str()
 				, getStringHostState(entity->getHostState()).c_str()
 			);
 	
-			for (std::vector<DeploymentState>::iterator it = deploys->begin(); it != deploys->end(); it++) {
+			for (; it != deploys->end(); ++it) {
 				File* f = it->getRefFile();
 				mg_printf(conn, "{\"name\":\"%s\", \"state\":\"%s\", \"current\":\"%i\", \"total\":\"%lu\"}"
 					, f->getName().c_str()
@@ -144,6 +146,7 @@ void get_host_route(mg_connection* conn, const mg_request_info* request_info)
 void deployment_route(mg_connection* conn, const mg_request_info* request_info)
 {
 	char qid[16];
+	int id;
 	
 	get_qsvar(request_info, "id", qid, sizeof(qid));
 	
@@ -155,10 +158,7 @@ void deployment_route(mg_connection* conn, const mg_request_info* request_info)
 	} 
 	else
 	{
-	
-		std::istringstream iss(qid);
-		// convertir en un int
-		int id;
+		istringstream iss(qid);
 		iss >> id;
 	
 		PolypeerServer* server = PolypeerServer::getInstance();
@@ -182,7 +182,8 @@ void deployment_route(mg_connection* conn, const mg_request_info* request_info)
 			
 			strftime (buffer,80,"%c",timeinfo);
 			
-			mg_printf(conn, "{\"id\":\"%i\", \"name\":\"%s\", \"date\":\"%s\", \"filename\":\"%s\", \"state\":\"%s\", \"nbchunk\":%lu, \"chunksize\":%lu, \"size\":%lu, \"hosts\":["
+			mg_printf(conn, "{\"id\":\"%i\", \"name\":\"%s\", \"date\":\"%s\", \"filename\":\"%s\", \"state\":\"%s\", \
+				\"nbchunk\":%lu, \"chunksize\":%lu, \"size\":%lu, \"hosts\":["
 				, id, file->getName().c_str(), buffer
 				, fm->getFileName().c_str()
 				, getStringFileState(file->getFileState()).c_str()
@@ -190,9 +191,9 @@ void deployment_route(mg_connection* conn, const mg_request_info* request_info)
 				, fm->getChunkSize(), fm->getFileSize()
 			);
 	
-			for (vector<vector<Entity*>* >::iterator itZone = pp->begin(); itZone != pp->end(); itZone++) 
+			for (vector<vector<Entity*>* >::const_iterator itZone = pp->begin(); itZone != pp->end(); ++itZone) 
 			{
-				for (vector<Entity*>::iterator it = (*itZone)->begin(); it != (*itZone)->end(); it++)
+				for (vector<Entity*>::const_iterator it = (*itZone)->begin(); it != (*itZone)->end(); ++it)
 				{
 					mg_printf(conn, "{\"name\":\"%s\", \"ip\":\"%s\", \"host_state\":\"%s\", \"state\":\"%s\", \"current\":\"%i\", \"total\":\"%lu\"}"
 						, (*it)->getName().c_str(), (*it)->getIP().c_str()
@@ -226,10 +227,14 @@ void displayEntity(mg_connection* conn, Entity* entity)
 	if (entity->getType() == ZONE)
 	{
 		map<string, Entity*>* entities = entity->getEntities();
+		map<string, Entity*>::iterator it = entities->begin();
 		
-		mg_printf(conn, "{\"name\":\"%s\", \"type\":\"zone\", \"nc\":%i, \"cbbs\":%i, \"hosts\":[", entity->getName().c_str(), entity->getNetworkCapacity(), entity->getCurrentBroadbandSpeed());
+		mg_printf(conn, "{\"name\":\"%s\", \"type\":\"zone\", \"nc\":%i, \"cbbs\":%i, \"hosts\":["
+			, entity->getName().c_str(), entity->getNetworkCapacity()
+			, entity->getCurrentBroadbandSpeed()
+		);
 		
-		for (map<string, Entity*>::iterator it = entities->begin(); it != entities->end();) 
+		for (; it != entities->end();) 
 		{
 			displayEntity(conn, (*it).second);
 			
@@ -255,11 +260,12 @@ void network_route(mg_connection* conn, const mg_request_info* request_info)
 	PolypeerServer* server = PolypeerServer::getInstance();
 	ServerData& data = server->getServerData();
 	map<string, Entity*>* entities = data.getEntities();
+	map<string, Entity*>::const_iterator it = entities->begin();
 	
 	mg_printf(conn, "%s", ajax_reply_start);
 	mg_printf(conn, "[");
 	
-	for (map<string, Entity*>::const_iterator it = entities->begin(); it != entities->end();) 
+	for (; it != entities->end();) 
 	{
 		displayEntity(conn, (*it).second);
 		
@@ -297,16 +303,21 @@ void new_deployment_route(mg_connection* conn, const mg_request_info* request_in
 	
 	mg_printf(conn, "%s", ajax_reply_start);
 	
-	try {
+	try 
+	{
 		File* file = new File(data.getCurrentId() + 1, string(qname), string(qspath), string(qcpath));
-	
-		for (unsigned int i = 0; i < vzones.size(); i++) {
-			file->addEntity(data.public_getEntity(vzones[i]));
+		vector<string>::const_iterator it = vzones.begin();
+		
+		for (; it != vzones.end(); ++it) 
+		{
+			file->addEntity(data.public_getEntity(*it));
 		}
 	
 		data.addFileToAll(file);
 		mg_printf(conn, "{\"state\":\"done\"}");
-	} catch (CreateFileException e) {
+	} 
+	catch (CreateFileException e) 
+	{
 		mg_printf(conn, "{\"state\":\"error\"}");
 	}
 }
@@ -317,8 +328,9 @@ void pause_deployments_route(mg_connection* conn, const mg_request_info* request
 	ServerData& data = server->getServerData();
 	
 	vector<File*>* files = data.getDeployFiles();
+	vector<File*>::const_iterator it = files->begin();
 	
-	for (vector<File*>::iterator it = files->begin(); it != files->end(); it++) 
+	for (; it != files->end(); it++) 
 	{
 		if ((*it)->getFileState() != F_ERROR && (*it)->getFileState() != F_PAUSE)
 		{
@@ -356,12 +368,16 @@ void pause_deployment_route(mg_connection* conn, const mg_request_info* request_
 	
 	mg_printf(conn, "%s", ajax_reply_start);
 	
-	if (file != NULL) {
-		if (file->getFileState() != F_PAUSE) {
+	if (file != NULL) 
+	{
+		if (file->getFileState() != F_PAUSE) 
+		{
 			file->setFileState(F_PAUSE);
 		}
 		mg_printf(conn, "{\"state\":\"done\"}");
-	} else {
+	} 
+	else 
+	{
 		mg_printf(conn, "{\"state\":\"error\"}");
 	}
 }
@@ -383,12 +399,42 @@ void unpause_deployment_route(mg_connection* conn, const mg_request_info* reques
 	
 	mg_printf(conn, "%s", ajax_reply_start);
 	
-	if (file != NULL) {
-		if (file->getFileState() == F_PAUSE) {
+	if (file != NULL) 
+	{
+		if (file->getFileState() == F_PAUSE) 
+		{
 			file->setFileState(READY);
 		}
 		mg_printf(conn, "{\"state\":\"done\"}");
-	} else {
+	} 
+	else 
+	{
+		mg_printf(conn, "{\"state\":\"error\"}");
+	}
+}
+
+void log_route(mg_connection* conn, const mg_request_info* request_info)
+{
+	char qlog[32];
+
+	get_qsvar(request_info, "log", qlog, sizeof(qlog));
+	
+	string log = "log/";
+	log += string(qlog) + ".log";
+	
+   ifstream fichier(log.c_str());
+	
+	mg_printf(conn, "%s", ajax_reply_start);
+	
+	if (fichier)
+	{
+		std::stringstream buffer;
+		buffer << fichier.rdbuf();
+		fichier.close();
+		mg_printf(conn, "{\"content\":\"%s\"}", buffer.str().c_str());
+	}
+	else
+	{
 		mg_printf(conn, "{\"state\":\"error\"}");
 	}
 }
