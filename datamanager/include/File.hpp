@@ -3,6 +3,7 @@
 
 #include <set>
 #include <iostream>
+#include <ctime>
 
 #include <Entity.hpp>
 #include <State.hpp>
@@ -22,12 +23,13 @@ public :
 
 	File(int id, std::string name, std::string serverPath, std::string clientPath);
 	File(int id, std::string name, std::string serverPath, std::string clientPath, int chunkSize);
-	File(int id, std::string name, std::string serverPath, std::string clientPath, int chunkSize, FileState fs);
+	File(int id, std::string name, std::string serverPath, std::string clientPath, int chunkSize, FileState fs, long dateFile);
 	~File();
 	std::string getName() { return name; }
 	FileManager* getFileManager() { return fileM; }
 	FileState getFileState() { return fState; }
 	std::string getClientPath() { return clientPath; }
+	long getDate() { return date; }
 	void setFileState(FileState fs);
 	std::vector<Entity*>* getDeploysOn() { return &deploysOn; }
 	std::vector<std::vector<Entity*>* >* getSortedHosts();
@@ -37,6 +39,7 @@ public :
 	
 protected :
 	
+	time_t date;
 	std::string name;
 	std::string clientPath;
 	FileManager* fileM;

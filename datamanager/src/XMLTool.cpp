@@ -2,6 +2,7 @@
 #include <OpenFileException.hpp>
 #include <CreateFileException.hpp>
 
+
 using namespace std;
 
 XMLTool::XMLTool(ServerData* sData)
@@ -62,53 +63,70 @@ void XMLTool::readTopology(ServerData* sData, TiXmlNode* node, map<string, Entit
 	Entity* entity = NULL;
 	int capacity;
 	
-	if ( node->ToElement() )
-	{
-		TiXmlElement* elem = node->ToElement();
-		if (!(node->ValueStr().compare("host")))
-		{
-			if (elem->Attribute("ref") != NULL )
-			{
-				entity = sData->getHostByName(elem->Attribute("ref"));
-				if (entity != NULL)
-					entities->insert(make_pair(elem->Attribute("ref"), entity));
-				else 
-					cout << "reference inexistante" << endl;
-			}else
-			{
-				elem->QueryIntAttribute("networkCapacity", &capacity);
-				entity = sData->addHost(elem->Attribute("name"), parent, capacity, elem->Attribute("address"), elem->Attribute("mac"));
-				entities->insert(make_pair(elem->Attribute("name"), entity));
-			}
-		}
-		if (!(node->ValueStr().compare("zone")))
-		{
-			if (elem->Attribute("ref") != NULL )
-			{
-				entity = sData->public_getEntity(elem->Attribute("ref"));
-				if (entity != NULL)
-					entities->insert(make_pair(elem->Attribute("ref"), entity));
-				else 
-					cout << "reference inexistante" << endl;
-			}else
-			{
-				elem->QueryIntAttribute("networkCapacity", &capacity);
-				zone = new Zone(elem->Attribute("name"), parent, capacity);
-				entities->insert(make_pair(elem->Attribute("name"), zone));
-			}
-		}
-	} 
-	
-
-	for(TiXmlNode* element = node->FirstChild(); element; element = element->NextSibling())
+	try
 	{
 		if ( node->ToElement() )
 		{
+			TiXmlElement* elem = node->ToElement();
+			if (!(node->ValueStr().compare("host")))
+			{
+				if (elem->Attribute("ref") != NULL )
+				{
+					entity = sData->getHostByName(elem->Attribute("ref"));
+					if (entity != NULL)
+						entities->insert(make_pair(elem->Attribute("ref"), entity));
+					else 
+						cout << "reference inexistante" << endl;
+				}else
+				{
+					elem->QueryIntAttribute("networkCapacity", &capacity);
+					entity = sData->addHost(elem->Attribute("name"), parent, capacity, elem->Attribute("address"), elem->Attribute("mac"));
+					entities->insert(make_pair(elem->Attribute("name"), entity));
+				}
+			}
 			if (!(node->ValueStr().compare("zone")))
-				readTopology(sData, element, zone->getEntities(), zone);
-			else 
-				readTopology(sData, element, entities, parent);
+			{
+				if (elem->Attribute("ref") != NULL )
+				{
+					entity = sData->public_getEntity(elem->Attribute("ref"));
+					if (entity != NULL)
+						entities->insert(make_pair(elem->Attribute("ref"), entity));
+					else 
+						cout << "reference inexistante" << endl;
+				}else
+				{
+					elem->QueryIntAttribute("networkCapacity", &capacity);
+					zone = new Zone(elem->Attribute("name"), parent, capacity);
+					entities->insert(make_pair(elem->Attribute("name"), zone));
+				}
+			}
+		} 
+	
+
+		for(TiXmlNode* element = node->FirstChild(); element; element = element->NextSibling())
+		{
+			if ( node->ToElement() )
+			{
+				if (!(node->ValueStr().compare("zone")))
+					readTopology(sData, element, zone->getEntities(), zone);
+				else 
+					readTopology(sData, element, entities, parent);
+			}
 		}
+	} catch(...)
+	{
+		if ( node->ToElement() )
+		{
+			TiXmlElement* elem = node->ToElement();
+			cout << "Problème dans la construction du fichier de topologie, il manque peut être des attributs dans une balise " << node->ValueStr();
+			if (!(node->ValueStr().compare("host")) || !(node->ValueStr().compare("host")))
+			{
+				if (elem->Attribute("name") != NULL)
+					cout << ", de nom : " << elem->Attribute("name") << "." << endl;
+				else 
+					cout << ", son nom est introuvable." << endl;
+			}
+		}		
 	}
 }
 
@@ -116,6 +134,7 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 {
 	int id = 0;
 	int chunkSize = 0;
+	int date = 0;
 	Entity* entity = NULL;
 
 	string name ="";
@@ -133,9 +152,9 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 				{
 					elem->QueryIntAttribute("id", &id);
 					elem->QueryIntAttribute("chunkSize", &chunkSize);
-
-						File *f = new File(id, elem->Attribute("name"), elem->Attribute("serverPath"), elem->Attribute("clientPath"), chunkSize, fs);
-						sData->addFile(f);
+					elem->QueryIntAttribute("date", &date);
+					File *f = new File(id, elem->Attribute("name"), elem->Attribute("serverPath"), elem->Attribute("clientPath"), chunkSize, fs, (long)date);
+					sData->addFile(f);
 				}
 			}
 			if (!(node->ValueStr().compare("zone")) || !(node->ValueStr().compare("host")))
@@ -164,7 +183,21 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 		cout << "Problème dans le fichier de déploiement : " << name << endl;
 	} catch (CreateFileException)
 	{
-		cout << "CREATEFILEEXCEPTION" << endl;
+		cout << "Problème lors du chargement d'un déploiment." << endl;
+	} catch (...)
+	{
+		 if ( node->ToElement() )
+		{
+			TiXmlElement* elem = node->ToElement();
+			cout << "Problème dans la construction du fichier de déploiement, il manque peut être des attributs dans une balise " << node->ValueStr();
+			if (!(node->ValueStr().compare("file")))
+			{
+				if (elem->Attribute("id") != NULL)
+					cout << ", d'id : " << elem->Attribute("id") << "." << endl;
+				else 
+					cout << ", son id est introuvable." << endl;
+			}
+		}		
 	}
 }
 
@@ -180,6 +213,7 @@ void XMLTool::writeFileIntoDeployments(File* file)
 		newFile.SetAttribute("clientPath", file->getClientPath());
 		newFile.SetAttribute("chunkSize", (file->getFileManager())->getChunkSize());
 		newFile.SetAttribute("state", getStringFileState(file->getFileState()));
+		newFile.SetAttribute("date", file->getDate());
 	}
 	
 	f->InsertEndChild(newFile);
