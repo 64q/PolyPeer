@@ -16,7 +16,7 @@
 			for (var i = 0; i < content.deployments.length; i++) {
 				var width = (content.deployments[i].current / content.deployments[i].total) * 100;
 				result += '<tr><td>' + content.deployments[i].name + '</td><td>' + printDeployState(content.deployments[i].state) + '</td>\
-				<td class="large-column"><div class="progress progress-striped active"> \
+				<td class="large-column"><div class="progress"> \
 							<div class="bar" style="width: ' + width + '%;"></div></div></td><td><span>' + content.deployments[i].current + '/' + content.deployments[i].total + '</span></td></tr>';
 			}
 
