@@ -135,11 +135,28 @@ void ShareDeployment::nextStep()
 			case F_PAUSE:
 				break;
 		}
-		PolypeerServer::getInstance()->multiSleep(50);
+		PolypeerServer::getInstance()->multiSleep(10);
 	}
+	if(makePause())
+		PolypeerServer::getInstance()->multiSleep(750);
 
 }
 
+bool ShareDeployment::makePause()
+{
+	bool toReturn = true;
+	vector<File*>* files = sData->getDeployFiles();
+
+	for (vector<File*>::iterator itFile = files->begin(); itFile != files->end(); itFile++) 
+	{
+		if(((*itFile)->getFileState() == READY) || ((*itFile)->getFileState() == DEPLOYMENT))
+		{
+			toReturn = false;
+			break;
+		}
+	}
+	return toReturn;
+}
 
 
 bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
@@ -179,10 +196,10 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 				
 			} else
 			{
-				// traitement erreur dépassement par RAZ
+				// traitement erreur dépassement
 				cout <<"Dépassement max chunk"<<endl;
-				//entity->getDeploymentState(idFile)->setCurrentIdChunk(0);
-				//entity->getDeploymentState(idFile)->setCurrentState(HDS_INIT);
+				// on demande un nouveau paquet
+				entity->getDeploymentState(idFile)->setCurrentState(HDS_INIT);
 			}
 		}
 	}
@@ -219,11 +236,10 @@ bool ShareDeployment::sendOperationOnHosts(Entity* entitySrc, Entity* entityDst,
 				
 			} else
 			{
-				// traitement erreur dépassement par RAZ
+				// traitement erreur dépassement
 				cout <<"Dépassement max chunk"<<endl;
-				//entityDst->getDeploymentState(idFile)->setCurrentIdChunk(0);
-				//entityDst->getDeploymentState(idFile)->setCurrentState(HDS_INIT);
-				
+				// on demande un nouveau paquet
+				entityDst->getDeploymentState(idFile)->setCurrentState(HDS_INIT);
 			}
 		}
 	}

@@ -107,6 +107,11 @@ private:
 	 * Rechercher un second host sur la zone pour seeder
 	 */
 	Entity* selectSeedHostOnZone(std::vector<Entity*>* zone, int idFile, Entity* hostMaster);
+	
+	/**
+	 * Vérifier si il faut mettre le programme en pause
+	 */
+	bool makePause();
 	 
 };
 

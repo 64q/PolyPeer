@@ -382,11 +382,11 @@ Mutex.o:  $(MUTEX)$(SRC)Mutex.cpp
 ############################
 
 
-polypeer: main.o PolypeerServer.o $(BaseServ) $(MainStruct) $(LibXML) $(Mutex) $(FileManager) $(PacketManager) $(CallbackManager) $(Data) $(ConnectionManager)  $(Algorithm) $(Logger) $(WebServ)
+$(EXEC): main.o PolypeerServer.o $(BaseServ) $(MainStruct) $(LibXML) $(Mutex) $(FileManager) $(PacketManager) $(CallbackManager) $(Data) $(ConnectionManager)  $(Algorithm) $(Logger) $(WebServ)
 	@echo "Link output files..."
 	@$(CC) -o $@  $^ $(LDFLAGS)
 	@echo "OK"
-	@echo "Program name is 'polypeer'"
+	@echo "Program name is $(EXEC)"
 
 
 ############################

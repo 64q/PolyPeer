@@ -273,11 +273,11 @@ Logger.o:  $(LOG)$(SRC)Logger.cpp
 ############################
 
 
-ppclient: main.o PolypeerClient.o $(BaseServ) $(MainStruct) $(FileManager) $(PacketManager) $(CallbackManager) $(Data) $(ConnectionManager) $(Logger)
+$(EXEC): main.o PolypeerClient.o $(BaseServ) $(MainStruct) $(FileManager) $(PacketManager) $(CallbackManager) $(Data) $(ConnectionManager) $(Logger)
 	@echo "Link output files..."
 	@$(CC) -o $@  $^ $(LDFLAGS)
 	@echo "OK"
-	@echo "Program name is 'ppclient'"
+	@echo "Program name is $(EXEC)"
 
 
 ############################
