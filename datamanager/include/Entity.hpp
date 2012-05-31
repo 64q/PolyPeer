@@ -40,6 +40,7 @@ public:
 	virtual std::map<std::string, Entity*>* getEntities() = 0;
 	virtual std::vector<DeploymentState>* getDeploys() = 0;
 	virtual std::string getIP() = 0;
+	virtual std::string getMac() = 0;
 	virtual void addDeploymentState(const int, File*, HostDeployState) = 0;
 	virtual DeploymentState* getDeploymentState(int idFile) = 0;
 	virtual HostState getHostState() = 0;

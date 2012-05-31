@@ -3,6 +3,7 @@
 #include <ClientData.hpp>
 #include <CreateFileException.hpp>
 
+
 int main()
 {
 
@@ -44,7 +45,15 @@ int main()
 	cout << endl;
 	for (i=0; i < vFile->size(); i++)
 	{
-			cout << "name : " << ((*vFile)[i])->getName() << endl;
+	
+		time_t rawtime = (time_t)((*vFile)[i])->getDate();
+		struct tm * timeinfo;
+
+		timeinfo = localtime ( &(rawtime) );
+		printf ( "Date : %s", asctime (timeinfo) );
+	
+		cout << "name : " << ((*vFile)[i])->getName() << endl;
+		
 		if (((*vFile)[i])->getFileState() != F_ERROR)
 		{
 			cout << "id : " << ((*vFile)[i])->getFileManager()->getIdFile() <<endl;
@@ -109,13 +118,11 @@ int main()
 	
 	Entity* e1 = sData->public_getEntity("PC1");
 	Entity* e2 = sData->public_getEntity("PC5");
-		
-	cout << "CurrentID : "<< sData->getCurrentId() << endl;
+	
+	cout << "MAC : "<< e1->getMac() << endl;
 	
 	sData->updateNetworkCurrentBroadbandSpeed(e1,e2,1);
-	
-	
-	sData->public_displayEntities();
+
 	
 	delete sData;
 

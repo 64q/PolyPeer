@@ -3,35 +3,35 @@
 		<zone name="batiment_C" networkCapacity="100000" >
 			<zone name="C_07" networkCapacity="10000">
 				<zone name="C_02" networkCapacity="10000">
-					<host name="IRC007-05" address="172.34.67.4" networkCapacity="100"/>
-					<host name="PC4" address="172.34.67.5" networkCapacity="100"/>
-					<host name="PC5" address="172.34.67.6" networkCapacity="100"/>
+					<host name="IRC007-05" address="172.34.67.4" mac="mac" networkCapacity="100"/>
+					<host name="PC4" address="172.34.67.5" mac="mac" networkCapacity="100"/>
+					<host name="PC5" address="172.34.67.6" mac="mac" networkCapacity="100"/>
 				</zone>
-				<host name="IRC007-04" address="172.34.67.1" networkCapacity="100"/>
-				<host name="PC1" address="172.34.67.2" networkCapacity="100"/>
-				<host name="PC2" address="172.34.67.3" networkCapacity="100"/>
+				<host name="IRC007-04" address="172.34.67.1" mac="mac" networkCapacity="100"/>
+				<host name="PC1" address="172.34.67.2" mac="macPC1" networkCapacity="100"/>
+				<host name="PC2" address="172.34.67.3" mac="mac" networkCapacity="100"/>
 			</zone>
 			
 		</zone>
 		
 		<zone name="batiment_D" networkCapacity="100000">
 			<zone name="D_07" networkCapacity="10000">
-				<host name="PC6" address="132.34.67.7" networkCapacity="100"/>
-				<host name="PC7" address="132.34.67.8" networkCapacity="100"/>
-				<host name="PC8" address="132.34.67.9" networkCapacity="100"/>
+				<host name="PC6" address="132.34.67.7" mac="mac" networkCapacity="100"/>
+				<host name="PC7" address="132.34.67.8" mac="mac" networkCapacity="100"/>
+				<host name="PC8" address="132.34.67.9" mac="mac" networkCapacity="100"/>
 			</zone>
 			<zone name="D_08" networkCapacity="10000">
-				<host name="PC11" address="132.34.67.10" networkCapacity="100"/>
+				<host name="PC11" address="132.34.67.10" mac="mac" networkCapacity="100"/>
 			</zone>
 		</zone>
 		
-		<host name="PC9" address="132.34.67.11" networkCapacity="100"/>
-		<host name="PC10" address="132.34.67.12" networkCapacity="100"/>
+		<host name="PC9" address="132.34.67.11" mac="mac" networkCapacity="100"/>
+		<host name="PC10" address="132.34.67.12" mac="mac" networkCapacity="100"/>
 		
 	</real>
 	<virtual>
 		<zone name="virtual" networkCapacity="0">
-			<zone name="machine_de_test" networkCapacity="0">
+			<zone name="machine_de_test" mac="mac" networkCapacity="0">
 				<zone ref="D_07"/>
 				<host ref="PC11"/>
 			</zone>

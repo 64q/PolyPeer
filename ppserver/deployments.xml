@@ -1,5 +1,5 @@
 <deployments>
-    <file id="24" name="ED_HD" serverPath="file/ED_HD.avi" clientPath="file/ED_HD.avi" size="854537054" chunkSize="18000" state="deployment">
+    <file id="24" name="ED_HD" serverPath="file/ED_HD.avi" clientPath="file/ED_HD.avi" chunkSize="18000" state="deployment" date="0">
         <host ref="PC1" />
         <host ref="PC10" />
         <host ref="PC11" />
@@ -17,4 +17,4 @@
         <host ref="PC8" />
         <host ref="PC9" />
     </file>
-</deployments>
+</deployment

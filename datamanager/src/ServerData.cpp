@@ -217,9 +217,9 @@ void ServerData::deleteFile(int id)
 	
 }
 
-Entity* ServerData::addHost(string name, Entity* parent, int networkCapacity, string address)
+Entity* ServerData::addHost(string name, Entity* parent, int networkCapacity, string address, string mac)
 {
-	Entity* host = new Host(name, parent, networkCapacity, address);
+	Entity* host = new Host(name, parent, networkCapacity, address, mac);
 	hosts.push_back(host);
 	return host;
 }
@@ -372,23 +372,21 @@ void ServerData::displayEntities(map<string, Entity*>* entities, int level)
 			cout << endl;
 			displayEntities(mit->second->getEntities(), level + 1);
 		}
-		if (mit->second->getDeploys() != NULL)
+		if (mit->second->getType() == HOST)
 		{
-			if (!((mit->second->getDeploys())->empty()))
+			for (i=0; i < (mit->second->getDeploys())->size(); i++)
 			{
-				for (i=0; i < (mit->second->getDeploys())->size(); i++)
+				if ((((*(mit->second->getDeploys()))[i]).getRefFile())->getFileManager() != NULL )
 				{
-					if ((((*(mit->second->getDeploys()))[i]).getRefFile())->getFileManager() != NULL )
-					{
-						cout << " | fID : " << (((*(mit->second->getDeploys()))[i]).getRefFile())->getFileManager()->getIdFile();
-						cout << " | cID : " << (*(mit->second->getDeploys()))[i].getCurrentIdChunk();
-						cout << " | fPath : " << ((*(mit->second->getDeploys()))[i].getRefFile())->getFileManager()->getFileName();
-						cout << " | hState : " << (*(mit->second->getDeploys()))[i].getCurrentState();
-						cout << endl;
-						cout << string( level*3 + (mit->first).size(), ' ' ) << " " ;
-					}
+					cout << " | fID : " << (((*(mit->second->getDeploys()))[i]).getRefFile())->getFileManager()->getIdFile();
+					cout << " | cID : " << (*(mit->second->getDeploys()))[i].getCurrentIdChunk();
+					cout << " | fPath : " << ((*(mit->second->getDeploys()))[i].getRefFile())->getFileManager()->getFileName();
+					cout << " | hState : " << (*(mit->second->getDeploys()))[i].getCurrentState();
+					cout << endl;
+					cout << string( level*3 + (mit->first).size(), ' ' ) << " " ;
 				}
 			}
+			
 		}
 		cout << endl;
 		

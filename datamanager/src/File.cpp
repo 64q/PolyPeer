@@ -5,7 +5,7 @@
 
 using namespace std;
 
-File::File(int id, string name, string serverPath, string clientPath, int size, int chunkSize, FileState fs):
+File::File(int id, string name, string serverPath, string clientPath, int chunkSize, FileState fs, long dateFile):
 	name(name),
 	clientPath(clientPath),
 	fState(fs)
@@ -17,6 +17,7 @@ File::File(int id, string name, string serverPath, string clientPath, int size, 
 	try
 	{
 		fileM = new FileManager(serverPath.data(), id);
+		date = (time_t) dateFile;
 
 	} catch (OpenFileException)
 	{
@@ -27,7 +28,7 @@ File::File(int id, string name, string serverPath, string clientPath, int size, 
 	}
 }
 
-File::File(int id, string name, string serverPath, string clientPath, int size, int chunkSize):
+File::File(int id, string name, string serverPath, string clientPath, int chunkSize):
 	name(name),
 	clientPath(clientPath),
 	fState(READY)
@@ -35,6 +36,7 @@ File::File(int id, string name, string serverPath, string clientPath, int size, 
 	try
 	{
 		fileM= new FileManager(serverPath.data(), id);
+		time ( &date );
 
 	} catch (OpenFileException)
 	{
@@ -54,6 +56,7 @@ File::File(int id, string name, string serverPath, string clientPath):
 	try
 	{
 		fileM= new FileManager(serverPath.data(), id);
+		time ( &date );
 
 	} catch (OpenFileException)
 	{
