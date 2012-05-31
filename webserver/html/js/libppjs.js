@@ -46,6 +46,15 @@ var PolyPeerJS = {
 		this.Utils.updateStatus();
 		this.HashNav.init(this.HashRoutes, this.HashRoutes.home);
 	},
+	
+	/**
+	 * Cette fonction ne déclenchera le callback que lorsque la page sera chargée
+	 * @param callback
+	 * 	fonction a executé une fois la page chargée
+	 */
+	ready: function(callback) {
+		window.addEventListener('load', callback);
+	},
 };
 
 /**
