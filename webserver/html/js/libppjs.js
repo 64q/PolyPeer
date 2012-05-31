@@ -148,7 +148,6 @@ PolyPeerJS.HashRoutes = {
 				'<dl>' +
 					'<dt>Etat du serveur</dt><dd>L\'état du serveur est ' + printServerState(PolyPeerJS.stats.state) + '</dd>' +
 					'<dt>Nombre de déploiements en cours</dt><dd>Il y a actuellement ' + PolyPeerJS.stats.count_deployments + ' en cours</dd>' +
-					'<dt>Nombre d\'entitées sur le réseau</dt><dd>Il y a ' + PolyPeerJS.stats.count_hosts + ' hotes sur le réseau</dd>' +
 				'</dl>'
 			);
 		});
