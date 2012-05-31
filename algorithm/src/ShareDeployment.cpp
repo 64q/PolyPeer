@@ -38,7 +38,8 @@ void ShareDeployment::nextStep()
 	// Pour chaque fichier en cour de déploiement, recherche des nouvelles actions
 	for (vector<File*>::iterator itFile = files->begin(); itFile != files->end(); itFile++) 
 	{
-		int idFile;
+		// variable très utilisé
+		int idFile = (*itFile)->getFileManager()->getIdFile();
 		
 		switch((*itFile)->getFileState())
 		{
@@ -48,8 +49,7 @@ void ShareDeployment::nextStep()
 				break;
 				
 			case DEPLOYMENT:
-				// variable très utilisé
-				idFile = (*itFile)->getFileManager()->getIdFile();
+				
 				
 				// Récupération des entités concernés par ce déploiement
 				entities = (*itFile)->getSortedHosts();
@@ -135,7 +135,7 @@ void ShareDeployment::nextStep()
 			case F_PAUSE:
 				break;
 		}
-		//PolypeerServer::getInstance()->multiSleep(20);
+		PolypeerServer::getInstance()->multiSleep(50);
 	}
 
 }
@@ -150,8 +150,6 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 	{
 		// pour simplifier
 		int idFile = file->getFileManager()->getIdFile();
-		if(idFile == 0)
-			cout<<"erreur id !"<<endl;
 		if((entity->getHostState() == WAIT) && (entity->getDeploymentState(idFile)->getCurrentState() != HDS_FINISH))
 		{
 		
@@ -183,8 +181,8 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 			{
 				// traitement erreur dépassement par RAZ
 				cout <<"Dépassement max chunk"<<endl;
-				entity->getDeploymentState(idFile)->setCurrentIdChunk(0);
-				entity->getDeploymentState(idFile)->setCurrentState(HDS_INIT);
+				//entity->getDeploymentState(idFile)->setCurrentIdChunk(0);
+				//entity->getDeploymentState(idFile)->setCurrentState(HDS_INIT);
 			}
 		}
 	}
@@ -199,9 +197,6 @@ bool ShareDeployment::sendOperationOnHosts(Entity* entitySrc, Entity* entityDst,
 	{
 		// pour simplifier
 		int idFile = file->getFileManager()->getIdFile();
-		if(idFile == 0)
-			cout<<"erreur id !"<<endl;
-
 		if((entitySrc->getHostState() == WAIT) && (entityDst->getHostState() == WAIT) 
 			&& (entityDst->getDeploymentState(idFile)->getCurrentState() != HDS_FINISH))
 		{
@@ -225,9 +220,10 @@ bool ShareDeployment::sendOperationOnHosts(Entity* entitySrc, Entity* entityDst,
 			} else
 			{
 				// traitement erreur dépassement par RAZ
-				entityDst->getDeploymentState(idFile)->setCurrentIdChunk(0);
-				entityDst->getDeploymentState(idFile)->setCurrentState(HDS_INIT);
 				cout <<"Dépassement max chunk"<<endl;
+				//entityDst->getDeploymentState(idFile)->setCurrentIdChunk(0);
+				//entityDst->getDeploymentState(idFile)->setCurrentState(HDS_INIT);
+				
 			}
 		}
 	}
@@ -244,7 +240,7 @@ void ShareDeployment::resetBreakHost(vector<vector<Entity*>* >* entities)
 			if((*itHost)->getHostState() == DOWNLOAD)
 			{
 				// si on dépasse les 20 secondes en mode DOWNLOAD, il y a un pb
-				if((*itHost)->getTimerState() > 20.0)
+				if((*itHost)->getTimerState() > 5.0)
 				{
 					cout<<"BREAK DOWNLOAD : "<< (*itHost)->getIP() <<endl;
 					(*itHost)->setHostState(WAIT);

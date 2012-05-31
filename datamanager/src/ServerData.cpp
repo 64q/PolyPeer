@@ -110,8 +110,10 @@ void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
 				host->getDeploymentState(fileID)->setCurrentState(HDS_WAIT);
 		} else 
 		{
-			cout << "Le fichier d'id donné n'existe pas" << endl;
+			cout << "Le fichier d'id donné n'existe pas ("<<fileID<<")" << endl;
 		}
+		// l'host a fini son operation
+		host->setHostState(WAIT);
 	}
 	
 }
@@ -124,6 +126,7 @@ void ServerData::updateHost(string addressHost, int fileID, HostDeployState s)
 		// l'host a fini son operation
 		host->setHostState(WAIT);
 		// Actualiser l'état du fichier POUR L'Host
+		if(host->getDeploymentState(fileID) != NULL)
 			host->getDeploymentState(fileID)->setCurrentState(HDS_DISKFULL);
 	}
 }
@@ -305,7 +308,8 @@ bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity, int packetWe
 			possible = updateNetworkCurrentBroadbandSpeed(entity->getParent(),packetWeight);
 			if(possible)
 			{
-				// calcul
+				//int capacite = entity->getNetworkCapacity();
+				//int neededTimeMs = (packetWeight*1000)/capacite;
 				entity->setCurrentBroadbandSpeed(entity->getCurrentBroadbandSpeed() + packetWeight);
 			}
 		} else
