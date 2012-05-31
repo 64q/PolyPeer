@@ -26,11 +26,12 @@ PacketSendChunk::~PacketSendChunk()
 
 }
 
-Chunk PacketSendChunk::getChunk ()
+Chunk* PacketSendChunk::getChunk ()
 {
 	setPosition (0);
 	Data d;
+	
 	(*this) >> d;
-	return Chunk(d);
+	return new Chunk(d);
 }
 

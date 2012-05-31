@@ -11,11 +11,11 @@ using namespace std;
 int main()
 {
 
-/*
-    char file1[] = "../filemanager/dossier/a.png";
-    char file2[] = "./media/DCED-6AD4/dossier/test.png";
 
-    FileManager fmanager(file1, 345);
+    char file1[] = "../filemanager/dossier/a.png";
+    char file2[] = "./media/test.png";
+
+    FileManager fmanager(file1, 2);
 
     FileManager cible(file2,fmanager.getFileSize(), fmanager.getChunkSize(), 1);
 
@@ -43,6 +43,9 @@ int main()
         }
 
     }
+    
+    
+    
 	cout<<"fichier 3"<<endl;
     FileManager cible2("test2.png",cible.getFileSize(), cible.getChunkSize(), 1);
 
@@ -64,13 +67,8 @@ int main()
     }
 
 
-*/
-
-	FileManager fm("./dossier/a.png", 0, 1000, 1);
-	cout << fm.getCurrentNumberChunk() << endl;
-	cout << fm.getFileName() << endl;
-
 
 
 
 }
+
