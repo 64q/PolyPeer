@@ -8,6 +8,7 @@
 #include <vector>
 #include <string>
 #include <ctime>
+#include <sys/time.h>
 
 #include <DeploymentState.hpp>
 #include <State.hpp>
@@ -32,8 +33,8 @@ public:
 	int getCurrentBroadbandSpeed();
 	bool setCurrentBroadbandSpeed(int bbs);
 	int getNetworkCapacity();
-	void setTimerSpeed();
-	double getTimerSpeed();
+	void setTimerSpeed(int seconds, int milliseconds);
+	bool getTimerSpeed();
 	EntityType getType();
 	~Entity();
 	
@@ -56,7 +57,7 @@ protected:
 	std::string name;
 	Entity* parent;
 	int currentBroadbandSpeed; 
-	time_t timerSpeed;
+	timeval timerSpeed;
 	int networkCapacity;
 	EntityType type;
 };
