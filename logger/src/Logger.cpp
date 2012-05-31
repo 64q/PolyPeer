@@ -47,6 +47,11 @@ Logger::Logger(const string& path) : stringSave(""), typeSave(normal), verbose(f
 		createDir("./log/", "");
 		
 		this->file.open(path.c_str(), fstream::app);
+		
+		if (!this->file.is_open()) // Seconde ouverture en echec
+		{
+			throw OpenFileException();
+		}
 	}
 }
 
@@ -111,6 +116,7 @@ string Logger::getType(const ELogImportance logType)
 			break;
 		case notice:
 			toReturn = "notice";
+			break;
 		default :
 			toReturn = "undefined";
 	}
