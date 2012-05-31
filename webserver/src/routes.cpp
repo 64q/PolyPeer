@@ -175,8 +175,9 @@ void deployment_route(mg_connection* conn, const mg_request_info* request_info)
 			{
 				for (vector<Entity*>::iterator it = (*itZone)->begin(); it != (*itZone)->end(); it++)
 				{
-					mg_printf(conn, "{\"name\":\"%s\", \"ip\":\"%s\", \"state\":\"%s\", \"current\":\"%i\", \"total\":\"%lu\"}"
+					mg_printf(conn, "{\"name\":\"%s\", \"ip\":\"%s\", \"host_state\":\"%s\", \"state\":\"%s\", \"current\":\"%i\", \"total\":\"%lu\"}"
 						, (*it)->getName().c_str(), (*it)->getIP().c_str()
+						, getStringHostState((*it)->getHostState()).c_str()
 						, getStringHostDeployState((*it)->getDeploymentState(fm->getIdFile())->getCurrentState()).c_str()
 						, (*it)->getDeploymentState(fm->getIdFile())->getCurrentIdChunk()
 						, fm->getNumberChunk()

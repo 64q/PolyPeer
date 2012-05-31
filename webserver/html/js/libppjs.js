@@ -17,6 +17,7 @@ var PolyPeerJS = {
 	js: "/js",
 	ajax: "/ajax",
 	stats: null,
+	hasChanged: false,
 	
 	init: function() {
 		this.Utils.updateStatus();
@@ -53,6 +54,17 @@ PolyPeerJS.Utils = {
 		);
 	},
 	
+	serverDown: function() {
+		$('#content').text(
+			'<div class="page-header">'+
+				'<h1>Aucune réponse</h1>'+
+			'</div>'+
+			'<div class="alert alert-error">'+
+				'<strong>Alerte !</strong> Le serveur ne répond pas !'+
+			'</div>'
+		);
+	},
+	
 	error: function(type) {
 		PolyPeerJS.Utils.callPage(type + '.html', function(){});
 	},
@@ -64,6 +76,9 @@ PolyPeerJS.Utils = {
 PolyPeerJS.HashRoutes = {
 	home: function() {
 		PolyPeerJS.Utils.callPage('home.html', function() {
+			// Mise à jour données
+			PolyPeerJS.Utils.updateStatus();
+			
 			$('#overview').text( // Définition du contenu de l'aperçu rapide
 				'<dl>' +
 					'<dt>Etat du serveur</dt><dd>L\'état du serveur est ' + printServerState(PolyPeerJS.stats.state) + '</dd>' +
@@ -106,6 +121,10 @@ PolyPeerJS.HashRoutes = {
 	
 	doc: function() {
 		PolyPeerJS.Utils.callPage('doc.html', function(){});
+	},
+	
+	credits: function() {
+		PolyPeerJS.Utils.callPage('credits.html', function(){});
 	},
 };
 

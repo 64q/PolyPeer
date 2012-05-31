@@ -64,32 +64,31 @@ PolyPeerJS.Ajax = function(file, params, success, error, isParsable) {
 	if (isParsable == null) {
 		isParsable = true;
 	}
+	xhr.onabort = xhr.onerror = function() {
+		PolyPeerJS.Utils.serverDown();
+	};
 	
-	xhr.open('GET', sent);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4 && xhr.status == 200) {
-			if (xhr.responseText.length != 0) {
-				// Les données reçues sont du JSON
-				if (isParsable) {
-					var parsed = JSON.parse(xhr.responseText);
-					if (parsed.state != undefined && parsed.state == "error" && error != null) {
-						error();
-					} else {
-						success(parsed);
-					}
-				} 
-				// Sinon c'est autre chose, on ne parse pas
-				else {
-					success(xhr.responseText);
+			// Les données reçues sont du JSON
+			if (isParsable) {
+				var parsed = JSON.parse(xhr.responseText);
+				if (parsed.state != undefined && parsed.state == "error" && error != null) {
+					error();
+				} else {
+					success(parsed);
 				}
-			} else { // Si la requête ne renvoie rien, cela signife souvent que le serveur est down
-				error();
+			} 
+			// Sinon c'est autre chose, on ne parse pas
+			else {
+				success(xhr.responseText);
 			}
 		} else if (xhr.readyState == 4 && xhr.status == 404) {
 			PolyPeerJS.Utils.error('404'); // Erreur 404, page introuvable
 		}
 	};
-
+	
+	xhr.open('GET', sent);
 	xhr.send(null);
 };
 
@@ -132,6 +131,8 @@ PolyPeerJS.HashNav = {
 				} else {
 					that.notFound();
 				}
+				
+				PolyPeerJS.hasChanged = true;
 			}
 		} else {
 			that.root();

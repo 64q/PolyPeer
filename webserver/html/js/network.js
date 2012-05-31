@@ -19,19 +19,23 @@
 	
 	function createZone(parent, item) {
 	
-		var zone = document.createElement('table');
-		zone.className = 'table table-striped';
-		zone.innerHTML = '<tr><th colspan="3">Zone &laquo; ' + item.name + ' &raquo; \
-			<th>Capacité : ' + item.cbbs + '/' + item.nc + '</th></tr>'; 
-	
+		var zone = document.createElement('div');
+		
+		zone.innerHTML += '<h3>Zone &laquo; ' + item.name + ' &raquo; \
+			<small>Capacité : ' + item.cbbs + '/' + item.nc + '</small></h3>';
+		
+		var table = document.createElement('table');
+		table.className = 'table table-striped';
+
 		for (var i = 0; i < item.hosts.length; i++) {
 			if (item.hosts[i].type == "zone") {
 				createZone(zone, item.hosts[i]);
 			} else {
-				zone.appendChild(createHostLine('tr', item.hosts[i]));
+				table.appendChild(createHostLine('tr', item.hosts[i]));
 			}
-		}
+		}	
 
+		zone.appendChild(table);
 		parent.appendChild(zone);
 	}
 
@@ -51,7 +55,7 @@
 		view.appendChild(document.createTextNode('Détails'));
 		view.href = '#!/host/ip/' + item.ip;
 		view.className = 'btn';
-
+		
 		// Attachement des entités
 		link.appendChild(view);
 		line.appendChild(ip);
