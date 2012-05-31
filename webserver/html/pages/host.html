@@ -1,18 +1,28 @@
 <div id="host">
 	<div class="page-header">
 		<h1>
-			Vue de l'hote <small>Détails de l'hôte</small>
+			Vue de l'hote &laquo; <span id="host-header">None</span> &raquo; <small>Détails de l'hôte</small>
 		</h1>
 	</div>
+	<p>
+		Retrouvez toutes les infos importantes d'un hote sur le réseau.
+	</p>
 	<div id="notifs"></div>
 	<!-- Infos générales -->
-	<div id="host-info"></div>
-	<!-- Déploiements -->
-	<h3>
-		Déploiements sur l'hote
-	</h3>
-	<div id="host-deployments">
-		
+	<div id="host-info">
+		<ul>
+			<li><strong>Nom : </strong><span id="host-name">None</span></li>
+			<li><strong>IP : </strong><span id="host-ip">None</span></li>
+			<li><strong>Etat : </strong><span id="host-state">None</span></li>
+		</ul>
 	</div>
-	
+	<hr>
+	<h2>
+		Déploiements sur l'hote
+	</h2>
+	<p>
+		Voici la liste des déploiement sur l'hote.
+	</p>
+	<table class="table table-striped" id="host-deployments">
+	</table>
 </div>

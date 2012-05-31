@@ -11,35 +11,72 @@
 	
 	// Récupération des infos du déploiement cible
 	pp.Ajax('/ajax/deployment', args[0] + '=' + args[1], function(content) {
-		var result;
-	
+		$('#deployment-name').text(content.name);
+		
 		if (content.state == 'error') {
 			notifyError('Impossible de récupérer le déploiement');
 		} else {
-			result = '<div class="page-header"><h1>' + content.name + '</h1></div>';
-			result += '<ul>';
-			result += '<li><strong>Fichier : </strong>' + content.filename + '</li>';
-			result += '<li><strong>Etat : </strong>' + printFileState(content.state) + '</li>';
-			result += '<li><strong>Taille : </strong>' + content.size + ' o</li>';
-			result += '<li><strong>Nombre de chunks : </strong>' + content.nbchunk + '</li>';
-			result += '<li><strong>Taille d\'un chunk : </strong>' + content.chunksize + ' o</li>';
-			result += '</ul>';
-			result += '<h3>Actions</h3>';
-			result += '<p><button class="btn btn-warning" id="pause-button">Pause</button>&nbsp; \
-				<button class="btn btn-danger" id="delete-button">Supprimer</button></p>';
-			result += '<h3>Hotes incluses</h3>';
-			result += '<table class="table table-striped">';
-		
+			$('#deployment-filename').text(content.filename);
+			$('#deployment-state').text(printFileState(content.state));
+			$('#deployment-size').text(content.size);
+			$('#deployment-nb-chunks').text(content.nbchunk);
+			$('#deployment-chunk-size').text(content.chunksize);
+			
+			var result;
 			for (var i = 0; i < content.hosts.length; i++) {
 				var width = (content.hosts[i].current / content.hosts[i].total) * 100;
-				result += '<tr><td>' + content.hosts[i].ip + '</td><td>' + content.hosts[i].name + '</td><td>' + printDeployState(content.hosts[i].state) + '</td><td class="large-column">\
+				var tmp_state;
+				
+				if (content.hosts[i].host_state == "offline") {
+					tmp_state = printHostState("offline");
+				} else {
+					tmp_state = printDeployState(content.hosts[i].state);
+				}
+				
+				result += '<tr><td>' + content.hosts[i].ip + '</td><td>' + content.hosts[i].name + '</td><td>' + tmp_state + '</td><td class="large-column">\
 					<div class="progress progress-striped active"> \
 						<div class="bar" style="width: ' + width + '%;"></div></div></td><td><span style="float: left;margin-right: 5px;">' + content.hosts[i].current + '/' + content.hosts[i].total + '</span></td></tr>';
 			}
-	
-			result += '</ul>';
 			
-			$('#deployment').text(result);
+			$('#deployment-hosts').text(result);
+			
+			pp.hasChanged = false;
+			
+			// Traitement rafraichissement live
+			window.setTimeout(function() {
+				updateHosts(args[0], args[1]);
+			}, 1000);
 		}
 	});
+	
+	function updateHosts(type, ref) {
+		// Récupération des infos du déploiement cible
+		pp.Ajax('/ajax/deployment', type + '=' + ref, function(content) {
+			if (!pp.hasChanged) {
+				var result;
+				for (var i = 0; i < content.hosts.length; i++) {
+					var width = (content.hosts[i].current / content.hosts[i].total) * 100;
+					var tmp_state;
+		
+					if (content.hosts[i].host_state == "offline") {
+						tmp_state = printHostState("offline");
+					} else {
+						tmp_state = printDeployState(content.hosts[i].state);
+					}
+		
+					result += '<tr><td>' + content.hosts[i].ip + '</td><td>' + content.hosts[i].name + '</td><td>' + tmp_state + '</td><td class="large-column">\
+						<div class="progress progress-striped active"> \
+							<div class="bar" style="width: ' + width + '%;"></div></div></td><td><span style="float: left;margin-right: 5px;">' + content.hosts[i].current + '/' + content.hosts[i].total + '</span></td></tr>';
+				}
+	
+				$('#deployment-hosts').text(result);		
+		
+				window.setTimeout(function() {
+					updateHosts(type, ref);
+				}, 1000);
+			} else {
+				pp.hasChanged = false;
+			}
+		});
+	}
 })();

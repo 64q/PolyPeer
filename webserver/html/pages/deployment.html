@@ -1,4 +1,34 @@
 <div id="notifs"></div>
 <div id="deployment">
-	
+	<div class="page-header">
+		<h1 id="deployment-name">None</h1>
+	</div>
+	<p>
+		Voici les informations sur le déploiement sélectionné.
+	</p>
+	<ul>
+		<li><strong>Fichier : </strong><span id="deployment-filename">None</span></li>
+		<li><strong>Etat : </strong><span id="deployment-state">None</span></li>
+		<li><strong>Taille : </strong><span id="deployment-size">None</span> o</li>
+		<li><strong>Nombre de chunks : </strong><span id="deployment-nb-chunks">None</span></li>
+		<li><strong>Taille d'un chunk : </strong><span id="deployment-chunk-size">None</span> o</li>
+	</ul>
+	<hr>
+	<h2>Actions sur déploiement</h2>
+	<p>
+		Attention, avant de faire une action, assurez vous de savoir ce que vous faite.
+	</p>
+	<div>
+		<p>
+			<button class="btn btn-warning" id="pause-button">Pause</button>&nbsp;
+			<button class="btn btn-danger" id="delete-button">Supprimer</button>
+		</p>
+	</div>
+	<hr>
+	<h2>Hotes impliquées</h2>
+	<p>
+		La liste suivante donne la liste des hotes cibles du déploiement.
+	</p>
+	<table id="deployment-hosts" class="table table-striped"s>
+	</table>
 </div>

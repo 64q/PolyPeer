@@ -22,23 +22,27 @@ body li#state {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 
-body #network-view div {
-	margin: 5px;
-	margin-left: 15px;
-	border: 1px solid black;
-	background: silver;
-}
-
 body #zones-choice p {
 	margin-left: 15px;
 	padding: 10px;
-	background: silver;
-	border: 1px solid gray;
+	border: 1px solid #DDD;
+	background: whiteSmoke;
+	font-weight: bold;
 }
 
 body footer {
 	text-align: center;
 	color: silver;
+}
+
+body #network-view div {
+	margin: 5px 5px 5px 15px;
+	padding: 0px;
+	border: 1px solid #DDD;
+}
+
+body #network-view div h3 {
+	padding: 5px;
 }
 
 .tiny-column {
