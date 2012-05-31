@@ -17,4 +17,4 @@
         <host ref="PC8" />
         <host ref="PC9" />
     </file>
-</deployment
+</deployments>
