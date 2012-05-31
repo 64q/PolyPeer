@@ -64,8 +64,13 @@ PolyPeerJS.Ajax = function(file, params, success, error, isParsable) {
 	if (isParsable == null) {
 		isParsable = true;
 	}
+	
+	if (error == null) {
+		error = PolyPeerJS.Utils.serverDown;
+	}
+	
 	xhr.onabort = xhr.onerror = function() {
-		PolyPeerJS.Utils.serverDown();
+		error();
 	};
 	
 	xhr.onreadystatechange = function() {

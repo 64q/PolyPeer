@@ -44,12 +44,16 @@ PolyPeerJS.Utils = {
 	updateStatus: function() {
 		PolyPeerJS.Ajax(PolyPeerJS.ajax + '/get_stats', null, 
 			function(content) {
+				if (PolyPeerJS.stats != null && PolyPeerJS.stats.state == "offline") {
+					PolyPeerJS.HashNav.onChange();
+				}
 				PolyPeerJS.stats = content;
 				$("#state").text(printServerState(content.state));
 			}, 
 			function() { // Le serveur ne répond pas, on le considère offline
 				PolyPeerJS.stats.state = "offline";
 				$("#state").text(printServerState(content.state));
+				PolyPeerJS.Utils.serverDown();
 			}
 		);
 	},

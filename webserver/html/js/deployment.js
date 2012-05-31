@@ -17,6 +17,7 @@
 			notifyError('Impossible de récupérer le déploiement');
 		} else {
 			$('#deployment-filename').text(content.filename);
+			$('#deployment-date').text(content.date);
 			$('#deployment-state').text(printFileState(content.state));
 			$('#deployment-size').text(content.size);
 			$('#deployment-nb-chunks').text(content.nbchunk);
