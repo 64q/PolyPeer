@@ -9,7 +9,6 @@ ServerData::ServerData() :
 {
 	cM = new ConnectionManager(6666);
 	cM->start();
-	
 	xmlTool = new XMLTool(this);
 }
 
@@ -79,6 +78,8 @@ map<string, Entity*>* ServerData::getEntities()
 
 vector<File*>* ServerData::getDeployFiles()
 {
+	mutex_deployFiles.lock();
+	mutex_deployFiles.unlock();
 	return &deployFiles;
 }
 
@@ -152,7 +153,10 @@ void ServerData::updateHostInit(string addressHost)
 
 FileManager* ServerData::addFile(File* f)
 {
+	mutex_deployFiles.lock();
 	deployFiles.push_back(f);
+	mutex_deployFiles.unlock();
+	
 	return f->getFileManager();
 }
 
@@ -180,7 +184,9 @@ File* ServerData::getFile(int id)
 	unsigned int i=0;
 	bool find = false;
 	File* toReturn = NULL;
-
+	
+	mutex_deployFiles.lock();
+	
 	while( (i < deployFiles.size()) && (find == false) )
 	{
 		if (deployFiles[i]->getFileManager())
@@ -193,6 +199,8 @@ File* ServerData::getFile(int id)
 		}
 		i++;
 	}
+	mutex_deployFiles.unlock();
+
 	return toReturn;	
 }
 

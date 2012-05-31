@@ -1,6 +1,9 @@
 #ifndef CREATEFILEEXCEPTION_H
 #define CREATEFILEEXCEPTION_H
 
+/**
+ * Exception qui est lancée lorsque le fichier de déploiement n'a pas pu être correctement créé
+ */
 
 class CreateFileException
 {

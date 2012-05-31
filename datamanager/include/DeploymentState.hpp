@@ -18,11 +18,11 @@ public:
   /**
 	* Constructeur
 	* @currentIdChunk
-	*		id du chunk courant
+	*	 id du chunk courant
 	* @file
-	*		pointeur vers le fichier de déploiement correspondant
+	*	 pointeur vers le fichier de déploiement correspondant
 	* @HostDeployState
-	*		Etat courant du déploiement pour l'Host donné
+	*	 Etat courant du déploiement pour l'Host donné
 	*/
 	DeploymentState(const int currentIdChunk, File* file, HostDeployState s);
 	
@@ -49,14 +49,14 @@ public:
   /**
 	* Change l'id du chunk courrant
 	* @id 
-	*		nouvelle id du chunk courrant
+	*	 nouvelle id du chunk courrant
 	*/
 	void setCurrentIdChunk(int id) { currentIdChunk = id; }
 	
   /**
 	* Change l'etat du déploiement 
-	*	@id 
-	*		nouvel etat du déploiement
+	* @id 
+	*	 nouvel etat du déploiement
 	*/
 	void setCurrentState(HostDeployState s);
 
