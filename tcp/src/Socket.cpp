@@ -73,9 +73,38 @@ bool Socket::send(const Data& data)
 int Socket::read(char* buffer, int sizeBuffer)
 {
 	int size = 0;
-
+	//essayer avec MSG_WAITALL à la place de 0
 	size = recv(descripteur, buffer, sizeBuffer, 0);
 
+/* On vérifie qu'il n'y a plus rien à lire
+	fd_set rfds;
+    struct timeval tv;
+    int retval;
+    // Surveiller stdin (fd 0) en attente d'entrées
+    FD_ZERO(&rfds);
+    FD_SET(descripteur, &rfds);
+    // Pendant 0 secondes maxi
+    tv.tv_sec = 0;
+    tv.tv_usec = 0;
+    retval = select(1, &rfds, NULL, NULL, &tv);
+    // Considerer tv comme indéfini maintenant !
+    if (retval)
+    {
+    	char* buffTmp = new buffTmp[20000];
+
+    	int sizeTmp = recv(descripteur, buffTmp, 20000, 0);
+
+		for(int i = size; i < size+sizeTmp; i++)
+		{
+			buffer[i] = buffTmp[i-size];
+		}
+    }
+    else
+    {
+    	//printf("Pas de données depuis 5 secondes\n");
+
+    }
+*/
 
 	return size;
 }
