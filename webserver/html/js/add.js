@@ -3,6 +3,29 @@
  * Quentin Lebourgeois - 2012
  */
  
+function createInputZone(parent, item) {
+	
+	var zone = document.createElement('p');
+	var title = document.createElement('label');
+	var input = document.createElement('input');
+	
+	input.type = "checkbox"; input.value = item.name;
+	
+	title.className = "checkbox";
+	title.appendChild(input);
+	title.appendChild(document.createTextNode(item.name));
+	
+	zone.appendChild(title);
+	
+	for (var i = 0; i < item.hosts.length; i++) {
+		if (item.hosts[i].type == "zone") {
+			createInputZone(zone, item.hosts[i]);
+		}
+	}
+
+	parent.appendChild(zone);
+}
+
 $('#new-deployment-form').addEventListener('submit', function(e) {
  	var name = $('#name');
  	var path = $('#path');
@@ -35,22 +58,19 @@ $('#new-deployment-form').addEventListener('submit', function(e) {
  	}
  	
  	if (!error) {
-	 	Ajax.request('/ajax/new_deployment', 'name=' + name.value + '&spath=' + path.value + '&zones=' + str_zones + '&cpath=' + cpath.value, function(content) {
-	 		var content = JSON.parse(content);
-	 		
+	 	PolyPeerJS.Ajax('/ajax/new_deployment', 'name=' + name.value + '&spath=' + path.value + '&zones=' + str_zones + '&cpath=' + cpath.value, function(content) {
 	 		if (content.state == "done") {
 	 			notifySuccess('Création du déploiement exectuée.');
-	 		} else {
-	 			notifyError('Impossible de créer le nouveau déploiement');
 	 		}
+	 	}, function() {
+	 			notifyError('Impossible de créer le nouveau déploiement');
 	 	});
 	}
  	
  	e.preventDefault();
  });
  
-Ajax.request('/ajax/network', null, function(content) {
-	var content = JSON.parse(content);
+PolyPeerJS.Ajax('/ajax/network', null, function(content) {
 	var view = $('#zones-choice');
 	for (var i = 0; i < content.length; i++) {
 		if (content[i].type == "zone") {
@@ -58,27 +78,4 @@ Ajax.request('/ajax/network', null, function(content) {
 		}
 	}
 });
-
-function createInputZone(parent, item) {
-	
-	var zone = document.createElement('p');
-	var title = document.createElement('label');
-	var input = document.createElement('input');
-	
-	input.type = "checkbox"; input.value = item.name;
-	
-	title.className = "checkbox";
-	title.appendChild(input);
-	title.appendChild(document.createTextNode(item.name));
-	
-	zone.appendChild(title);
-	
-	for (var i = 0; i < item.hosts.length; i++) {
-		if (item.hosts[i].type == "zone") {
-			createInputZone(zone, item.hosts[i]);
-		}
-	}
-
-	parent.appendChild(zone);
-}
 
