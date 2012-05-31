@@ -20,6 +20,7 @@ public:
 	std::map<std::string, Entity*>* getEntities();
 	std::vector<DeploymentState>* getDeploys();
 	std::string getIP();
+	std::string getMac();
 	HostState getHostState();
 	void setHostState(HostState);
 	void setTimerState();

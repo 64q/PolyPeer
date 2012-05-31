@@ -40,6 +40,11 @@ string Zone::getIP()
 	return string("");
 }
 
+std::string Zone::getMac()
+{
+	return string("");
+}
+
 HostState Zone::getHostState()
 {
 	return OFFLINE;

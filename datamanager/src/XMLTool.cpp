@@ -77,7 +77,7 @@ void XMLTool::readTopology(ServerData* sData, TiXmlNode* node, map<string, Entit
 			}else
 			{
 				elem->QueryIntAttribute("networkCapacity", &capacity);
-				entity = sData->addHost(elem->Attribute("name"), parent, capacity, elem->Attribute("address"));
+				entity = sData->addHost(elem->Attribute("name"), parent, capacity, elem->Attribute("address"), elem->Attribute("mac"));
 				entities->insert(make_pair(elem->Attribute("name"), entity));
 			}
 		}
@@ -115,7 +115,6 @@ void XMLTool::readTopology(ServerData* sData, TiXmlNode* node, map<string, Entit
 void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 {
 	int id = 0;
-	int size = 0;
 	int chunkSize = 0;
 	Entity* entity = NULL;
 
@@ -133,10 +132,9 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 				if (fs != FINISH)
 				{
 					elem->QueryIntAttribute("id", &id);
-					elem->QueryIntAttribute("size", &size);
 					elem->QueryIntAttribute("chunkSize", &chunkSize);
 
-						File *f = new File(id, elem->Attribute("name"), elem->Attribute("serverPath"), elem->Attribute("clientPath"), size, chunkSize, fs);
+						File *f = new File(id, elem->Attribute("name"), elem->Attribute("serverPath"), elem->Attribute("clientPath"), chunkSize, fs);
 						sData->addFile(f);
 				}
 			}
@@ -180,7 +178,6 @@ void XMLTool::writeFileIntoDeployments(File* file)
 		newFile.SetAttribute("name", file->getName());
 		newFile.SetAttribute("serverPath", (file->getFileManager())->getFilePath());
 		newFile.SetAttribute("clientPath", file->getClientPath());
-		newFile.SetAttribute("size", (file->getFileManager())->getFileSize());
 		newFile.SetAttribute("chunkSize", (file->getFileManager())->getChunkSize());
 		newFile.SetAttribute("state", getStringFileState(file->getFileState()));
 	}

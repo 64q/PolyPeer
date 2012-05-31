@@ -5,7 +5,7 @@
 
 using namespace std;
 
-File::File(int id, string name, string serverPath, string clientPath, int size, int chunkSize, FileState fs):
+File::File(int id, string name, string serverPath, string clientPath, int chunkSize, FileState fs):
 	name(name),
 	clientPath(clientPath),
 	fState(fs)
@@ -27,7 +27,7 @@ File::File(int id, string name, string serverPath, string clientPath, int size, 
 	}
 }
 
-File::File(int id, string name, string serverPath, string clientPath, int size, int chunkSize):
+File::File(int id, string name, string serverPath, string clientPath, int chunkSize):
 	name(name),
 	clientPath(clientPath),
 	fState(READY)

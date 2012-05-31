@@ -21,8 +21,8 @@ class File
 public :
 
 	File(int id, std::string name, std::string serverPath, std::string clientPath);
-	File(int id, std::string name, std::string serverPath, std::string clientPath, int size, int chunkSize);
-	File(int id, std::string name, std::string serverPath, std::string clientPath, int size, int chunkSize, FileState fs);
+	File(int id, std::string name, std::string serverPath, std::string clientPath, int chunkSize);
+	File(int id, std::string name, std::string serverPath, std::string clientPath, int chunkSize, FileState fs);
 	~File();
 	std::string getName() { return name; }
 	FileManager* getFileManager() { return fileM; }

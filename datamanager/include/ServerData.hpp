@@ -88,7 +88,7 @@ public :
 	* @param address
 	*	adress de l'Host à creer
 	*/	
-	Entity* addHost(string name, Entity* parent,int networkCapacity, string address);
+	Entity* addHost(string name, Entity* parent,int networkCapacity, string address, string mac);
 	
   /**
 	* Supprime de la mémoire et du fichier XML le déploiement d'id passé en paramètre, si son 
