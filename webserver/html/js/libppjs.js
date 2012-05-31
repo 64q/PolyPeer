@@ -211,6 +211,12 @@ PolyPeerJS.HashRoutes = {
 	credits: function() {
 		PolyPeerJS.Utils.callPage('credits.html', function(){});
 	},
+	
+	log: function() {
+		PolyPeerJS.Utils.callPage('log.html', function() {
+			PolyPeerJS.Utils.load('log.js');
+		});
+	},
 };
 
 /**
