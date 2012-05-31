@@ -1,5 +1,6 @@
 /*
- * Ajout feuille de style PolyPeer
+ * Feuille de style de PolyPeer
+ * Quentin Lebourgeois - 2012
  */
 
 body {
@@ -64,7 +65,8 @@ body #network-view div h3 {
 }
 
 .server-state {
-	
+	font-weight: bold;
+	font-family: monospace;
 }
 
 .online {
