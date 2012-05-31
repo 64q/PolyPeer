@@ -66,7 +66,7 @@ public:
 	 * @param long
 	 * numéro du Chunk que l'on veut récupérer (doit être inférieur à la valeur retournée par getNumberChunk() )
 	 */
-	Chunk getChunk(long number);
+	Chunk* getChunk(long number);
 
 	/**
 	 * On enregistre le Chunk dans le fichier avec les vérifications nécessaires

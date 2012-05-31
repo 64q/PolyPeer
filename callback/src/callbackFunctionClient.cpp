@@ -70,14 +70,22 @@ int callbackSendOperation(Packet& p)
 	
 	if(fm!=NULL)
 	{
-		Chunk c = fm->getChunk((long)pp.getNumChunk());
-		cout << "Chunk prêt à envoyer n°" << c.getNumber()<<endl;
-		// envoie à la cible
-		cd->getConnectionManager()->sendTo(pp.getTarget(), PacketSendChunk(c));
-		cout << "Chunk envoyé"<<endl;
-		// réponse au serveur du travail effectué
-		cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketSendOperationFinished());
-		cout << "serveur prévenu"<<endl;
+		Chunk* c = fm->getChunk((long)pp.getNumChunk());
+		if(c !=NULL)
+		{
+			cout << "Chunk prêt à envoyer n°" << c->getNumber()<<endl;
+			// envoie à la cible
+			cd->getConnectionManager()->sendTo(pp.getTarget(), PacketSendChunk(*c));
+			cout << "Chunk envoyé"<<endl;
+			// réponse au serveur du travail effectué
+			cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketSendOperationFinished());
+			cout << "serveur prévenu"<<endl;
+		
+		}else
+		{
+			cout << "ce Chunk n'est pas dispo"<<endl;
+		}
+		
 	
 	}else
 	{
