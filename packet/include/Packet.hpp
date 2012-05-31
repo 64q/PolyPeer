@@ -135,6 +135,16 @@ public:
 	 *	address
 	 */
 	 std::string getAddress () const;
+	 
+	 /**
+	 * Retourne la taille du paquet
+
+	 * @return unsigned int
+	 *	taille
+	 * Méthode à ne pas trop utiliser... calculs lourds
+	 * Utiliser la méthode de la classe Data
+	 */
+	unsigned int getSize ();
 
 
 protected:
@@ -158,15 +168,6 @@ protected:
 	 * un Data vide est retourné si la position n'existe pas
 	 */
 	Data getDataPos (unsigned int i);
-
-	/**
-	 * Retourne la taille du paquet
-	 * @return unsigned int
-	 *	taille
-	 * Méthode à ne pas trop utiliser... calculs lourds
-	 * Utiliser la méthode de la classe Data
-	 */
-	unsigned int getSize ();
 
 	/**
 	 * Remet à zéro la position de lecture des arguments

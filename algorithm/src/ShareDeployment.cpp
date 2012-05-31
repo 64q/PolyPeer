@@ -28,6 +28,7 @@ ShareDeployment::~ShareDeployment()
 
 void ShareDeployment::nextStep()
 {
+
 	// liste des déploiements
 	vector<File*>* files = sData->getDeployFiles();
 	
@@ -64,31 +65,34 @@ void ShareDeployment::nextStep()
 				{
 					(*itFile)->setFileState(FINISH);
 				}
-				
+
 				// Les traitements sont effectués par zone
 				for (vector<vector<Entity*>* >::iterator itZone = entities->begin(); itZone != entities->end(); itZone++) 
 				{
 					// récupérer le maitre de zone
 					Entity* hostMaster = selectZoneMaster((*itZone), idFile);
-					
+
 					// si il n'y a pas de master, c'est qu'aucun Host n'est dispo
 					if(hostMaster != NULL)
 					{
+
 						// si il y a plus d'un host sur la zone
 						if((*itZone)->size() > 1)
 						{
 							// On essaye de créer un deuxieme HOST pour seed sur la zone
 							// car le maitre est tjs pris par le serveur
 							Entity* seedHostZone = selectSeedHostOnZone((*itZone), idFile, hostMaster);
-							
-							// si on a trouver un deuxieme host pour seed la zone pendant que le master récupere le fichier du serveur
+
+							// si on a trouver un deuxieme host pour seed la zone pendant que le master 
+							// récupere le fichier du serveur
 							if(seedHostZone != NULL)
 							{
 								sendOperationOnHosts(hostMaster, seedHostZone, (*itFile));
 							}
+
 							// on essaye d'envoyer sur le maitre de zone
 							sendOnMaster(hostMaster, (*itFile));
-						
+
 							// ajout du déploiement sur forme d'arbre dans la zone
 							Entity* minHost = NULL;
 							Entity* seedHost = NULL;
@@ -131,8 +135,9 @@ void ShareDeployment::nextStep()
 			case F_PAUSE:
 				break;
 		}
-		PolypeerServer::getInstance()->multiSleep(20);
+		//PolypeerServer::getInstance()->multiSleep(20);
 	}
+
 }
 
 
@@ -145,6 +150,8 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 	{
 		// pour simplifier
 		int idFile = file->getFileManager()->getIdFile();
+		if(idFile == 0)
+			cout<<"erreur id !"<<endl;
 		if((entity->getHostState() == WAIT) && (entity->getDeploymentState(idFile)->getCurrentState() != HDS_FINISH))
 		{
 		
@@ -155,21 +162,17 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 				// récupération du chunk
 				Chunk chunk = file->getFileManager()->getChunk(numChunk);
 			
-				//cout<< chunk.getData()[0]<< " NumSend : "<< entity->getDeploymentState(idFile)->getCurrentIdChunk() <<endl;
-			
-				//cout<<"DEBUT "<< idFile <<"-------"<<endl;
-				//cout.write(chunk.getData(), 500);
-				//cout<<"-------FIN"<<endl;
 				// création du paquet
 				Packet pSC = PacketSendChunk(chunk);
 		
 				// gestion du débit
-				//if(canTakeBroadcastNetworkFromServerTo(entity, pSC.size()))
-				//{
+				if(sData->updateNetworkCurrentBroadbandSpeed(entity, pSC.getSize()))
+				{
+				}
 					sData->getConnectionManager()->sendTo((entity->getIP()), pSC);
 					entity->setHostState(DOWNLOAD);
 					toReturn = true;
-				//}
+				
 			} else
 			{
 				// traitement erreur dépassement par RAZ
@@ -190,6 +193,8 @@ bool ShareDeployment::sendOperationOnHosts(Entity* entitySrc, Entity* entityDst,
 	{
 		// pour simplifier
 		int idFile = file->getFileManager()->getIdFile();
+		if(idFile == 0)
+			cout<<"erreur id !"<<endl;
 
 		if((entitySrc->getHostState() == WAIT) && (entityDst->getHostState() == WAIT) 
 			&& (entityDst->getDeploymentState(idFile)->getCurrentState() != HDS_FINISH))
@@ -203,13 +208,14 @@ bool ShareDeployment::sendOperationOnHosts(Entity* entitySrc, Entity* entityDst,
 				Packet pSOP = PacketSendOperation(entityDst->getIP(), idFile, numNeededChunk);
 		
 				// gestion du débit
-				//if(canTakeBroadcastNetworkFromServerTo(entity, pSOP.size()))
-				//{
+				//if(sData->updateNetworkCurrentBroadbandSpeed(entitySrc, entityDst, pSOP.getSize()))
+				{
+				}
 					sData->getConnectionManager()->sendTo(entitySrc->getIP(), pSOP);
 					entitySrc->setHostState(DOWNLOAD);
 					entityDst->setHostState(DOWNLOAD);
 					toReturn = true;
-				//}
+				
 			} else
 			{
 				// traitement erreur dépassement par RAZ
@@ -317,12 +323,14 @@ Entity* ShareDeployment::selectZoneMaster(std::vector<Entity*>* zone, int idFile
 Entity* ShareDeployment::selectSeedHostOnZone(std::vector<Entity*>* zone, int idFile, Entity* hostMaster)
 {
 	Entity* toReturn = NULL;
-	
+
 	// chercher un deuxieme master pour la zone
 	Entity* secondMaster = selectZoneMaster(zone, idFile, hostMaster);
-	
-	toReturn = secondMaster;
-	
+	if((hostMaster != NULL) && (secondMaster != NULL))
+	{
+		if(secondMaster->getDeploymentState(idFile)->getCurrentIdChunk() < (hostMaster->getDeploymentState(idFile)->getCurrentIdChunk()-1))
+			toReturn = secondMaster;
+	}
 	return toReturn;
 }
 

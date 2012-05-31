@@ -289,18 +289,18 @@ FileManager* ServerData::getFileManager(int id)
 bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity, int packetWeight)
 {
 	bool possible = true;
-	Entity* e = entity;
 	
-	while (e != NULL && possible == true)
+	if(entity != NULL)
 	{
-		if ( packetWeight == 0 )
-			e->setCurrentBroadbandSpeed(0);
-		else
-			possible = e->setCurrentBroadbandSpeed(e->getCurrentBroadbandSpeed() + packetWeight);
-		e = e->getParent();
+		possible = updateNetworkCurrentBroadbandSpeed(entity->getParent(),packetWeight);
+		if(possible)
+		{
+			// calcul
+			entity->setCurrentBroadbandSpeed(entity->getCurrentBroadbandSpeed() + packetWeight);
+		}
 	}
 	
-	return possible;	
+	return possible;
 }
 
 bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity1, Entity* entity2, int packetWeight)

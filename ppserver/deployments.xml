@@ -1,8 +1,20 @@
 <deployments>
-     <file id="23" name="TextFile" serverPath="file/text.txt" clientPath="file/text.txt" size="5343" chunkSize="3000" state="ready">
-        <zone ref="C007" />
-    </file>
-    <file id="24" name="TextFile++" serverPath="file/text+.txt" clientPath="file/text+.txt" size="5343" chunkSize="3000" state="ready">
-        <zone ref="C007" />
+    <file id="24" name="ED_HD" serverPath="file/ED_HD.avi" clientPath="file/ED_HD.avi" size="854537054" chunkSize="18000" state="deployment">
+        <host ref="PC1" />
+        <host ref="PC10" />
+        <host ref="PC11" />
+        <host ref="PC12" />
+        <host ref="PC13" />
+        <host ref="PC14" />
+        <host ref="PC15" />
+        <host ref="PC16" />
+        <host ref="PC2" />
+        <host ref="PC3" />
+        <host ref="PC4" />
+        <host ref="PC5" />
+        <host ref="PC6" />
+        <host ref="PC7" />
+        <host ref="PC8" />
+        <host ref="PC9" />
     </file>
 </deployments>
