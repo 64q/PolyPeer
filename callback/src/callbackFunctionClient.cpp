@@ -34,12 +34,13 @@ int callbackNewFile(Packet& p)
 		{
 			fm = new FileManager(pp.getFileName().c_str(), pp.getFileSize(), pp.getChunkSize(), pp.getIdFile());
 			cd->addFileManager(fm);
-			cout << "création du fichier"<<endl;
+			cout << "ajout du fichier dans la structure de donnée"<<endl;
 		} catch (DiskFullException e)
 		{
 			// Création du paquet d'erreur
 			cout << "full"<<endl;
 			pReturn = PacketDiskFull (pp.getIdFile());
+			cd->getConnectionManager()->sendTo(cd->getAddressServ(), pReturn);
 			return 0;
 		}
 	}
@@ -49,6 +50,7 @@ int callbackNewFile(Packet& p)
 	cout << "chunk désiré n° " << fm->getCurrentNumberChunk() << endl;
 	// -> créer le nouveau paquet PacketReady
 	cd->getConnectionManager()->sendTo(cd->getAddressServ(), pReturn);
+	cout << "réponse au sendChunk envoyé"<<endl;
 
 	return 1;
 }
