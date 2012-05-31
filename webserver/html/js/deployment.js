@@ -65,7 +65,7 @@
 					}
 		
 					result += '<tr><td>' + content.hosts[i].ip + '</td><td>' + content.hosts[i].name + '</td><td>' + tmp_state + '</td><td class="large-column">\
-						<div class="progress progress-striped active"> \
+						<div class="progress"> \
 							<div class="bar" style="width: ' + width + '%;"></div></div></td><td><span style="float: left;margin-right: 5px;">' + content.hosts[i].current + '/' + content.hosts[i].total + '</span></td></tr>';
 				}
 	
