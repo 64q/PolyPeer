@@ -290,13 +290,21 @@ bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity, int packetWe
 {
 	bool possible = true;
 	
+	// racine de l'arbre
 	if(entity != NULL)
 	{
-		possible = updateNetworkCurrentBroadbandSpeed(entity->getParent(),packetWeight);
-		if(possible)
+		// si on peut envoyer
+		if(entity->getTimerState())
 		{
-			// calcul
-			entity->setCurrentBroadbandSpeed(entity->getCurrentBroadbandSpeed() + packetWeight);
+			possible = updateNetworkCurrentBroadbandSpeed(entity->getParent(),packetWeight);
+			if(possible)
+			{
+				// calcul
+				entity->setCurrentBroadbandSpeed(entity->getCurrentBroadbandSpeed() + packetWeight);
+			}
+		} else
+		{
+			possible = false;
 		}
 	}
 	

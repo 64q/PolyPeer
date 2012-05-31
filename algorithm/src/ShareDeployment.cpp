@@ -53,13 +53,13 @@ void ShareDeployment::nextStep()
 				
 				// Récupération des entités concernés par ce déploiement
 				entities = (*itFile)->getSortedHosts();
-				
+
 				// Repasser un host en status WAIT (pret) si il	est bloqué plus d'un certain temps
 				resetBreakHost(entities);	
 								
 				// Faire un scan du réseau pour MAJ -> envoie du paquet d'initialisation si besoin
 				networkScan(entities, (*itFile));
-				
+
 				// vérifier qu'il reste des données à déployer
 				if(isEnd(entities, idFile))
 				{
@@ -160,25 +160,31 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 			if(numChunk <= file->getFileManager()->getNumberChunk())
 			{
 				// récupération du chunk
-				Chunk chunk = file->getFileManager()->getChunk(numChunk);
-			
-				// création du paquet
-				Packet pSC = PacketSendChunk(chunk);
-		
-				// gestion du débit
-				if(sData->updateNetworkCurrentBroadbandSpeed(entity, pSC.getSize()))
+				Chunk* chunk = file->getFileManager()->getChunk(numChunk);
+				
+				if(chunk != NULL)
 				{
+					// création du paquet
+					Packet pSC = PacketSendChunk((*chunk));
+		
+					// gestion du débit
+					//if(sData->updateNetworkCurrentBroadbandSpeed(entity, pSC.getSize()))
+					{
+					}
+						sData->getConnectionManager()->sendTo((entity->getIP()), pSC);
+						entity->setHostState(DOWNLOAD);
+						toReturn = true;
+					
+					// suppression du chunk
+					delete chunk;
 				}
-					sData->getConnectionManager()->sendTo((entity->getIP()), pSC);
-					entity->setHostState(DOWNLOAD);
-					toReturn = true;
 				
 			} else
 			{
 				// traitement erreur dépassement par RAZ
+				cout <<"Dépassement max chunk"<<endl;
 				entity->getDeploymentState(idFile)->setCurrentIdChunk(0);
 				entity->getDeploymentState(idFile)->setCurrentState(HDS_INIT);
-				cout <<"Dépassement max chunk"<<endl;
 			}
 		}
 	}
