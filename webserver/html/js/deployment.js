@@ -50,6 +50,30 @@
 		}
 	});
 	
+	$('#pause-button').addEventListener('click', function() {
+		if (confirm('Êtes-vous sûr de vouloir mettre le déploiement en pause ?')) {
+			pp.Ajax('/ajax/pause_deployment', args[0] + '=' + args[1], function(content) {
+				if (content.state == "done") {
+					notifySuccess('Le déploiement a été mis en pause avec succès.');
+				} else {
+					notifyError('Le déploiement n\'a pas pu être mis en pause.');
+				}
+			});
+		}
+	});
+	
+	$('#unpause-button').addEventListener('click', function() {
+		if (confirm('Êtes-vous sûr de vouloir remettre en route le déploiement ?')) {
+			pp.Ajax('/ajax/unpause_deployment', args[0] + '=' + args[1], function(content) {
+				if (content.state == "done") {
+					notifySuccess('Le déploiement a été mis remis en route avec succès.');
+				} else {
+					notifyError('Le déploiement n\'a pas pu être remis en route.');
+				}
+			});
+		}
+	});
+	
 	function updateHosts(type, ref) {
 		// Récupération des infos du déploiement cible
 		pp.Ajax('/ajax/deployment', type + '=' + ref, function(content) {

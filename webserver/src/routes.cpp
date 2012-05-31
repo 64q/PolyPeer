@@ -313,7 +313,18 @@ void new_deployment_route(mg_connection* conn, const mg_request_info* request_in
 
 void pause_deployments_route(mg_connection* conn, const mg_request_info* request_info)
 {
-	//PolypeerServer* server = PolypeerServer::getInstance();
+	PolypeerServer* server = PolypeerServer::getInstance();
+	ServerData& data = server->getServerData();
+	
+	vector<File*>* files = data.getDeployFiles();
+	
+	for (vector<File*>::iterator it = files->begin(); it != files->end(); it++) 
+	{
+		if ((*it)->getFileState() != F_ERROR && (*it)->getFileState() != F_PAUSE)
+		{
+			(*it)->setFileState(F_PAUSE);
+		}
+	}
 	
 	mg_printf(conn, "%s", ajax_reply_start);
 	mg_printf(conn, "{\"state\":\"done\"}");
@@ -330,6 +341,55 @@ void delete_deployment_route(mg_connection* conn, const mg_request_info* request
 
 void pause_deployment_route(mg_connection* conn, const mg_request_info* request_info)
 {
-	// TODO
+	char qid[32];
+	int id;
+	
+	get_qsvar(request_info, "id", qid, sizeof(qid));
+	
+	std::istringstream iss(qid);
+	iss >> id;
+	
+	PolypeerServer* server = PolypeerServer::getInstance();
+	ServerData& data = server->getServerData();
+	
+	File* file = data.getFile(id);
+	
+	mg_printf(conn, "%s", ajax_reply_start);
+	
+	if (file != NULL) {
+		if (file->getFileState() != F_PAUSE) {
+			file->setFileState(F_PAUSE);
+		}
+		mg_printf(conn, "{\"state\":\"done\"}");
+	} else {
+		mg_printf(conn, "{\"state\":\"error\"}");
+	}
+}
+
+void unpause_deployment_route(mg_connection* conn, const mg_request_info* request_info)
+{
+	char qid[32];
+	int id;
+	
+	get_qsvar(request_info, "id", qid, sizeof(qid));
+	
+	std::istringstream iss(qid);
+	iss >> id;
+	
+	PolypeerServer* server = PolypeerServer::getInstance();
+	ServerData& data = server->getServerData();
+	
+	File* file = data.getFile(id);
+	
+	mg_printf(conn, "%s", ajax_reply_start);
+	
+	if (file != NULL) {
+		if (file->getFileState() == F_PAUSE) {
+			file->setFileState(READY);
+		}
+		mg_printf(conn, "{\"state\":\"done\"}");
+	} else {
+		mg_printf(conn, "{\"state\":\"error\"}");
+	}
 }
 
