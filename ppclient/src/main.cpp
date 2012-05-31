@@ -1,22 +1,27 @@
 #include <iostream>
+
+
+#include <PolypeerClient.hpp>
+#ifdef WIN32
+
+#else
 // C library
 #include <signal.h>
 
-#include <PolypeerClient.hpp>
 
-using namespace std;
 
 void kill_handler(int sig);
 
 void defineHandleStop();
-
-
+#endif
+using namespace std;
 int main()
 {
 	//defineHandleStop();
 	PolypeerClient::getInstance()->start();
 }
-
+#ifdef WIN32
+#else
 void defineHandleStop()
 {
 	// Definition du catch d'arret
@@ -35,5 +40,5 @@ void kill_handler(int sig)
 	client->stop();
 }
 
-
+#endif
 

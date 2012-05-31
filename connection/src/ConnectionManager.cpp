@@ -86,7 +86,7 @@ void ConnectionManager::stop()
 	}
 
 	serverSocket->close();
-	kill(thread, 9);
+//	kill(thread, 9);
 	cout << "serverSocketClose"<<endl;
 }
 
@@ -94,7 +94,7 @@ void ConnectionManager::sendTo(std::string dest, Packet packet)
 {//cout << "CM sento"<<endl<<flush;
 	Connection* connection = listConnections[dest];
 	cout << "envoie à " << dest << " de "<< packet.getType()<<endl;
-	
+
 	if(connection != NULL)
 	{
 		connection->getSocket()->send(packet.serialize());

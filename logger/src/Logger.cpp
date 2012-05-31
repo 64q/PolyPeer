@@ -7,6 +7,8 @@
 #include <exception>
 #include <sstream>
 
+#include <windows.h>
+
 // C library
 #include <ctime>
 #include <cstdlib>
@@ -41,13 +43,13 @@ void createDir(string pathDirectory, string currentPath)
 Logger::Logger(const string& path) : stringSave(""), typeSave(normal), verbose(false)
 {
 	this->file.open(path.c_str(), fstream::app);
-	
-	if (!this->file.is_open()) 
+
+	if (!this->file.is_open())
 	{
 		createDir("./log/", "");
-		
+
 		this->file.open(path.c_str(), fstream::app);
-		
+
 		if (!this->file.is_open()) // Seconde ouverture en echec
 		{
 			throw OpenFileException();
@@ -64,7 +66,7 @@ void Logger::put(const string& type, const string& content)
 {
 	char buffer[256];
 	time_t timestamp = time(NULL);
-	
+
 	strftime(buffer, sizeof(buffer), "%a %b %d %H:%M:%S %Y", localtime(&timestamp));
 
 	this->file << "[" << buffer << "] [" << type << "] " << content << endl;
@@ -96,7 +98,7 @@ Logger& Logger::operator<<(const ELogImportance logType)
 string Logger::getType(const ELogImportance logType)
 {
 	string toReturn;
-	
+
 	switch (logType)
 	{
 		case normal:
@@ -120,7 +122,7 @@ string Logger::getType(const ELogImportance logType)
 		default :
 			toReturn = "undefined";
 	}
-	
+
 	return toReturn;
 }
 
