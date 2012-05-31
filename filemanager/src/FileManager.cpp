@@ -184,9 +184,8 @@ bool FileManager::saveChunk(Chunk &chunk)
 			pbuf->sputn(chunk.getData(), chunk.getSize());
 			currentChunk++;
 			saveState();
-	cout << "pos" << currentChunk*sizeChunk<<endl;
-	cout << "data";
-	cout.write(chunk.getData(), chunk.getSize());cout <<endl;
+	
+	
 
 			if(currentChunk == getNumberChunk())
 			{

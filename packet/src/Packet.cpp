@@ -89,10 +89,17 @@ int Packet::unserialize (const Data& d)
 		posInData += size;
 	}
 	
-	if ((nbExtraction < 2) && (nbExtraction == nbData))
+	if (nbExtraction != nbData)
+	{
+		valid = false;
 		return 0;
+	}
 	else
+	{
+		valid = true;
 		return 1;
+	}
+		
 }
 
 PacketType Packet::getType ()
