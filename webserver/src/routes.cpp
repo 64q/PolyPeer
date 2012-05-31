@@ -2,6 +2,7 @@
 #include <cstring>
 #include <vector>
 #include <string>
+#include <ctime>
 
 #include <mongoose.h>
 
@@ -41,9 +42,18 @@ void deployments_route(mg_connection* conn, const mg_request_info* request_info)
 		{
 			FileManager* fm = (*it)->getFileManager();
 			
-			mg_printf(conn, "{\"id\":%i, \"name\":\"%s\", \"state\":\"%s\"}"
+			struct tm * timeinfo;
+			time_t rawtime = (time_t)((*it)->getDate());
+			char buffer[80];
+			time (&rawtime);
+			timeinfo = localtime(&rawtime);
+			
+			strftime (buffer,80,"%c",timeinfo);
+			
+			mg_printf(conn, "{\"id\":%i, \"name\":\"%s\", \"date\":\"%s\", \"state\":\"%s\"}"
 				, fm->getIdFile()
 				, (*it)->getName().c_str()
+				, buffer
 				, getStringFileState((*it)->getFileState()).c_str()
 			);
 	
