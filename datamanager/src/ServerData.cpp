@@ -311,15 +311,24 @@ bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity, int packetWe
 	// racine de l'arbre
 	if(entity != NULL)
 	{
+		// init de la valeur témoin
+		entity->setCurrentBroadbandSpeed(0);
 		// si on peut envoyer
 		if(entity->getTimerState())
 		{
 			possible = updateNetworkCurrentBroadbandSpeed(entity->getParent(),packetWeight);
 			if(possible)
 			{
-				//int capacite = entity->getNetworkCapacity();
-				//int neededTimeMs = (packetWeight*1000)/capacite;
-				entity->setCurrentBroadbandSpeed(entity->getCurrentBroadbandSpeed() + packetWeight);
+				// calcul
+				int capacite = entity->getNetworkCapacity();
+				int neededTimeMs = (packetWeight*1000)/capacite;
+				
+				entity->setTimerSpeed(neededTimeMs/1000, neededTimeMs%1000);
+				
+				entity->setCurrentBroadbandSpeed(10);
+			} else
+			{
+				possible = false;
 			}
 		} else
 		{

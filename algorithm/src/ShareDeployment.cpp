@@ -186,8 +186,12 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 					Packet pSC = PacketSendChunk((*chunk));
 		
 					// gestion du débit
-					//if(sData->updateNetworkCurrentBroadbandSpeed(entity, pSC.getSize()))
+					if(sData->updateNetworkCurrentBroadbandSpeed(entity, pSC.getSize()))
 					{
+						cout<<"--------------------------------------OK"<<endl;
+					} else
+					{
+						cout<<"--------------------------------FALSE"<<endl;
 					}
 						sData->getConnectionManager()->sendTo((entity->getIP()), pSC);
 						entity->setHostState(DOWNLOAD);

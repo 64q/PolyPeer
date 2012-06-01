@@ -91,20 +91,20 @@ int Socket::read(char* buffer, int sizeBuffer)
 			 // Pendant 0 secondes maxi
 			 tv.tv_sec = 0;
 			 tv.tv_usec = 10000;
-			 cout << "avant retval"<<endl;
+			 //cout << "avant retval"<<endl;
 			 retval = select(descripteur+1, &rfds, NULL, NULL, &tv);
 			 // Considerer tv comme indéfini maintenant !
-			 cout << "retval "<<retval <<endl;
+			// cout << "retval "<<retval <<endl;
 			 if(retval!=-1 )
 			 {
 				 if (retval && retval!=-1)
 				 {
-				 	cout <<"reconstruction"<<endl;
+				// 	cout <<"reconstruction"<<endl;
 				 	char* buffTmp = new char[20000];
 
 				 	int sizeTmp = recv(descripteur, buffTmp, 20000, 0);
 				 	
-				cout << "taille de base "<<size<<" taille ajout "<<sizeTmp<<endl;
+			//	cout << "taille de base "<<size<<" taille ajout "<<sizeTmp<<endl;
 					for(int i = size; i < size+sizeTmp; i++)
 					{
 						buffer[i] = buffTmp[i-size];
@@ -114,7 +114,7 @@ int Socket::read(char* buffer, int sizeBuffer)
 				 }
 				 else
 				 {
-				 	cout <<"pas de reconstruction"<<endl;
+			//	 	cout <<"pas de reconstruction"<<endl;
 					complete = true;
 				}
 			}else
