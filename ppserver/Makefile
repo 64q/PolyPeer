@@ -29,7 +29,7 @@ MUTEX=../mutex/
 
 # Variables de nomage et de localisation
 CC=g++
-EXEC=polypeer
+EXEC=ppserver
 SRC=src/
 INC=include/
 
