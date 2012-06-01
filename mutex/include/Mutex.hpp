@@ -14,6 +14,11 @@ class Mutex
 		 * Constructeur initialisant à 1 le mutex.
 		 */
 		Mutex();
+		
+		/**
+		 * Destructeur d'une mutex
+		 */
+		~Mutex();
 
 		/**
 		 * Similaire à pthread_mutex_lock() de pthread.
