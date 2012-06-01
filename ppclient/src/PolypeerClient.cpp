@@ -22,12 +22,10 @@ using namespace std;
 PolypeerClient* PolypeerClient::instance = NULL;
 
 PolypeerClient::PolypeerClient() :
-	BaseServer("log/PolypeerClient.log")
+	BaseServer("log/ppclient.log")
 {
 	logger.setVerboseMode(true);
 	logger << "Lancement du client Polypeer..."<<endlog;
-
-	cData = new ClientData();
 
 	// initialisation du system de callBack
 	// -> permet l'appel "automatique des traitement pour un paquet
@@ -42,6 +40,11 @@ PolypeerClient::PolypeerClient() :
 PolypeerClient::~PolypeerClient()
 {
 
+}
+
+void PolypeerClient::setConfig(ClientOptions* opt)
+{
+	cData = new ClientData(opt);
 }
 
 PolypeerClient* PolypeerClient::getInstance()

@@ -36,7 +36,10 @@ public:
 	 */
 	void restart();
 	
-	void init();
+	/**
+	 * Méthode de config a lancer en premier
+	 */
+	void setConfig(ClientOptions* opt);
 
 	/**
 	 * Récupérer la structure principale
