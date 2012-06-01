@@ -91,6 +91,11 @@ string ServerData::getAddressServ()
 	return addressServ;
 }
 
+Mutex* ServerData::getMutex()
+{
+	return &mutex_deployFiles;
+}
+
 void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
 {
 	Entity* host = getHostByAddress(addressHost);

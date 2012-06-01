@@ -29,7 +29,7 @@ ShareDeployment::~ShareDeployment()
 void ShareDeployment::nextStep()
 {
 	// on prend le mutex
-	sData->mutex_deployFiles.lock();
+	sData->getMutex()->lock();
 	// liste des déploiements
 	vector<File*>* files = sData->getDeployFiles();
 	
@@ -142,7 +142,7 @@ void ShareDeployment::nextStep()
 		PolypeerServer::getInstance()->multiSleep(750);
 	
 	// On rend le mutex	
-	sData->mutex_deployFiles.unlock();
+	sData->getMutex()->unlock();
 }
 
 bool ShareDeployment::makePause()
