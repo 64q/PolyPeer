@@ -33,7 +33,7 @@
 	 	var cpath = $('#cpath');
 	 	var error = false;
 	 	
-	 	var checkboxes = qsa('#new-deployment-form input[type="checkbox"]');
+	 	var checkboxes = $$('#new-deployment-form input[type="checkbox"]');
 		var zones = [];
 	
 		for (var i = 0; i < checkboxes.length; i++) {
@@ -59,7 +59,7 @@
 	 	}
 	 	
 	 	if (!error) {
-		 	PolyPeerJS.Ajax('/ajax/new_deployment', 'name=' + name.value + '&spath=' + path.value + '&zones=' + str_zones + '&cpath=' + cpath.value, function(content) {
+		 	pp.Ajax('/ajax/new_deployment', 'name=' + name.value + '&spath=' + path.value + '&zones=' + str_zones + '&cpath=' + cpath.value, function(content) {
 		 		if (content.state == "done") {
 		 			notifySuccess('Création du déploiement exectuée.');
 		 		}
