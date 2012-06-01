@@ -29,8 +29,8 @@ int main(int argc, char* argv[])
 	#ifdef WIN32
 
 	#else
-	// déffinition d'un catch de signal si on n'est pas sous windows
-	defineHandleStop();
+		// déffinition d'un catch de signal si on n'est pas sous windows
+		defineHandleStop();
 	#endif
 	
 	// Récupération de l'instance du client
