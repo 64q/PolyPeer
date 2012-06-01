@@ -135,43 +135,48 @@ int main(int argc, char* argv[])
 
 int args(int argc, char* argv[], ServerOptions* opt)
 {
-	int result = 0;
+	int result = 0, i = 1;
 	
-	if (argc == 2)
+	while (i < argc)
 	{
-		if (strcmp("-d", *(argv + 1)) == 0)
-		{
-			result = 2;
-		}
-		else if (strcmp("-h", *(argv + 1)) == 0)
+		// Lecture aide
+		if (strcmp("-h", *(argv + i)) == 0)
 		{
 			result = 1;
 		}
-	}
-	
-	for (int i = 0; i < argc - 1; i++) 
-	{
-		std::istringstream iss(*(argv + i + 1));
-		
-		if (strcmp("-c", *(argv + i)) == 0) 
-		{
-			iss >> opt->clientPort;
-			i++;
-		}
-		else if (strcmp("-s", *(argv + i)) == 0) 
-		{
-			iss >> opt->serverPort;
-			i++;
-		}
-		else if (strcmp("-w", *(argv + i)) == 0) 
-		{
-			iss >> opt->webserverPort;
-			i++;
-		}
-		else if (strcmp("-d", *(argv + i)) == 0) 
+		// Mode démon
+		else if (strcmp("-d", *(argv + i)) == 0)
 		{
 			result = 2;
 		}
+		else
+		{
+			// Lecture d'un paramètre avec argument (ex : "-p 3128")
+			if ((i + 1) < argc)
+			{
+				stringstream iss(*(argv + i + 1));
+				
+				// Port du client
+				if (strcmp("-c", *(argv + i)) == 0) 
+				{
+					iss >> opt->clientPort;
+				}
+				// Port du serveur
+				else if (strcmp("-s", *(argv + i)) == 0) 
+				{
+					iss >> opt->serverPort;
+				}
+				// Port du webserver
+				else if (strcmp("-w", *(argv + i)) == 0) 
+				{
+					iss >> opt->webserverPort;
+				}
+				
+				i++;
+			}
+		}
+		
+		i++;
 	}
 	
 	return result;
