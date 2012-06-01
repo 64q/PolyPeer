@@ -81,41 +81,41 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-
 int args(int argc, char* argv[], ClientOptions* opt) 
 {
-	int result = 0;
+	int result = 0, i = 1;
 	
-	if (argc == 2)
+	while (i < argc)
 	{
-		if (strcmp("-h", *(argv + 1)) == 0)
+		if (strcmp("-h", *(argv + i)) == 0)
 		{
 			result = 1;
 		}
-	}
-	
-	if (result != 1)
-	{
-		for (int i = 1; i < argc - 1; i++) 
+		else
 		{
-			std::istringstream iss(*(argv + i + 1));
-		
-			if (strcmp("-c", *(argv + i)) == 0) 
+			// Lecture d'un paramètre avec argument (ex : "-p 3128")
+			if ((i + 1) < argc)
 			{
-				iss >> opt->clientPort;
-				i++;
-			}
-			else if (strcmp("-p", *(argv + i)) == 0) 
-			{
-				iss >> opt->serverPort;
-				i++;
-			}
-			else if (strcmp("-s", *(argv + i)) == 0) 
-			{
-				iss >> opt->ip;
+				std::istringstream iss(*(argv + i + 1));
+				
+				if (strcmp("-c", *(argv + i)) == 0) 
+				{
+					iss >> opt->clientPort;
+				}
+				else if (strcmp("-p", *(argv + i)) == 0) 
+				{
+					iss >> opt->serverPort;
+				}
+				else if (strcmp("-s", *(argv + i)) == 0) 
+				{
+					iss >> opt->ip;
+				}
+				
 				i++;
 			}
 		}
+		
+		i++;
 	}
 	
 	return result;
