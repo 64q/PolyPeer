@@ -16,7 +16,7 @@ typedef struct {
 void* start(void* tp)
 {
 	//lock()
-	((threadParams*)tp)->mut->lock();
+	//((threadParams*)tp)->mut->lock();
 
 	for(int i = 0; i<30; i++)
 	{
@@ -25,7 +25,7 @@ void* start(void* tp)
 	cout<<"FINI"<<endl;
 
 	//unlock()
-	((threadParams*)tp)->mut->unlock();
+	//((threadParams*)tp)->mut->unlock();
 }
 
 int main()
