@@ -23,6 +23,7 @@ DATA=../data/
 CB=../callback/
 TCPEXCEPT=../tcp/include/Exceptions/
 BASESERVER=../baseserver/
+MUTEX=../mutex/
 
 # Variables de nomage et de localisation
 CC=g++
@@ -33,7 +34,7 @@ INC=include/
 # Flag pour le linker
 LDFLAGS=-lpthread -pthread -ldl -g
 # Flag préprocessing et compilation
-CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(TCP)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -I$(BASESERVER)$(INC) -D TIXML_USE_STL
+CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(TCP)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -I$(BASESERVER)$(INC) -I$(MUTEX)$(INC) -D TIXML_USE_STL
 
 
 # commande par defaut
@@ -91,6 +92,17 @@ ClientData.o: $(XML)$(SRC)ClientData.cpp
 	@$(CC) -c $^ $(CFLAGS)
 
 
+###########################
+#
+# MUTEX
+#
+###########################
+Mutex=Mutex.o
+
+# Compilation Mutex
+Mutex.o: $(MUTEX)$(SRC)Mutex.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
 ############################
 #
@@ -273,7 +285,7 @@ Logger.o:  $(LOG)$(SRC)Logger.cpp
 ############################
 
 
-$(EXEC): main.o PolypeerClient.o $(BaseServ) $(MainStruct) $(FileManager) $(PacketManager) $(CallbackManager) $(Data) $(ConnectionManager) $(Logger)
+$(EXEC): main.o PolypeerClient.o $(Mutex) $(BaseServ) $(MainStruct) $(FileManager) $(PacketManager) $(CallbackManager) $(Data) $(ConnectionManager) $(Logger)
 	@echo "Link output files..."
 	@$(CC) -o $@  $^ $(LDFLAGS)
 	@echo "OK"
