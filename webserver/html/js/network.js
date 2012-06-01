@@ -25,7 +25,7 @@
 			<small>Capacité : ' + item.cbbs + '/' + item.nc + '</small></h3>';
 		
 		var table = document.createElement('table');
-		table.className = 'table table-striped';
+		table.className = 'table table-striped table-condensed';
 
 		for (var i = 0; i < item.hosts.length; i++) {
 			if (item.hosts[i].type == "zone") {
