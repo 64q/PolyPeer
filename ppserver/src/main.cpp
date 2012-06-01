@@ -128,7 +128,7 @@ bool args(int argc, char* argv[], bool& daemon)
 			cout << "\t--daemon : lancer en service" << endl;
 			//cout << "\t-wd : choisir le repertoire de travail pour le service" << endl;
 			cout << "\thelp     : cette aide" << endl;
-			toReturn = true;
+			toReturn = false;
 		}
 		i++;
 	}

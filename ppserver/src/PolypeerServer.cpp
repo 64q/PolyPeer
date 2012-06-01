@@ -26,7 +26,7 @@ PolypeerServer::PolypeerServer() :
 	BaseServer("log/PolypeerServer.log")
 {
 	logger.setVerboseMode(true);
-	logger << "Launch PolypeerServer..."<<endlog;
+	logger << "Le serveur Polypeer a été démarré sur le port 6666"<<endlog;
 	
 	// récupération du logger
 	webserver = WebServer::getInstance();
@@ -111,6 +111,7 @@ void PolypeerServer::run()
 void PolypeerServer::stop()
 {
 	webserver->stop();
+	(PolypeerServer::instance)->getLogger()<<"Le serveur a été arrêté." <<endlog;
 	this->running = false;
 }
 
@@ -157,10 +158,9 @@ void* thread_initConnection(void* data)
 		Socket* socket = new Socket(myHost->getIP(), (PolypeerServer::instance)->getServerData().getClientPort());
 		cm->addConnection(myHost->getIP(), socket);
 		myHost->setHostState(WAIT);
-		(PolypeerServer::instance)->getLogger()<<"Connection to " << myHost->getIP() << " complete" <<endlog;
 	} catch(ConnectionException)
 	{
-		(PolypeerServer::instance)->getLogger()<<"Connection to " << myHost->getIP() << " failed" <<endlog;
+		//(PolypeerServer::instance)->getLogger()<<"Connection to " << myHost->getIP() << " failed" <<endlog;
 	}
 
 	

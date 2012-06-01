@@ -88,7 +88,7 @@ void PolypeerClient::restart()
 
 void PolypeerClient::run()
 {
-	// propre à 'instance client polypeer
+	// propre à l'instance client polypeer
 	PolypeerClient::getInstance()->getClientData()->getConnectionManager()->wait();
 	cout << "client terminé"<<endl;
 }
