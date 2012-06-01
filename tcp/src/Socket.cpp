@@ -15,7 +15,6 @@ Socket::Socket(std::string address, int port)
 Socket::Socket(int descripteur, std::string ipAdress):ipAdress(ipAdress)
 {
 	this->descripteur = descripteur;
-
 }
 
 Socket::Socket()
@@ -91,28 +90,36 @@ int Socket::read(char* buffer, int sizeBuffer)
 			 FD_SET(descripteur, &rfds);
 			 // Pendant 0 secondes maxi
 			 tv.tv_sec = 0;
-			 tv.tv_usec = 1000;
+			 tv.tv_usec = 10000;
 			 cout << "avant retval"<<endl;
 			 retval = select(descripteur+1, &rfds, NULL, NULL, &tv);
 			 // Considerer tv comme indéfini maintenant !
 			 cout << "retval "<<retval <<endl;
-			 if (retval)
+			 if(retval!=-1 )
 			 {
-			 	cout <<"reconstruction"<<endl;
-			 	char* buffTmp = new char[20000];
+				 if (retval && retval!=-1)
+				 {
+				 	cout <<"reconstruction"<<endl;
+				 	char* buffTmp = new char[20000];
 
-			 	int sizeTmp = recv(descripteur, buffTmp, 20000, 0);
-			cout << "taille de base "<<size<<" taille ajout "<<sizeTmp<<endl;
-				for(int i = size; i < size+sizeTmp; i++)
-				{
-					buffer[i] = buffTmp[i-size];
+				 	int sizeTmp = recv(descripteur, buffTmp, 20000, 0);
+				 	
+				cout << "taille de base "<<size<<" taille ajout "<<sizeTmp<<endl;
+					for(int i = size; i < size+sizeTmp; i++)
+					{
+						buffer[i] = buffTmp[i-size];
+					}
+					size+=sizeTmp;
+					delete [] buffTmp;
+				 }
+				 else
+				 {
+				 	cout <<"pas de reconstruction"<<endl;
+					complete = true;
 				}
-				size+=sizeTmp;
-				delete [] buffTmp;
-			 }
-			 else
-			 {
-			 	cout <<"pas de reconstruction"<<endl;
+			}else
+			{
+				size = -1;
 				complete = true;
 			}
 		}
@@ -125,3 +132,5 @@ std::string Socket::getIpAdress()
 {
 	return ipAdress;
 }
+
+

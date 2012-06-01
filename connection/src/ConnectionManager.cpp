@@ -22,6 +22,7 @@ ConnectionManager::ConnectionManager(int port)
 		{
 			cout << "impossible de lier le port d'écoute numéro :" << port << endl;
 			cout << "tentative de reconnexion dans 5 secondes" << endl;
+			delete serverSocket;
 			sleep(5);
 		}
 	}
@@ -54,7 +55,7 @@ void* runFct(void* connectionManager)
 	ConnectionManager* connectionManagerTmp = (ConnectionManager*)connectionManager;
 	connectionManagerTmp->run = true;
 	Socket* sockTmp;
-	while(connectionManagerTmp->run)
+	while(connectionManagerTmp->run && )
 	{
 		cout << "en attente "<<endl;
 		sockTmp = connectionManagerTmp->serverSocket->accept();
