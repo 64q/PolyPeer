@@ -19,7 +19,7 @@ void defineHandleStop();
  */
 int args(int argc, char* argv[], ClientOptions* opt);
 
-/** 
+/**
  * Affichage l'utilisation de l'executable
  */
 void display_usage(int argc, char* argv[]);
@@ -35,16 +35,16 @@ int main(int argc, char* argv[])
 {
 	// Options client par défaut
 	ClientOptions opt = {"192.168.0.14", 5555, 6666};
-	
+
 	// Récupération des valeurs
 	int result = args(argc, argv, &opt);
-	
-	if (result == 1) 
+
+	if (result == 1)
 	{
 		display_help(argc, argv);
 		exit(0);
 	}
-	
+
 	if (result == -1)
 	{
 		cout << "Erreur, les paramètres fournis sont incorrects" << endl;
@@ -58,10 +58,10 @@ int main(int argc, char* argv[])
 		// déffinition d'un catch de signal si on n'est pas sous windows
 		defineHandleStop();
 	#endif
-	
+
 	// Récupération de l'instance du client
 	PolypeerClient* ppc = PolypeerClient::getInstance();
-	
+
 	// Config du client
 	ppc->setConfig(&opt);
 
@@ -71,13 +71,19 @@ int main(int argc, char* argv[])
 	cout << "Fichier de log     : log/client.log" << endl;
 	cout << "Serveur PolyPeer   : " << opt.ip << ":" << opt.serverPort << endl;
 	cout << "Port écoute client : " << opt.clientPort << endl;
-	cout << "PID                : " << getpid() << endl;
-	
+
+	#ifdef WIN32
+
+	#else
+		cout << "PID             : " << getpid() << endl;
+	#endif
+
+
 	// Lancement
 	ppc->start();
-	
+
 	delete ppc;
-	
+
 	return 0;
 }
 
@@ -117,13 +123,13 @@ int args(int argc, char* argv[], ClientOptions* opt)
 		
 		i++;
 	}
-	
+
 	return result;
 }
 
 void display_usage(int argc, char* argv[])
 {
-	cout << "Usage: " << *argv << " [-h] [-p serverPort] [-c clientPort] [-s serverIp]" << endl; 
+	cout << "Usage: " << *argv << " [-h] [-p serverPort] [-c clientPort] [-s serverIp]" << endl;
 }
 
 void display_help(int argc, char* argv[])
