@@ -42,6 +42,7 @@ public:
 	 */
 	inline ServerData& getServerData() { return *(this->sData); }
 	
+	void setConfig(ServerOptions* opt);
 	
 	/**
 	 * Destructeur de PolypeerServer

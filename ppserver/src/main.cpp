@@ -4,13 +4,15 @@
  *
  * Fichier Main
  *
- *
+ * Olivier Blin
  */
 
 // STL
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <cstdlib>
+#include <cstring>
 
 // C library
 #include <signal.h>
@@ -24,59 +26,70 @@
 
 using namespace std;
 
-// prototype
-bool args(int argc, char* argv[], bool& deamon);
 void kill_handler(int sig);
 void defineHandleStop();
 void writePid(string fileName);
-bool daemon_conf ();
+bool daemon_conf();
+
+/**
+ * Fonction de lecture des arguments du serveur
+ */
+int args(int argc, char* argv[], ServerOptions* opt);
+
+/** 
+ * Affichage l'utilisation de l'executable
+ */
+void display_usage(int argc, char* argv[]);
+
+/**
+ * Affiche l'aide de l'executable
+ */
+void display_help(int argc, char* argv[]);
 
 int main(int argc, char* argv[])
 {
 	// variables
-	bool daemon = false;
+	ServerOptions opt = {6666, 5555, 7777};
 	int pid;
+	int result = args(argc, argv, &opt);
 	
-	// Récupération des paramètres
-	if (!args(argc, argv, daemon))
-		return 0;
-	
-	// gestion du mode demon
-	if(daemon)
+	if (result == 2)
 	{
 		// création d'un processus
-		pid=fork();
-		if (pid==-1)
+		pid = fork();
+		if (pid == -1)
 		{
-			cout<<"Erreur sur le fork()"<<endl;
+			cout << "Erreur, impossible de fork()" << endl;
+			exit(1);
 			
-		} else if (pid==0) // config du fils = daemon
+		}
+		else if (pid == 0)
 		{
-			// variable principale
 			PolypeerServer* server = PolypeerServer::getInstance();
-		
-			// conf
-			if(!daemon_conf ())
+	
+			if (!daemon_conf()) // Configuration du démon
 			{
-				cout<<"Configuration du démon échoué"<<endl;
-				return 0;
+				cout << "Erreur, configuration du démon échoué" <<endl;
+				exit(1);
 			}
-			
-			// message
-			(server->getLogger())<< "Lancement du serveur Polypeer en mode démon"<<endlog;
-			
-			// run
+		
+			(server->getLogger())<< "Lancement du serveur Polypeer en mode démon" << endlog;
+			server->setConfig(&opt);
 			server->start();
-			
+		
 			// vidage mémoire
 			delete server;
-			
-		} else
-		{
-			// Quitter le père pour que le demon soit récupéré par le proces init
-			return 0;
 		}
-	} else
+		else
+		{
+			exit(0); // terminaison du père pour que le fils soit récupéré par init
+		}
+	}
+	else if (result == 1)
+	{
+		display_help(argc, argv);
+	}
+	else if (result == 0)
 	{
 		// variable principale
 		PolypeerServer* server = PolypeerServer::getInstance();
@@ -86,26 +99,33 @@ int main(int argc, char* argv[])
 		// pid du processus
 		writePid("ppserver.pid");
 	
-		// programme principale
+		// programme principal
 		cout << "+---------------------------------+" << endl;
 		cout << "|         Server PolyPeer         |" << endl;
 		cout << "+---------------------------------+" << endl;
 		cout << "Serveur de distribution de fichiers volumineux en réseau" << endl;
 		cout << "Pour les modalités d'utilisation des sources, veuillez lire" << endl;
 		cout << "le fichier LICENCE, inclu dans le projet." << endl << endl;
-	
-		cout << "Fichier de log : ./log/PolypeerServer.log" << endl;
-		cout << "Fichier de pid : ./ppserver.pid" << endl;
-		cout << "PID 			: " << getpid() << endl;
+		
+		cout << "Fichier de log   : log/ppserver.log" << endl;
+		cout << "Fichier de pid   : ppserver.pid" << endl;
+		cout << "Port serveur     : " << opt.serverPort << endl;
+		cout << "Port clients     : " << opt.clientPort << endl;
+		cout << "Port webserver   : " << opt.webserverPort << endl;
+		cout << "PID              : " << getpid() << endl;
 		
 		
-		(server->getLogger())<< "Lancement du serveur Polypeer en mode normal"<<endlog;
+		(server->getLogger()) << "Lancement du serveur Polypeer en mode normal" << endlog;
+		server->setConfig(&opt);
 		server->start();
 	
 		cout << "Serveur Polypeer terminé" << endl;
 	
-		// Suppression des allocations dynamiques
 		delete server;
+	}
+	else
+	{
+		display_usage(argc, argv);
 	}
 	
 	return 0;
@@ -113,28 +133,64 @@ int main(int argc, char* argv[])
 
 
 
-bool args(int argc, char* argv[], bool& daemon)
+int args(int argc, char* argv[], ServerOptions* opt)
 {
-	int i = 1;
-	bool toReturn = true;
-	while(i < argc)
+	int result = 0;
+	
+	if (argc == 2)
 	{
-		if(string(argv[i]).compare("--daemon") == 0)
-			daemon = true;
-		else if((string(argv[i]).compare("help") == 0) || (string(argv[i]).compare("-h") == 0))
+		if (strcmp("-d", *(argv + 1)) == 0)
 		{
-			cout << "Serveur Polypeer" << endl;
-			cout << "Options :" << endl;
-			cout << "\t--daemon : lancer en service" << endl;
-			//cout << "\t-wd : choisir le repertoire de travail pour le service" << endl;
-			cout << "\thelp     : cette aide" << endl;
-			toReturn = false;
+			result = 2;
 		}
-		i++;
+		else if (strcmp("-h", *(argv + 1)) == 0)
+		{
+			result = 1;
+		}
 	}
-	return toReturn;
+	
+	for (int i = 0; i < argc - 1; i++) 
+	{
+		std::istringstream iss(*(argv + i + 1));
+		
+		if (strcmp("-c", *(argv + i)) == 0) 
+		{
+			iss >> opt->clientPort;
+			i++;
+		}
+		else if (strcmp("-s", *(argv + i)) == 0) 
+		{
+			iss >> opt->serverPort;
+			i++;
+		}
+		else if (strcmp("-w", *(argv + i)) == 0) 
+		{
+			iss >> opt->webserverPort;
+			i++;
+		}
+		else if (strcmp("-d", *(argv + i)) == 0) 
+		{
+			result = 2;
+		}
+	}
+	
+	return result;
 }
 
+void display_usage(int argc, char* argv[])
+{
+	cout << "Usage: " << *argv << " [-hd] [-s serverPort] [-c clientPort] [-w webserverPort]" << endl; 
+}
+
+void display_help(int argc, char* argv[])
+{
+	cout << "Aide: " << *argv << ", client PolyPeer" << endl;
+	cout << "[-s serverPort] Port du serveur" << endl;
+	cout << "[-c clientPort] Port du client" << endl;
+	cout << "[-w webserverPort] Port du serveur web" << endl;
+	cout << "[-d] Lancer en démon" << endl;
+	cout << "[-h] Affichage de l'aide" << endl;
+}
 
 void defineHandleStop()
 {
@@ -158,6 +214,7 @@ void writePid(string fileName)
 {
 	ofstream file;
 	file.open(fileName.c_str(), fstream::trunc);
+	
 	if (file.is_open()) 
 	{
 		file << getpid();

@@ -23,16 +23,13 @@ using namespace std;
 PolypeerServer* PolypeerServer::instance = NULL;
 
 PolypeerServer::PolypeerServer() :
-	BaseServer("log/PolypeerServer.log")
+	BaseServer("log/ppserver.log")
 {
 	logger.setVerboseMode(true);
-	logger << "Le serveur Polypeer a été démarré sur le port 6666"<<endlog;
+	logger << "Le serveur Polypeer a été démarré sur le port " << this->port << endlog;
 	
 	// récupération du logger
 	webserver = WebServer::getInstance();
-
-	// création de notre structure principale
-	sData = new ServerData();
 	
 	// initialisation du system de callBack
 	// -> permet l'appel "automatique des traitement pour un paquet
@@ -59,6 +56,11 @@ PolypeerServer* PolypeerServer::getInstance()
 		instance = new PolypeerServer();
 	}
 	return instance;
+}
+
+void PolypeerServer::setConfig(ServerOptions* opt)
+{
+	sData = new ServerData(opt);
 }
 
 void PolypeerServer::start()
