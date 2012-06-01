@@ -60,6 +60,7 @@ PolyPeerJS.Ajax = function(file, params, success, error, isParsable) {
 	var xhr = new XMLHttpRequest();
 	var sent = file;
 	
+	// Lecture des paramètres optionnels
 	if (params != null) {
 		sent += '?' + params;
 	}
@@ -71,8 +72,9 @@ PolyPeerJS.Ajax = function(file, params, success, error, isParsable) {
 	if (error == null) {
 		error = PolyPeerJS.Utils.serverDown;
 	}
+	// Fin lecture paramètres
 	
-	xhr.onabort = xhr.onerror = function() {
+	xhr.onabort = xhr.onerror = function() { // Défintion du callback en cas d'erreur de la requete
 		error();
 	};
 	
@@ -87,7 +89,7 @@ PolyPeerJS.Ajax = function(file, params, success, error, isParsable) {
 					success(parsed);
 				}
 			} 
-			// Sinon c'est autre chose, on ne parse pas
+			// Sinon c'est autre chose, on ne parse pas, on déclenche forcément la fn de succès
 			else {
 				success(xhr.responseText);
 			}

@@ -9,6 +9,8 @@
 		<li><a href="#doc_starting">Démarrer</a></li>
 		<li><a href="#doc_create">Créer un déploiement</a></li>
 		<li><a href="#doc_actions">Intéragir avec un déploiement</a></li>
+		<li><a href="#doc_topology">Fichier de topologie</a></li>
+		<li><a href="#doc_deployments">Fichier des déploiements</a></li>
 	</ul>
 	<div id="doc_starting">
 		<h2>Démarrer</h2>
@@ -33,7 +35,7 @@
 	<div id="doc_create">
 		<h2>Créer un déploiement</h2>
 		<p>
-			Afin de créer un nouveau déploiement vous devez vous rendre sur <a href="#!/new" class="link btn btn-mini">Nouveau déploiement</a>.
+			Afin de créer un nouveau déploiement vous devez vous rendre sur <a href="#!/add" class="link btn btn-mini">Nouveau déploiement</a>.
 		</p>
 		<p>
 			Il va falloir remplir les champs demandés avec des informations valides :
@@ -63,5 +65,35 @@
 			ou de le supprimer.
 		</p>
 		<div class="alert alert-error"><strong>Attention !</strong> Supprimer un déploiement est irréversible.</div>
+	</div>
+	<hr>
+	<div id="doc_topology">
+		<h2>Le fichier de topologie</h2>
+		<p>
+			Voici le format standard d'un fichier de topologie du réseau :
+		</p>
+		<pre>
+&lt;network&gt;
+   &lt;real&gt;
+      &lt;zone name="ZoneTest" networkCapacity="100000"&gt;
+         &lt;host name="Host1" address="192.168.0.2" mac="00:11:43:00:00:01" networkCapacity="100"/&gt;
+      &lt;/zone&gt;
+   &lt;/real&gt;
+&lt;/network&gt;
+		</pre>
+	</div>
+	<hr>
+	<div id="doc_deployments">
+		<h2>Le fichier de déploiements</h2>
+		<p>
+			Voici le format standard d'un fichier de déploiement sur l'application :
+		</p>
+		<pre>
+&lt;deployments&gt;
+    &lt;file id="25" name="text" serverPath="file/text.txt" clientPath="dos/textclient.txt" chunkSize="15000" state="ready" date="1338504476"&gt;
+        &lt;host ref="PC1" /&gt;
+    &lt;/file&gt;
+&lt;/deployments&gt;
+		</pre>
 	</div>
 </div>
