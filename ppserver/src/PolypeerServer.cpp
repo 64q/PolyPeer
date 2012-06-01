@@ -16,8 +16,6 @@
 #include <DeploymentAlgorithm.hpp>
 #include <ShareDeployment.hpp>
 
-
-
 using namespace std;
 
 PolypeerServer* PolypeerServer::instance = NULL;
@@ -27,9 +25,6 @@ PolypeerServer::PolypeerServer() :
 {
 	logger.setVerboseMode(true);
 	logger << "Le serveur Polypeer a été démarré sur le port " << this->port << endlog;
-	
-	// récupération du logger
-	webserver = WebServer::getInstance();
 	
 	// initialisation du system de callBack
 	// -> permet l'appel "automatique des traitement pour un paquet
@@ -61,6 +56,10 @@ PolypeerServer* PolypeerServer::getInstance()
 void PolypeerServer::setConfig(ServerOptions* opt)
 {
 	sData = new ServerData(opt);
+	// Configuration serveur web
+	WebServerConfig conf = {opt->webserverPort, 5, "html", "passwd", "polypeer.polytech.prive"};
+	webserver = WebServer::getInstance();
+	webserver->setConfig(&conf);
 }
 
 void PolypeerServer::start()
