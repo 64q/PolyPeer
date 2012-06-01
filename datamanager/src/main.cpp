@@ -6,9 +6,12 @@
 
 int main()
 {
+	struct ServerOptions so;
+	so.serverPort = 6666;
+	so.clientPort = 5555;
 
 	list<string> list;
-	ServerData* sData = new ServerData();
+	ServerData* sData = new ServerData(&so);
 	XMLTool* t = sData->getXMLTool();
 	/*sData->updateHost(string("132.34.67.10"), 23, 15);
 	sData->updateHost(string("132.34.67.10"), 23, HDS_FINISH);*/

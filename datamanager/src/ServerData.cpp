@@ -3,14 +3,14 @@
 
 using namespace std;
 
-ServerData::ServerData() :
-	addressServ("192.168.0.50"),
-	clientPort(5555)
+ServerData::ServerData(ServerOptions* so)
 {
-	cM = new ConnectionManager(6666);
+	clientPort = so->clientPort;
+	cM = new ConnectionManager(so->webserverPort);
 	cM->start();
 	xmlTool = new XMLTool(this);
 }
+
 
 ServerData::~ServerData()
 {
@@ -84,11 +84,6 @@ vector<File*>* ServerData::getDeployFiles()
 ConnectionManager* ServerData::getConnectionManager()
 {
 	return cM;
-}
-
-string ServerData::getAddressServ()
-{
-	return addressServ;
 }
 
 Mutex* ServerData::getMutex()

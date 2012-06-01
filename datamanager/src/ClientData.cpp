@@ -1,10 +1,10 @@
 #include <ClientData.hpp>
 
-ClientData::ClientData()
+ClientData::ClientData(ClientOptions* co)
 {
-	connectionManager = new ConnectionManager(5555);
-	addressServ = "192.168.0.14";
-	portServ = 6666;
+	connectionManager = new ConnectionManager(co->clientPort);
+	addressServ = co->ip;
+	portServ = co->serverPort;
 
 	connectionManager->start();
 }
