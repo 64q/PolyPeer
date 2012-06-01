@@ -55,7 +55,7 @@ void* runFct(void* connectionManager)
 	ConnectionManager* connectionManagerTmp = (ConnectionManager*)connectionManager;
 	connectionManagerTmp->run = true;
 	Socket* sockTmp;
-	while(connectionManagerTmp->run && )
+	while(connectionManagerTmp->run )
 	{
 		cout << "en attente "<<endl;
 		sockTmp = connectionManagerTmp->serverSocket->accept();
