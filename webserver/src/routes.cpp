@@ -431,11 +431,11 @@ void log_route(mg_connection* conn, const mg_request_info* request_info)
 		std::stringstream buffer;
 		buffer << fichier.rdbuf();
 		fichier.close();
-		mg_printf(conn, "{\"content\":\"%s\"}", buffer.str().c_str());
+		mg_printf(conn, "%s", buffer.str().c_str());
 	}
 	else
 	{
-		mg_printf(conn, "{\"state\":\"error\"}");
+		mg_printf(conn, "error");
 	}
 }
 
