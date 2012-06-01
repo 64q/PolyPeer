@@ -96,7 +96,7 @@ int args(int argc, char* argv[], ClientOptions* opt)
 			// Lecture d'un paramètre avec argument (ex : "-p 3128")
 			if ((i + 1) < argc)
 			{
-				std::istringstream iss(*(argv + i + 1));
+				istringstream iss(*(argv + i + 1));
 				
 				if (strcmp("-c", *(argv + i)) == 0) 
 				{
