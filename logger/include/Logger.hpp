@@ -5,8 +5,6 @@
 #include <sstream>
 #include <fstream>
 
-#include <Mutex.hpp>
-
 /**
  * Les terminaisons de ligne pour l'insertion par flux
  */
@@ -129,11 +127,6 @@ private:
 	 * Mode du débugger
 	 */
 	bool verbose;
-	
-	/**
-	 * Mutex de protection pour l'écriture
-	 */
-	Mutex mutex;
 };
 
 #endif
