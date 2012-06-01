@@ -66,12 +66,16 @@ Logger::~Logger()
 
 void Logger::put(const string& type, const string& content)
 {
+	this->mutex.lock();
+	
 	char buffer[256];
 	time_t timestamp = time(NULL);
 
 	strftime(buffer, sizeof(buffer), "%a %b %d %H:%M:%S %Y", localtime(&timestamp));
-
+	
 	this->file << "[" << buffer << "] [" << type << "] " << content << endl;
+	
+	this->mutex.unlock();
 }
 
 Logger& Logger::operator<<(const ELogAction logAct)
