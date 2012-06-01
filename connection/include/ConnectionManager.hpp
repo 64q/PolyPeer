@@ -61,6 +61,9 @@ class ConnectionManager
 
 		void removeConnection(std::string);
 
+		static bool WOL(const char *bcastAddr,const char *macAddr="255.255.255.255");
+
+
 	private:
 		std::map<std::string, Connection*> listConnections;
 
