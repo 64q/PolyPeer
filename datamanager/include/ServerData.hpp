@@ -16,6 +16,7 @@
 #include <ConnectionManager.hpp>
 #include <Packet.hpp>
 #include <Mutex.hpp>
+#include <PolypeerServer.hpp>
 
 	/**
 	 * Classe contenant les différentes structures de stockage des données ainsi que
@@ -31,8 +32,10 @@ public :
 
 	/**
 	 * Constructeur d'un ServerData
+	 * @param so
+	 * contient les informations à initialiser (ports)
 	 */
-	ServerData();
+	ServerData(ServerOptions* so);
 	
   /**
 	* Destructeur
@@ -134,11 +137,6 @@ public :
 	* Retourne le connectionManager
 	*/		
 	ConnectionManager* getConnectionManager();
-	
-  /**
-	* Retourne l'adresse du serveur
-	*/		
-	string getAddressServ();
 	
   /**
 	* Met à jour le numéro de Chunk du fichier passé en paramètre déjà 
@@ -252,12 +250,6 @@ protected :
 	 * Pointeur vers un connectionManager
 	 */	
 	ConnectionManager* cM;
-	
-	/**
-	 * Adresse du serveur principal
-	 */
-	string addressServ;
-	
 	
 	/**
 	 * Port pour le client

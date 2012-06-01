@@ -26,6 +26,7 @@ WEB=../webserver/
 BASESERVER=../baseserver/
 PPS = ../ppserver/
 ALGO = ../algorithm/
+MUTEX=../mutex/
 
 # Variables de nomage et de localisation
 CC=g++
@@ -36,7 +37,7 @@ INC=include/
 # Flag pour le linker
 LDFLAGS=-lpthread -pthread -ldl
 # Flag préprocessing et compilation
-CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(TCP)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(WEB)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -I$(BASESERVER)$(INC) -I$(PPS)$(INC) -I$(ALGO)$(INC) -D TIXML_USE_STL
+CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(MUTEX)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(TCP)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(WEB)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -I$(BASESERVER)$(INC) -I$(PPS)$(INC) -I$(ALGO)$(INC) -D TIXML_USE_STL
 
 
 # commande par defaut
@@ -110,7 +111,7 @@ mongoose.o: $(WEB)$(SRC)mongoose.c
 #
 ############################
 
-MainStruct=Zone.o Host.o Entity.o File.o DeploymentState.o XMLTool.o ServerData.o ClientData.o State.o
+MainStruct=Zone.o Host.o Entity.o File.o DeploymentState.o XMLTool.o ServerData.o State.o
 
 # Compilation de Zone
 Zone.o: $(XML)$(SRC)Zone.cpp
@@ -147,10 +148,6 @@ ServerData.o: $(XML)$(SRC)ServerData.cpp
 	@echo $^
 	@$(CC) -c $^ $(CFLAGS)
 
-# Compilation de ClientData
-ClientData.o: $(XML)$(SRC)ClientData.cpp
-	@echo $^
-	@$(CC) -c $^ $(CFLAGS)
 
 State.o: $(XML)$(SRC)State.cpp
 	@echo $^
@@ -205,7 +202,19 @@ FileManager.o: $(FM)$(SRC)FileManager.cpp
 	@echo $^
 	@$(CC) -c $^ $(CFLAGS)
 
+############################
+#
+#      MUTEX
+#
+############################
 
+Mutex=Mutex.o
+
+# Compilation du Logger
+Mutex.o:  $(MUTEX)$(SRC)Mutex.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+	
 ############################
 #
 #     PACKET::PROTOCOL
@@ -376,7 +385,7 @@ ShareDeployment.o:  $(ALGO)$(SRC)ShareDeployment.cpp
 ############################
 
 
-polypeer: main.o $(BaseServ) $(MainStruct) $(LibXML) $(FileManager) $(PacketManager) $(CallbackManager) $(Data) $(ConnectionManager) $(Logger) $(WebServ) $(PPServer) $(Algo)
+polypeer: main.o $(BaseServ) $(MainStruct) $(LibXML) $(Mutex) $(FileManager) $(PacketManager) $(CallbackManager) $(Data) $(ConnectionManager) $(Logger) $(WebServ) $(PPServer) $(Algo)
 	@echo "Link output files..."
 	@$(CC) -o $@  $^ $(LDFLAGS)
 	@echo "OK"
