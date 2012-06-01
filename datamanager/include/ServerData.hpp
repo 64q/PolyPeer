@@ -73,6 +73,12 @@ public :
 	* Renvoi l'id courante qui sert lors de la création d'un nouveau déploiement
 	*/
 	int getCurrentId();
+
+  /**
+	* Renvoi l'id courante qui sert lors de la création d'un nouveau déploiement
+	*/
+	Mutex* getMutex();
+	
 	
   /**
 	* Cherche un fichier de déploiement dans DeployFiles en fonction de son id et

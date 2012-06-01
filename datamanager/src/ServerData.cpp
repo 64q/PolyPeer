@@ -78,8 +78,6 @@ map<string, Entity*>* ServerData::getEntities()
 
 vector<File*>* ServerData::getDeployFiles()
 {
-	mutex_deployFiles.lock();
-	mutex_deployFiles.unlock();
 	return &deployFiles;
 }
 
@@ -91,6 +89,11 @@ ConnectionManager* ServerData::getConnectionManager()
 string ServerData::getAddressServ()
 {
 	return addressServ;
+}
+
+Mutex* ServerData::getMutex()
+{
+	return &mutex_deployFiles;
 }
 
 void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
@@ -188,7 +191,6 @@ File* ServerData::getFile(int id)
 	bool find = false;
 	File* toReturn = NULL;
 	
-	mutex_deployFiles.lock();
 	
 	while( (i < deployFiles.size()) && (find == false) )
 	{
@@ -202,7 +204,6 @@ File* ServerData::getFile(int id)
 		}
 		i++;
 	}
-	mutex_deployFiles.unlock();
 
 	return toReturn;	
 }
