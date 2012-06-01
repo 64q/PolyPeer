@@ -1,8 +1,38 @@
 <deployments>
-    <file id="25" name="text" serverPath="file/text.txt" clientPath="dos/textclient.txt" chunkSize="15000" state="ready" date="1338504476">
-        <zone ref="C007" />
+    <file id="24" name="ED_HD" serverPath="file/ED_HD.avi" clientPath="file/ED_HD.avi" chunkSize="18000" state="deployment" date="0">
+        <host ref="PC1" />
+        <host ref="PC10" />
+        <host ref="PC11" />
+        <host ref="PC12" />
+        <host ref="PC13" />
+        <host ref="PC14" />
+        <host ref="PC15" />
+        <host ref="PC16" />
+        <host ref="PC2" />
+        <host ref="PC3" />
+        <host ref="PC4" />
+        <host ref="PC5" />
+        <host ref="PC6" />
+        <host ref="PC7" />
+        <host ref="PC8" />
+        <host ref="PC9" />
     </file>
-    <file id="26" name="text+" serverPath="file/text+.txt" clientPath="dos/textclient+.txt" chunkSize="14000" state="ready" date="1338506490">
-        <zone ref="C007-P2" />
+    <file id="25" name="text" serverPath="file/text.txt" clientPath="dos/textclient.txt" chunkSize="15000" state="ready" date="1338504476">
+        <host ref="PC1" />
+        <host ref="PC10" />
+        <host ref="PC11" />
+        <host ref="PC12" />
+        <host ref="PC13" />
+        <host ref="PC14" />
+        <host ref="PC15" />
+        <host ref="PC16" />
+        <host ref="PC2" />
+        <host ref="PC3" />
+        <host ref="PC4" />
+        <host ref="PC5" />
+        <host ref="PC6" />
+        <host ref="PC7" />
+        <host ref="PC8" />
+        <host ref="PC9" />
     </file>
 </deployments>
