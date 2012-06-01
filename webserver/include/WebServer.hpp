@@ -3,6 +3,7 @@
 
 // Spécifique map
 #include <map>
+#include <vector>
 
 #include <mongoose.h>
 
@@ -13,6 +14,17 @@
  * Typedef pour créer facilement des handlers sur les routes appelées par le client web
  */
 typedef void (*route_handler)(mg_connection*, const mg_request_info*);
+
+/**
+ * Structure pour configurer le serveur
+ */
+struct WebServerConfig {
+	int port;
+	int nthreads;
+	std::string root;
+	std::string pwfile;
+	std::string domain;
+};
 
 /**
  * Le web server permet de gérer intégralement l'interface web de controle
@@ -36,6 +48,11 @@ public:
 	 * Restart du serveur Web
 	 */
 	void restart();
+	
+	/**
+	 * Configure le serveur (a executer en premier)
+	 */
+	void setConfig(WebServerConfig* opt);
 	
 	/**
 	 * Permet de passer en mode debug et inversement
@@ -62,10 +79,6 @@ public:
 protected:
 	/**
 	 * Constructeur d'un WebServer
-	 * @param int port
-	 * 	le port d'écoute du serveur
-	 * @param string path
-	 * 	chemin d'accès aux templates
 	 */
 	WebServer();
 	

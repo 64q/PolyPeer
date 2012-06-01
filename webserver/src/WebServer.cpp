@@ -27,7 +27,6 @@ WebServer* WebServer::instance = NULL;
 WebServer::WebServer() :
 	BaseServer("log/webserver.log")
 {
-	this->port = 6969;
 	this->debug	= false;
 	this->running = true;
 	
@@ -71,6 +70,10 @@ void WebServer::start()
 	{
 		throw WebServerException();
 	}
+}
+
+void WebServer::setConfig(WebServerConfig* opt)
+{
 }
 
 void WebServer::run()
