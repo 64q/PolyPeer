@@ -8,7 +8,7 @@
 using namespace std;
 
 Socket::Socket(std::string address, int port) :
-	timeWaitForMTUInMc(50),
+	timeWaitForMTUInMc(0),
 	numberPacketInvalid(0),
 	numberPacketValid(0)
 	
@@ -18,7 +18,7 @@ Socket::Socket(std::string address, int port) :
 
 Socket::Socket(int descripteur, std::string ipAdress) :
 	ipAdress(ipAdress),
-	timeWaitForMTUInMc(50),
+	timeWaitForMTUInMc(0),
 	numberPacketInvalid(0),
 	numberPacketValid(0)
 {
@@ -26,7 +26,7 @@ Socket::Socket(int descripteur, std::string ipAdress) :
 }
 
 Socket::Socket() :
-	timeWaitForMTUInMc(50),
+	timeWaitForMTUInMc(0),
 	numberPacketInvalid(0),
 	numberPacketValid(0)
 {
@@ -161,7 +161,7 @@ void Socket::manageWaitingTimeWithPacketState(bool stateValid)
 	{
 		numberPacketInvalid++;
 	}
-	if (numberPacketInvalid > 20)
+	if (numberPacketInvalid > 15)
 	{
 		// on reparametre le temps d'attente
 		timeWaitForMTUInMc += 50;
@@ -169,7 +169,7 @@ void Socket::manageWaitingTimeWithPacketState(bool stateValid)
 		numberPacketValid = 0;
 		numberPacketInvalid = 0;
 	}
-	if (numberPacketValid > 100)
+	if (numberPacketValid > 500)
 	{
 		// on reparametre le temps d'attente
 		timeWaitForMTUInMc -= 5;
@@ -177,6 +177,8 @@ void Socket::manageWaitingTimeWithPacketState(bool stateValid)
 		numberPacketValid = 0;
 		numberPacketInvalid = 0;
 	}
+	if(timeWaitForMTUInMc > 12000)
+		timeWaitForMTUInMc = 12000;
 }
 
 
