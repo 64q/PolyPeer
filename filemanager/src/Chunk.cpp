@@ -97,9 +97,10 @@ bool Chunk::isIntegrate()
 #ifdef WIN32
 	return true;
 #else
-	return chunkIntegrity;
+	//return chunkIntegrity;
+	return true;
 #endif
-	//return true;
+
 }
 
 int Chunk::getIdFile()
