@@ -96,7 +96,7 @@ int main(int argc, char* argv[])
 	
 		cout << "Fichier de log : ./log/PolypeerServer.log" << endl;
 		cout << "Fichier de pid : ./ppserver.pid" << endl;
-		cout << "PID 			: " << getpid() << endl;
+		cout << "PID : " << getpid() << endl;
 		
 		
 		(server->getLogger())<< "Lancement du serveur Polypeer en mode normal"<<endlog;
