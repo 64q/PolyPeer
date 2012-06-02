@@ -192,6 +192,9 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 						sData->getConnectionManager()->sendTo((entity->getIP()), pSC);
 						entity->setHostState(DOWNLOAD);
 						toReturn = true;
+					} else
+					{
+						cout<<"NON, Vous ne passerz PAS !"<<endl;
 					}
 					
 					// suppression du chunk
