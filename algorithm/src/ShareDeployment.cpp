@@ -119,10 +119,10 @@ void ShareDeployment::nextStep()
 							} while(isSend);
 						} else
 						{
-							//l'Host est seul sur la zone, il est le seul maitre
+							// Un seul Host sur la zone, il est maitre par défaut
 							sendOnMaster(hostMaster, (*itFile));
 						}
-					} 
+					}
 				}
 				// désallocation
 				File::deleteSortedHost(entities);
@@ -136,7 +136,7 @@ void ShareDeployment::nextStep()
 			case F_PAUSE:
 				break;
 		}
-		PolypeerServer::getInstance()->multiSleep(10);
+		PolypeerServer::getInstance()->multiSleep(6);
 	}
 	if(makePause())
 		PolypeerServer::getInstance()->multiSleep(750);
@@ -188,14 +188,14 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 					// gestion du débit
 					if(sData->updateNetworkCurrentBroadbandSpeed(entity, pSC.getSize()))
 					{
+						sData->getConnectionManager()->sendTo((entity->getIP()), pSC);
+						entity->setHostState(DOWNLOAD);
+						toReturn = true;
 						cout<<"--------------------------------------OK"<<endl;
 					} else
 					{
 						cout<<"--------------------------------FALSE"<<endl;
 					}
-						sData->getConnectionManager()->sendTo((entity->getIP()), pSC);
-						entity->setHostState(DOWNLOAD);
-						toReturn = true;
 					
 					// suppression du chunk
 					delete chunk;

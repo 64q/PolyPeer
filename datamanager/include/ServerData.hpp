@@ -181,7 +181,7 @@ public :
 	* @param packetWeight
 	* entier à enlever de currentBroadbandSpeed pour chaque entité
 	*/
-	bool updateNetworkCurrentBroadbandSpeed(Entity* entity, int packetWeight);
+	bool updateNetworkCurrentBroadbandSpeed(Entity* entity, unsigned int packetWeightInOctet);
 
   /**
 	* Permet de mettre à jour les débits des entités traversées entre deux entités cibles
@@ -192,7 +192,7 @@ public :
 	* @param packetWeight
 	* entier à enlever de currentBroadbandSpeed pour chaque entité
 	*/
-	bool updateNetworkCurrentBroadbandSpeed(Entity* entity1, Entity* entity2, int packetWeight);
+	bool updateNetworkCurrentBroadbandSpeed(Entity* entity1, Entity* entity2, unsigned int packetWeightInOctet);
 	
   /**
 	* Recherche le parent commun entre deux entités cibles
