@@ -27,6 +27,7 @@ BASESERVER=../baseserver/
 PPS = ../ppserver/
 ALGO = ../algorithm/
 MUTEX=../mutex/
+PPC = ../ppclient/
 
 # Variables de nomage et de localisation
 CC=g++
@@ -37,7 +38,7 @@ INC=include/
 # Flag pour le linker
 LDFLAGS=-lpthread -pthread -ldl
 # Flag préprocessing et compilation
-CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(MUTEX)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(TCP)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(WEB)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -I$(BASESERVER)$(INC) -I$(PPS)$(INC) -I$(ALGO)$(INC) -D TIXML_USE_STL
+CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(MUTEX)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(TCP)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(WEB)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -I$(BASESERVER)$(INC) -I$(PPS)$(INC) -I$(ALGO)$(INC) -I$(PPC)$(INC) -D TIXML_USE_STL
 
 
 # commande par defaut
@@ -111,7 +112,7 @@ mongoose.o: $(WEB)$(SRC)mongoose.c
 #
 ############################
 
-MainStruct=Zone.o Host.o Entity.o File.o DeploymentState.o XMLTool.o ServerData.o State.o
+MainStruct=Zone.o Host.o Entity.o File.o DeploymentState.o XMLTool.o ServerData.o ClientData.o State.o
 
 # Compilation de Zone
 Zone.o: $(XML)$(SRC)Zone.cpp
@@ -148,6 +149,10 @@ ServerData.o: $(XML)$(SRC)ServerData.cpp
 	@echo $^
 	@$(CC) -c $^ $(CFLAGS)
 
+# Compilation de ClientData
+ClientData.o: $(XML)$(SRC)ClientData.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
 State.o: $(XML)$(SRC)State.cpp
 	@echo $^
@@ -285,7 +290,7 @@ PacketRemoveHost.o: $(PACKET)$(SRC)PacketRemoveHost.cpp
 #
 ############################
 
-CallbackManager=PacketCallback.o callbackFunctionServer.o
+CallbackManager=PacketCallback.o callbackFunctionServer.o callbackFunctionClient.o
 
 # Compilation du PacketManager
 PacketCallback.o:  $(CB)$(SRC)PacketCallback.cpp
@@ -294,6 +299,11 @@ PacketCallback.o:  $(CB)$(SRC)PacketCallback.cpp
 
 # Compilation du callbackFunctionServer
 callbackFunctionServer.o: $(CB)$(SRC)callbackFunctionServer.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+# Compilation du callbackFunctionClient
+callbackFunctionClient.o: $(CB)$(SRC)callbackFunctionClient.cpp
 	@echo $^
 	@$(CC) -c $^ $(CFLAGS)
 
@@ -347,6 +357,19 @@ Socket.o: $(TCP)$(SRC)Socket.cpp
 
 ############################
 #
+#      PPCLIENT
+#
+############################
+
+PPClient=PolypeerClient.o
+
+# Compilation du Logger
+PolypeerClient.o:  $(PPC)$(SRC)PolypeerClient.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+	
+############################
+#
 #      LOGGER
 #
 ############################
@@ -385,7 +408,7 @@ ShareDeployment.o:  $(ALGO)$(SRC)ShareDeployment.cpp
 ############################
 
 
-polypeer: main.o $(BaseServ) $(MainStruct) $(LibXML) $(Mutex) $(FileManager) $(PacketManager) $(CallbackManager) $(Data) $(ConnectionManager) $(Logger) $(WebServ) $(PPServer) $(Algo)
+polypeer: main.o $(BaseServ) $(MainStruct) $(LibXML) $(Mutex) $(FileManager) $(PacketManager) $(CallbackManager) $(Data) $(ConnectionManager) $(Logger) $(WebServ) $(PPServer) $(Algo) $(PPClient)
 	@echo "Link output files..."
 	@$(CC) -o $@  $^ $(LDFLAGS)
 	@echo "OK"

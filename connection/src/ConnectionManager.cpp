@@ -161,7 +161,7 @@ bool ConnectionManager::WOL(const char *macAddr,const char *bcastAddr)
 		i++;
 	}
 	if (*macAddr!='\0') return(false);
-
+	
 	for (i=0;i<6;i++) buf[i]=0xff;
 	for (i=0;i<16;i++) memcpy(buf+6+i*6,mac,6);
 
