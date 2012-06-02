@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cmath>
 #include <Entity.hpp>
 
 using namespace std;
@@ -50,7 +49,7 @@ void Entity::calculNewTimerSpeed(unsigned int packetSizeInOctet)
 	// calcul
 	unsigned int conversionStoMc = 1000000; // pour faire le découpage dans le set (sec, mc)
 	// la taille du packet est en otets
-	unsigned int capacite = abs(this->getNetworkCapacity()); // en Ko pas sec
+	unsigned int capacite = this->getNetworkCapacity(); // en Ko pas sec
 	// temps nécessaire pour envoyer le paquet en microseconde
 	unsigned int neededTimeMc = (packetSizeInOctet*1000)/capacite; 
 	// mise en place du temps d'attente pour l'envoi du prochain paquet
