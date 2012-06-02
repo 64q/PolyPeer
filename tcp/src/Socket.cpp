@@ -8,7 +8,7 @@
 using namespace std;
 
 Socket::Socket(std::string address, int port) :
-	timeWaitForMTUInMc(0),
+	timeWaitForMTUInMc(50),
 	numberPacketInvalid(0),
 	numberPacketValid(0)
 	
@@ -18,7 +18,7 @@ Socket::Socket(std::string address, int port) :
 
 Socket::Socket(int descripteur, std::string ipAdress) :
 	ipAdress(ipAdress),
-	timeWaitForMTUInMc(0),
+	timeWaitForMTUInMc(50),
 	numberPacketInvalid(0),
 	numberPacketValid(0)
 {
@@ -26,7 +26,7 @@ Socket::Socket(int descripteur, std::string ipAdress) :
 }
 
 Socket::Socket() :
-	timeWaitForMTUInMc(0),
+	timeWaitForMTUInMc(50),
 	numberPacketInvalid(0),
 	numberPacketValid(0)
 {
@@ -179,6 +179,8 @@ void Socket::manageWaitingTimeWithPacketState(bool stateValid)
 	}
 	if(timeWaitForMTUInMc > 12000)
 		timeWaitForMTUInMc = 12000;
+	if(timeWaitForMTUInMc < 0)
+		timeWaitForMTUInMc = 0;
 }
 
 
