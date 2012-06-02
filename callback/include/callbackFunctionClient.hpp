@@ -19,7 +19,7 @@ int callbackSendChunk(Packet& p);
 
 int callbackRemoveHost(Packet& p);
 
-
+int callbackPacketInvalid(Packet& p);
 
 #endif // CALLBACKFUNCTION_H
 

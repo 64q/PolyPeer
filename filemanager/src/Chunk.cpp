@@ -94,8 +94,13 @@ char* Chunk::getMD5()
 
 bool Chunk::isIntegrate()
 {
-	return chunkIntegrity;
-	//return true;
+#ifdef WIN32
+	return true;
+#else
+	//return chunkIntegrity;
+	return true;
+#endif
+
 }
 
 int Chunk::getIdFile()

@@ -3,6 +3,7 @@
 
 // header
 #include <BaseServer.hpp>
+#include <string>
 
 // forward declaration
 class ServerData;
@@ -13,6 +14,8 @@ struct ServerOptions
 	int serverPort;
 	int clientPort;
 	int webserverPort;
+	bool daemon;
+	std::string root;
 };
 
 /**

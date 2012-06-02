@@ -25,13 +25,21 @@ void PacketCallback::addOperation(PacketType type, pOperation pOp)
 
 int PacketCallback::packetOperation(Packet& p)
 {
-	//cout<<"Type "<<p.getType()<<endl;
-	int type = p.getType();
-	if(type > int(EUndefined) && type < int(End_PaquetType))
+	if(p.isValid())
 	{
-		if(listOperations[type] != NULL)
-			return listOperations[type](p);
+		int type = p.getType();
+		if(type > int(EUndefined) && type < int(End_PaquetType))
+		{
+			if(listOperations[type] != NULL)
+				return listOperations[type](p);
+		}
 	}
+	else
+	{
+		if(listOperations[EPacketInvalid] != NULL)
+				return listOperations[EPacketInvalid](p);
+	}
+
 	return -1;
 }
 

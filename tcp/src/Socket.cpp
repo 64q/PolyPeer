@@ -74,7 +74,7 @@ int Socket::read(char* buffer, int sizeBuffer)
 	int size = 0;
 	//essayer avec MSG_WAITALL à la place de 0
 	size = recv(descripteur, buffer, sizeBuffer, 0);
-	
+
 	if(size>0)
 	{
 	 //On vérifie qu'il n'y a plus rien à lire
@@ -82,7 +82,7 @@ int Socket::read(char* buffer, int sizeBuffer)
 		 struct timeval tv;
 		 int retval;
 		 bool complete = false;
-		 
+
 		 while(!complete)
 		 {
 			 // Surveiller stdin (fd 0) en attente d'entrées
@@ -90,7 +90,7 @@ int Socket::read(char* buffer, int sizeBuffer)
 			 FD_SET(descripteur, &rfds);
 			 // Pendant 0 secondes maxi
 			 tv.tv_sec = 0;
-			 tv.tv_usec = 10000;
+			 tv.tv_usec = 5000;
 			 //cout << "avant retval"<<endl;
 			 retval = select(descripteur+1, &rfds, NULL, NULL, &tv);
 			 // Considerer tv comme indéfini maintenant !
@@ -99,17 +99,24 @@ int Socket::read(char* buffer, int sizeBuffer)
 			 {
 				 if (retval && retval!=-1)
 				 {
-				// 	cout <<"reconstruction"<<endl;
+
 				 	char* buffTmp = new char[20000];
 
 				 	int sizeTmp = recv(descripteur, buffTmp, 20000, 0);
-				 	
-			//	cout << "taille de base "<<size<<" taille ajout "<<sizeTmp<<endl;
-					for(int i = size; i < size+sizeTmp; i++)
+					if(size+sizeTmp < 20000)
 					{
-						buffer[i] = buffTmp[i-size];
+						for(int i = size; i < size+sizeTmp; i++)
+						{
+							buffer[i] = buffTmp[i-size];
+						}
+						size+=sizeTmp;
+					}else
+					{
+						complete = true;
+						return size;
 					}
-					size+=sizeTmp;
+
+
 					delete [] buffTmp;
 				 }
 				 else

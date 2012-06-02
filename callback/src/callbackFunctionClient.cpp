@@ -67,9 +67,9 @@ int callbackSendOperation(Packet& p)
 	// vérifier que l'on possède bien le chunk en question
 	// --
 	FileManager* fm = cd->getFileManager(pp.getIdFile());
-	
+
 	cout <<" on demande a envoyé le "<<pp.getNumChunk()<<" du fichier "<< pp.getIdFile() <<endl;
-	
+
 	if(fm!=NULL)
 	{
 		Chunk* c = fm->getChunk((long)pp.getNumChunk());
@@ -82,19 +82,19 @@ int callbackSendOperation(Packet& p)
 			// réponse au serveur du travail effectué
 			cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketSendOperationFinished());
 			cout << "serveur prévenu"<<endl;
-		
+
 		}else
 		{
 			cout << "ce Chunk n'est pas dispo"<<endl;
 		}
-		
-	
+
+
 	}else
 	{
-	
+
 		cout << "Ce fichier n'existe pas"<<endl;
 	}
-	
+
 
 	return 1;
 }
@@ -137,7 +137,15 @@ int callbackRemoveHost(Packet& p)
 	ClientData* cd = PolypeerClient::getInstance()->getClientData();
 	ConnectionManager* cm = cd->getConnectionManager();
 	cm->removeConnection(pp.getIpAddress());
-	
+
+	return 1;
+}
+
+int callbackPacketInvalid(Packet& p)
+{
+	ClientData* cd = PolypeerClient::getInstance()->getClientData();
+	cout << "callbackPacketInvalid" << endl;
+	cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketMd5Error(-1, -1));
 	return 1;
 }
 

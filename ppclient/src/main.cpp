@@ -4,15 +4,15 @@
 #include <cstring>
 
 #include <PolypeerClient.hpp>
-#ifdef WIN32
 
-#else
+
 // C library
 #include <signal.h>
 
 void kill_handler(int sig);
 void defineHandleStop();
-#endif
+bool daemon_conf(std::string& root);
+void writePid(std::string fileName);
 
 /**
  * Fonction de lecture des arguments du client
@@ -34,55 +34,87 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	// Options client par défaut
-	ClientOptions opt = {"192.168.0.14", 5555, 6666};
+	ClientOptions opt = {"192.168.0.14", 5555, 6666, false, "/tmp"};
 
 	// Récupération des valeurs
 	int result = args(argc, argv, &opt);
-
-	if (result == 1)
-	{
-		display_help(argc, argv);
-		exit(0);
-	}
-
+	int pid;
+	
 	if (result == -1)
 	{
 		cout << "Erreur, les paramètres fournis sont incorrects" << endl;
 		display_usage(argc, argv);
 		exit(1);
 	}
-
-	#ifdef WIN32
-
-	#else
+	else if (opt.daemon)
+	{
+		// mise en place de l'interception d'un signal
+		defineHandleStop();
+		// création d'un processus
+		pid = fork();
+		if (pid == -1)
+		{
+			cout << "Erreur, impossible de fork()" << endl;
+			exit(1);
+			
+		}
+		else if (pid == 0)
+		{
+			// Récupération de l'instance du client
+			PolypeerClient* ppc = PolypeerClient::getInstance();
+	
+			if (!daemon_conf(opt.root)) // Configuration du démon
+			{
+				cout << "Erreur, configuration du démon échoué" <<endl;
+				exit(1);
+			}
+		
+			(ppc->getLogger())<< "Lancement du serveur Polypeer en mode démon" << endlog;
+			// Config du client
+			ppc->setConfig(&opt);
+			// Lancement
+			ppc->start();
+		
+			// vidage mémoire
+			delete ppc;
+		}
+		else
+		{
+			exit(0); // terminaison du père pour que le fils soit récupéré par init
+		}
+	}
+	else if (result == 1)
+	{
+		display_help(argc, argv);
+		exit(0);
+	}
+	else 
+	{
 		// déffinition d'un catch de signal si on n'est pas sous windows
 		defineHandleStop();
-	#endif
 
-	// Récupération de l'instance du client
-	PolypeerClient* ppc = PolypeerClient::getInstance();
 
-	// Config du client
-	ppc->setConfig(&opt);
+		// Récupération de l'instance du client
+		PolypeerClient* ppc = PolypeerClient::getInstance();
 
-	cout << "+---------------------------------+" << endl;
-	cout << "|         Client PolyPeer         |" << endl;
-	cout << "+---------------------------------+" << endl;
-	cout << "Fichier de log     : log/client.log" << endl;
-	cout << "Serveur PolyPeer   : " << opt.ip << ":" << opt.serverPort << endl;
-	cout << "Port écoute client : " << opt.clientPort << endl;
+		// Config du client
+		ppc->setConfig(&opt);
 
-	#ifdef WIN32
-
-	#else
+		cout << "+---------------------------------+" << endl;
+		cout << "|         Client PolyPeer         |" << endl;
+		cout << "+---------------------------------+" << endl;
+		cout << "Fichier de log     : log/client.log" << endl;
+		cout << "Serveur PolyPeer   : " << opt.ip << ":" << opt.serverPort << endl;
+		cout << "Port écoute client : " << opt.clientPort << endl;
 		cout << "PID             : " << getpid() << endl;
-	#endif
 
-
-	// Lancement
-	ppc->start();
-
-	delete ppc;
+		// Lancement
+		ppc->start();
+		
+		delete ppc;
+	}	
+	
+	
 
 	return 0;
 }
@@ -116,7 +148,17 @@ int args(int argc, char* argv[], ClientOptions* opt)
 				{
 					iss >> opt->ip;
 				}
-
+				// Mode démon
+				else if (strcmp("-d", *(argv + i)) == 0)
+				{
+					opt->daemon = true;
+				}
+				// directory de chroot
+				else if (strcmp("-r", *(argv + i)) == 0) 
+				{
+					opt->root = string(*(argv + i + 1));
+				}
+				
 				i++;
 			}
 		}
@@ -138,11 +180,12 @@ void display_help(int argc, char* argv[])
 	cout << "[-p serverPort] Port du serveur" << endl;
 	cout << "[-c clientPort] Port du client" << endl;
 	cout << "[-s serverIp] Adresse ip du serveur" << endl;
+	cout << "[-d] lancer en démon" << endl;
+	cout << "[-r] repertoire de chdir pour le demon" << endl;
 	cout << "[-h] Affichage de l'aide" << endl;
 }
 
-#ifdef WIN32
-#else
+
 void defineHandleStop()
 {
 	// Definition du catch d'arret
@@ -161,5 +204,45 @@ void kill_handler(int sig)
 	client->stop();
 }
 
-#endif
+bool daemon_conf (string& root)
+{
+	// change the file mode mask
+	//umask (0); 
+	
+	// Create a new SID for the child process
+	int sid = setsid ();
+	if (sid < 0)
+		return false;
+	
+	// pid du processus
+	writePid("ppclient.pid");
+	
+	// mise en place de l'interception d'un signal
+	defineHandleStop();
+	
+	
+	// change the current working directory
+	if ((chdir(root.c_str())) < 0)
+		return false;
+	
+	// close out the standart file descriptor
+	close (STDIN_FILENO);
+	close (STDOUT_FILENO);
+	close (STDERR_FILENO);
+	
+	return true;
+}
+
+void writePid(string fileName)
+{
+	ofstream file;
+	file.open(fileName.c_str(), fstream::trunc);
+	
+	if (file.is_open()) 
+	{
+		file << getpid();
+		file.close();
+	}
+}
+
 
