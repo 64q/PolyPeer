@@ -87,10 +87,10 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-int args(int argc, char* argv[], ClientOptions* opt) 
+int args(int argc, char* argv[], ClientOptions* opt)
 {
 	int result = 0, i = 1;
-	
+
 	while (i < argc)
 	{
 		if (strcmp("-h", *(argv + i)) == 0)
@@ -103,24 +103,24 @@ int args(int argc, char* argv[], ClientOptions* opt)
 			if ((i + 1) < argc)
 			{
 				istringstream iss(*(argv + i + 1));
-				
-				if (strcmp("-c", *(argv + i)) == 0) 
+
+				if (strcmp("-c", *(argv + i)) == 0)
 				{
 					iss >> opt->clientPort;
 				}
-				else if (strcmp("-p", *(argv + i)) == 0) 
+				else if (strcmp("-p", *(argv + i)) == 0)
 				{
 					iss >> opt->serverPort;
 				}
-				else if (strcmp("-s", *(argv + i)) == 0) 
+				else if (strcmp("-s", *(argv + i)) == 0)
 				{
 					iss >> opt->ip;
 				}
-				
+
 				i++;
 			}
 		}
-		
+
 		i++;
 	}
 
