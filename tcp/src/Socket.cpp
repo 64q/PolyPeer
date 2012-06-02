@@ -169,10 +169,10 @@ void Socket::manageWaitingTimeWithPacketState(bool stateValid)
 		numberPacketValid = 0;
 		numberPacketInvalid = 0;
 	}
-	if (numberPacketInvalid > 20)
+	if (numberPacketValid > 100)
 	{
 		// on reparametre le temps d'attente
-		timeWaitForMTUInMc -= 1;
+		timeWaitForMTUInMc -= 5;
 		// init des compteurs
 		numberPacketValid = 0;
 		numberPacketInvalid = 0;
