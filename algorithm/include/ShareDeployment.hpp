@@ -56,6 +56,12 @@ private:
 	ServerData* sData;
 	
 	/**
+	 * Pour gérer les cycles de sommeil
+	 * Seul moyen trouvé pour éviter les pertes de débits
+	 */
+	int loopNumber;
+	
+	/**
 	 * Etat initial
 	 * cas particulier du lancement où il faut se mettre à jour
 	 */
@@ -112,7 +118,7 @@ private:
 	 * Vérifier si il faut mettre le programme en pause
 	 */
 	bool makePause();
-	 
+
 };
 
 

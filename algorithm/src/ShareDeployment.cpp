@@ -16,7 +16,8 @@ using namespace std;
 
 ShareDeployment::ShareDeployment(PolypeerServer* pps, ServerData* sd) :
 	ppServer(pps),
-	sData(sd)
+	sData(sd),
+	loopNumber(0)
 {
 
 }
@@ -136,8 +137,14 @@ void ShareDeployment::nextStep()
 			case F_PAUSE:
 				break;
 		}
-		//PolypeerServer::getInstance()->multiSleep(4);
 	}
+	
+	if(loopNumber > 5)
+	{
+		PolypeerServer::getInstance()->multiSleep(10);
+		loopNumber = 0;
+	} else
+		loopNumber++;
 	
 	if(makePause())
 		PolypeerServer::getInstance()->multiSleep(750);
