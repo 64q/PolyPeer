@@ -1,4 +1,4 @@
-#include <string>
+#include <string.h> // .h a cause de memcpy
 #ifdef WIN32 /* si vous êtes sous Windows */
 	#define sleep(t) Sleep(t)
 #endif
@@ -168,7 +168,7 @@ bool ConnectionManager::WOL(const char *macAddr,const char *bcastAddr)
 	memset(&name,0,sizeof(name));
 	name.sin_family=AF_INET;
 	name.sin_port=htons(9);
-	if (hptr=gethostbyname(bcastAddr))
+	if ((hptr=gethostbyname(bcastAddr)))
 	{
 		memcpy(&name.sin_addr.s_addr,hptr->h_addr,hptr->h_length);
 		name.sin_family=hptr->h_addrtype;
