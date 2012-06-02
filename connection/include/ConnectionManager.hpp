@@ -9,6 +9,7 @@
 #include <Connection.hpp>
 #include <ServerSocket.hpp>
 #include <Packet.hpp>
+#include <Mutex.hpp>
 
 /**
  * Classe gérant les sockets d'écoute. Quand un socket est ajouté au connectionManager, il lance l'écoute dans un thread.
@@ -72,7 +73,7 @@ class ConnectionManager
 		bool run;
 		ServerSocket* serverSocket;
 
-		//static ConnectionManager* instance;
+		Mutex mutex;
 
 		friend void* runFct(void* connectionManager);
 };

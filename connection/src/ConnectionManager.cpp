@@ -41,8 +41,13 @@ void ConnectionManager::addConnection(std::string name, Socket* socket)
 
 	Connection* tmp = new Connection(socket);
 	tmp->throwUpdatePacket();
+
+	mutex.lock();
 	listConnections[name] = tmp;
+	mutex.unlock();
+
 	tmp->start();
+
 }
 
 Connection* ConnectionManager::getConnection(std::string name)
@@ -92,8 +97,10 @@ void ConnectionManager::stop()
 }
 
 void ConnectionManager::sendTo(std::string dest, Packet packet)
-{//cout << "CM sento"<<endl<<flush;
+{
+	mutex.lock();
 	Connection* connection = listConnections[dest];
+	mutex.unlock();
 	cout << "envoie à " << dest << " de "<< packet.getType()<<endl;
 
 	if(connection != NULL)
@@ -122,11 +129,13 @@ void ConnectionManager::wait()
 
 void ConnectionManager::removeConnection(std::string ip)
 {
+	mutex.lock();
 	Connection* connec = listConnections[ip];
 	if(connec != NULL)
 	{
 		listConnections.erase(ip);
 	}
+	mutex.unlock();
 }
 
 

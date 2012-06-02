@@ -103,9 +103,9 @@ int Socket::read(char* buffer, int sizeBuffer)
 				 	char* buffTmp = new char[20000];
 
 				 	int sizeTmp = recv(descripteur, buffTmp, 20000, 0);
-					if(size+sizeTmp < 20000)
+					if(size+sizeTmp < 20000 && sizeTmp>0)
 					{
-						cout << "reconstruction"<<endl;
+						cout << "reconstruction nouvelle taille "<<size+sizeTmp<<" ("<<size<<"+"<<sizeTmp<<")"<<endl;
 						for(int i = size; i < size+sizeTmp; i++)
 						{
 							buffer[i] = buffTmp[i-size];
