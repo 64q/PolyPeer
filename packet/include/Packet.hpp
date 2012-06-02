@@ -51,6 +51,7 @@ typedef enum
     EDiskFull,
     ESendOperationFinished,
     EAddHost,
+    EPacketInvalid,
     ERemoveHost,
 
     End_PaquetType, // Doit rester en derniere position, pour avoir la taille du tableau
@@ -135,7 +136,7 @@ public:
 	 *	address
 	 */
 	 std::string getAddress () const;
-	 
+
 	 /**
 	 * Retourne la taille du paquet
 

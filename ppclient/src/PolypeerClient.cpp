@@ -34,6 +34,7 @@ PolypeerClient::PolypeerClient() :
 	pcb->addOperation (ESendChunk, callbackSendChunk);
 	pcb->addOperation (ESendOperation, callbackSendOperation);
 	pcb->addOperation(ERemoveHost, callbackRemoveHost);
+	pcb->addOperation(EPacketInvalid, callbackPacketInvalid);
 
 }
 
