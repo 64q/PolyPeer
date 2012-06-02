@@ -82,7 +82,7 @@ void ShareDeployment::nextStep()
 						{
 							// On essaye de créer un deuxieme HOST pour seed sur la zone
 							// car le maitre est tjs pris par le serveur
-							Entity* seedHostZone = selectSeedHostOnZone((*itZone), idFile, hostMaster);
+							Entity* seedHostZone = NULL; //selectSeedHostOnZone((*itZone), idFile, hostMaster);
 
 							// si on a trouver un deuxieme host pour seed la zone pendant que le master 
 							// récupere le fichier du serveur
@@ -136,7 +136,7 @@ void ShareDeployment::nextStep()
 			case F_PAUSE:
 				break;
 		}
-		PolypeerServer::getInstance()->multiSleep(6);
+		PolypeerServer::getInstance()->multiSleep(4);
 	}
 	
 	if(makePause())
@@ -186,15 +186,14 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 					// création du paquet
 					Packet pSC = PacketSendChunk((*chunk));
 		
-					// gestion du débit
-					if(sData->updateNetworkCurrentBroadbandSpeed(entity, pSC.getSize()))
+					// gestion du débit 
+					// pour la taille exact du paquet on peut utiliser pSC.getSize() mais très lourd.
+					// file->getFileManager()->getChunkSize()+60 donne la taille a 20 octets près
+					if(sData->updateNetworkCurrentBroadbandSpeed(entity, file->getFileManager()->getChunkSize()+60))
 					{
 						sData->getConnectionManager()->sendTo((entity->getIP()), pSC);
 						entity->setHostState(DOWNLOAD);
 						toReturn = true;
-					} else
-					{
-						cout<<"NON, Vous ne passerz PAS !"<<endl;
 					}
 					
 					// suppression du chunk
@@ -231,16 +230,15 @@ bool ShareDeployment::sendOperationOnHosts(Entity* entitySrc, Entity* entityDst,
 			{
 				// création du paquet
 				Packet pSOP = PacketSendOperation(entityDst->getIP(), idFile, numNeededChunk);
-		
-				// gestion du débit
-				//if(sData->updateNetworkCurrentBroadbandSpeed(entitySrc, entityDst, pSOP.getSize()))
+				
+				// gestion du débit on connait la taille du chunk mais pas la taille exact du paquet
+				if(sData->updateNetworkCurrentBroadbandSpeed(entitySrc, entityDst, file->getFileManager()->getChunkSize()+60))
 				{
-				}
 					sData->getConnectionManager()->sendTo(entitySrc->getIP(), pSOP);
 					entitySrc->setHostState(DOWNLOAD);
 					entityDst->setHostState(DOWNLOAD);
 					toReturn = true;
-				
+				}
 			} else
 			{
 				// traitement erreur dépassement

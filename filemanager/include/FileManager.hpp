@@ -44,7 +44,7 @@ public:
 	 * @param long
 	 * taille de chaque Chunk dans lesquels vont être placés les morceaux du fichier
 	 */
-	FileManager(const char* path, int idFile, long sizeChunk=10000);
+	FileManager(const char* path, int idFile, long sizeChunk=5800);
 
 	/**
 	 * Constructeur pour un fichier incomplet ou dont on ignore l'état.
