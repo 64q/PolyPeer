@@ -90,7 +90,7 @@ int Socket::read(char* buffer, int sizeBuffer)
 			 FD_SET(descripteur, &rfds);
 			 // Pendant 0 secondes maxi
 			 tv.tv_sec = 0;
-			 tv.tv_usec = 100;
+			 tv.tv_usec = 1200;
 
 			 retval = select(descripteur+1, &rfds, NULL, NULL, &tv);
 

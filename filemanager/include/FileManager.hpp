@@ -43,8 +43,12 @@ public:
 	 * id du fichier (renseigné dans le fichier XML de déploiement)
 	 * @param long
 	 * taille de chaque Chunk dans lesquels vont être placés les morceaux du fichier
+	 * pk 7200 ? 
+	 *  -> < 8000 a cause du buffer windows
+	 *  -> 5 * 1480 = 7400
+	 *  -> on doit avoir des paquets inférieurs a 7400 donc on garde une marge de 200 octets
 	 */
-	FileManager(const char* path, int idFile, long sizeChunk=5800);
+	FileManager(const char* path, int idFile, long sizeChunk=7200);
 
 	/**
 	 * Constructeur pour un fichier incomplet ou dont on ignore l'état.

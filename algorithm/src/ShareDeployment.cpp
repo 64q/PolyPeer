@@ -136,7 +136,7 @@ void ShareDeployment::nextStep()
 			case F_PAUSE:
 				break;
 		}
-		PolypeerServer::getInstance()->multiSleep(4);
+		//PolypeerServer::getInstance()->multiSleep(4);
 	}
 	
 	if(makePause())
@@ -203,8 +203,7 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 			} else
 			{
 				// traitement erreur dépassement
-				cout <<"Dépassement max chunk"<<endl;
-				// on demande un nouveau paquet
+				// on demande un paquet nouveau fichier
 				entity->getDeploymentState(idFile)->setCurrentState(HDS_INIT);
 			}
 		}
@@ -242,8 +241,7 @@ bool ShareDeployment::sendOperationOnHosts(Entity* entitySrc, Entity* entityDst,
 			} else
 			{
 				// traitement erreur dépassement
-				cout <<"Dépassement max chunk"<<endl;
-				// on demande un nouveau paquet
+				// on demande un paquet nouveau fichier
 				entityDst->getDeploymentState(idFile)->setCurrentState(HDS_INIT);
 			}
 		}
@@ -263,7 +261,6 @@ void ShareDeployment::resetBreakHost(vector<vector<Entity*>* >* entities)
 				// si on dépasse les 20 secondes en mode DOWNLOAD, il y a un pb
 				if((*itHost)->getTimerState() > 5.0)
 				{
-					cout<<"BREAK DOWNLOAD : "<< (*itHost)->getIP() <<endl;
 					(*itHost)->setHostState(WAIT);
 				}
 			}
@@ -282,7 +279,6 @@ void ShareDeployment::networkScan(vector<vector<Entity*>* >* entities, File* f)
 			// -> si le fichier n'existe pas, il est créé
 			if(((*itHost)->getHostState() == WAIT) && ((*itHost)->getDeploymentState(f->getFileManager()->getIdFile())->getCurrentState() == HDS_INIT))
 			{
-				cout<<"SEND NEWFILE to "<< (*itHost)->getIP() <<endl;
 				Packet p = PacketNewFile(f->getFileManager()->getIdFile(), f->getClientPath(), f->getFileManager()->getFileSize(), f->getFileManager()->getChunkSize());
 				sData->getConnectionManager()->sendTo((*itHost)->getIP(), p);
 				(*itHost)->setHostState(DOWNLOAD);
