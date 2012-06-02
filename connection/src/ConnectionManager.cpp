@@ -190,7 +190,7 @@ bool ConnectionManager::WOL(const char *macAddr,const char *bcastAddr)
 		return(false);
 	}
 
-	if (sendto(sd,(char*)buf,len,0,(sockaddr*)&name,sizeof(name))!=len)
+	if (sendto(sd,(char*)buf,len,0,(sockaddr*)&name,sizeof(name))!=(int)len)
 	{
 		return(false);
 	}
