@@ -6,7 +6,11 @@ using namespace std;
 
 int main()
 {
-	ServerSocket sock(6666);
+
+	//Socket sock("192.168.0.14",6666);
+	ServerSocket s(6666);
+	cout << "en attente" << endl;
+	s.accept();
 
 	return 0;
 }

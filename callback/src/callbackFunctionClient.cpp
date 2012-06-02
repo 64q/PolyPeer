@@ -144,7 +144,7 @@ int callbackRemoveHost(Packet& p)
 int callbackPacketInvalid(Packet& p)
 {
 	ClientData* cd = PolypeerClient::getInstance()->getClientData();
-	cout << "callbackRemoveHost" << endl;
+	cout << "callbackPacketInvalid" << endl;
 	cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketMd5Error(-1, -1));
 	return 1;
 }
