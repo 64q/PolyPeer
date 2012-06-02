@@ -9,12 +9,10 @@
     <file id="25" name="D3" serverPath="file/truc2.png" clientPath="file/truc2.png" chunkSize="13000" state="finished" date="0">
         <zone ref="PC2" />
     </file>
-    <file id="26" name="D4" serverPath="file/truc2d.png" clientPath="file/truc2d.png" chunkSize="500" state="ready" date="1338567301">
-        <host ref="D_07" />
+    <file id="26" name="D4" serverPath="file/truc2d.png" clientPath="file/truc2d.png" chunkSize="10000" state="ready" date="1338627701">
         <host ref="PC6" />
         <host ref="PC7" />
         <host ref="PC8" />
-        <host ref="D_08" />
         <host ref="PC11" />
     </file>
 </deployments>

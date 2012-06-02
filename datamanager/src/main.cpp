@@ -3,6 +3,7 @@
 #include <ClientData.hpp>
 #include <CreateFileException.hpp>
 #include <sys/time.h>
+#include <Logger.hpp>
 
 int main()
 {
@@ -133,6 +134,8 @@ int main()
      gettimeofday(&tim, NULL);
      double t2=tim.tv_sec+(tim.tv_usec/1000000.0);
      printf("%.6lf seconds elapsed\n", t2-t1);
+	
+	logger << notice << "Le serveur web a été arrêté." << endlog;
 	
 	delete sData;
 

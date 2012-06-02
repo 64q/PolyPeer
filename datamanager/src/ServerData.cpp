@@ -18,7 +18,7 @@ ServerData::~ServerData()
 	vector <string> alreadyDelete;
 	deleteDeployFiles();
 	deleteHosts();
-	//deleteMap(this->getEntities(), alreadyDelete);
+	//deleteMap(this->getEntities(), &alreadyDelete);
 
 }
 
@@ -102,7 +102,7 @@ void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
 			host->getDeploymentState(fileID)->setCurrentIdChunk(nbChunk);
 			// l'host a fini son operation
 			host->setHostState(WAIT);
-			// Actualiser l'état du fichier POUR L'Host
+			// Actualiser l'état du fichier pour L'Host
 			if(nbChunk >= getFile(fileID)->getFileManager()->getNumberChunk())
 				host->getDeploymentState(fileID)->setCurrentState(HDS_FINISH);
 			else
@@ -154,6 +154,7 @@ void ServerData::updateHostInit(string addressHost)
 
 FileManager* ServerData::addFile(File* f)
 {
+	//Mutex qui empèche qu'il y ai un ajout de déploiement pendant que l'algorithme principale lit la liste des déploiements
 	mutex_deployFiles.lock();
 	deployFiles.push_back(f);
 	mutex_deployFiles.unlock();
@@ -168,6 +169,7 @@ void ServerData::addFileToAll(File* f)
 	if (f->getFileState() != F_ERROR)
 	{
 		xmlTool->writeFileIntoDeployments(f);
+		//Parcours des Host à ajouter dans le fichier XML
 		for(i=0; i < (f->getDeploysOn())->size(); i++)
 		{
 			xmlTool->writeEntityIntoFile((f->getFileManager())->getIdFile(), (*(f->getDeploysOn()))[i]);
@@ -177,6 +179,7 @@ void ServerData::addFileToAll(File* f)
 
 int ServerData::getCurrentId()
 {
+	//la récupération de l'id se fait dans le fichier XML car il peut y avoir des déploiements FINISH qui y sont présents mais non chargés en mémoire
 	return xmlTool->getCurrentId();
 }
 

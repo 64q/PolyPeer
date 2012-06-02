@@ -9,10 +9,14 @@ XMLTool::XMLTool(ServerData* sData)
 {
 	topologyFile = string("topology.xml");
 	deploymentsFile = string("deployments.xml");
+	
+	//Chargement en mémoire des deux fichiers
 	TiXmlDocument DOMT(topologyFile);
 	TiXmlDocument DOMD(deploymentsFile);
 	DOMTopology = DOMT;
 	DOMDeployments = DOMD;
+	
+	//Vérification qu'il n'y a pas eut d'erreur lors du chargement
 	if(!DOMTopology.LoadFile())
 		cout << "Erreur lors du chargement du fichier de topologie" << topologyFile << endl;
 	else 
@@ -68,10 +72,14 @@ void XMLTool::readTopology(ServerData* sData, TiXmlNode* node, map<string, Entit
 		if ( node->ToElement() )
 		{
 			TiXmlElement* elem = node->ToElement();
+			
+			//Si c'est une balise Host
 			if (!(node->ValueStr().compare("host")))
 			{
+				//Si c'est une balise qui contient une référence vers un Host
 				if (elem->Attribute("ref") != NULL )
 				{
+					// Nous cherchons la référence de l'Host dans la structure partiellement remplie
 					entity = sData->getHostByName(elem->Attribute("ref"));
 					if (entity != NULL)
 						entities->insert(make_pair(elem->Attribute("ref"), entity));
@@ -79,13 +87,17 @@ void XMLTool::readTopology(ServerData* sData, TiXmlNode* node, map<string, Entit
 						cout << "reference inexistante" << endl;
 				}else
 				{
+					//Dans le cas contraire nous créons l'Host à partir des informations contenues dans la balise et l'ajoutons à la structure
 					elem->QueryIntAttribute("networkCapacity", &capacity);
 					entity = sData->addHost(elem->Attribute("name"), parent, capacity, elem->Attribute("address"), elem->Attribute("mac"));
 					entities->insert(make_pair(elem->Attribute("name"), entity));
 				}
 			}
+			
+			//Si c'est une balise Zone
 			if (!(node->ValueStr().compare("zone")))
 			{
+				//Cas de la balise référence et de création similaire à Host
 				if (elem->Attribute("ref") != NULL )
 				{
 					entity = sData->public_getEntity(elem->Attribute("ref"));
@@ -102,17 +114,19 @@ void XMLTool::readTopology(ServerData* sData, TiXmlNode* node, map<string, Entit
 			}
 		} 
 	
-
+		//Parcours des balises du même niveau, si l'une d'elle contient des filles : appel récurssif de la fonction 
 		for(TiXmlNode* element = node->FirstChild(); element; element = element->NextSibling())
 		{
 			if ( node->ToElement() )
 			{
+				//Si c'est une balise zone alors nous changeons la map à remplir et le parent courant
 				if (!(node->ValueStr().compare("zone")))
 					readTopology(sData, element, zone->getEntities(), zone);
 				else 
 					readTopology(sData, element, entities, parent);
 			}
 		}
+		
 	} catch(...)
 	{
 		if ( node->ToElement() )
@@ -143,13 +157,18 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 	{
 		if ( node->ToElement() )
 		{
+			//Récupération de la balise parente
 			TiXmlElement* parentElem = (node->Parent())->ToElement();
 			TiXmlElement* elem = node->ToElement();
+			
+			//Si c'est une balise File
 			if (!(node->ValueStr().compare("file")))
 			{
+				//Récupération de l'etat, si il est à FINISH nous ne chargeons pas le déploiement en mémoire
 				FileState fs =  getFileStateString(elem->Attribute("state"));
 				if (fs != FINISH)
 				{
+					//Si il y a la moindre exception sur le déploiement (manque d'attribut(s), chemin incorrect, ou fichier deja en déploiement alors le File n'est pas créé et ajouté
 					elem->QueryIntAttribute("id", &id);
 					elem->QueryIntAttribute("chunkSize", &chunkSize);
 					elem->QueryIntAttribute("date", &date);
@@ -159,6 +178,7 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 			}
 			if (!(node->ValueStr().compare("zone")) || !(node->ValueStr().compare("host")))
 			{
+				//Récupération de la référence vers l'entité contenue dans la balise File
 				entity = sData->public_getEntity(elem->Attribute("ref"));
 				if (entity != NULL)
 				{
@@ -172,7 +192,6 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 		
 		for(TiXmlNode* element = node->FirstChild(); element; element = element->NextSibling())
 		{
-			cout << element->ValueStr() << endl;
 			if ( node->ToElement() )
 				readDeployments(sData, element);
 		}
@@ -203,6 +222,7 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 
 void XMLTool::writeFileIntoDeployments(File* file)
 {
+	//Positionnement sur au niveau des balises File
 	TiXmlElement *f = DOMDeployments.FirstChildElement();
 	TiXmlElement newFile ("file");
 	if (file->getFileManager() != NULL)
@@ -230,6 +250,7 @@ void XMLTool::writeEntityIntoFile(int fileId, Entity* entity)
 	
 	if (entity != NULL)
 	{
+		//Parcours pour trouver si le File dans lequel ajouter les entité 
 		while(file && !find)
 		{
 			file->QueryIntAttribute("id", &id);
@@ -248,6 +269,7 @@ void XMLTool::writeEntityIntoFile(int fileId, Entity* entity)
 					file->InsertEndChild(newEntity);
 				}
 			}
+			// Nous passons à la balise File suivante
 			file = file->NextSiblingElement();
 		}
 
