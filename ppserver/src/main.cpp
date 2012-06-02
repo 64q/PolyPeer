@@ -33,6 +33,10 @@ bool daemon_conf(string& root);
 
 /**
  * Fonction de lecture des arguments du serveur
+ * @return int
+ * 	0 = lancement normal
+ * 	1 = lancement de l'aide
+ * 	2 = lancement en démon
  */
 int args(int argc, char* argv[], ServerOptions* opt);
 
@@ -53,45 +57,7 @@ int main(int argc, char* argv[])
 	int pid;
 	int result = args(argc, argv, &opt);
 	
-	if (opt.daemon)
-	{
-		// mise en place de l'interception d'un signal
-		defineHandleStop();
-		// création d'un processus
-		pid = fork();
-		if (pid == -1)
-		{
-			cout << "Erreur, impossible de fork()" << endl;
-			exit(1);
-			
-		}
-		else if (pid == 0)
-		{
-			PolypeerServer* server = PolypeerServer::getInstance();
-	
-			if (!daemon_conf(opt.root)) // Configuration du démon
-			{
-				cout << "Erreur, configuration du démon échoué" <<endl;
-				exit(1);
-			}
-		
-			(server->getLogger())<< "Lancement du serveur Polypeer en mode démon" << endlog;
-			server->setConfig(&opt);
-			server->start();
-		
-			// vidage mémoire
-			delete server;
-		}
-		else
-		{
-			exit(0); // terminaison du père pour que le fils soit récupéré par init
-		}
-	}
-	else if (result == 1)
-	{
-		display_help(argc, argv);
-	}
-	else if (result == 0)
+	if (result == 0)
 	{
 		// variable principale
 		PolypeerServer* server = PolypeerServer::getInstance();
@@ -125,9 +91,49 @@ int main(int argc, char* argv[])
 	
 		delete server;
 	}
+	else if (result == 1)
+	{
+		display_help(argc, argv);
+		exit(0);
+	}
+	else if (result == 2)
+	{
+		// mise en place de l'interception d'un signal
+		defineHandleStop();
+		// création d'un processus
+		pid = fork();
+		if (pid == -1)
+		{
+			cout << "Erreur, impossible de fork()" << endl;
+			exit(1);
+			
+		}
+		else if (pid == 0)
+		{
+			PolypeerServer* server = PolypeerServer::getInstance();
+	
+			if (!daemon_conf(opt.root)) // Configuration du démon
+			{
+				cout << "Erreur, configuration du démon échoué" <<endl;
+				exit(1);
+			}
+		
+			(server->getLogger()) << "Lancement du serveur Polypeer en mode démon" << endlog;
+			server->setConfig(&opt);
+			server->start();
+		
+			// vidage mémoire
+			delete server;
+		}
+		else
+		{
+			exit(0); // terminaison du père pour que le fils soit récupéré par init
+		}
+	}
 	else
 	{
 		display_usage(argc, argv);
+		exit(1);
 	}
 	
 	return 0;
@@ -145,6 +151,12 @@ int args(int argc, char* argv[], ServerOptions* opt)
 		if (strcmp("-h", *(argv + i)) == 0)
 		{
 			result = 1;
+		}
+		// Mode démon
+		else if (strcmp("-d", *(argv + i)) == 0)
+		{
+			opt->daemon = true;
+			result = 2;
 		}
 		else
 		{
@@ -167,11 +179,6 @@ int args(int argc, char* argv[], ServerOptions* opt)
 				else if (strcmp("-w", *(argv + i)) == 0) 
 				{
 					iss >> opt->webserverPort;
-				}
-				// Mode démon
-				else if (strcmp("-d", *(argv + i)) == 0)
-				{
-					opt->daemon = true;
 				}
 				// directory de chroot
 				else if (strcmp("-r", *(argv + i)) == 0) 

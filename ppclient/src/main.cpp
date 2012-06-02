@@ -16,6 +16,10 @@ void writePid(std::string fileName);
 
 /**
  * Fonction de lecture des arguments du client
+ * @return int
+ * 	0 = lancement normal
+ * 	1 = lancement de l'aide
+ * 	2 = lancement en démon
  */
 int args(int argc, char* argv[], ClientOptions* opt);
 
@@ -40,13 +44,36 @@ int main(int argc, char* argv[])
 	int result = args(argc, argv, &opt);
 	int pid;
 	
-	if (result == -1)
+	if (result == 0)
 	{
-		cout << "Erreur, les paramètres fournis sont incorrects" << endl;
-		display_usage(argc, argv);
-		exit(1);
+		// déffinition d'un catch de signal si on n'est pas sous windows
+		defineHandleStop();
+
+		// Récupération de l'instance du client
+		PolypeerClient* ppc = PolypeerClient::getInstance();
+
+		// Config du client
+		ppc->setConfig(&opt);
+
+		cout << "+---------------------------------+" << endl;
+		cout << "|         Client PolyPeer         |" << endl;
+		cout << "+---------------------------------+" << endl;
+		cout << "Fichier de log     : log/client.log" << endl;
+		cout << "Serveur PolyPeer   : " << opt.ip << ":" << opt.serverPort << endl;
+		cout << "Port écoute client : " << opt.clientPort << endl;
+		cout << "PID             : " << getpid() << endl;
+
+		// Lancement
+		ppc->start();
+		
+		delete ppc;
 	}
-	else if (opt.daemon)
+	else if (result == 1)
+	{
+		display_help(argc, argv);
+		exit(0);
+	}
+	else if (result == 2)
 	{
 		// mise en place de l'interception d'un signal
 		defineHandleStop();
@@ -82,38 +109,12 @@ int main(int argc, char* argv[])
 		{
 			exit(0); // terminaison du père pour que le fils soit récupéré par init
 		}
-	}
-	else if (result == 1)
-	{
-		display_help(argc, argv);
-		exit(0);
-	}
-	else 
-	{
-		// déffinition d'un catch de signal si on n'est pas sous windows
-		defineHandleStop();
-
-
-		// Récupération de l'instance du client
-		PolypeerClient* ppc = PolypeerClient::getInstance();
-
-		// Config du client
-		ppc->setConfig(&opt);
-
-		cout << "+---------------------------------+" << endl;
-		cout << "|         Client PolyPeer         |" << endl;
-		cout << "+---------------------------------+" << endl;
-		cout << "Fichier de log     : log/client.log" << endl;
-		cout << "Serveur PolyPeer   : " << opt.ip << ":" << opt.serverPort << endl;
-		cout << "Port écoute client : " << opt.clientPort << endl;
-		cout << "PID             : " << getpid() << endl;
-
-		// Lancement
-		ppc->start();
-		
-		delete ppc;
 	}	
-	
+	else
+	{
+		display_usage(argc, argv);
+		exit(1);
+	}
 	
 
 	return 0;
@@ -128,6 +129,11 @@ int args(int argc, char* argv[], ClientOptions* opt)
 		if (strcmp("-h", *(argv + i)) == 0)
 		{
 			result = 1;
+		}
+		else if (strcmp("-d", *(argv + i)) == 0)
+		{
+			opt->daemon = true;
+			result = 2;
 		}
 		else
 		{
@@ -147,11 +153,6 @@ int args(int argc, char* argv[], ClientOptions* opt)
 				else if (strcmp("-s", *(argv + i)) == 0)
 				{
 					iss >> opt->ip;
-				}
-				// Mode démon
-				else if (strcmp("-d", *(argv + i)) == 0)
-				{
-					opt->daemon = true;
 				}
 				// directory de chroot
 				else if (strcmp("-r", *(argv + i)) == 0) 
