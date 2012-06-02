@@ -47,10 +47,16 @@ int Entity::getNetworkCapacity()
 
 void Entity::setTimerSpeed(int seconds, int milliseconds)
 {
+	// remise à jour du time
 	gettimeofday(&timerSpeed, NULL);
-	timerSpeed.tv_sec += seconds;
-	// On multiplie par 1000 pour avoir des u-seconds
-	timerSpeed.tv_usec += (milliseconds*1000);	
+	
+	// récupération du time en paramètre
+	timeval givenTime;
+	givenTime.tv_sec = seconds;
+	givenTime.tv_usec = milliseconds*1000;
+	
+	// addition
+	timeradd(&timerSpeed, &givenTime, &timerSpeed);
 }
 
 bool Entity::getTimerSpeed()
@@ -58,10 +64,10 @@ bool Entity::getTimerSpeed()
 	timeval currentTime;
 	gettimeofday(&currentTime, NULL);
 	
-	double saveTimer = timerSpeed.tv_sec + (timerSpeed.tv_usec/1000000.0);
-	double currentTimer = currentTime.tv_sec + (currentTime.tv_usec/1000000.0);
-	
-	return (saveTimer <= currentTimer);
+	if(timercmp(&timerSpeed, &currentTime, >) != 0)
+		return true;
+	else
+		return false;
 }
 
 EntityType Entity::getType() 

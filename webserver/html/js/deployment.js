@@ -24,7 +24,7 @@
 			$('#deployment-nb-chunks').text(content.nbchunk);
 			$('#deployment-chunk-size').text(content.chunksize);
 			
-			var result;
+			var result = '';
 			for (var i = 0; i < content.hosts.length; i++) {
 				var width = (content.hosts[i].current / content.hosts[i].total) * 100;
 				var tmp_state;
@@ -79,7 +79,7 @@
 		// Récupération des infos du déploiement cible
 		pp.Ajax('/ajax/deployment', type + '=' + ref, function(content) {
 			if (!pp.hasChanged) {
-				var result;
+				var result = '';
 				for (var i = 0; i < content.hosts.length; i++) {
 					var width = (content.hosts[i].current / content.hosts[i].total) * 100;
 					var tmp_state;

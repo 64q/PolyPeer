@@ -1,4 +1,4 @@
 *.o
-polypeer
+ppserver
 *.log
 *.pid

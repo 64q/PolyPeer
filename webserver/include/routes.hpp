@@ -63,6 +63,8 @@ void unpause_deployment_route(mg_connection* conn, const mg_request_info* reques
 
 /** 
  * Route pour accéder à un fichier de log
+ * Remarque importante : le format de sortie n'est pas du JSON car les logs contiennent des \n
+ * qui ne sont pas parsables par JSON.parse en JS. On retourne donc du texte brut.
  */
 void log_route(mg_connection* conn, const mg_request_info* request_info);
 

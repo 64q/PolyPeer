@@ -3,14 +3,14 @@
 
 using namespace std;
 
-ServerData::ServerData() :
-	addressServ("192.168.0.50"),
-	clientPort(5555)
+ServerData::ServerData(ServerOptions* so)
 {
-	cM = new ConnectionManager(6666);
+	clientPort = so->clientPort;
+	cM = new ConnectionManager(so->webserverPort);
 	cM->start();
 	xmlTool = new XMLTool(this);
 }
+
 
 ServerData::~ServerData()
 {
@@ -78,8 +78,6 @@ map<string, Entity*>* ServerData::getEntities()
 
 vector<File*>* ServerData::getDeployFiles()
 {
-	mutex_deployFiles.lock();
-	mutex_deployFiles.unlock();
 	return &deployFiles;
 }
 
@@ -88,9 +86,9 @@ ConnectionManager* ServerData::getConnectionManager()
 	return cM;
 }
 
-string ServerData::getAddressServ()
+Mutex* ServerData::getMutex()
 {
-	return addressServ;
+	return &mutex_deployFiles;
 }
 
 void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
@@ -188,7 +186,6 @@ File* ServerData::getFile(int id)
 	bool find = false;
 	File* toReturn = NULL;
 	
-	mutex_deployFiles.lock();
 	
 	while( (i < deployFiles.size()) && (find == false) )
 	{
@@ -202,7 +199,6 @@ File* ServerData::getFile(int id)
 		}
 		i++;
 	}
-	mutex_deployFiles.unlock();
 
 	return toReturn;	
 }
@@ -310,15 +306,24 @@ bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity, int packetWe
 	// racine de l'arbre
 	if(entity != NULL)
 	{
+		// init de la valeur témoin
+		entity->setCurrentBroadbandSpeed(0);
 		// si on peut envoyer
 		if(entity->getTimerState())
 		{
 			possible = updateNetworkCurrentBroadbandSpeed(entity->getParent(),packetWeight);
 			if(possible)
 			{
-				//int capacite = entity->getNetworkCapacity();
-				//int neededTimeMs = (packetWeight*1000)/capacite;
-				entity->setCurrentBroadbandSpeed(entity->getCurrentBroadbandSpeed() + packetWeight);
+				// calcul
+				int capacite = entity->getNetworkCapacity();
+				int neededTimeMs = (packetWeight*1000)/capacite;
+				
+				entity->setTimerSpeed(neededTimeMs/1000, neededTimeMs%1000);
+				
+				entity->setCurrentBroadbandSpeed(10);
+			} else
+			{
+				possible = false;
 			}
 		} else
 		{

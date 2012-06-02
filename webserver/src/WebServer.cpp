@@ -27,7 +27,6 @@ WebServer* WebServer::instance = NULL;
 WebServer::WebServer() :
 	BaseServer("log/webserver.log")
 {
-	this->port = 6969;
 	this->debug	= false;
 	this->running = true;
 	
@@ -42,6 +41,7 @@ WebServer::WebServer() :
 	routes.insert(pair<string, route_handler>("/ajax/pause_deployments", pause_deployments_route));
 	routes.insert(pair<string, route_handler>("/ajax/pause_deployment", pause_deployment_route));
 	routes.insert(pair<string, route_handler>("/ajax/unpause_deployment", unpause_deployment_route));
+	routes.insert(pair<string, route_handler>("/ajax/get_log", log_route));
 }
 
 WebServer::~WebServer()
@@ -70,6 +70,10 @@ void WebServer::start()
 	{
 		throw WebServerException();
 	}
+}
+
+void WebServer::setConfig(WebServerConfig* opt)
+{
 }
 
 void WebServer::run()

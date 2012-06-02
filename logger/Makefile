@@ -6,16 +6,18 @@
 #
 
 CC=g++
-CFLAGS=-Wall -ggdb -Iinclude/
+CFLAGS=-Wall -ggdb -Iinclude/ -I../mutex/include/
 LDFLAGS=
 EXEC=logger
 SRC=src/
 INC=include/
 
+MUTEX=../mutex/
+
 all: logger
 
 # Edition des liens
-logger: Logger.o  example.o
+logger: Logger.o Mutex.o example.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 # Compilation du Logger
@@ -25,6 +27,11 @@ Logger.o: $(SRC)Logger.cpp
 # Compilation du main
 example.o: $(SRC)example.cpp
 	$(CC) -c $^ $(CFLAGS)
+
+# Compilation des Mutex
+Mutex.o:  $(MUTEX)$(SRC)Mutex.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
 
 clean:
 	rm -f *.o

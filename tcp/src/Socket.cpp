@@ -15,7 +15,6 @@ Socket::Socket(std::string address, int port)
 Socket::Socket(int descripteur, std::string ipAdress):ipAdress(ipAdress)
 {
 	this->descripteur = descripteur;
-
 }
 
 Socket::Socket()
@@ -75,36 +74,56 @@ int Socket::read(char* buffer, int sizeBuffer)
 	int size = 0;
 	//essayer avec MSG_WAITALL à la place de 0
 	size = recv(descripteur, buffer, sizeBuffer, 0);
+	
+	if(size>0)
+	{
+	 //On vérifie qu'il n'y a plus rien à lire
+		fd_set rfds;
+		 struct timeval tv;
+		 int retval;
+		 bool complete = false;
+		 
+		 while(!complete)
+		 {
+			 // Surveiller stdin (fd 0) en attente d'entrées
+			 FD_ZERO(&rfds);
+			 FD_SET(descripteur, &rfds);
+			 // Pendant 0 secondes maxi
+			 tv.tv_sec = 0;
+			 tv.tv_usec = 10000;
+			 //cout << "avant retval"<<endl;
+			 retval = select(descripteur+1, &rfds, NULL, NULL, &tv);
+			 // Considerer tv comme indéfini maintenant !
+			// cout << "retval "<<retval <<endl;
+			 if(retval!=-1 )
+			 {
+				 if (retval && retval!=-1)
+				 {
+				// 	cout <<"reconstruction"<<endl;
+				 	char* buffTmp = new char[20000];
 
-/* On vérifie qu'il n'y a plus rien à lire
-	fd_set rfds;
-    struct timeval tv;
-    int retval;
-    // Surveiller stdin (fd 0) en attente d'entrées
-    FD_ZERO(&rfds);
-    FD_SET(descripteur, &rfds);
-    // Pendant 0 secondes maxi
-    tv.tv_sec = 0;
-    tv.tv_usec = 0;
-    retval = select(1, &rfds, NULL, NULL, &tv);
-    // Considerer tv comme indéfini maintenant !
-    if (retval)
-    {
-    	char* buffTmp = new buffTmp[20000];
-
-    	int sizeTmp = recv(descripteur, buffTmp, 20000, 0);
-
-		for(int i = size; i < size+sizeTmp; i++)
-		{
-			buffer[i] = buffTmp[i-size];
+				 	int sizeTmp = recv(descripteur, buffTmp, 20000, 0);
+				 	
+			//	cout << "taille de base "<<size<<" taille ajout "<<sizeTmp<<endl;
+					for(int i = size; i < size+sizeTmp; i++)
+					{
+						buffer[i] = buffTmp[i-size];
+					}
+					size+=sizeTmp;
+					delete [] buffTmp;
+				 }
+				 else
+				 {
+			//	 	cout <<"pas de reconstruction"<<endl;
+					complete = true;
+				}
+			}else
+			{
+				size = -1;
+				complete = true;
+			}
 		}
-    }
-    else
-    {
-    	//printf("Pas de données depuis 5 secondes\n");
-
-    }
-*/
+	}
 
 	return size;
 }
@@ -113,3 +132,5 @@ std::string Socket::getIpAdress()
 {
 	return ipAdress;
 }
+
+

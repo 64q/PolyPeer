@@ -7,6 +7,7 @@
 #include <FileManager.hpp>
 #include <ConnectionManager.hpp>
 #include <Packet.hpp>
+#include <PolypeerClient.hpp>
 
 /**
  * Classe contenant les informations d'un host pour un déploiement donné
@@ -20,7 +21,7 @@ public :
 	/**
 	 * Constructeur d'un ClientData
 	 */
-	ClientData();
+	ClientData(ClientOptions* co);
 
 	/**
 	* Destructeur

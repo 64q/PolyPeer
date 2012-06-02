@@ -25,16 +25,18 @@
 			<small>Capacité : ' + item.cbbs + '/' + item.nc + '</small></h3>';
 		
 		var table = document.createElement('table');
-		table.className = 'table table-striped';
-
+		var tbody = document.createElement('tbody');
+		table.className = 'table table-striped table-condensed';
+		
 		for (var i = 0; i < item.hosts.length; i++) {
 			if (item.hosts[i].type == "zone") {
 				createZone(zone, item.hosts[i]);
 			} else {
-				table.appendChild(createHostLine('tr', item.hosts[i]));
+				tbody.appendChild(createHostLine('tr', item.hosts[i]));
 			}
 		}	
 
+		table.appendChild(tbody);
 		zone.appendChild(table);
 		parent.appendChild(zone);
 	}

@@ -7,7 +7,7 @@
 	var args = pp.HashNav.vars;
 	
 	pp.Ajax('/ajax/deployments', null, function(content) {
-		var contentTab = $("#deployments>table");
+		var contentTab = $("#deployments-table");
 		for (var i = 0; i < content.length; i++) {
 			contentTab.appendChild(createDeploymentLine(content[i]));
 		}

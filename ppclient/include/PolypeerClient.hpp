@@ -7,6 +7,12 @@
 // forward declaration
 class ClientData;
 
+struct ClientOptions 
+{
+	std::string ip;
+	int clientPort;
+	int serverPort;
+};
 
 /**
  * Client de Polypeer.
@@ -29,6 +35,11 @@ public:
 	 * Redémarrage du serveur
 	 */
 	void restart();
+	
+	/**
+	 * Méthode de config a lancer en premier
+	 */
+	void setConfig(ClientOptions* opt);
 
 	/**
 	 * Récupérer la structure principale

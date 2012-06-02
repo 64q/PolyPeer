@@ -8,6 +8,13 @@
 class ServerData;
 class WebServer;
 
+struct ServerOptions 
+{
+	int serverPort;
+	int clientPort;
+	int webserverPort;
+};
+
 /**
  * Serveur principale de Polypeer.
  * gère le lancement de tous les threads de traitement
@@ -35,6 +42,7 @@ public:
 	 */
 	inline ServerData& getServerData() { return *(this->sData); }
 	
+	void setConfig(ServerOptions* opt);
 	
 	/**
 	 * Destructeur de PolypeerServer

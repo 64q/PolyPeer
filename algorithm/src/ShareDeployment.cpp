@@ -28,7 +28,8 @@ ShareDeployment::~ShareDeployment()
 
 void ShareDeployment::nextStep()
 {
-
+	// on prend le mutex
+	sData->getMutex()->lock();
 	// liste des déploiements
 	vector<File*>* files = sData->getDeployFiles();
 	
@@ -139,7 +140,9 @@ void ShareDeployment::nextStep()
 	}
 	if(makePause())
 		PolypeerServer::getInstance()->multiSleep(750);
-
+	
+	// On rend le mutex	
+	sData->getMutex()->unlock();
 }
 
 bool ShareDeployment::makePause()
@@ -183,8 +186,12 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 					Packet pSC = PacketSendChunk((*chunk));
 		
 					// gestion du débit
-					//if(sData->updateNetworkCurrentBroadbandSpeed(entity, pSC.getSize()))
+					if(sData->updateNetworkCurrentBroadbandSpeed(entity, pSC.getSize()))
 					{
+						cout<<"--------------------------------------OK"<<endl;
+					} else
+					{
+						cout<<"--------------------------------FALSE"<<endl;
 					}
 						sData->getConnectionManager()->sendTo((entity->getIP()), pSC);
 						entity->setHostState(DOWNLOAD);
