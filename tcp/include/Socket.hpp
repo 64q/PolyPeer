@@ -88,10 +88,14 @@ public:
 
 	std::string getIpAdress();
 
+	void manageWaitingTimeWithPacketState(bool stateValid);
 
 
 protected:
 	std::string ipAdress;
+	unsigned int timeWaitForMTUInMc;
+	unsigned int numberPacketInvalid;
+	unsigned int numberPacketValid;
 };
 
 

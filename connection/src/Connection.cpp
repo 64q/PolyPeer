@@ -36,6 +36,11 @@ void* listenSocket(void* connection)
 
 			//on ajoute l'adresse ip d'où provient le paquet
 			tmp.setAddress(connectionTmp->socket->getIpAdress());
+			
+			// On envoie au socket l'état du packet (si il est intègre)
+			// pour qu'il adapte son dans d'attente si besoin
+			connectionTmp->socket->manageWaitingTimeWithPacketState(tmp.isValid());
+			
 			//cout << "------>" << connectionTmp->socket->getIpAdress() << endl;
 			//on agit suivant le paquet
 			PacketCallback::getPacketCallback()->packetOperation(tmp);

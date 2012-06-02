@@ -7,17 +7,28 @@
 
 using namespace std;
 
-Socket::Socket(std::string address, int port)
+Socket::Socket(std::string address, int port) :
+	timeWaitForMTUInMc(50),
+	numberPacketInvalid(0),
+	numberPacketValid(0)
+	
 {
 	connect(address, port);
 }
 
-Socket::Socket(int descripteur, std::string ipAdress):ipAdress(ipAdress)
+Socket::Socket(int descripteur, std::string ipAdress) :
+	ipAdress(ipAdress),
+	timeWaitForMTUInMc(50),
+	numberPacketInvalid(0),
+	numberPacketValid(0)
 {
 	this->descripteur = descripteur;
 }
 
-Socket::Socket()
+Socket::Socket() :
+	timeWaitForMTUInMc(50),
+	numberPacketInvalid(0),
+	numberPacketValid(0)
 {
 
 }
@@ -90,7 +101,7 @@ int Socket::read(char* buffer, int sizeBuffer)
 			 FD_SET(descripteur, &rfds);
 			 // Pendant 0 secondes maxi
 			 tv.tv_sec = 0;
-			 tv.tv_usec = 1200;
+			 tv.tv_usec = timeWaitForMTUInMc;
 
 			 retval = select(descripteur+1, &rfds, NULL, NULL, &tv);
 
@@ -140,5 +151,33 @@ std::string Socket::getIpAdress()
 {
 	return ipAdress;
 }
+
+void Socket::manageWaitingTimeWithPacketState(bool stateValid)
+{
+	if(stateValid)
+	{
+		numberPacketValid++;
+	} else
+	{
+		numberPacketInvalid++;
+	}
+	if (numberPacketInvalid > 20)
+	{
+		// on reparametre le temps d'attente
+		timeWaitForMTUInMc += 50;
+		// init des compteurs
+		numberPacketValid = 0;
+		numberPacketInvalid = 0;
+	}
+	if (numberPacketInvalid > 20)
+	{
+		// on reparametre le temps d'attente
+		timeWaitForMTUInMc -= 1;
+		// init des compteurs
+		numberPacketValid = 0;
+		numberPacketInvalid = 0;
+	}
+}
+
 
 
