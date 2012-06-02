@@ -12,6 +12,8 @@ struct ClientOptions
 	std::string ip;
 	int clientPort;
 	int serverPort;
+	bool daemon;
+	std::string root;
 };
 
 /**

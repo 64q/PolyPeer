@@ -1,9 +1,9 @@
 <network>
 	<real>
-		<zone name="C007" networkCapacity="1000000000" >
-			<host name="debianServ" address="192.168.0.50" mac="00:11:23:48:d5:65" networkCapacity="1000000000"/>
-			<host name="Erwan" address="192.168.0.19" mac="00:22:fb:8b:25:66" networkCapacity="1000000000"/>
-			<host name="Windows" address="192.168.0.4" mac="mac1" networkCapacity="1000000000"/>
+		<zone name="C007" networkCapacity="300" >
+			<host name="debianServ" address="192.168.0.50" mac="00:11:23:48:d5:65" networkCapacity="100"/>
+			<host name="Erwan" address="192.168.0.19" mac="00:22:fb:8b:25:66" networkCapacity="100"/>
+			<host name="Windows" address="192.168.0.4" mac="mac1" networkCapacity="100"/>
 		</zone>
 	</real>
 </network>

@@ -29,7 +29,7 @@ using namespace std;
 void kill_handler(int sig);
 void defineHandleStop();
 void writePid(string fileName);
-bool daemon_conf();
+bool daemon_conf(string& root);
 
 /**
  * Fonction de lecture des arguments du serveur
@@ -49,12 +49,14 @@ void display_help(int argc, char* argv[]);
 int main(int argc, char* argv[])
 {
 	// variables
-	ServerOptions opt = {6666, 5555, 8588};
+	ServerOptions opt = {6666, 5555, 8588, false, "/tmp"};
 	int pid;
 	int result = args(argc, argv, &opt);
 	
-	if (result == 2)
+	if (opt.daemon)
 	{
+		// mise en place de l'interception d'un signal
+		defineHandleStop();
 		// création d'un processus
 		pid = fork();
 		if (pid == -1)
@@ -67,7 +69,7 @@ int main(int argc, char* argv[])
 		{
 			PolypeerServer* server = PolypeerServer::getInstance();
 	
-			if (!daemon_conf()) // Configuration du démon
+			if (!daemon_conf(opt.root)) // Configuration du démon
 			{
 				cout << "Erreur, configuration du démon échoué" <<endl;
 				exit(1);
@@ -144,11 +146,6 @@ int args(int argc, char* argv[], ServerOptions* opt)
 		{
 			result = 1;
 		}
-		// Mode démon
-		else if (strcmp("-d", *(argv + i)) == 0)
-		{
-			result = 2;
-		}
 		else
 		{
 			// Lecture d'un paramètre avec argument (ex : "-p 3128")
@@ -170,6 +167,16 @@ int args(int argc, char* argv[], ServerOptions* opt)
 				else if (strcmp("-w", *(argv + i)) == 0) 
 				{
 					iss >> opt->webserverPort;
+				}
+				// Mode démon
+				else if (strcmp("-d", *(argv + i)) == 0)
+				{
+					opt->daemon = true;
+				}
+				// directory de chroot
+				else if (strcmp("-r", *(argv + i)) == 0) 
+				{
+					opt->root = string(*(argv + i + 1));
 				}
 				
 				i++;
@@ -193,8 +200,9 @@ void display_help(int argc, char* argv[])
 	cout << "[-s serverPort] Port du serveur" << endl;
 	cout << "[-c clientPort] Port du client" << endl;
 	cout << "[-w webserverPort] Port du serveur web" << endl;
-	cout << "[-d] Lancer en démon" << endl;
-	cout << "[-h] Affichage de l'aide" << endl;
+	cout << "[-d] lancer en démon" << endl;
+	cout << "[-r] repertoire de chdir pour le demon" << endl;
+	cout << "[-h] affichage de l'aide" << endl;
 }
 
 void defineHandleStop()
@@ -228,7 +236,7 @@ void writePid(string fileName)
 }
 
 
-bool daemon_conf ()
+bool daemon_conf (string& root)
 {
 	// change the file mode mask
 	//umask (0); 
@@ -246,8 +254,8 @@ bool daemon_conf ()
 	
 	
 	// change the current working directory
-	//if ((chdir("/tmp")) < 0)
-	//	return false;
+	if ((chdir(root.c_str())) < 0)
+		return false;
 	
 	// close out the standart file descriptor
 	close (STDIN_FILENO);
