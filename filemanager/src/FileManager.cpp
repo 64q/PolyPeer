@@ -184,8 +184,8 @@ bool FileManager::saveChunk(Chunk &chunk)
 			pbuf->sputn(chunk.getData(), chunk.getSize());
 			currentChunk++;
 			saveState();
-	
-	
+
+
 
 			if(currentChunk == getNumberChunk())
 			{
@@ -312,6 +312,8 @@ void FileManager::setCompleted()
 	file.close();
 	rename(strTmp.c_str(),pathFile.c_str());
 	file.open(pathFile.c_str(),ios::binary|ios::in);
+
+	remove(pathFileState.c_str());
 }
 
 void FileManager::checkDirectory(std::string pathDirectory)
