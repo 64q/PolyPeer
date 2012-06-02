@@ -7,7 +7,7 @@ using namespace std;
 ServerData::ServerData(ServerOptions* so)
 {
 	clientPort = so->clientPort;
-	cM = new ConnectionManager(so->webserverPort);
+	cM = new ConnectionManager(so->serverPort);
 	cM->start();
 	xmlTool = new XMLTool(this);
 }
