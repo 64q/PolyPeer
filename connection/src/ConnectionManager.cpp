@@ -57,9 +57,9 @@ void* runFct(void* connectionManager)
 	Socket* sockTmp;
 	while(connectionManagerTmp->run )
 	{
-		cout << "en attente "<<endl;
+		//cout << "en attente "<<endl;
 		sockTmp = connectionManagerTmp->serverSocket->accept();
-		cout << "connexion "<< sockTmp->getIpAdress()<< endl;
+		//cout << "connexion "<< sockTmp->getIpAdress()<< endl;
 
 		connectionManagerTmp->addConnection(sockTmp->getIpAdress(), sockTmp);
 
@@ -101,7 +101,7 @@ void ConnectionManager::sendTo(std::string dest, Packet packet)
 		connection->getSocket()->send(packet.serialize());
 	}else
 	{
-		cout << "l'adresse ip est inconnu dans le ConnectionManager, tentative de connexion..." << endl;
+		//cout << "l'adresse ip est inconnu dans le ConnectionManager, tentative de connexion..." << endl;
 
 		try
 		{
@@ -161,7 +161,7 @@ bool ConnectionManager::WOL(const char *macAddr,const char *bcastAddr)
 		i++;
 	}
 	if (*macAddr!='\0') return(false);
-	
+
 	for (i=0;i<6;i++) buf[i]=0xff;
 	for (i=0;i<16;i++) memcpy(buf+6+i*6,mac,6);
 

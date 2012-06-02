@@ -109,7 +109,7 @@
 		<Unit filename="..\packet\src\PacketSendOperationFinished.cpp" />
 		<Unit filename="include\PolypeerClient.hpp" />
 		<Unit filename="src\PolypeerClient.cpp" />
-		<Unit filename="src\main.cpp" />
+		<Unit filename="src\mainWindows.cpp" />
 		<Unit filename="..\tcp\include\BaseSocket.hpp" />
 		<Unit filename="..\tcp\include\Exceptions\AcceptException.hpp" />
 		<Unit filename="..\tcp\include\Exceptions\BindException.hpp" />

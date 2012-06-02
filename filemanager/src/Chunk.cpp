@@ -36,9 +36,9 @@ void Chunk::checkIntegrity(char* crc)
 		chunkIntegrity = false;
 		if(number<20)
 		{
-			cout<<number<<endl;
-		cout.write(md5, 32)<<endl;
-		cout.write(crc, 32)<<endl;
+			//cout<<number<<endl;
+		//cout.write(md5, 32)<<endl;
+		//cout.write(crc, 32)<<endl;
 
 		}
 
@@ -141,17 +141,20 @@ Chunk::Chunk(char* serializedChunk, int sizeString)
 	in.write(serializedChunk, sizeString);
 
 	in>>idFile;
-	//cout<<idFile<<endl;
+
+
 	int p = in.tellg();
 	in.seekg(p+1, ios::beg);
 	in>>number;
-	//cout<<number<<endl;
+
+
 
 	p = in.tellg();
 	in.seekg(p+1, ios::beg);
 	char* crc = new char[32];
 	in.read(crc, 32);
-	//cout.write(crc, 32)<<endl;
+
+
 
 
 
@@ -159,14 +162,13 @@ Chunk::Chunk(char* serializedChunk, int sizeString)
 	p = in.tellg();
 	in.seekg(p+1, ios::beg);
 	in>>size;
-	//cout<<size<<endl;
+
 
 
 	p = in.tellg();
 	in.seekg(p+1, ios::beg);
 	data = new char[size];
 	in.read(data, size);
-	//cout.write(data, size)<<endl;
 
 
 	//calcul du code correspondant à data
@@ -187,17 +189,17 @@ Chunk::Chunk(Data& d)
 	in.write(serializedChunk, sizeString);
 
 	in>>idFile;
-	//cout<<idFile<<endl;
+
 	int p = in.tellg();
 	in.seekg(p+1, ios::beg);
 	in>>number;
-	//cout<<number<<endl;
+
 
 	p = in.tellg();
 	in.seekg(p+1, ios::beg);
 	char* crc = new char[32];
 	in.read(crc, 32);
-	//cout.write(crc, 32)<<endl;
+
 
 
 
@@ -205,14 +207,13 @@ Chunk::Chunk(Data& d)
 	p = in.tellg();
 	in.seekg(p+1, ios::beg);
 	in>>size;
-	//cout<<size<<endl;
 
 
 	p = in.tellg();
 	in.seekg(p+1, ios::beg);
 	data = new char[size];
 	in.read(data, size);
-	//cout.write(data, size)<<endl;
+
 
 
 	//calcul du code correspondant à data

@@ -33,7 +33,7 @@ ServerSocket::ServerSocket(int port) :
 
 ServerSocket::~ServerSocket()
 {
-	
+
 
 }
 
@@ -45,15 +45,12 @@ Socket* ServerSocket::accept()
 	SOCKET csock;
 
 	socklen_t sinsize = sizeof csin;
-cout <<"ici" << descripteur<<endl;
 	//on récupère le descripteur de la socket de la demande reçue
 	//(on fait appel à la fonction accept() système, il faut donc sortir de l'espace de nommage de la méthode avec :: )
 	csock = ::accept(descripteur, (SOCKADDR *)&csin, &sinsize);
-cout <<"là"<< descripteur <<endl;
 
 	if (csock == INVALID_SOCKET)
 	{
-//cout << WSAGetLastError() << endl<<flush;
 		throw AcceptException();
 	}
 	else

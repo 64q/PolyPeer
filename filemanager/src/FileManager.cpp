@@ -266,11 +266,11 @@ long FileManager::getCurrentNumberChunk()
 {
 	if(!isComplete)
 	{
-		cout << "fichier non complet et currentChunk n° "<<currentChunk<<endl;
+		//cout << "fichier non complet et currentChunk n° "<<currentChunk<<endl;
 		return currentChunk;
 	}else
 	{
-		cout << "fichier complet et currentChunk n° "<<getNumberChunk()<<endl;
+		//cout << "fichier complet et currentChunk n° "<<getNumberChunk()<<endl;
 		return getNumberChunk();
 	}
 
