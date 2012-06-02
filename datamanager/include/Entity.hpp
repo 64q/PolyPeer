@@ -67,6 +67,7 @@ public:
 	 * Retourne la capacité réseau d'une entité
 	 */
 	int getNetworkCapacity();
+<<<<<<< HEAD
 	
 	/**
 	 * Permet de mettre à jour timerSpeed avec une nouvelle date butoire
@@ -79,6 +80,12 @@ public:
 	
 	/**
 	 * Vérifie si la date actuelle est suppérieure à celle stockée dans le timerSpeed
+	 */
+
+	void setTimerSpeed(int seconds, int microseconds);
+	
+	/**
+	 * Vérifie si la date actuelle est supérieure à la date prédite
 	 */
 	bool getTimerSpeed();
 	

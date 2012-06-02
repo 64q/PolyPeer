@@ -1,5 +1,6 @@
 #include <ServerData.hpp>
 #include <PolypeerServer.hpp>
+#include <cmath>
 
 using namespace std;
 
@@ -44,7 +45,7 @@ ServerData::~ServerData()
 				}
 				mit++;
 			}
-		}		
+		}	
 	}
 }*/
 
@@ -302,28 +303,33 @@ FileManager* ServerData::getFileManager(int id)
 	return toReturn;		
 }
 
-bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity, int packetWeight)
+bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity, unsigned int packetWeightInOctet)
 {
+	// Sytem de calcul récursif du débit
+	// mise en place d'un temps d'attente apres l'envoi d'un paquet
+	// Voir Olivier si ca ne marche pas ;)
+	
 	bool possible = true;
 	
 	// racine de l'arbre
 	if(entity != NULL)
 	{
-		// init de la valeur témoin
-		entity->setCurrentBroadbandSpeed(0);
 		// si on peut envoyer
 		if(entity->getTimerState())
 		{
-			possible = updateNetworkCurrentBroadbandSpeed(entity->getParent(),packetWeight);
+			possible = updateNetworkCurrentBroadbandSpeed(entity->getParent(),packetWeightInOctet);
 			if(possible)
 			{
 				// calcul
-				int capacite = entity->getNetworkCapacity();
-				int neededTimeMs = (packetWeight*1000)/capacite;
+				unsigned int conversionStoMc = 1000000; // pour faire le découpage dans le set
+				// la taille du packet est en otets
+				unsigned int capacite = abs(entity->getNetworkCapacity()); // en Ko pas sec
+				// temps nécessaire pour envoyer le paquet en microseconde
+				unsigned int neededTimeMc = (packetWeightInOctet*1000)/capacite; 
 				
-				entity->setTimerSpeed(neededTimeMs/1000, neededTimeMs%1000);
+				// mise en place du temps d'attente pour l'envoi du prochain paquet
+				entity->setTimerSpeed(neededTimeMc/conversionStoMc, neededTimeMc%conversionStoMc);
 				
-				entity->setCurrentBroadbandSpeed(10);
 			} else
 			{
 				possible = false;
@@ -337,7 +343,7 @@ bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity, int packetWe
 	return possible;
 }
 
-bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity1, Entity* entity2, int packetWeight)
+bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity1, Entity* entity2, unsigned int packetWeightInOctet)
 {
 	bool possible = true;
 	Entity* e1 = entity1;
@@ -346,15 +352,15 @@ bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity1, Entity* ent
 	
 	while ((e1 != parent || e2 != parent) && possible == true)
 	{
-		if ( packetWeight == 0 )
+		if ( packetWeightInOctet == 0 )
 		{
 			e1->setCurrentBroadbandSpeed(0);
 			e2->setCurrentBroadbandSpeed(0);
 		}
 		else
 		{
-			possible = e1->setCurrentBroadbandSpeed(e1->getCurrentBroadbandSpeed() + packetWeight);
-			possible = e2->setCurrentBroadbandSpeed(e2->getCurrentBroadbandSpeed() + packetWeight);
+			possible = e1->setCurrentBroadbandSpeed(e1->getCurrentBroadbandSpeed() + packetWeightInOctet);
+			possible = e2->setCurrentBroadbandSpeed(e2->getCurrentBroadbandSpeed() + packetWeightInOctet);
 		}
 		if (e1 != parent )
 			e1 = e1->getParent();
