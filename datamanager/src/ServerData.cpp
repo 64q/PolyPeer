@@ -1,6 +1,6 @@
 #include <ServerData.hpp>
 #include <PolypeerServer.hpp>
-#include <cmath>
+
 
 using namespace std;
 
@@ -302,7 +302,8 @@ FileManager* ServerData::getFileManager(int id)
 
 bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity, unsigned int packetWeightInOctet)
 {
-	// Sytem de calcul récursif du débit
+	// débit client - server
+	// System de calcul du débit par parcours récursif de l'arbre
 	// mise en place d'un temps d'attente apres l'envoi d'un paquet
 	// Voir Olivier si ca ne marche pas ;)
 	
@@ -312,21 +313,12 @@ bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity, unsigned int
 	if(entity != NULL)
 	{
 		// si on peut envoyer
-		if(entity->getTimerState())
+		if(entity->getTimerSpeed())
 		{
 			possible = updateNetworkCurrentBroadbandSpeed(entity->getParent(),packetWeightInOctet);
 			if(possible)
 			{
-				// calcul
-				unsigned int conversionStoMc = 1000000; // pour faire le découpage dans le set
-				// la taille du packet est en otets
-				unsigned int capacite = abs(entity->getNetworkCapacity()); // en Ko pas sec
-				// temps nécessaire pour envoyer le paquet en microseconde
-				unsigned int neededTimeMc = (packetWeightInOctet*1000)/capacite; 
-				
-				// mise en place du temps d'attente pour l'envoi du prochain paquet
-				entity->setTimerSpeed(neededTimeMc/conversionStoMc, neededTimeMc%conversionStoMc);
-				
+				entity->calculNewTimerSpeed(packetWeightInOctet);
 			} else
 			{
 				possible = false;
@@ -347,24 +339,55 @@ bool ServerData::updateNetworkCurrentBroadbandSpeed(Entity* entity1, Entity* ent
 	Entity* e2 = entity2;
 	Entity* parent = getCommonParent(e1,e2);
 	
-	while ((e1 != parent || e2 != parent) && possible == true)
-	{
-		if ( packetWeightInOctet == 0 )
-		{
-			e1->setCurrentBroadbandSpeed(0);
-			e2->setCurrentBroadbandSpeed(0);
-		}
-		else
-		{
-			possible = e1->setCurrentBroadbandSpeed(e1->getCurrentBroadbandSpeed() + packetWeightInOctet);
-			possible = e2->setCurrentBroadbandSpeed(e2->getCurrentBroadbandSpeed() + packetWeightInOctet);
-		}
-		if (e1 != parent )
-			e1 = e1->getParent();
-		if (e2 != parent )
-			e2 = e2->getParent();
-	}
 	
+	if(parent == NULL)
+	{
+		// on n'a pas trouvé la relation entre les clients
+		if((e1->getTimerSpeed()) && (e2->getTimerSpeed()))
+		{
+			e1->calculNewTimerSpeed(packetWeightInOctet);
+			e2->calculNewTimerSpeed(packetWeightInOctet);
+		} else
+		{
+			possible = false;
+		}
+		cout<<"impossible (topologie mal faite)"<<endl;
+	} else
+	{
+		// ré-init au cas ou !
+		e1 = entity1;
+		e2 = entity2;
+		// vérifier la disponibilité du débit
+		while ((e1 != NULL) && (e1 != parent) && (possible))
+		{
+			if(!e1->getTimerSpeed())
+				possible = false;
+			e1 = e1->getParent();
+		}
+		while ((e2 != NULL) && (e2 != parent) && (possible))
+		{
+			if(!e2->getTimerSpeed())
+				possible = false;
+			e2 = e2->getParent();
+		}
+		
+		// on prend le débit si possible
+		e1 = entity1;
+		e2 = entity2;
+		if(possible)
+		{
+			while ((e1 != NULL) && (e1 != parent))
+			{
+				e1->calculNewTimerSpeed(packetWeightInOctet);
+				e1 = e1->getParent();
+			}
+			while ((e2 != NULL) && (e2 != parent))
+			{
+				e2->calculNewTimerSpeed(packetWeightInOctet);
+				e2 = e2->getParent();
+			}
+		}
+	}
 	return possible;
 }
 
@@ -380,14 +403,14 @@ Entity* ServerData::getCommonParent(Entity* entity1, Entity* entity2)
 		{
 			if ( e1 == e2 )
 				parent = e1;
+			// incrémentation de e2
 			e2 = e2->getParent();
 		}
-		
+		// ré-init de e2
 		e2 = entity2;
+		// incrémentation de e1
 		e1 = e1->getParent();
-
 	}
-	
 	return parent;
 }
 

@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <cmath>
 #include <Entity.hpp>
 
 using namespace std;
@@ -7,7 +7,7 @@ using namespace std;
 Entity::Entity(const std::string& name, Entity* parent, int networkCapacity) :
 	name(name), parent(parent), networkCapacity(networkCapacity)
 {
-	gettimeofday(&timerSpeed, NULL);
+	setTimerSpeed(0, 0);
 	currentBroadbandSpeed = 0;
 }
 
@@ -43,6 +43,18 @@ bool Entity::setCurrentBroadbandSpeed(int bbs)
 int Entity::getNetworkCapacity()
 {
 	return networkCapacity;
+}
+
+void Entity::calculNewTimerSpeed(unsigned int packetSizeInOctet)
+{
+	// calcul
+	unsigned int conversionStoMc = 1000000; // pour faire le découpage dans le set (sec, mc)
+	// la taille du packet est en otets
+	unsigned int capacite = abs(this->getNetworkCapacity()); // en Ko pas sec
+	// temps nécessaire pour envoyer le paquet en microseconde
+	unsigned int neededTimeMc = (packetSizeInOctet*1000)/capacite; 
+	// mise en place du temps d'attente pour l'envoi du prochain paquet
+	this->setTimerSpeed(neededTimeMc/conversionStoMc, neededTimeMc%conversionStoMc);
 }
 
 void Entity::setTimerSpeed(int seconds, int microseconds)

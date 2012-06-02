@@ -35,4 +35,22 @@
         <host ref="PC8" />
         <host ref="PC9" />
     </file>
+    <file id="26" name="video" serverPath="file/daemon.mp4" clientPath="testfile/demon.mp4" chunkSize="10000" state="ready" date="1338637342">
+        <host ref="PC1" />
+        <host ref="PC10" />
+        <host ref="PC11" />
+        <host ref="PC12" />
+        <host ref="PC13" />
+        <host ref="PC14" />
+        <host ref="PC15" />
+        <host ref="PC16" />
+        <host ref="PC2" />
+        <host ref="PC3" />
+        <host ref="PC4" />
+        <host ref="PC5" />
+        <host ref="PC6" />
+        <host ref="PC7" />
+        <host ref="PC8" />
+        <host ref="PC9" />
+    </file>
 </deployments>

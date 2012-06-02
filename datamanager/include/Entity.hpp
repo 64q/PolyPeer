@@ -41,6 +41,7 @@ public:
 	int getCurrentBroadbandSpeed();
 	bool setCurrentBroadbandSpeed(int bbs);
 	int getNetworkCapacity();
+	void calculNewTimerSpeed(unsigned int packetSizeInOctet);
 	void setTimerSpeed(int seconds, int microseconds);
 	bool getTimerSpeed();
 	EntityType getType();
