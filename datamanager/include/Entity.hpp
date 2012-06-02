@@ -67,25 +67,26 @@ public:
 	 * Retourne la capacité réseau d'une entité
 	 */
 	int getNetworkCapacity();
-<<<<<<< HEAD
+	
+	
+	/**
+	 * Calcul automatiquement le nouveau temps avec la taille du paquet
+	 * utilise setTimerSpeed
+	 */
+	void calculNewTimerSpeed(unsigned int packetSizeInOctet);
+
 	
 	/**
 	 * Permet de mettre à jour timerSpeed avec une nouvelle date butoire
 	 * @param seconds 
 	 *	 nombre de secondes estimée avant la fin du téléchargement
 	 * @param milliseconds
-	 *	 nombre de millisecondes estimée avant la fin du téléchargement
+	 *	 nombre de microseconds estimée avant la fin du téléchargement
 	 */
-	void setTimerSpeed(int seconds, int milliseconds);
-	
-	/**
-	 * Vérifie si la date actuelle est suppérieure à celle stockée dans le timerSpeed
-	 */
-
 	void setTimerSpeed(int seconds, int microseconds);
 	
 	/**
-	 * Vérifie si la date actuelle est supérieure à la date prédite
+	 * Vérifie si la date actuelle est suppérieure à celle stockée dans le timerSpeed
 	 */
 	bool getTimerSpeed();
 	

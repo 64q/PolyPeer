@@ -138,6 +138,7 @@ void ShareDeployment::nextStep()
 		}
 		PolypeerServer::getInstance()->multiSleep(6);
 	}
+	
 	if(makePause())
 		PolypeerServer::getInstance()->multiSleep(750);
 	
@@ -191,10 +192,6 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 						sData->getConnectionManager()->sendTo((entity->getIP()), pSC);
 						entity->setHostState(DOWNLOAD);
 						toReturn = true;
-						cout<<"--------------------------------------OK"<<endl;
-					} else
-					{
-						cout<<"--------------------------------FALSE"<<endl;
 					}
 					
 					// suppression du chunk
