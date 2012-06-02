@@ -19,4 +19,9 @@
         <host ref="Windows" />
         <host ref="debianServ" />
     </file>
+    <file id="28" name="got" serverPath="file/gof.mkv" clientPath="file/goo.mkv" chunkSize="7200" state="ready" date="1338675586">
+        <host ref="Erwan" />
+        <host ref="Windows" />
+        <host ref="debianServ" />
+    </file>
 </deployments>

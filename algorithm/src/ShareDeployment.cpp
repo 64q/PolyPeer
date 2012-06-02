@@ -83,7 +83,7 @@ void ShareDeployment::nextStep()
 						{
 							// On essaye de créer un deuxieme HOST pour seed sur la zone
 							// car le maitre est tjs pris par le serveur
-							Entity* seedHostZone = NULL; //selectSeedHostOnZone((*itZone), idFile, hostMaster);
+							Entity* seedHostZone = selectSeedHostOnZone((*itZone), idFile, hostMaster);
 
 							// si on a trouver un deuxieme host pour seed la zone pendant que le master 
 							// récupere le fichier du serveur
@@ -141,7 +141,7 @@ void ShareDeployment::nextStep()
 	
 	if(loopNumber > 5)
 	{
-		PolypeerServer::getInstance()->multiSleep(10);
+		PolypeerServer::getInstance()->multiSleep(6);
 		loopNumber = 0;
 	} else
 		loopNumber++;
