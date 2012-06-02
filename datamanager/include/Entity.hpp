@@ -67,7 +67,6 @@ public:
 	 * Retourne la capacité réseau d'une entité
 	 */
 	int getNetworkCapacity();
-<<<<<<< HEAD
 	
 	/**
 	 * Permet de mettre à jour timerSpeed avec une nouvelle date butoire
