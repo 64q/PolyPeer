@@ -57,7 +57,8 @@ Après avoir compilé le projet et fait un make install, tout est près pour que
 au démarrage. 
 * toutes les configurations sont dans /etc/ppserver
 * l'executable est dans le dossier /usr/bin
-* un script de lancement classique à été ajouté dans /etc/init.d ("pserverservice.sh")
+* un script de lancement classique à été ajouté dans /etc/init.d
+* le nom du script est pserverservice.sh
 
 Ce script qui peut être appelé avec les options start, stop, status et restart.
 
@@ -90,6 +91,7 @@ configuration avec l'option -r.
 
 Pour linux, il faut procèdercomme pour le serveur. D'abord une compilation avec `make`, puis un `make install`.
 Les fichiers de configuration sont copier et le service près.
+Le nom du service s'appelle pclientservice.sh
 
 Il y a une deuxieme facon de lancer ce service automatiquement sous linux :
 Il faut éditer le fichier /etc/rc.local du système sous Linux.

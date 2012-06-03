@@ -300,6 +300,7 @@ $(EXEC): main.o PolypeerClient.o $(Mutex) $(BaseServ) $(MainStruct) $(FileManage
 
 install: all
 	cp $(EXEC) /usr/bin
+	cp pclientservice.sh /etc/init.d/
 	mkdir /etc/ppclient
 	@echo "Programme installé avec succès"
 
