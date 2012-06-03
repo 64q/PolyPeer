@@ -294,6 +294,17 @@ $(EXEC): main.o PolypeerClient.o $(Mutex) $(BaseServ) $(MainStruct) $(FileManage
 
 ############################
 #
+#    INSTALLATION
+#
+############################
+
+install: all
+	cp $(EXEC) /usr/bin
+	mkdir /etc/ppclient
+	@echo "Programme installé avec succès"
+
+############################
+#
 #          CLEAN
 #
 ############################

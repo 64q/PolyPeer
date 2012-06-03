@@ -21,8 +21,15 @@ tapez simplement `make` pour compiler les sources du projet.
 Si vous désirer recompiler, il faut alors entrer `make clean` et `make mproper` si vous
 souhaitez aussi supprimer l'executable.
 
+Si vous souhaitez installer votre serveur, tapez `make install`. Les fichiers seront copiés
+dans /etc/ppserver ou /etc/ppclient et l'executable ajouté dans /usr/bin.
+
 2. Lancement du serveur
 -----------------------
+
+Veillez tout d'abord a être positionné dans le dossier contenant le dossier html/ et le fichier passwd.
+
+Vérifiez également que vous avez les droits nécessaires pour lire/écrire dans le dit dossier.
 
 Le serveur se lance en ligne de commande, un certain nombre de paramètre est disponible :
 

@@ -388,6 +388,20 @@ $(EXEC): main.o PolypeerServer.o $(BaseServ) $(MainStruct) $(LibXML) $(Mutex) $(
 	@echo "OK"
 	@echo "Program name is $(EXEC)"
 
+############################
+#
+#    INSTALLATION
+#
+############################
+
+install: all
+	cp $(EXEC) /usr/bin
+	mkdir /etc/ppserver
+	cp deployments.xml /etc/ppserver
+	cp topology.xml /etc/ppserver
+	cp -r html /etc/ppserver
+	cp passwd /etc/ppserver
+	@echo "Programme installé avec succès (voir /etc/ppserver pour les fichiers de configuration)"
 
 ############################
 #
