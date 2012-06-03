@@ -47,9 +47,13 @@ Mise en place d'un déploiement
 Le professeur désireux de déployer les images devra le faire par le biais d'une IHM (web ou programme), choisir l'image à déployer et la configuration liée. Il devra mettre le fichier dans un dossier prévu à l'avance sur le serveur.
 
 Quentin Lebourgeois
+
 Olivier Blin
+
 Erwan Matrat
+
 Charles Daumont
+
 INFO3 - 2012
 
 Document rédigé par Quentin Lebourgeois
