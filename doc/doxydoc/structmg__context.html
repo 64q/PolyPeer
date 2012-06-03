@@ -1,0 +1,103 @@
+<!-- This comment will put IE 6, 7 and 8 in quirks mode -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PolyPeer: Référence de la structure mg_context</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javaScript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Généré par Doxygen 1.6.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+--></script>
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&nbsp;associées</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <img id="MSearchSelect" src="search/search.png"
+             onmouseover="return searchBox.OnSearchSelectShow()"
+             onmouseout="return searchBox.OnSearchSelectHide()"
+             alt=""/>
+        <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+             onfocus="searchBox.OnSearchFieldFocus(true)" 
+             onblur="searchBox.OnSearchFieldFocus(false)" 
+             onkeyup="searchBox.OnSearchFieldChange(event)"/>
+        <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="annotated.html"><span>Liste&nbsp;des&nbsp;classes</span></a></li>
+      <li><a href="hierarchy.html"><span>Hiérarchie&nbsp;des&nbsp;classes</span></a></li>
+      <li><a href="functions.html"><span>Membres&nbsp;de&nbsp;classe</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="contents">
+<h1>Référence de la structure mg_context</h1><!-- doxytag: class="mg_context" -->
+<p><a href="structmg__context-members.html">Liste de tous les membres</a></p>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr><td colspan="2"><h2>Attributs publics</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a262e7e3079712367f829427934838e7b"></a><!-- doxytag: member="mg_context::stop_flag" ref="a262e7e3079712367f829427934838e7b" args="" -->
+volatile int&nbsp;</td><td class="memItemRight" valign="bottom"><b>stop_flag</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a463677406a1b4dd5e5a6a9df427800ce"></a><!-- doxytag: member="mg_context::ssl_ctx" ref="a463677406a1b4dd5e5a6a9df427800ce" args="" -->
+SSL_CTX *&nbsp;</td><td class="memItemRight" valign="bottom"><b>ssl_ctx</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf904c7ddd0214498d77f9ba70262dce"></a><!-- doxytag: member="mg_context::config" ref="adf904c7ddd0214498d77f9ba70262dce" args="[NUM_OPTIONS]" -->
+char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>config</b> [NUM_OPTIONS]</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3b5cc8977ca3af5ff20c3b445c0a9823"></a><!-- doxytag: member="mg_context::user_callback" ref="a3b5cc8977ca3af5ff20c3b445c0a9823" args="" -->
+mg_callback_t&nbsp;</td><td class="memItemRight" valign="bottom"><b>user_callback</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a73a26dd1c9abead88b40b2d226ad9f28"></a><!-- doxytag: member="mg_context::user_data" ref="a73a26dd1c9abead88b40b2d226ad9f28" args="" -->
+void *&nbsp;</td><td class="memItemRight" valign="bottom"><b>user_data</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8639456185dda0c46dc6131f814a9d3f"></a><!-- doxytag: member="mg_context::listening_sockets" ref="a8639456185dda0c46dc6131f814a9d3f" args="" -->
+struct <a class="el" href="structsocket.html">socket</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><b>listening_sockets</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a81b6277ccbae09b5229824d3e871348f"></a><!-- doxytag: member="mg_context::num_threads" ref="a81b6277ccbae09b5229824d3e871348f" args="" -->
+volatile int&nbsp;</td><td class="memItemRight" valign="bottom"><b>num_threads</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae4d63e22f24744ca80804d96c2936dc1"></a><!-- doxytag: member="mg_context::mutex" ref="ae4d63e22f24744ca80804d96c2936dc1" args="" -->
+pthread_mutex_t&nbsp;</td><td class="memItemRight" valign="bottom"><b>mutex</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae7ffc4f7cdffe0c4341b3bc9bfb699a5"></a><!-- doxytag: member="mg_context::cond" ref="ae7ffc4f7cdffe0c4341b3bc9bfb699a5" args="" -->
+pthread_cond_t&nbsp;</td><td class="memItemRight" valign="bottom"><b>cond</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1fdc6b1641a5eaa6d45c3140b3752a90"></a><!-- doxytag: member="mg_context::queue" ref="a1fdc6b1641a5eaa6d45c3140b3752a90" args="[20]" -->
+struct <a class="el" href="structsocket.html">socket</a>&nbsp;</td><td class="memItemRight" valign="bottom"><b>queue</b> [20]</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6df1d217787a1f213ddb9873f545d23f"></a><!-- doxytag: member="mg_context::sq_head" ref="a6df1d217787a1f213ddb9873f545d23f" args="" -->
+volatile int&nbsp;</td><td class="memItemRight" valign="bottom"><b>sq_head</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad0b2da59bdd93d8eb819ef552025b654"></a><!-- doxytag: member="mg_context::sq_tail" ref="ad0b2da59bdd93d8eb819ef552025b654" args="" -->
+volatile int&nbsp;</td><td class="memItemRight" valign="bottom"><b>sq_tail</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad49398eacc039c312d58c55530c65fa"></a><!-- doxytag: member="mg_context::sq_full" ref="aad49398eacc039c312d58c55530c65fa" args="" -->
+pthread_cond_t&nbsp;</td><td class="memItemRight" valign="bottom"><b>sq_full</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3260d5fc8e16e35026d7d2bbcb10abf5"></a><!-- doxytag: member="mg_context::sq_empty" ref="a3260d5fc8e16e35026d7d2bbcb10abf5" args="" -->
+pthread_cond_t&nbsp;</td><td class="memItemRight" valign="bottom"><b>sq_empty</b></td></tr>
+</table>
+<hr/>La documentation de cette structure a été générée à partir du fichier suivant :<ul>
+<li>webserver/src/mongoose.c</li>
+</ul>
+</div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<hr class="footer"/><address style="text-align: right;"><small>Généré le Sun Jun 3 15:08:52 2012 pour PolyPeer par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
+</body>
+</html>

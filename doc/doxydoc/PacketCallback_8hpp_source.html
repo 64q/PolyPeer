@@ -1,0 +1,124 @@
+<!-- This comment will put IE 6, 7 and 8 in quirks mode -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PolyPeer:  Fichier source de callback/include/PacketCallback.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javaScript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Généré par Doxygen 1.6.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+--></script>
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&nbsp;associées</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <img id="MSearchSelect" src="search/search.png"
+             onmouseover="return searchBox.OnSearchSelectShow()"
+             onmouseout="return searchBox.OnSearchSelectHide()"
+             alt=""/>
+        <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+             onfocus="searchBox.OnSearchFieldFocus(true)" 
+             onblur="searchBox.OnSearchFieldFocus(false)" 
+             onkeyup="searchBox.OnSearchFieldChange(event)"/>
+        <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="files.html"><span>Liste&nbsp;des&nbsp;fichiers</span></a></li>
+    </ul>
+  </div>
+<h1>callback/include/PacketCallback.hpp</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef PACKETCALLBACK_H</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define PACKETCALLBACK_H</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00004"></a>00004 
+<a name="l00005"></a>00005 <span class="comment">/*</span>
+<a name="l00006"></a>00006 <span class="comment"> * Classe PacketCallback</span>
+<a name="l00007"></a>00007 <span class="comment"> *</span>
+<a name="l00008"></a>00008 <span class="comment"> *</span>
+<a name="l00009"></a>00009 <span class="comment"> * Associer un callback pour traiter un paquet</span>
+<a name="l00010"></a>00010 <span class="comment"> *</span>
+<a name="l00011"></a>00011 <span class="comment"> * par Olivier</span>
+<a name="l00012"></a>00012 <span class="comment"> */</span>
+<a name="l00013"></a>00013 
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015 <span class="comment">// Library header</span>
+<a name="l00016"></a>00016 <span class="preprocessor">#include &lt;vector&gt;</span>
+<a name="l00017"></a>00017 
+<a name="l00018"></a>00018 <span class="comment">// Project header</span>
+<a name="l00019"></a>00019 <span class="preprocessor">#include &lt;Packet.hpp&gt;</span>
+<a name="l00020"></a>00020 
+<a name="l00021"></a>00021 
+<a name="l00025"></a>00025 <span class="keyword">typedef</span> int (*pOperation) (<a class="code" href="classPacket.html">Packet</a>&amp; p);
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 
+<a name="l00028"></a><a class="code" href="classPacketCallback.html">00028</a> <span class="keyword">class </span><a class="code" href="classPacketCallback.html">PacketCallback</a>
+<a name="l00029"></a>00029 {
+<a name="l00030"></a>00030 <span class="keyword">private</span>:
+<a name="l00034"></a>00034    <span class="keyword">static</span> <a class="code" href="classPacketCallback.html">PacketCallback</a>* instance;
+<a name="l00035"></a>00035 
+<a name="l00039"></a>00039    <a class="code" href="classPacketCallback.html">PacketCallback</a>();
+<a name="l00040"></a>00040    <a class="code" href="classPacketCallback.html">PacketCallback</a>(<span class="keyword">const</span> <a class="code" href="classPacketCallback.html">PacketCallback</a>&amp; pm)  { }
+<a name="l00041"></a>00041 
+<a name="l00045"></a>00045    std::vector&lt;pOperation&gt; listOperations;
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048 <span class="keyword">public</span>:
+<a name="l00053"></a><a class="code" href="classPacketCallback.html#a546f09048e0727c18b1281edbcbf23a1">00053</a>    <span class="keyword">static</span> <a class="code" href="classPacketCallback.html">PacketCallback</a>* <a class="code" href="classPacketCallback.html#a546f09048e0727c18b1281edbcbf23a1">getPacketCallback</a>()
+<a name="l00054"></a>00054    {
+<a name="l00055"></a>00055       <span class="keywordflow">if</span> (PacketCallback::instance == NULL)
+<a name="l00056"></a>00056          PacketCallback::instance = <span class="keyword">new</span> <a class="code" href="classPacketCallback.html">PacketCallback</a>();
+<a name="l00057"></a>00057       <span class="keywordflow">return</span> PacketCallback::instance;
+<a name="l00058"></a>00058    }
+<a name="l00059"></a>00059 
+<a name="l00064"></a><a class="code" href="classPacketCallback.html#a0514df911c91c21a75ba61f4fc7ed08f">00064</a>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classPacketCallback.html#a0514df911c91c21a75ba61f4fc7ed08f">quit</a>()
+<a name="l00065"></a>00065    {
+<a name="l00066"></a>00066       <span class="keywordflow">if</span> (PacketCallback::instance != NULL)
+<a name="l00067"></a>00067       {
+<a name="l00068"></a>00068          <span class="keyword">delete</span> PacketCallback::instance;
+<a name="l00069"></a>00069          PacketCallback::instance = NULL;
+<a name="l00070"></a>00070       }
+<a name="l00071"></a>00071    }
+<a name="l00072"></a>00072 
+<a name="l00080"></a>00080    <span class="keywordtype">void</span> <a class="code" href="classPacketCallback.html#a12f77a832b588e176362a8bf317f15b8">addOperation</a> (PacketType type, pOperation);
+<a name="l00081"></a>00081 
+<a name="l00090"></a>00090    <span class="keywordtype">int</span> <a class="code" href="classPacketCallback.html#a534891e05dd07c09231c1660493289fe">packetOperation</a> (<a class="code" href="classPacket.html">Packet</a>&amp; p);
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093 };
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095 <span class="preprocessor">#endif // PACKETCALLBACK_H</span>
+<a name="l00096"></a>00096 <span class="preprocessor"></span>
+</pre></div></div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<hr class="footer"/><address style="text-align: right;"><small>Généré le Sun Jun 3 15:08:51 2012 pour PolyPeer par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
+</body>
+</html>

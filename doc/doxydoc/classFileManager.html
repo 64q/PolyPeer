@@ -1,0 +1,409 @@
+<!-- This comment will put IE 6, 7 and 8 in quirks mode -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PolyPeer: Référence de la classe FileManager</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javaScript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Généré par Doxygen 1.6.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+--></script>
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&nbsp;associées</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <img id="MSearchSelect" src="search/search.png"
+             onmouseover="return searchBox.OnSearchSelectShow()"
+             onmouseout="return searchBox.OnSearchSelectHide()"
+             alt=""/>
+        <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+             onfocus="searchBox.OnSearchFieldFocus(true)" 
+             onblur="searchBox.OnSearchFieldFocus(false)" 
+             onkeyup="searchBox.OnSearchFieldChange(event)"/>
+        <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="annotated.html"><span>Liste&nbsp;des&nbsp;classes</span></a></li>
+      <li><a href="hierarchy.html"><span>Hiérarchie&nbsp;des&nbsp;classes</span></a></li>
+      <li><a href="functions.html"><span>Membres&nbsp;de&nbsp;classe</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="contents">
+<h1>Référence de la classe FileManager</h1><!-- doxytag: class="FileManager" -->
+<p><code>#include &lt;<a class="el" href="FileManager_8hpp_source.html">FileManager.hpp</a>&gt;</code></p>
+
+<p><a href="classFileManager-members.html">Liste de tous les membres</a></p>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr><td colspan="2"><h2>Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFileManager.html#ae83c64a8e91c0844af5308e16fcf07fd">FileManager</a> (const char *path, int idFile, long sizeChunk=7200)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFileManager.html#a687ee51e460fbd798397160f9e3f8a19">FileManager</a> (const char *path, long size, long sizeChunk, int idfile)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classChunk.html">Chunk</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFileManager.html#a9567a96f6492b19255ce4dd8c810de35">getChunk</a> (long number)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFileManager.html#a666e16d7aef6389a326e79f1ec1a8124">saveChunk</a> (<a class="el" href="classChunk.html">Chunk</a> &amp;chunk)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">long&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFileManager.html#a307e79de7d9e785b65e6b14af8687a5a">getNumberChunk</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">long&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFileManager.html#a1a6d46e58f43a42e70bfa76fdb0413a6">getFileSize</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFileManager.html#a90f9162fb64a04bf065d4ab363140eba">getIdFile</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFileManager.html#a9b9f84ef44d797c7b912169a33893780">getFileName</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a726654651897cd6b28601fafeddc96d0"></a><!-- doxytag: member="FileManager::getFilePath" ref="a726654651897cd6b28601fafeddc96d0" args="()" -->
+std::string&nbsp;</td><td class="memItemRight" valign="bottom"><b>getFilePath</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">long&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFileManager.html#adae245be41ec9fb63c397e0023ec5942">getChunkSize</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">long&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFileManager.html#ab10123876fb1cd5de289872a548f84d2">getCurrentNumberChunk</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFileManager.html#a91ddc34966ec93dad52a795dfcfe2a44">getFreeDiskSpace</a> ()</td></tr>
+<tr><td colspan="2"><h2>Fonctions membres protégées</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af7d5ba47184c0a4a0ea543473d07c411"></a><!-- doxytag: member="FileManager::init" ref="af7d5ba47184c0a4a0ea543473d07c411" args="(const char *path, long size, long sizeChunk, int idFile)" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><b>init</b> (const char *path, long size, long sizeChunk, int idFile)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a223575a2da3b34c63dade0c9427f8345"></a><!-- doxytag: member="FileManager::getState" ref="a223575a2da3b34c63dade0c9427f8345" args="()" -->
+long&nbsp;</td><td class="memItemRight" valign="bottom"><b>getState</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b106dd72ff2eaddbbe25bc72adfe8be"></a><!-- doxytag: member="FileManager::saveState" ref="a6b106dd72ff2eaddbbe25bc72adfe8be" args="()" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><b>saveState</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a64a01022ecc7185375ea4aa4c9f9237d"></a><!-- doxytag: member="FileManager::existFile" ref="a64a01022ecc7185375ea4aa4c9f9237d" args="(const char *path)" -->
+bool&nbsp;</td><td class="memItemRight" valign="bottom"><b>existFile</b> (const char *path)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adfa88df4eabf5f4886318f6a05d7dfa1"></a><!-- doxytag: member="FileManager::reserveFile" ref="adfa88df4eabf5f4886318f6a05d7dfa1" args="(const char *path, long size)" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><b>reserveFile</b> (const char *path, long size)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab8a13d0fde71133ec4b85884a8994db8"></a><!-- doxytag: member="FileManager::setCompleted" ref="ab8a13d0fde71133ec4b85884a8994db8" args="()" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><b>setCompleted</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b2479c8fab63495141d1f7474f261be"></a><!-- doxytag: member="FileManager::checkDirectory" ref="a7b2479c8fab63495141d1f7474f261be" args="(std::string pathDirectory)" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><b>checkDirectory</b> (std::string pathDirectory)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab1e73d5924536bb0fa56d06d984fb4ea"></a><!-- doxytag: member="FileManager::createDirectory" ref="ab1e73d5924536bb0fa56d06d984fb4ea" args="(std::string pathDirectory, std::string currentPath)" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><b>createDirectory</b> (std::string pathDirectory, std::string currentPath)</td></tr>
+<tr><td colspan="2"><h2>Attributs protégés</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af37100997e6fbc7989539aef326f61db"></a><!-- doxytag: member="FileManager::pbuf" ref="af37100997e6fbc7989539aef326f61db" args="" -->
+std::filebuf *&nbsp;</td><td class="memItemRight" valign="bottom"><b>pbuf</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8184d3ea2f1d25b0255164501319bf7d"></a><!-- doxytag: member="FileManager::file" ref="a8184d3ea2f1d25b0255164501319bf7d" args="" -->
+std::fstream&nbsp;</td><td class="memItemRight" valign="bottom"><b>file</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0332222d3a20c2fc8e3835b44defb43"></a><!-- doxytag: member="FileManager::idFile" ref="ae0332222d3a20c2fc8e3835b44defb43" args="" -->
+int&nbsp;</td><td class="memItemRight" valign="bottom"><b>idFile</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6775163dcd2156b3339053f529f2135e"></a><!-- doxytag: member="FileManager::pathFile" ref="a6775163dcd2156b3339053f529f2135e" args="" -->
+std::string&nbsp;</td><td class="memItemRight" valign="bottom"><b>pathFile</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7efa788af2a4ed154edcf0a0e9f407fd"></a><!-- doxytag: member="FileManager::pathFileState" ref="a7efa788af2a4ed154edcf0a0e9f407fd" args="" -->
+std::string&nbsp;</td><td class="memItemRight" valign="bottom"><b>pathFileState</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec77e3e6cddc4b028790f0ae88f03c65"></a><!-- doxytag: member="FileManager::currentData" ref="aec77e3e6cddc4b028790f0ae88f03c65" args="" -->
+char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>currentData</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a527fe973fb041bc57c1bd307ce8800f1"></a><!-- doxytag: member="FileManager::currentChunk" ref="a527fe973fb041bc57c1bd307ce8800f1" args="" -->
+long&nbsp;</td><td class="memItemRight" valign="bottom"><b>currentChunk</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a401bf87944d9f14b08f5dd52f33330db"></a><!-- doxytag: member="FileManager::sizeFile" ref="a401bf87944d9f14b08f5dd52f33330db" args="" -->
+long&nbsp;</td><td class="memItemRight" valign="bottom"><b>sizeFile</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e4e35f06258a6defc8a8ddfe9f653d6"></a><!-- doxytag: member="FileManager::sizeChunk" ref="a7e4e35f06258a6defc8a8ddfe9f653d6" args="" -->
+long&nbsp;</td><td class="memItemRight" valign="bottom"><b>sizeChunk</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32d6b369e9aea962dda5d0165f51516b"></a><!-- doxytag: member="FileManager::isComplete" ref="a32d6b369e9aea962dda5d0165f51516b" args="" -->
+bool&nbsp;</td><td class="memItemRight" valign="bottom"><b>isComplete</b></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Classe de gestion des fichiers à déployer Permet de récupérer les morceaux de fichier sous forme de <a class="el" href="classChunk.html">Chunk</a> </p>
+<dl class="see"><dt><b>Voir également:</b></dt><dd><a class="el" href="classChunk.html">Chunk</a> </dd></dl>
+<hr/><h2>Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="ae83c64a8e91c0844af5308e16fcf07fd"></a><!-- doxytag: member="FileManager::FileManager" ref="ae83c64a8e91c0844af5308e16fcf07fd" args="(const char *path, int idFile, long sizeChunk=7200)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">FileManager::FileManager </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>idFile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&nbsp;</td>
+          <td class="paramname"> <em>sizeChunk</em> = <code>7200</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Constructeur pour un fichier déjà complet (sur le serveur ou sur un client qui a fini de dl un fichier). </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>const</em>&nbsp;</td><td>char* chemin d'accès du fichier </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>int</em>&nbsp;</td><td>id du fichier (renseigné dans le fichier XML de déploiement) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>long</em>&nbsp;</td><td>taille de chaque <a class="el" href="classChunk.html">Chunk</a> dans lesquels vont être placés les morceaux du fichier pk 7200 ? -&gt; &lt; 8000 a cause du buffer windows -&gt; 5 * 1480 = 7400 -&gt; on doit avoir des paquets inférieurs a 7400 donc on garde une marge de 200 octets </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a687ee51e460fbd798397160f9e3f8a19"></a><!-- doxytag: member="FileManager::FileManager" ref="a687ee51e460fbd798397160f9e3f8a19" args="(const char *path, long size, long sizeChunk, int idfile)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">FileManager::FileManager </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&nbsp;</td>
+          <td class="paramname"> <em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&nbsp;</td>
+          <td class="paramname"> <em>sizeChunk</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>idfile</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Constructeur pour un fichier incomplet ou dont on ignore l'état. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>const</em>&nbsp;</td><td>char* chemin d'accès du fichier </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>long</em>&nbsp;</td><td>taille du fichier (utile seulement si le fichier n'existe pas déjà) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>long</em>&nbsp;</td><td>taille de chaque <a class="el" href="classChunk.html">Chunk</a> dans lesquels vont être placés les morceaux du fichier </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>int</em>&nbsp;</td><td>id du fichier (renseigné dans le fichier XML de déploiement) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions membres</h2>
+<a class="anchor" id="a9567a96f6492b19255ce4dd8c810de35"></a><!-- doxytag: member="FileManager::getChunk" ref="a9567a96f6492b19255ce4dd8c810de35" args="(long number)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classChunk.html">Chunk</a> * FileManager::getChunk </td>
+          <td>(</td>
+          <td class="paramtype">long&nbsp;</td>
+          <td class="paramname"> <em>number</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>On récupère le <a class="el" href="classChunk.html">Chunk</a> correspondant au number </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>long</em>&nbsp;</td><td>numéro du <a class="el" href="classChunk.html">Chunk</a> que l'on veut récupérer (doit être inférieur à la valeur retournée par <a class="el" href="classFileManager.html#a307e79de7d9e785b65e6b14af8687a5a">getNumberChunk()</a> ) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="adae245be41ec9fb63c397e0023ec5942"></a><!-- doxytag: member="FileManager::getChunkSize" ref="adae245be41ec9fb63c397e0023ec5942" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long FileManager::getChunkSize </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Renvoie la taille des Chunk(s) crées </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>long taille des <a class="el" href="classChunk.html">Chunk</a> qui vont être générés </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab10123876fb1cd5de289872a548f84d2"></a><!-- doxytag: member="FileManager::getCurrentNumberChunk" ref="ab10123876fb1cd5de289872a548f84d2" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long FileManager::getCurrentNumberChunk </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Renvoie le numéro du <a class="el" href="classChunk.html">Chunk</a> qui est attendu. </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>long numéro du <a class="el" href="classChunk.html">Chunk</a> qui doit être réceptionné </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a9b9f84ef44d797c7b912169a33893780"></a><!-- doxytag: member="FileManager::getFileName" ref="a9b9f84ef44d797c7b912169a33893780" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string FileManager::getFileName </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Renvoie le nom du fichier </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>string Nom du fichier sans le chemin d'accès </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a1a6d46e58f43a42e70bfa76fdb0413a6"></a><!-- doxytag: member="FileManager::getFileSize" ref="a1a6d46e58f43a42e70bfa76fdb0413a6" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long FileManager::getFileSize </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Renvoie la taille du fichier chargé </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>long Taille en octet du fichier chargé </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a91ddc34966ec93dad52a795dfcfe2a44"></a><!-- doxytag: member="FileManager::getFreeDiskSpace" ref="a91ddc34966ec93dad52a795dfcfe2a44" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int64_t FileManager::getFreeDiskSpace </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Renvoie la taille disponible sur le disque dur en octet. </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>long taille disponible sur le disque dur en octet. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a90f9162fb64a04bf065d4ab363140eba"></a><!-- doxytag: member="FileManager::getIdFile" ref="a90f9162fb64a04bf065d4ab363140eba" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int FileManager::getIdFile </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Renvoie l'id du fichier </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>int id du fichier (renseigné dans le fichier XML de déploiement) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a307e79de7d9e785b65e6b14af8687a5a"></a><!-- doxytag: member="FileManager::getNumberChunk" ref="a307e79de7d9e785b65e6b14af8687a5a" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long FileManager::getNumberChunk </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Renvoie le nombre de <a class="el" href="classChunk.html">Chunk</a> nécessaires pour récupérer le fichier entier </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>long nombre de <a class="el" href="classChunk.html">Chunk</a> contenu dans le fichier </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a666e16d7aef6389a326e79f1ec1a8124"></a><!-- doxytag: member="FileManager::saveChunk" ref="a666e16d7aef6389a326e79f1ec1a8124" args="(Chunk &amp;chunk)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FileManager::saveChunk </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classChunk.html">Chunk</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>chunk</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>On enregistre le <a class="el" href="classChunk.html">Chunk</a> dans le fichier avec les vérifications nécessaires </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em><a class="el" href="classChunk.html">Chunk</a></em>&nbsp;</td><td><a class="el" href="classChunk.html">Chunk</a> qui va être enregistré dans le fichier si il correspond à celui attendu (les <a class="el" href="classChunk.html">Chunk</a> doivent être enregistrés dans l'ordre) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>bool True si le <a class="el" href="classChunk.html">Chunk</a> est bien enregistré, False si il y a eu un problème </dd></dl>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir des fichiers suivants :<ul>
+<li>filemanager/include/<a class="el" href="FileManager_8hpp_source.html">FileManager.hpp</a></li>
+<li>filemanager/src/FileManager.cpp</li>
+</ul>
+</div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<hr class="footer"/><address style="text-align: right;"><small>Généré le Sun Jun 3 15:08:52 2012 pour PolyPeer par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
+</body>
+</html>

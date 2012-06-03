@@ -3,61 +3,58 @@ Configuration du projet PolyPeer
 
 Une configuration du projet peut être nécessaire avant de le lancer. Voici les étapes à suivre.
 
-1. Création du fichier de topologie
+Création du fichier de topologie
 -----------------------------------
 
 Un fichier de topologie est fourni avec l'executable pour vous montrer comment contruire votre réseau.
 
-```
-<network>
-	<real>
-		<zone name="C007" networkCapacity="30000" >
-			<host name="debianServ" address="192.168.0.50" mac="00:11:23:48:d5:65" networkCapacity="5000"/>
-			<host name="Erwan" address="192.168.0.21" mac="00:22:fb:8b:25:66" networkCapacity="5000"/>
-			<host name="Windows" address="192.168.0.17" mac="mac1" networkCapacity="5000"/>
-		</zone>
-	</real>
-</network>
-```
+    <network>
 
-* <network> représente le réseau
-* <real> représente la déclaration d'une zone physique
-* <zone> déclare une zone
-* <host> permet de déclarer un hote (networkCapacity est la capacité de l'entité en ko/s)
+	    <real>
+		    <zone name="batiment_C" networkCapacity="100000" >
+			    <zone name="C_07" networkCapacity="10000">
+				    <host name="PC2" address="172.34.67.3" 
+				            mac="08:00:27:a1:9e:61" networkCapacity="100"/>
+			    </zone>	
+		    </zone>
+	    </real>
+	
+	    <virtual>
+		    <zone name="virtual" networkCapacity="0">
+			    <zone name="testZone" networkCapacity="0">
+				    <zone ref="C_07"/>
+			    </zone>
+			    <host ref="PC2"/>
+		    </zone>
+	    </virtual>
 
-* <virtual> permet de déclarer une zone dite virtuelle
-* <host ref="host1" /> permet de déclarer une référence sur un hote créé dans une zone physique (real)
+    </network>
 
-2. Création du fichier de déploiement
+* &lt;network&gt; représente le réseau
+* &lt;real&gt; représente la déclaration d'une zone physique
+* &lt;zone&gt; déclare une zone
+* &lt;host&gt; permet de déclarer un hote (networkCapacity est la capacité de l'entité en ko/s)
+
+* &lt;virtual&gt; permet de déclarer une zone dite virtuelle
+* &lt;host ref="host1" /&gt; permet de déclarer une référence sur un hote créé dans une zone physique (real)
+
+Création du fichier de déploiement
 -------------------------------------
 
 Un fichier de déploiements est fourni avec l'executable pour vous montrer comment configurer la gestion
 des déploiements sur le réseau.
 
-```
-<deployments>
-    <file id="24" name="ED_HD" serverPath="file/ED_HD.avi" clientPath="file/ED_HD.avi" chunkSize="18000" state="deployment" date="0">
-        <host ref="Erwan" />
-        <host ref="Windows" />
-        <host ref="debianServ" />
-    </file>
-    <file id="25" name="text" serverPath="file/text.txt" clientPath="file/textclient.txt" chunkSize="15000" state="ready" date="1338504476">
-        <host ref="Erwan" />
-        <host ref="Windows" />
-        <host ref="debianServ" />
-    </file>
-    <file id="26" name="video" serverPath="file/daemon.mp4" clientPath="file/demon.mp4" chunkSize="10000" state="ready" date="1338637342">
-        <host ref="Erwan" />
-        <host ref="Windows" />
-        <host ref="debianServ" />
-    </file>
-</deployments>
-```
+    <deployments>
+	    <file id="1" name="D1" serverPath="file/example.png" 
+	            clientPath="file/example.png" chunkSize="3000" state="ready" date="0">
+            <host ref="PC11" />
+        </file>
+    </deployments>
 
 Attention, l'id doit être unique. Chaque déploiement est constitué de reférence sur des hotes ou des zones.
 
 
-3. Config du webserver
+Config du webserver
 --------------------------
 
 Pour configurer le port du webserver, vous devrez changer la variable WB_PORT dans le fichier WebServer.hpp se trouvant dans le dossier du

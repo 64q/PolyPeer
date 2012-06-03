@@ -1,0 +1,397 @@
+<!-- This comment will put IE 6, 7 and 8 in quirks mode -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PolyPeer: Référence de la classe Host</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javaScript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Généré par Doxygen 1.6.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+--></script>
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&nbsp;associées</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <img id="MSearchSelect" src="search/search.png"
+             onmouseover="return searchBox.OnSearchSelectShow()"
+             onmouseout="return searchBox.OnSearchSelectHide()"
+             alt=""/>
+        <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+             onfocus="searchBox.OnSearchFieldFocus(true)" 
+             onblur="searchBox.OnSearchFieldFocus(false)" 
+             onkeyup="searchBox.OnSearchFieldChange(event)"/>
+        <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="annotated.html"><span>Liste&nbsp;des&nbsp;classes</span></a></li>
+      <li><a href="hierarchy.html"><span>Hiérarchie&nbsp;des&nbsp;classes</span></a></li>
+      <li><a href="functions.html"><span>Membres&nbsp;de&nbsp;classe</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="contents">
+<h1>Référence de la classe Host</h1><!-- doxytag: class="Host" --><!-- doxytag: inherits="Entity" -->
+<p><code>#include &lt;<a class="el" href="Host_8hpp_source.html">Host.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Graphe d'héritage de Host:</div>
+<div class="dynsection">
+ <div class="center">
+  <img src="classHost.png" usemap="#Host_map" alt=""/>
+  <map id="Host_map" name="Host_map">
+<area href="classEntity.html" alt="Entity" shape="rect" coords="0,0,43,24"/>
+</map>
+ </div>
+</div>
+
+<p><a href="classHost-members.html">Liste de tous les membres</a></p>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr><td colspan="2"><h2>Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#a814a8b55020acbae7113577c05a42911">Host</a> (const std::string &amp;<a class="el" href="classEntity.html#a931b21fbdebb1a5963b4bcab5df128f5">name</a>, <a class="el" href="classEntity.html">Entity</a> *<a class="el" href="classEntity.html#ac15a54cec580aaf79218140f2f073af7">parent</a>, int <a class="el" href="classEntity.html#a20d23dbaef7017442e2b9e64204b5a98">networkCapacity</a>, const std::string &amp;ip, const std::string &amp;mac)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#a6ad92ac943cb6a49af79fd27f61b7582">addDeploymentState</a> (const int cid, <a class="el" href="classFile.html">File</a> *file, HostDeployState hds)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDeploymentState.html">DeploymentState</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#af4971938adcc4ad665b72e31d68a90fb">getDeploymentState</a> (int idFile)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classDeploymentState.html">DeploymentState</a> &gt; *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#a4bbd1422ee6cef02e901aed079b5ba09">getDeploys</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#a9cc64a65d688ca20ae6a39fc0ab10447">getIP</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#a5616a8e6d452a8ba7e8cb8091223ee8d">getMac</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">HostState&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#ac4b4d471877c1467400128c09c946d84">getHostState</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#a4c5f420537cf4a43f5129bc3ed41c4b2">setHostState</a> (HostState)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <a class="el" href="classEntity.html">Entity</a> * &gt; *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#ad3738c118ffe623f8044c9c70aff8987">getEntities</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#ad8cd0dc12dee3d05f5c871d2768536f3">setTimerState</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHost.html#af7a0184236a527d9f19edbb6a51a185e">getTimerState</a> ()</td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Classe contenant l'ensemble des informations d'un client </p>
+<hr/><h2>Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="a814a8b55020acbae7113577c05a42911"></a><!-- doxytag: member="Host::Host" ref="a814a8b55020acbae7113577c05a42911" args="(const std::string &amp;name, Entity *parent, int networkCapacity, const std::string &amp;ip, const std::string &amp;mac)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Host::Host </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classEntity.html">Entity</a> *&nbsp;</td>
+          <td class="paramname"> <em>parent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>networkCapacity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>ip</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>mac</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Constructeur d'un client </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>nom du client </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>parent</em>&nbsp;</td><td>pointeur vers l'entité qui contient le client </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>networkCapacity</em>&nbsp;</td><td>capacité réseau entre le client et son père </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>ip</em>&nbsp;</td><td>adresse ip du client </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>mac</em>&nbsp;</td><td>adresse mac du client </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions membres</h2>
+<a class="anchor" id="a6ad92ac943cb6a49af79fd27f61b7582"></a><!-- doxytag: member="Host::addDeploymentState" ref="a6ad92ac943cb6a49af79fd27f61b7582" args="(const int cid, File *file, HostDeployState hds)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Host::addDeploymentState </td>
+          <td>(</td>
+          <td class="paramtype">const int&nbsp;</td>
+          <td class="paramname"> <em>cid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classFile.html">File</a> *&nbsp;</td>
+          <td class="paramname"> <em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">HostDeployState&nbsp;</td>
+          <td class="paramname"> <em>s</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>permet d'ajouter un nouveau déploiement dans la structure d'un <a class="el" href="classHost.html">Host</a> </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>cid</em>&nbsp;</td><td>numéro du chunk courant </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>f</em>&nbsp;</td><td>pointeur vers le déploiement pour pouvoir en récupérer les informations </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>s</em>&nbsp;</td><td>nouvel état de l'Host </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implémente <a class="el" href="classEntity.html#ab19ab88069dc816db9be0f5097e0328a">Entity</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af4971938adcc4ad665b72e31d68a90fb"></a><!-- doxytag: member="Host::getDeploymentState" ref="af4971938adcc4ad665b72e31d68a90fb" args="(int idFile)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classDeploymentState.html">DeploymentState</a> * Host::getDeploymentState </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>idFile</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Retourne un pointeur vers le <a class="el" href="classDeploymentState.html">DeploymentState</a> d'id passé en paramètre </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>idFile</em>&nbsp;</td><td>id du fichier à déployer recherché </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implémente <a class="el" href="classEntity.html#ad3efc3dfd4cf6444db2883c76ee449fa">Entity</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4bbd1422ee6cef02e901aed079b5ba09"></a><!-- doxytag: member="Host::getDeploys" ref="a4bbd1422ee6cef02e901aed079b5ba09" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="classDeploymentState.html">DeploymentState</a> &gt; * Host::getDeploys </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Retourne un pointeur vers la liste des déploiements d'un <a class="el" href="classHost.html">Host</a> </p>
+
+<p>Implémente <a class="el" href="classEntity.html#a7513e2e6c448e595ff3d7b8e30298fd8">Entity</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad3738c118ffe623f8044c9c70aff8987"></a><!-- doxytag: member="Host::getEntities" ref="ad3738c118ffe623f8044c9c70aff8987" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">map&lt; std::string, <a class="el" href="classEntity.html">Entity</a> * &gt; * Host::getEntities </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Retourne un pointeur vers la map d'entités d'une <a class="el" href="classZone.html">Zone</a> </p>
+
+<p>Implémente <a class="el" href="classEntity.html#a439ccfa07997b869345e16cac3803937">Entity</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac4b4d471877c1467400128c09c946d84"></a><!-- doxytag: member="Host::getHostState" ref="ac4b4d471877c1467400128c09c946d84" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">HostState Host::getHostState </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Retourne l'etat d'un <a class="el" href="classHost.html">Host</a> </p>
+
+<p>Implémente <a class="el" href="classEntity.html#a08bf7dc036e3b85be3d903050310ebce">Entity</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9cc64a65d688ca20ae6a39fc0ab10447"></a><!-- doxytag: member="Host::getIP" ref="a9cc64a65d688ca20ae6a39fc0ab10447" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Host::getIP </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Retourne l'adresse ip d'un <a class="el" href="classHost.html">Host</a> </p>
+
+<p>Implémente <a class="el" href="classEntity.html#ac479f4508cf02a86c52367b63fc888f4">Entity</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5616a8e6d452a8ba7e8cb8091223ee8d"></a><!-- doxytag: member="Host::getMac" ref="a5616a8e6d452a8ba7e8cb8091223ee8d" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Host::getMac </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Retourne l'adresse mac d'un <a class="el" href="classHost.html">Host</a> </p>
+
+<p>Implémente <a class="el" href="classEntity.html#adbd3055b2b33a77eb1de7fb50dad702d">Entity</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af7a0184236a527d9f19edbb6a51a185e"></a><!-- doxytag: member="Host::getTimerState" ref="af7a0184236a527d9f19edbb6a51a185e" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Host::getTimerState </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Retourne la différence entre la date actuelle et la dernière fois que l'Host à été contacté </p>
+
+<p>Implémente <a class="el" href="classEntity.html#a4e5035a3bd4d77107d2611015959feb0">Entity</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4c5f420537cf4a43f5129bc3ed41c4b2"></a><!-- doxytag: member="Host::setHostState" ref="a4c5f420537cf4a43f5129bc3ed41c4b2" args="(HostState)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Host::setHostState </td>
+          <td>(</td>
+          <td class="paramtype">HostState&nbsp;</td>
+          <td class="paramname"> <em>hs</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Met à jour l'etat d'un <a class="el" href="classHost.html">Host</a> </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>hs</em>&nbsp;</td><td>nouvel état de l'Host </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implémente <a class="el" href="classEntity.html#a05cdc39858cdf326f107254416fd2c90">Entity</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad8cd0dc12dee3d05f5c871d2768536f3"></a><!-- doxytag: member="Host::setTimerState" ref="ad8cd0dc12dee3d05f5c871d2768536f3" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Host::setTimerState </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Met à la date actuelle le timerState de l'Host </p>
+
+<p>Implémente <a class="el" href="classEntity.html#a1e28b9aa781114bb2b3bb610974b06a0">Entity</a>.</p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir des fichiers suivants :<ul>
+<li>datamanager/include/<a class="el" href="Host_8hpp_source.html">Host.hpp</a></li>
+<li>datamanager/src/Host.cpp</li>
+</ul>
+</div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<hr class="footer"/><address style="text-align: right;"><small>Généré le Sun Jun 3 15:08:52 2012 pour PolyPeer par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
+</body>
+</html>

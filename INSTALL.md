@@ -6,7 +6,7 @@ Avant d'installer PolyPeer, veuillez vous assurer d'avoir les prérequis suivant
 * Des clients sous Windows ou Linux
 * Un serveur sous Linux
 
-1. Compilation
+Compilation
 --------------
 
 Le serveur se trouve dans le dossier ppserver/, une fois dedans, tapez simplement `make`
@@ -24,7 +24,7 @@ souhaitez aussi supprimer l'executable.
 Si vous souhaitez installer votre serveur, tapez `make install`. Les fichiers seront copiés
 dans /etc/ppserver ou /etc/ppclient et l'executable ajouté dans /usr/bin.
 
-2. Lancement du serveur
+Lancement du serveur
 -----------------------
 
 Veillez tout d'abord a être positionné dans le dossier contenant le dossier html/ et le fichier passwd.
@@ -33,12 +33,12 @@ Vérifiez également que vous avez les droits nécessaires pour lire/écrire dan
 
 Le serveur se lance en ligne de commande, un certain nombre de paramètre est disponible :
 
-* [-s serverPort] Port du serveur
-* [-c clientPort] Port du client
-* [-w webserverPort] Port du serveur web /!\ ATTENTION, n'est pas implémenté /!\ (cf. fichier CONFIG)
-* [-d] lancer en démon
-* [-r] repertoire de chdir pour le demon
-* [-h] affichage de l'aide
+* -s serverPort Port du serveur
+* -c clientPort Port du client
+* -w webserverPort Port du serveur web /!\ ATTENTION, n'est pas implémenté /!\ (cf. fichier CONFIG)
+* -d lancer en démon
+* -r repertoire de chdir pour le demon
+* -h affichage de l'aide
 
 Cette aide est directement intégrée dans l'executable.
 
@@ -49,17 +49,17 @@ le port approprié (par défaut 8889).
 L'interface web est protégée par une authentification HTTP. Le nom d'utilisateur est 'admin' et le mot
 de passe 'polypeer'.
 
-3. Lancement du client
+Lancement du client
 ----------------------
 
 Le client suit le même standard de lancement, une liste des paramètres est disponible :
 
-* [-p serverPort] Port du serveur
-* [-c clientPort] Port du client
-* [-s serverIp] Adresse ip du serveur
-* [-d] lancer en démon
-* [-r] repertoire de chdir pour le demon
-* [-h] Affichage de l'aide
+* -p serverPort Port du serveur
+* -c clientPort Port du client
+* -s serverIp Adresse ip du serveur
+* -d lancer en démon
+* -r repertoire de chdir pour le demon
+* -h Affichage de l'aide
 
 Une fois le client lancé, vous devriez pouvoir visualiser son état sur l'interface web, si biensûr
 vous avez correctement configuré votre fichier de topologie.
