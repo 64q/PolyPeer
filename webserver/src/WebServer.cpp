@@ -31,7 +31,6 @@ WebServer::WebServer() :
 	this->running = true;
 	
 	// insertion des routes
-	routes.insert(pair<string, route_handler>("/ajax/error", error_route));
 	routes.insert(pair<string, route_handler>("/ajax/get_stats", get_stats_route));
 	routes.insert(pair<string, route_handler>("/ajax/get_host", get_host_route));
 	routes.insert(pair<string, route_handler>("/ajax/deployment", deployment_route));
