@@ -17,7 +17,8 @@ using namespace std;
 ShareDeployment::ShareDeployment(PolypeerServer* pps, ServerData* sd) :
 	ppServer(pps),
 	sData(sd),
-	loopNumber(0)
+	loopNumber(0),
+	packetIsSend(false)
 {
 
 }
@@ -29,6 +30,9 @@ ShareDeployment::~ShareDeployment()
 
 void ShareDeployment::nextStep()
 {
+	// savoir si on a envoyé au moins 1 paquet
+	packetIsSend = false;
+
 	// on prend le mutex
 	sData->getMutex()->lock();
 	// liste des déploiements
@@ -89,11 +93,15 @@ void ShareDeployment::nextStep()
 							// récupere le fichier du serveur
 							if(seedHostZone != NULL)
 							{
-								sendOperationOnHosts(hostMaster, seedHostZone, (*itFile));
+								packetIsSend = (packetIsSend || sendOperationOnHosts(hostMaster, seedHostZone, (*itFile)));
+								
+							} //else
+							{
+								// on essaye d'envoyer sur le maitre de zone
+								packetIsSend = (packetIsSend || sendOnMaster(hostMaster, (*itFile)));
 							}
 
-							// on essaye d'envoyer sur le maitre de zone
-							sendOnMaster(hostMaster, (*itFile));
+							
 
 							// ajout du déploiement sur forme d'arbre dans la zone
 							Entity* minHost = NULL;
@@ -115,6 +123,7 @@ void ShareDeployment::nextStep()
 									if(seedHost != NULL)
 									{
 										isSend = sendOperationOnHosts(seedHost, minHost, (*itFile));
+										packetIsSend = (packetIsSend || isSend);
 									}
 								}
 							} while(isSend);
@@ -139,12 +148,15 @@ void ShareDeployment::nextStep()
 		}
 	}
 	
-	if(loopNumber > 5)
+	if(loopNumber > 10)
 	{
 		PolypeerServer::getInstance()->multiSleep(6);
-		loopNumber = 0;
+		loopNumber = 1;
 	} else
-		loopNumber++;
+		loopNumber+=2;
+	// le programme consomme jusqu'a 2 fois plus de processeur s'il fait un déploiment
+	if(packetIsSend)
+		loopNumber--;
 	
 	if(makePause())
 		PolypeerServer::getInstance()->multiSleep(750);

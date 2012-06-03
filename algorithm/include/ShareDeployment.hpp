@@ -62,6 +62,11 @@ private:
 	int loopNumber;
 	
 	/**
+	 * booleen pour savoir si on a envoyé sur un tour de boucle
+	 */
+	 bool packetIsSend;
+	
+	/**
 	 * Etat initial
 	 * cas particulier du lancement où il faut se mettre à jour
 	 */
