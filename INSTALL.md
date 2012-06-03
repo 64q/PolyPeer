@@ -2,9 +2,9 @@ Installation du projet PolyPeer
 ===============================
 
 Avant d'installer PolyPeer, veuillez vous assurer d'avoir les prérequis suivants :
-Vous possèdez :
-* des clients sous Windows ou Linux,
-* un serveur sous Linux.
+
+* Des clients sous Windows ou Linux,
+* Un serveur sous Linux.
 
 Compilation
 --------------
@@ -55,6 +55,7 @@ de passe 'polypeer'.
 
 Après avoir compilé le projet et fait un make install, tout est près pour que le serveur se lance
 au démarrage. 
+
 * toutes les configurations sont dans /etc/ppserver
 * l'executable est dans le dossier /usr/bin
 * un script de lancement classique à été ajouté dans /etc/init.d
@@ -64,6 +65,7 @@ Ce script qui peut être appelé avec les options start, stop, status et restart
 
 Pour un simple démarrage au lancement du systeme, il faut ajouter ce script dans
 dans la configuration du serveur :
+
 * Se placer dans le repertoire /etc/init.d
 * taper update-re.d pserverservice.sh defaults
 * et c'est tout !
