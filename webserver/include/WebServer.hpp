@@ -10,6 +10,11 @@
 #include <BaseServer.hpp>
 #include <Logger.hpp>
 
+/*
+ * PORT DU SERVEUR WEB à EDITER
+ */
+#define WB_PORT "8889"
+
 /** 
  * Typedef pour créer facilement des handlers sur les routes appelées par le client web
  */

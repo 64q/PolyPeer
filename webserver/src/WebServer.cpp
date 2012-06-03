@@ -14,7 +14,7 @@ using namespace std;
 
 static const char *mg_options[] = {
   "document_root", "html",
-  "listening_ports", "6969",
+  "listening_ports", WB_PORT,
   "num_threads", "5",
   "global_passwords_file", "passwd",
   "authentication_domain", "polypeer.polytech.prive",
