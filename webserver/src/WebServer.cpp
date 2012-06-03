@@ -1,3 +1,8 @@
+/*
+ * Fichier Cpp du WebServer
+ * Quentin Lebourgeois - 2012
+ */
+
 #include <iostream>
 #include <sstream>
 #include <exception>
@@ -12,6 +17,9 @@
 
 using namespace std;
 
+// Définition des options de lancement du serveur intégré Mongoose
+// Se constitue d'un ensemble de chaines de caractères sous forme de
+// couples clé, valeur
 static const char *mg_options[] = {
   "document_root", "html",
   "listening_ports", WB_PORT,

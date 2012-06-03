@@ -1,5 +1,5 @@
 /*
- * Fichier contenant les routes pour gérer les appels clients web
+ * Exception lancée à l'initialisation de Mongoose
  * Quentin Lebourgeois - 2012
  */
  

@@ -1,5 +1,6 @@
 /*
- * Fichier contenant les routes pour gérer les appels clients web
+ * Fichier du WebServer, contient un package de gestion entre l'ihm
+ * et le serveur PolyPeer
  * Quentin Lebourgeois - 2012
  */
 
