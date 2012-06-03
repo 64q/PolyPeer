@@ -1,3 +1,16 @@
+/*
+ * Fichier contenant les routes pour gérer les appels clients web
+ * Quentin Lebourgeois - 2012
+ *
+ * Le traitement est systématique :
+ *
+ *   Le serveur reçoit une requête, si la route match dans les routes
+ *   dispos sur le webserveur, alors le callback aproprié est appelé
+ *   je procède ensuite au traitement spécifique et emet une réponse
+ *   sous forme de JSON généralement (sauf pour les logs).
+ *
+ */
+
 #include <iostream>
 #include <cstring>
 #include <vector>
@@ -13,13 +26,15 @@
 
 using namespace std;
 
+// Cette chaine de caractère permet de créer un moule de réponse
+// qui sera la réponse du serveur au client web
 static const char *ajax_reply_start =
   "HTTP/1.1 200 OK\r\n"
   "Cache: no-cache\r\n"
   "Content-Type: application/x-javascript\r\n"
   "\r\n";
 
-void get_qsvar(const struct mg_request_info *request_info,
+void get_qsvar(const mg_request_info *request_info,
                       const char *name, char *dst, size_t dst_len) {
   const char *qs = request_info->query_string;
   mg_get_var(qs, strlen(qs == NULL ? "" : qs), name, dst, dst_len);
@@ -35,7 +50,7 @@ void deployments_route(mg_connection* conn, const mg_request_info* request_info)
 	vector<File*>* files = data.getDeployFiles();
 	vector<File*>::const_iterator it = files->begin();
 	
-	for (; it != files->end(); it++) 
+	for (; it != files->end(); ++it) 
 	{
 		if ((*it)->getFileState() != F_ERROR)
 		{
@@ -73,21 +88,14 @@ void deployments_route(mg_connection* conn, const mg_request_info* request_info)
 	mg_printf(conn, "]");
 }
 
-void error_route(mg_connection* conn, const mg_request_info* request_info)
-{
-	mg_printf(conn, "%s", ajax_reply_start);
-	mg_printf(conn, "{\"error\":\"true\"}");
-}
-
 void get_stats_route(mg_connection* conn, const mg_request_info* request_info)
 {
 	PolypeerServer* server = PolypeerServer::getInstance();
 	ServerData& data = server->getServerData();
 	
 	mg_printf(conn, "%s", ajax_reply_start);
-	mg_printf(conn, "{\"state\":\"%s\", \"count_deployments\":%lu, \"count_hosts\":%lu}"
+	mg_printf(conn, "{\"state\":\"%s\", \"count_deployments\":%lu}"
 		, "online", data.getDeployFiles()->size()
-		, data.getEntities()->size()
 	);
 }
 
@@ -95,6 +103,8 @@ void get_host_route(mg_connection* conn, const mg_request_info* request_info)
 {
 	char qip[32];
 	
+	// Permet de récupérer la variable "ip" transmise par le client
+	// ex: localhost:8889?ip=192.168.0.1
 	get_qsvar(request_info, "ip", qip, sizeof(qip));
 	
 	mg_printf(conn, "%s", ajax_reply_start);
@@ -174,10 +184,10 @@ void deployment_route(mg_connection* conn, const mg_request_info* request_info)
 			FileManager* fm = file->getFileManager();
 			std::vector<std::vector<Entity*>* >* pp = file->getSortedHosts();
 			
+			// gestion affichage de la date de déploiement
 			struct tm * timeinfo;
 			time_t rawtime = (time_t)(file->getDate());
 			char buffer[80];
-			time (&rawtime);
 			timeinfo = localtime(&rawtime);
 			
 			strftime (buffer,80,"%c",timeinfo);
@@ -215,7 +225,7 @@ void deployment_route(mg_connection* conn, const mg_request_info* request_info)
 				}
 			}
 	
-			File::deleteSortedHost(pp);
+			File::deleteSortedHost(pp); // Nécessaire, des allocations dynamiques sont faite lors du listing précédent
 	
 			mg_printf(conn, "]}");
 		}
@@ -291,15 +301,15 @@ void new_deployment_route(mg_connection* conn, const mg_request_info* request_in
 	ServerData& data = server->getServerData();
 
 	vector<string> vzones;
-
-	char* pch = NULL;
 	
-	pch = strtok(qzones,",");
+	// Découpage des zones reçues lors de l'envoi du formulaire
+	char* pch = strtok(qzones,",");
 	while (pch != NULL)
 	{
 		vzones.push_back(string(pch));
 		pch = strtok (NULL, ",");
 	}
+	// Fin découpage
 	
 	mg_printf(conn, "%s", ajax_reply_start);
 	
@@ -344,11 +354,7 @@ void pause_deployments_route(mg_connection* conn, const mg_request_info* request
 
 void delete_deployment_route(mg_connection* conn, const mg_request_info* request_info)
 {
-	/*PolypeerServer* server = PolypeerServer::getInstance();
-	
-	ServerData& data = server->getServerData();
-	
-	*/
+	// TODO
 }
 
 void pause_deployment_route(mg_connection* conn, const mg_request_info* request_info)

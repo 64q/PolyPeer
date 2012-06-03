@@ -1,3 +1,8 @@
+/*
+ * Main de test du serveur web
+ * Quentin Lebourgeois - 2012
+ */
+
 #include <iostream>
 
 #include <WebServer.hpp>

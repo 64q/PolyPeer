@@ -1,3 +1,8 @@
+/*
+ * Fichier Cpp du WebServer
+ * Quentin Lebourgeois - 2012
+ */
+
 #include <iostream>
 #include <sstream>
 #include <exception>
@@ -12,9 +17,12 @@
 
 using namespace std;
 
+// Définition des options de lancement du serveur intégré Mongoose
+// Se constitue d'un ensemble de chaines de caractères sous forme de
+// couples clé, valeur
 static const char *mg_options[] = {
   "document_root", "html",
-  "listening_ports", "6969",
+  "listening_ports", WB_PORT,
   "num_threads", "5",
   "global_passwords_file", "passwd",
   "authentication_domain", "polypeer.polytech.prive",
@@ -31,7 +39,6 @@ WebServer::WebServer() :
 	this->running = true;
 	
 	// insertion des routes
-	routes.insert(pair<string, route_handler>("/ajax/error", error_route));
 	routes.insert(pair<string, route_handler>("/ajax/get_stats", get_stats_route));
 	routes.insert(pair<string, route_handler>("/ajax/get_host", get_host_route));
 	routes.insert(pair<string, route_handler>("/ajax/deployment", deployment_route));

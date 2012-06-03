@@ -1,7 +1,12 @@
+/*
+ * Fichier du WebServer, contient un package de gestion entre l'ihm
+ * et le serveur PolyPeer
+ * Quentin Lebourgeois - 2012
+ */
+
 #ifndef __H__WEBSERVER__
 #define __H__WEBSERVER__
 
-// Spécifique map
 #include <map>
 #include <vector>
 
@@ -9,6 +14,11 @@
 
 #include <BaseServer.hpp>
 #include <Logger.hpp>
+
+/*
+ * PORT DU SERVEUR WEB à EDITER
+ */
+#define WB_PORT "8889"
 
 /** 
  * Typedef pour créer facilement des handlers sur les routes appelées par le client web

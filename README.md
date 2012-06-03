@@ -1,10 +1,17 @@
-PolyPeer
+Projet PolyPeer
 ========
 Et déployer vos images VirtualBox n'a jamais été aussi simple ...
 
+Retrouvez toute l'aide pour configurer le projet dans le fichier CONFIG
+
+L'aide à l'installation se trouve dans le fichier INSTALL
+
+Le manuel utilisateur est disponible sur l'interface web.
+
 Système de déploiement d'images VirtualBox en pair à pair
 ---------------------------------------------------------
-Le système PolyPeer permet de déployer des images VirtualBox (http://en.wikipedia.org/wiki/VirtualBox) sur un parc de machine et ce en pair à pair tout en garantissant une charge du réseau raisonnable.
+Le système PolyPeer permet de déployer des images VirtualBox (http://en.wikipedia.org/wiki/VirtualBox) 
+sur un parc de machine et ce en pair à pair tout en garantissant une charge du réseau raisonnable.
 
 Technologies utilisées
 ----------------------
@@ -19,7 +26,6 @@ Le cahier des charges est disponible sur le wiki du projet : https://github.com/
 
 Développement de PolyPeer
 -------------------------
-Disponible dès que la phase d'implémentation sera lancée.
 
 ### Arboresence du projet
 
@@ -49,7 +55,9 @@ Dans chaque sous projet :
 Le projet est actuellement divisé en sous-projets que voici :
 
 ```
-XMLTool/     -- Contient les utilitaires de gestion de fichiers XML et de peuplement des structs de données
+algorithm/   -- Contient les sources pour le gestionnaire de déploiement
+data/        -- Contient les sources pour l'entité Data
+datamanager/ -- Contient les utilitaires de gestion de fichiers XML et de peuplement des structs de données
 callback/    -- Contient les fonctions d'actions sur les paquets
 connection/  -- Contient le gestionnaire de connexions
 data/        -- Contient l'utilitaire de gestion des données
@@ -60,9 +68,11 @@ packet/      -- Contient les paquets et leur gestionnaire
 ppclient/    -- Contient le client polypeer
 ppserver/    -- Contient le serveur polypeer
 tcp/         -- Contient la bibliothèque de gestion des Sockets
-tests/       -- Contient des tests en tout genre
 webserver/   -- Contient le gestionnaire de l'interface web
 ```
+
+A noter : l'executable du client est a construire dans ppclient/ et l'executable du serveur 
+dans ppserver/ (via Makefile).
 
 ### Conventions de nommages
 
@@ -82,7 +92,7 @@ int main(int argc, char* argv[])
 	WebServer* server = WebServer::getInstance();
 	
 	// Lancement
-	server->run();
+	server->start();
 	
 	return 0;
 }
@@ -157,7 +167,16 @@ Besoin de plus d'infos ?
 ------------------------
 Ce projet est réalisé dans le cadre du module d'Ingénierie Logicielle (S6).
 
+Interlocuteur projet : Lebourgeois Quentin
+
 Pour nous contacter :
 
 * Contact par mail : quentin.lebourgeois at etu dot univ-nantes dot fr
 * Contact sur GitHub : http://github.com/KenTiN
+
+Membres du projet :
+
+* Blin Oliver : Algorithme de déploiement et gestion du protocole de communication
+* Daumont Charles : Implémentation des structures de données du projet
+* Lebourgeois Quentin : Réalisation de l'interface homme-machine et structuration du projet
+* Matrat Erwan : gestion des fichiers et wrapping des objets pour compilation cross-platform

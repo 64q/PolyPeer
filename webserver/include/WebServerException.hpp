@@ -1,3 +1,8 @@
+/*
+ * Exception lancée à l'initialisation de Mongoose
+ * Quentin Lebourgeois - 2012
+ */
+ 
 #include <exception>
 
 using namespace std;

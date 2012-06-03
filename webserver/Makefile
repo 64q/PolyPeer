@@ -5,6 +5,8 @@
 # Version: 
 #
 
+# ATTENTION, ne fonctionne plus seul (servait lors de la phase de dev)
+
 # Définitions des autres variables
 CC=g++
 CFLAGS=-Wall -ggdb -I$(LOGGER)include/ -Iinclude/ -I$(SRV)include/

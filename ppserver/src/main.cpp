@@ -1,10 +1,6 @@
-/**
- *
- * Serveur PolyPeer
- *
- * Fichier Main
- *
- * Olivier Blin
+/*
+ * Main du serveur
+ * Olivier Blin - Matrat Erwan - Quentin Lebourgeois - 2012
  */
 
 // STL
