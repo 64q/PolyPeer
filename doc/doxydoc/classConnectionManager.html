@@ -1,0 +1,215 @@
+<!-- This comment will put IE 6, 7 and 8 in quirks mode -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PolyPeer: Référence de la classe ConnectionManager</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javaScript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Généré par Doxygen 1.6.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+--></script>
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&nbsp;associées</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <img id="MSearchSelect" src="search/search.png"
+             onmouseover="return searchBox.OnSearchSelectShow()"
+             onmouseout="return searchBox.OnSearchSelectHide()"
+             alt=""/>
+        <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+             onfocus="searchBox.OnSearchFieldFocus(true)" 
+             onblur="searchBox.OnSearchFieldFocus(false)" 
+             onkeyup="searchBox.OnSearchFieldChange(event)"/>
+        <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="annotated.html"><span>Liste&nbsp;des&nbsp;classes</span></a></li>
+      <li><a href="hierarchy.html"><span>Hiérarchie&nbsp;des&nbsp;classes</span></a></li>
+      <li><a href="functions.html"><span>Membres&nbsp;de&nbsp;classe</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="contents">
+<h1>Référence de la classe ConnectionManager</h1><!-- doxytag: class="ConnectionManager" -->
+<p><code>#include &lt;<a class="el" href="ConnectionManager_8hpp_source.html">ConnectionManager.hpp</a>&gt;</code></p>
+
+<p><a href="classConnectionManager-members.html">Liste de tous les membres</a></p>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr><td colspan="2"><h2>Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConnectionManager.html#af28108571ddfcaf30cdf7da1442e61d5">ConnectionManager</a> (int port)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConnectionManager.html#aaca6d84a58873f93d5f9ed382e8c992a">addConnection</a> (std::string name, <a class="el" href="classSocket.html">Socket</a> *<a class="el" href="structsocket.html">socket</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classConnection.html">Connection</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConnectionManager.html#a071bc36699485ecf4b11ecd9662da734">getConnection</a> (std::string name)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConnectionManager.html#a0ea792ddb3feb3f3c3ea1fe8b98e4f85">start</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConnectionManager.html#ac31077c786f244b753f148b1a17eba86">stop</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab61fde5f6d987732b70b93883049fcd8"></a><!-- doxytag: member="ConnectionManager::sendTo" ref="ab61fde5f6d987732b70b93883049fcd8" args="(std::string dest, Packet packet)" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><b>sendTo</b> (std::string dest, <a class="el" href="classPacket.html">Packet</a> packet)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab90b9461272b01cceeb1632420a2be38"></a><!-- doxytag: member="ConnectionManager::wait" ref="ab90b9461272b01cceeb1632420a2be38" args="()" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><b>wait</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a81c758140f9439d67e35d3cceb618fd8"></a><!-- doxytag: member="ConnectionManager::removeConnection" ref="a81c758140f9439d67e35d3cceb618fd8" args="(std::string)" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><b>removeConnection</b> (std::string)</td></tr>
+<tr><td colspan="2"><h2>Fonctions membres publiques statiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa4bd75268fd8c2d23619e7745333648b"></a><!-- doxytag: member="ConnectionManager::WOL" ref="aa4bd75268fd8c2d23619e7745333648b" args="(const char *bcastAddr, const char *macAddr=&quot;255.255.255.255&quot;)" -->
+static bool&nbsp;</td><td class="memItemRight" valign="bottom"><b>WOL</b> (const char *bcastAddr, const char *macAddr=&quot;255.255.255.255&quot;)</td></tr>
+<tr><td colspan="2"><h2>Amis</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5d1e63e4748ae505a42ea5651ebdaa2"></a><!-- doxytag: member="ConnectionManager::runFct" ref="ab5d1e63e4748ae505a42ea5651ebdaa2" args="(void *connectionManager)" -->
+void *&nbsp;</td><td class="memItemRight" valign="bottom"><b>runFct</b> (void *connectionManager)</td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Classe gérant les sockets d'écoute. Quand un socket est ajouté au connectionManager, il lance l'écoute dans un thread. la classe permet de récupérer les socket qu'il contient par le nom du PC corespondant. </p>
+<hr/><h2>Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="af28108571ddfcaf30cdf7da1442e61d5"></a><!-- doxytag: member="ConnectionManager::ConnectionManager" ref="af28108571ddfcaf30cdf7da1442e61d5" args="(int port)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ConnectionManager::ConnectionManager </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>port</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Constructeur </p>
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions membres</h2>
+<a class="anchor" id="aaca6d84a58873f93d5f9ed382e8c992a"></a><!-- doxytag: member="ConnectionManager::addConnection" ref="aaca6d84a58873f93d5f9ed382e8c992a" args="(std::string name, Socket *socket)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ConnectionManager::addConnection </td>
+          <td>(</td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classSocket.html">Socket</a> *&nbsp;</td>
+          <td class="paramname"> <em>socket</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Permet d'ajouter une connection au manager. Le Manager va lancer l'écoute dans un thread/ </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>string</em>&nbsp;</td><td>le nom de l'ordinateur connecté sur ce socket </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>Socket*</em>&nbsp;</td><td>pointeur vers la socket correspondant au nom et qui va être écouté. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a071bc36699485ecf4b11ecd9662da734"></a><!-- doxytag: member="ConnectionManager::getConnection" ref="a071bc36699485ecf4b11ecd9662da734" args="(std::string name)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classConnection.html">Connection</a> * ConnectionManager::getConnection </td>
+          <td>(</td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>name</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Permet de récupérer l'instance de connection qui correspond au nom passé en paramètre. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>string</em>&nbsp;</td><td>nom de l'ordinateur dont on veut récupérer la connection </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>Connection* Pointeur vers la connection correspondante au nom passé en paramètre. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a0ea792ddb3feb3f3c3ea1fe8b98e4f85"></a><!-- doxytag: member="ConnectionManager::start" ref="a0ea792ddb3feb3f3c3ea1fe8b98e4f85" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ConnectionManager::start </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Lance l'écoute des connexions entrantes et l'ajout de ces connexions dans le tableau de Conection dans un thread </p>
+
+</div>
+</div>
+<a class="anchor" id="ac31077c786f244b753f148b1a17eba86"></a><!-- doxytag: member="ConnectionManager::stop" ref="ac31077c786f244b753f148b1a17eba86" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ConnectionManager::stop </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Arrête le thread d'écoute des connexions entrantes et coupe toutes les connexions en cours. A n'utiliser qu'à la fermeture du programme! </p>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir des fichiers suivants :<ul>
+<li>connection/include/<a class="el" href="ConnectionManager_8hpp_source.html">ConnectionManager.hpp</a></li>
+<li>connection/src/ConnectionManager.cpp</li>
+</ul>
+</div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<hr class="footer"/><address style="text-align: right;"><small>Généré le Sun Jun 3 15:08:52 2012 pour PolyPeer par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
+</body>
+</html>

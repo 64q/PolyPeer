@@ -1,0 +1,130 @@
+<!-- This comment will put IE 6, 7 and 8 in quirks mode -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PolyPeer:  Fichier source de datamanager/include/File.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javaScript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Généré par Doxygen 1.6.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+--></script>
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&nbsp;associées</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <img id="MSearchSelect" src="search/search.png"
+             onmouseover="return searchBox.OnSearchSelectShow()"
+             onmouseout="return searchBox.OnSearchSelectHide()"
+             alt=""/>
+        <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+             onfocus="searchBox.OnSearchFieldFocus(true)" 
+             onblur="searchBox.OnSearchFieldFocus(false)" 
+             onkeyup="searchBox.OnSearchFieldChange(event)"/>
+        <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="files.html"><span>Liste&nbsp;des&nbsp;fichiers</span></a></li>
+    </ul>
+  </div>
+<h1>datamanager/include/File.hpp</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __H__FILE__</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define __H__FILE__</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;set&gt;</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;ctime&gt;</span>
+<a name="l00007"></a>00007 
+<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;Entity.hpp&gt;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;State.hpp&gt;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;FileManager.hpp&gt;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;State.hpp&gt;</span>
+<a name="l00012"></a>00012 
+<a name="l00017"></a>00017 <span class="keyword">class </span><a class="code" href="classEntity.html">Entity</a>;
+<a name="l00018"></a>00018 
+<a name="l00019"></a><a class="code" href="classFile.html">00019</a> <span class="keyword">class </span><a class="code" href="classFile.html">File</a>
+<a name="l00020"></a>00020 {
+<a name="l00021"></a>00021 
+<a name="l00022"></a>00022 <span class="keyword">public</span> :
+<a name="l00023"></a>00023 
+<a name="l00033"></a>00033    <a class="code" href="classFile.html#a974f28270ca57efc536f56b8b56b05ec">File</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, std::string <a class="code" href="classFile.html#ac219294b38d3a3a422ad6ebacb041bb5">name</a>, std::string serverPath, std::string <a class="code" href="classFile.html#ad164d5ba9ebafb075dc0434e96a6c215">clientPath</a>);
+<a name="l00034"></a>00034    <a class="code" href="classFile.html#a974f28270ca57efc536f56b8b56b05ec">File</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, std::string name, std::string serverPath, std::string clientPath, <span class="keywordtype">int</span> chunkSize);
+<a name="l00035"></a>00035    
+<a name="l00051"></a>00051    <a class="code" href="classFile.html#a974f28270ca57efc536f56b8b56b05ec">File</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, std::string name, std::string serverPath, std::string clientPath, <span class="keywordtype">int</span> chunkSize, FileState fs, <span class="keywordtype">long</span> dateFile);
+<a name="l00052"></a>00052    
+<a name="l00056"></a>00056    <a class="code" href="classFile.html#ac704ebdf5f57d7a1c5ddf409d797fb69">~File</a>();
+<a name="l00057"></a>00057    
+<a name="l00061"></a><a class="code" href="classFile.html#a9e324b9cb28fc557b92901f2481ce0fb">00061</a>    std::string <a class="code" href="classFile.html#a9e324b9cb28fc557b92901f2481ce0fb">getName</a>() { <span class="keywordflow">return</span> name; }
+<a name="l00062"></a>00062    
+<a name="l00066"></a><a class="code" href="classFile.html#a34684e389ac25a364031cd440ab0649c">00066</a>    <a class="code" href="classFileManager.html">FileManager</a>* <a class="code" href="classFile.html#a34684e389ac25a364031cd440ab0649c">getFileManager</a>() { <span class="keywordflow">return</span> <a class="code" href="classFile.html#ad6418113b0a7a5e63c6cf111346ab07e">fileM</a>; }
+<a name="l00067"></a>00067    
+<a name="l00071"></a><a class="code" href="classFile.html#a2686a54380ed7d299e0e4c94b6517bd0">00071</a>    FileState <a class="code" href="classFile.html#a2686a54380ed7d299e0e4c94b6517bd0">getFileState</a>() { <span class="keywordflow">return</span> <a class="code" href="classFile.html#ab1aeaab44ef9b83c83f8fd85f7fe0f8a">fState</a>; }
+<a name="l00072"></a>00072    
+<a name="l00076"></a><a class="code" href="classFile.html#a27fe4faa8571fd8c879c6285bea54ca9">00076</a>    std::string <a class="code" href="classFile.html#a27fe4faa8571fd8c879c6285bea54ca9">getClientPath</a>() { <span class="keywordflow">return</span> clientPath; }
+<a name="l00077"></a>00077    
+<a name="l00081"></a><a class="code" href="classFile.html#a6697564b4cb009192606d0ad676cee39">00081</a>    <span class="keywordtype">long</span> <a class="code" href="classFile.html#a6697564b4cb009192606d0ad676cee39">getDate</a>() { <span class="keywordflow">return</span> <a class="code" href="classFile.html#a5dc913e4ec0258186df99168a8fcd2c0">date</a>; }
+<a name="l00082"></a>00082    
+<a name="l00087"></a><a class="code" href="classFile.html#a4e82a7bb244aaaf05aa6ec98302d0aa5">00087</a>    std::vector&lt;Entity*&gt;* <a class="code" href="classFile.html#a4e82a7bb244aaaf05aa6ec98302d0aa5">getDeploysOn</a>() { <span class="keywordflow">return</span> &amp;<a class="code" href="classFile.html#aa6b63d866d0e618ebb4e63f67d7f6da6">deploysOn</a>; }
+<a name="l00088"></a>00088    
+<a name="l00094"></a>00094    <span class="keywordtype">void</span> <a class="code" href="classFile.html#a7eb83ad07bad03407ad8be39fc495fea">setFileState</a>(FileState fs);
+<a name="l00095"></a>00095    
+<a name="l00100"></a>00100    std::vector&lt;std::vector&lt;Entity*&gt;* &gt;* <a class="code" href="classFile.html#afeded40778745540636fadd458b412b0">getSortedHosts</a>();
+<a name="l00101"></a>00101    
+<a name="l00107"></a>00107    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classFile.html#aa86d31d7cfe03dbe7b874ef7ed194960">deleteSortedHost</a>(std::vector&lt;std::vector&lt;Entity*&gt;* &gt;* v);
+<a name="l00108"></a>00108    
+<a name="l00115"></a>00115    <span class="keywordtype">void</span> <a class="code" href="classFile.html#ac88f40fb5af4dc25d0bae17f63e375a8">addEntity</a>(<a class="code" href="classEntity.html">Entity</a>* entity);
+<a name="l00116"></a>00116    
+<a name="l00122"></a>00122    <a class="code" href="classEntity.html">Entity</a>* <a class="code" href="classFile.html#a22625a033e57cb9ec9bd03ad1e1ee8ae">getEntity</a>(std::string name);
+<a name="l00123"></a>00123    
+<a name="l00124"></a>00124 <span class="keyword">protected</span> :
+<a name="l00125"></a>00125    
+<a name="l00129"></a><a class="code" href="classFile.html#a5dc913e4ec0258186df99168a8fcd2c0">00129</a>    time_t <a class="code" href="classFile.html#a5dc913e4ec0258186df99168a8fcd2c0">date</a>;
+<a name="l00130"></a>00130    
+<a name="l00134"></a><a class="code" href="classFile.html#ac219294b38d3a3a422ad6ebacb041bb5">00134</a>    std::string name;
+<a name="l00135"></a>00135    
+<a name="l00139"></a><a class="code" href="classFile.html#ad164d5ba9ebafb075dc0434e96a6c215">00139</a>    std::string clientPath;
+<a name="l00140"></a>00140    
+<a name="l00144"></a><a class="code" href="classFile.html#ad6418113b0a7a5e63c6cf111346ab07e">00144</a>    <a class="code" href="classFileManager.html">FileManager</a>* <a class="code" href="classFile.html#ad6418113b0a7a5e63c6cf111346ab07e">fileM</a>;
+<a name="l00145"></a>00145    
+<a name="l00149"></a><a class="code" href="classFile.html#ab1aeaab44ef9b83c83f8fd85f7fe0f8a">00149</a>    FileState <a class="code" href="classFile.html#ab1aeaab44ef9b83c83f8fd85f7fe0f8a">fState</a>;
+<a name="l00150"></a>00150    
+<a name="l00154"></a><a class="code" href="classFile.html#aa6b63d866d0e618ebb4e63f67d7f6da6">00154</a>    std::vector&lt;Entity*&gt; <a class="code" href="classFile.html#aa6b63d866d0e618ebb4e63f67d7f6da6">deploysOn</a>;
+<a name="l00155"></a>00155    
+<a name="l00156"></a>00156 };
+<a name="l00157"></a>00157 
+<a name="l00158"></a>00158 <span class="preprocessor">#endif</span>
+<a name="l00159"></a>00159 <span class="preprocessor"></span>
+<a name="l00160"></a>00160 
+</pre></div></div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<hr class="footer"/><address style="text-align: right;"><small>Généré le Sun Jun 3 15:08:51 2012 pour PolyPeer par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
+</body>
+</html>

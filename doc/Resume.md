@@ -1,0 +1,59 @@
+Résumé de la demande client
+===========================
+
+Projet PolyPeer
+
+Application de déploiement d'images VirtualBox sur le réseau de l'école.
+
+Avant-propos
+------------
+
+Réponse à un besoin des professeurs, ils doivent actuellement installer les .vdi des systèmes d'exploitation manuellement avec un disque dur portable. Il y a donc un besoin d'automatiser ce traitement de déploiement.
+PolyPeer se positionne comme une application de déploiement des images sur les clients des salles de TP le tout en pair à pair pour éviter de surcharger certains liens et répartir la charge.
+
+Plateformes
+-----------
+
+* Le serveur principal sera situé sur une machine en réseau sous Linux.
+* Les clients seront soit des Windows XP ou Ubuntu 11.04.
+
+Cela implique nécessairement que le code du client produit devra être multiplateformes.
+
+A noter : la machine pourra être éteinte au moment du déploiement (besoin de l'allumer avec du Wake On Lan).
+
+Contraintes réseau
+------------------
+
+Le déploiement doit se faire en respectant la charge réseau. Ainsi le téléchargement sur les clients des images devra se faire la nuit par l'intermédiaire d'un cron. Le programme devra gérer les goulets d'étranglement pour éviter de surcharger un routeur/switch.
+
+Contraintes de déploiement
+--------------------------
+
+Le déploiement devra entièrement être configurable. Le réseau sera modélisé dans un fichier de configuration. Les images à déployer devront faire l'objet d'un fichier de config pour déterminer où les envoyer.
+
+Les images seront transférée depuis un serveur central, puis entre les clients en pair à pair lorsque ce sera possible.
+C'est le serveur qui décide par quels liens sont transférés les paquetes et entre quelles machines. Toutes les actions seront donc rapportées au serveur pour que celui ci est une cartographie exacte de l'état du déploiement.
+Les images seront transmises par blocs d'une taille à spécifier à chaque client.
+
+L'application devra gérer la reprise sur erreur pour permettre à tout moment de savoir où en est un téléchargement et pouvoir le reprendre.
+
+La gestion des erreurs devra être fine, et chaque bloc reçu devra être vérifié à l'aide d'un code CRC. Un vérification globale sera également appliquée à la fin du téléchargement sur le fichier entier.
+
+Le client devra vérifier que son disque dur dispose de suffisamment de place pour héberger le fichier et si oui réserver cette place.
+
+Mise en place d'un déploiement
+------------------------------
+
+Le professeur désireux de déployer les images devra le faire par le biais d'une IHM (web ou programme), choisir l'image à déployer et la configuration liée. Il devra mettre le fichier dans un dossier prévu à l'avance sur le serveur.
+
+Quentin Lebourgeois
+
+Olivier Blin
+
+Erwan Matrat
+
+Charles Daumont
+
+INFO3 - 2012
+
+Document rédigé par Quentin Lebourgeois

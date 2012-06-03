@@ -1,0 +1,115 @@
+<!-- This comment will put IE 6, 7 and 8 in quirks mode -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PolyPeer:  Fichier source de ppclient/include/PolypeerClient.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javaScript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Généré par Doxygen 1.6.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+--></script>
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&nbsp;associées</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <img id="MSearchSelect" src="search/search.png"
+             onmouseover="return searchBox.OnSearchSelectShow()"
+             onmouseout="return searchBox.OnSearchSelectHide()"
+             alt=""/>
+        <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+             onfocus="searchBox.OnSearchFieldFocus(true)" 
+             onblur="searchBox.OnSearchFieldFocus(false)" 
+             onkeyup="searchBox.OnSearchFieldChange(event)"/>
+        <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="files.html"><span>Liste&nbsp;des&nbsp;fichiers</span></a></li>
+    </ul>
+  </div>
+<h1>ppclient/include/PolypeerClient.hpp</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef POLYPEERCLIENT_H</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define POLYPEERCLIENT_H</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00004"></a>00004 <span class="comment">// header</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;BaseServer.hpp&gt;</span>
+<a name="l00006"></a>00006 
+<a name="l00007"></a>00007 <span class="comment">// forward declaration</span>
+<a name="l00008"></a>00008 <span class="keyword">class </span><a class="code" href="classClientData.html">ClientData</a>;
+<a name="l00009"></a>00009 
+<a name="l00010"></a><a class="code" href="structClientOptions.html">00010</a> <span class="keyword">struct </span><a class="code" href="structClientOptions.html">ClientOptions</a> 
+<a name="l00011"></a>00011 {
+<a name="l00012"></a>00012    std::string ip;
+<a name="l00013"></a>00013    <span class="keywordtype">int</span> clientPort;
+<a name="l00014"></a>00014    <span class="keywordtype">int</span> serverPort;
+<a name="l00015"></a>00015    <span class="keywordtype">bool</span> daemon;
+<a name="l00016"></a>00016    std::string root;
+<a name="l00017"></a>00017 };
+<a name="l00018"></a>00018 
+<a name="l00023"></a><a class="code" href="classPolypeerClient.html">00023</a> <span class="keyword">class </span><a class="code" href="classPolypeerClient.html">PolypeerClient</a> : <span class="keyword">public</span> <a class="code" href="classBaseServer.html">BaseServer</a>
+<a name="l00024"></a>00024 {
+<a name="l00025"></a>00025 <span class="keyword">public</span>:
+<a name="l00029"></a>00029    <span class="keywordtype">void</span> <a class="code" href="classPolypeerClient.html#a77b9c8cbb9d04ddbe0f28d43b87a321a">start</a>();
+<a name="l00030"></a>00030 
+<a name="l00034"></a>00034    <span class="keywordtype">void</span> <a class="code" href="classPolypeerClient.html#a54385ce1374a818b96ecb19adae01b2e">stop</a>();
+<a name="l00035"></a>00035 
+<a name="l00039"></a>00039    <span class="keywordtype">void</span> <a class="code" href="classPolypeerClient.html#aaf277315819e80398339db85693977bb">restart</a>();
+<a name="l00040"></a>00040    
+<a name="l00044"></a>00044    <span class="keywordtype">void</span> <a class="code" href="classPolypeerClient.html#a2a4c8e96145edebce69c1dcb4f8ae521">setConfig</a>(<a class="code" href="structClientOptions.html">ClientOptions</a>* opt);
+<a name="l00045"></a>00045 
+<a name="l00049"></a><a class="code" href="classPolypeerClient.html#a9f99090b41ff20b69b0338d66b765788">00049</a>    <span class="keyword">inline</span> <a class="code" href="classClientData.html">ClientData</a>* <a class="code" href="classPolypeerClient.html#a9f99090b41ff20b69b0338d66b765788">getClientData</a>() { <span class="keywordflow">return</span> (this-&gt;cData); }
+<a name="l00050"></a>00050 
+<a name="l00054"></a>00054    <a class="code" href="classPolypeerClient.html#ab204b18b4b4fbd586436711f5dbaa616">~PolypeerClient</a>();
+<a name="l00055"></a>00055 
+<a name="l00059"></a>00059    <span class="keyword">static</span> <a class="code" href="classPolypeerClient.html">PolypeerClient</a>* <a class="code" href="classPolypeerClient.html#ab2bcaae50a90749c5b7d0eacb2163e78">getInstance</a>();
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062 <span class="keyword">private</span>:
+<a name="l00066"></a>00066    <a class="code" href="classPolypeerClient.html">PolypeerClient</a>();
+<a name="l00067"></a>00067    <a class="code" href="classPolypeerClient.html">PolypeerClient</a>(<span class="keyword">const</span> <a class="code" href="classPolypeerClient.html">PolypeerClient</a>&amp;);
+<a name="l00068"></a>00068    <a class="code" href="classPolypeerClient.html">PolypeerClient</a>&amp; operator=(<span class="keyword">const</span> <a class="code" href="classPolypeerClient.html">PolypeerClient</a>&amp;);
+<a name="l00069"></a>00069 
+<a name="l00073"></a>00073    <span class="keyword">static</span> <a class="code" href="classPolypeerClient.html">PolypeerClient</a>* instance;
+<a name="l00074"></a>00074 
+<a name="l00078"></a>00078    <span class="keyword">static</span> <span class="keywordtype">void</span> run();
+<a name="l00079"></a>00079 
+<a name="l00083"></a>00083    <a class="code" href="classClientData.html">ClientData</a>* cData;
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086 };
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088 
+<a name="l00089"></a>00089 <span class="preprocessor">#endif //POLYPEERSERVER_H</span>
+</pre></div></div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<hr class="footer"/><address style="text-align: right;"><small>Généré le Sun Jun 3 15:08:51 2012 pour PolyPeer par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
+</body>
+</html>

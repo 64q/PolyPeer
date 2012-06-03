@@ -1,0 +1,93 @@
+<!-- This comment will put IE 6, 7 and 8 in quirks mode -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PolyPeer: Référence de la classe MD5</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javaScript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Généré par Doxygen 1.6.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+--></script>
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&nbsp;associées</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <img id="MSearchSelect" src="search/search.png"
+             onmouseover="return searchBox.OnSearchSelectShow()"
+             onmouseout="return searchBox.OnSearchSelectHide()"
+             alt=""/>
+        <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+             onfocus="searchBox.OnSearchFieldFocus(true)" 
+             onblur="searchBox.OnSearchFieldFocus(false)" 
+             onkeyup="searchBox.OnSearchFieldChange(event)"/>
+        <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="annotated.html"><span>Liste&nbsp;des&nbsp;classes</span></a></li>
+      <li><a href="hierarchy.html"><span>Hiérarchie&nbsp;des&nbsp;classes</span></a></li>
+      <li><a href="functions.html"><span>Membres&nbsp;de&nbsp;classe</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="contents">
+<h1>Référence de la classe MD5</h1><!-- doxytag: class="MD5" -->
+<p><a href="classMD5-members.html">Liste de tous les membres</a></p>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr><td colspan="2"><h2>Classes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><b>__context_t</b></td></tr>
+<tr><td colspan="2"><h2>Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86d88df8b611a8391c26c10f2060e603"></a><!-- doxytag: member="MD5::Init" ref="a86d88df8b611a8391c26c10f2060e603" args="()" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><b>Init</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4d97da4b9eb6ab4d67fa14c3a6c91afb"></a><!-- doxytag: member="MD5::Update" ref="a4d97da4b9eb6ab4d67fa14c3a6c91afb" args="(unsigned char *input, unsigned int inputLen)" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><b>Update</b> (unsigned char *input, unsigned int inputLen)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a225d7e26a0e7163a3be22813e1f202cd"></a><!-- doxytag: member="MD5::Final" ref="a225d7e26a0e7163a3be22813e1f202cd" args="()" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><b>Final</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab42a1fc79091ec3e43018d48cb5dd199"></a><!-- doxytag: member="MD5::writeToString" ref="ab42a1fc79091ec3e43018d48cb5dd199" args="()" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMD5.html#ab42a1fc79091ec3e43018d48cb5dd199">writeToString</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Buffer must be 32+1 (nul) = 33 chars long at least. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6881aaf52a2faa4616e77337a642c278"></a><!-- doxytag: member="MD5::digestString" ref="a6881aaf52a2faa4616e77337a642c278" args="(char *string, unsigned int len)" -->
+char *&nbsp;</td><td class="memItemRight" valign="bottom"><b>digestString</b> (char *string, unsigned int len)</td></tr>
+<tr><td colspan="2"><h2>Attributs publics</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2824069e9dbdd5aa07dc48fd59c1e344"></a><!-- doxytag: member="MD5::digestRaw" ref="a2824069e9dbdd5aa07dc48fd59c1e344" args="[16]" -->
+BYTE&nbsp;</td><td class="memItemRight" valign="bottom"><b>digestRaw</b> [16]</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa5b5a40c4dfe26b48eb95b0f43ac7d6"></a><!-- doxytag: member="MD5::digestChars" ref="aaa5b5a40c4dfe26b48eb95b0f43ac7d6" args="[33]" -->
+char&nbsp;</td><td class="memItemRight" valign="bottom"><b>digestChars</b> [33]</td></tr>
+</table>
+<hr/>La documentation de cette classe a été générée à partir du fichier suivant :<ul>
+<li>filemanager/include/<a class="el" href="md5_8hpp_source.html">md5.hpp</a></li>
+</ul>
+</div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<hr class="footer"/><address style="text-align: right;"><small>Généré le Sun Jun 3 15:08:52 2012 pour PolyPeer par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
+</body>
+</html>

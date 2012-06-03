@@ -6,6 +6,9 @@
 	<p>
 		Retrouvez toute l'aide nécessaire pour configurer et gérer votre serveur PolyPeer.
 	</p>
+	<p class="alert alert-info">
+		<strong>A noter</strong> Les fichiers CONFIG et INSTALL donne aussi des informations importantes sur la configuration et l'installation du projet.
+	</p>
 	<ul>
 		<li><a href="#doc_starting">Démarrer</a></li>
 		<li><a href="#doc_create">Créer un déploiement</a></li>
@@ -20,11 +23,11 @@
 		</p>
 		<ul>
 			<li>Un serveur dédié sous Linux (noyau >= 2.6)</li>
-			<li>Des clients sous Linux ou Windows (XP)</li>
+			<li>Des clients sous Linux ou Windows (XP ou supérieur)</li>
 		</ul>
 		<p>
 			Pour lancer le serveur, rien de plus simple, prenez un invite de commande Bash et entrez <code>./ppserver</code>. 
-			Attention tout de même a lancer l'executable depuis le répertoire qui contient le dossier html/ et passwd.
+			Attention tout de même a lancer l'executable depuis le répertoire qui contient le dossier html/ et passwd et les fichiers deployments.xml et topology.xml.
 		</p>
 		<p>
 			Après une phase d'initialisation, le serveur sera prêt à déployer les fichiers !
@@ -83,6 +86,17 @@
    &lt;/real&gt;
 &lt;/network&gt;
 		</pre>
+		<p>
+			Voici la signification des différentes balises :
+		</p>
+		<ul>
+			<li>&lt;network&gt; représente le réseau</li>
+			<li>&lt;real&gt; représente la déclaration d'une zone physique</li>
+			<li>&lt;zone&gt; déclare une zone</li>
+			<li>&lt;host&gt; permet de déclarer un hote (networkCapacity est la capacité de l'entité en ko/s)</li>
+			<li>&lt;virtual&gt; permet de déclarer une zone dite virtuelle</li>
+			<li>&lt;host ref="host1" /&gt; permet de déclarer une référence sur un hote créé dans une zone physique (real)</li>
+		</ul>
 	</div>
 	<hr>
 	<div id="doc_deployments">
@@ -97,5 +111,14 @@
     &lt;/file&gt;
 &lt;/deployments&gt;
 		</pre>
+		<p>
+			Attention, l'id doit être unique. Chaque déploiement est constitué de reférence sur des hotes ou des zones.
+		</p>
+		<p>
+		    Des exemples sont fournis à la racine de l'executable du serveur.
+		</p>
+		<p class="alert alert-info">
+			Nous vous conseillons d'utiliser l'interface web pour ajouter un déploiement.
+		</p>
 	</div>
 </div>

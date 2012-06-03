@@ -1,0 +1,138 @@
+<!-- This comment will put IE 6, 7 and 8 in quirks mode -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PolyPeer:  Fichier source de logger/include/Logger.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javaScript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Généré par Doxygen 1.6.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+--></script>
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&nbsp;associées</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <img id="MSearchSelect" src="search/search.png"
+             onmouseover="return searchBox.OnSearchSelectShow()"
+             onmouseout="return searchBox.OnSearchSelectHide()"
+             alt=""/>
+        <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+             onfocus="searchBox.OnSearchFieldFocus(true)" 
+             onblur="searchBox.OnSearchFieldFocus(false)" 
+             onkeyup="searchBox.OnSearchFieldChange(event)"/>
+        <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="files.html"><span>Liste&nbsp;des&nbsp;fichiers</span></a></li>
+    </ul>
+  </div>
+<h1>logger/include/Logger.hpp</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment"> * Logger</span>
+<a name="l00003"></a>00003 <span class="comment"> * Blin Olivier - Lebourgeois Quentin - 2012</span>
+<a name="l00004"></a>00004 <span class="comment"> */</span>
+<a name="l00005"></a>00005 
+<a name="l00006"></a>00006 <span class="preprocessor">#ifndef __H_LOGGER__</span>
+<a name="l00007"></a>00007 <span class="preprocessor"></span><span class="preprocessor">#define __H_LOGGER__</span>
+<a name="l00008"></a>00008 <span class="preprocessor"></span>
+<a name="l00009"></a>00009 <span class="comment">// Library header</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;sstream&gt;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;fstream&gt;</span>
+<a name="l00012"></a>00012 
+<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;OpenLoggerException.hpp&gt;</span>
+<a name="l00014"></a>00014 
+<a name="l00018"></a>00018 <span class="keyword">typedef</span> <span class="keyword">enum</span>
+<a name="l00019"></a>00019 {
+<a name="l00020"></a>00020    endlog,
+<a name="l00021"></a>00021    endline,
+<a name="l00022"></a>00022 } ELogAction;
+<a name="l00023"></a>00023 
+<a name="l00027"></a>00027 <span class="keyword">typedef</span> <span class="keyword">enum</span>
+<a name="l00028"></a>00028 {
+<a name="l00029"></a>00029    normal = 0,
+<a name="l00030"></a>00030    alert,
+<a name="l00031"></a>00031    error,
+<a name="l00032"></a>00032    critical,
+<a name="l00033"></a>00033    notice,
+<a name="l00034"></a>00034    debug,
+<a name="l00035"></a>00035 } ELogImportance;
+<a name="l00036"></a>00036  
+<a name="l00041"></a><a class="code" href="classLogger.html">00041</a> <span class="keyword">class </span><a class="code" href="classLogger.html">Logger</a>
+<a name="l00042"></a>00042 {
+<a name="l00043"></a>00043 <span class="keyword">public</span>:
+<a name="l00050"></a>00050    <a class="code" href="classLogger.html#ae7e2b50eb9e77e42da9555120a14e7d6">Logger</a>(<span class="keyword">const</span> std::string&amp;) <span class="keywordflow">throw</span>(<a class="code" href="classOpenLoggerException.html">OpenLoggerException</a>);
+<a name="l00051"></a>00051    
+<a name="l00055"></a>00055    <span class="keyword">virtual</span> <a class="code" href="classLogger.html#acb668a9e186a25fbaad2e4af6d1ed00a">~Logger</a>();
+<a name="l00056"></a>00056    
+<a name="l00064"></a>00064    <span class="keywordtype">void</span> <a class="code" href="classLogger.html#a1a8ce5270711915a9c22f3673016edf4">put</a>(<span class="keyword">const</span> std::string&amp; type, <span class="keyword">const</span> std::string&amp; content);
+<a name="l00065"></a>00065    
+<a name="l00069"></a><a class="code" href="classLogger.html#ab198ac364f5b372ccf52d313c0aefd77">00069</a>    <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;<a class="code" href="classLogger.html">Logger</a>&amp; <a class="code" href="classLogger.html#ab198ac364f5b372ccf52d313c0aefd77">operator&lt;&lt;</a>(<span class="keyword">const</span> T&amp; value)
+<a name="l00070"></a>00070    {
+<a name="l00071"></a>00071       std::ostringstream oss;
+<a name="l00072"></a>00072       oss &lt;&lt; value;
+<a name="l00073"></a>00073       stringSave += oss.str();
+<a name="l00074"></a>00074       <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00075"></a>00075    }
+<a name="l00076"></a>00076    
+<a name="l00080"></a>00080    <a class="code" href="classLogger.html">Logger</a>&amp; <a class="code" href="classLogger.html#ab198ac364f5b372ccf52d313c0aefd77">operator&lt;&lt;</a>(<span class="keyword">const</span> ELogAction logAct);
+<a name="l00081"></a>00081    
+<a name="l00085"></a>00085    <a class="code" href="classLogger.html">Logger</a>&amp; <a class="code" href="classLogger.html#ab198ac364f5b372ccf52d313c0aefd77">operator&lt;&lt;</a>(<span class="keyword">const</span> ELogImportance logType);
+<a name="l00086"></a>00086 
+<a name="l00094"></a>00094    std::string <a class="code" href="classLogger.html#a3ab6e397ae2a4d888ebcddfe347848df">getType</a> (<span class="keyword">const</span> ELogImportance logType);
+<a name="l00095"></a>00095    
+<a name="l00101"></a><a class="code" href="classLogger.html#a80e01cc1d2a365f3c99d94745d50fb9c">00101</a>    <span class="keywordtype">void</span> <a class="code" href="classLogger.html#a80e01cc1d2a365f3c99d94745d50fb9c">setVerboseMode</a>(<span class="keywordtype">bool</span> mode) { verbose = mode; }
+<a name="l00102"></a>00102    
+<a name="l00108"></a><a class="code" href="classLogger.html#aea91a12477216578638d63b3761806cd">00108</a>    <span class="keywordtype">bool</span> <a class="code" href="classLogger.html#aea91a12477216578638d63b3761806cd">getVerboseMode</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> verbose; }
+<a name="l00109"></a>00109    
+<a name="l00110"></a>00110 <span class="keyword">private</span>:
+<a name="l00111"></a>00111    <span class="comment">/*</span>
+<a name="l00112"></a>00112 <span class="comment">    * Le constructeur par copie et l&#39;opérateur = sont privés</span>
+<a name="l00113"></a>00113 <span class="comment">    * pour éviter toute recopie du logger (unique sur chaque fichier)</span>
+<a name="l00114"></a>00114 <span class="comment">    */</span>
+<a name="l00115"></a>00115    <a class="code" href="classLogger.html#ae7e2b50eb9e77e42da9555120a14e7d6">Logger</a>(<span class="keyword">const</span> <a class="code" href="classLogger.html">Logger</a>&amp;);
+<a name="l00116"></a>00116    <a class="code" href="classLogger.html">Logger</a>&amp; operator=(<span class="keyword">const</span> <a class="code" href="classLogger.html">Logger</a>&amp;);
+<a name="l00117"></a>00117    
+<a name="l00121"></a>00121    std::ofstream file;
+<a name="l00122"></a>00122 
+<a name="l00126"></a>00126    std::string stringSave;
+<a name="l00127"></a>00127 
+<a name="l00131"></a>00131    ELogImportance typeSave;
+<a name="l00132"></a>00132 
+<a name="l00136"></a>00136    <span class="keywordtype">bool</span> verbose;
+<a name="l00137"></a>00137 };
+<a name="l00138"></a>00138 
+<a name="l00139"></a>00139 <span class="preprocessor">#endif</span>
+</pre></div></div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<hr class="footer"/><address style="text-align: right;"><small>Généré le Sun Jun 3 15:08:51 2012 pour PolyPeer par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
+</body>
+</html>

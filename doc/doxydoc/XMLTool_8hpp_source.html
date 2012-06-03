@@ -1,0 +1,123 @@
+<!-- This comment will put IE 6, 7 and 8 in quirks mode -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PolyPeer:  Fichier source de datamanager/include/XMLTool.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javaScript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Généré par Doxygen 1.6.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+--></script>
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&nbsp;associées</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <img id="MSearchSelect" src="search/search.png"
+             onmouseover="return searchBox.OnSearchSelectShow()"
+             onmouseout="return searchBox.OnSearchSelectHide()"
+             alt=""/>
+        <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+             onfocus="searchBox.OnSearchFieldFocus(true)" 
+             onblur="searchBox.OnSearchFieldFocus(false)" 
+             onkeyup="searchBox.OnSearchFieldChange(event)"/>
+        <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="files.html"><span>Liste&nbsp;des&nbsp;fichiers</span></a></li>
+    </ul>
+  </div>
+<h1>datamanager/include/XMLTool.hpp</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __H__XMLTOOL__</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define __H__XMLTOOL__</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;map&gt;</span>
+<a name="l00007"></a>00007 <span class="preprocessor">#include &lt;list&gt;</span>
+<a name="l00008"></a>00008 
+<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;tinyxml/tinyxml.h&gt;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;Entity.hpp&gt;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;Zone.hpp&gt;</span>
+<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;Host.hpp&gt;</span>
+<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;File.hpp&gt;</span>
+<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;ServerData.hpp&gt;</span>
+<a name="l00015"></a>00015 
+<a name="l00016"></a>00016 <span class="keyword">class </span><a class="code" href="classServerData.html">ServerData</a>;
+<a name="l00017"></a>00017 
+<a name="l00022"></a><a class="code" href="classXMLTool.html">00022</a> <span class="keyword">class </span><a class="code" href="classXMLTool.html">XMLTool</a> 
+<a name="l00023"></a>00023 {
+<a name="l00024"></a>00024    
+<a name="l00025"></a>00025 <span class="keyword">public</span> :
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 
+<a name="l00034"></a>00034    <a class="code" href="classXMLTool.html#a9213b25b5e5daf95b31bfd339ced24cf">XMLTool</a>(<a class="code" href="classServerData.html">ServerData</a>* sData);
+<a name="l00035"></a>00035    
+<a name="l00039"></a>00039    <a class="code" href="classXMLTool.html#ae670a59832c3a6a94b006a38f4c866e6">~XMLTool</a>();
+<a name="l00040"></a>00040    
+<a name="l00041"></a>00041    <a class="code" href="classXMLTool.html">XMLTool</a>&amp; operator=(<a class="code" href="classXMLTool.html">XMLTool</a>&amp; reader); 
+<a name="l00042"></a>00042    
+<a name="l00046"></a>00046    <span class="keywordtype">void</span> <a class="code" href="classXMLTool.html#a097fa26e439338af3c41b9dc815e3453">public_displayTopology</a>();
+<a name="l00047"></a>00047    
+<a name="l00054"></a>00054    <span class="keywordtype">void</span> <a class="code" href="classXMLTool.html#a26dcceaa310cf4f647a13c86ed5674b2">writeFileIntoDeployments</a>(<a class="code" href="classFile.html">File</a>* file);
+<a name="l00055"></a>00055    
+<a name="l00064"></a>00064    <span class="keywordtype">void</span> <a class="code" href="classXMLTool.html#acf2c68d695ae6de4633e34d59dbd738a">writeEntityIntoFile</a>(<span class="keywordtype">int</span> fileId, <a class="code" href="classEntity.html">Entity</a>* entity);
+<a name="l00065"></a>00065    
+<a name="l00071"></a>00071    <span class="keywordtype">void</span> <a class="code" href="classXMLTool.html#a511cb0341a28cf5d1ba0b6d255a954cf">removeDeployment</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>);
+<a name="l00072"></a>00072    
+<a name="l00076"></a>00076    <span class="keywordtype">int</span> <a class="code" href="classXMLTool.html#abf8cd270bd3060509fe3824ca96326f2">getCurrentId</a>();
+<a name="l00077"></a>00077    
+<a name="l00078"></a>00078 <span class="keyword">protected</span> :
+<a name="l00079"></a>00079 
+<a name="l00083"></a><a class="code" href="classXMLTool.html#afb629eae41a53a1744395d5b88e92869">00083</a>    std::string <a class="code" href="classXMLTool.html#afb629eae41a53a1744395d5b88e92869">topologyFile</a>;
+<a name="l00084"></a>00084    
+<a name="l00088"></a><a class="code" href="classXMLTool.html#ab5a3b4cddc765e1add0ee44d4a550042">00088</a>    std::string <a class="code" href="classXMLTool.html#ab5a3b4cddc765e1add0ee44d4a550042">deploymentsFile</a>;
+<a name="l00089"></a>00089    
+<a name="l00093"></a><a class="code" href="classXMLTool.html#ac15161a95360f168966e0e346503953b">00093</a>    <a class="code" href="classTiXmlDocument.html">TiXmlDocument</a> <a class="code" href="classXMLTool.html#ac15161a95360f168966e0e346503953b">DOMTopology</a>;
+<a name="l00094"></a>00094    
+<a name="l00098"></a><a class="code" href="classXMLTool.html#af55932185b5e612bf2341f63276913ef">00098</a>    <a class="code" href="classTiXmlDocument.html">TiXmlDocument</a> <a class="code" href="classXMLTool.html#af55932185b5e612bf2341f63276913ef">DOMDeployments</a>;
+<a name="l00099"></a>00099    
+<a name="l00100"></a>00100 <span class="keyword">private</span> :
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102    <span class="keywordtype">void</span> displayTopology(<a class="code" href="classTiXmlNode.html">TiXmlNode</a>* node, <span class="keywordtype">int</span> level = 0);
+<a name="l00103"></a>00103    <span class="keywordtype">void</span> readTopology(<a class="code" href="classServerData.html">ServerData</a>* sData, <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* node, std::map&lt;std::string, Entity*&gt;* entities, <a class="code" href="classEntity.html">Entity</a>* parent);
+<a name="l00104"></a>00104    <span class="keywordtype">void</span> readDeployments(<a class="code" href="classServerData.html">ServerData</a>* sData, <a class="code" href="classTiXmlNode.html">TiXmlNode</a>* node);
+<a name="l00105"></a>00105    
+<a name="l00106"></a>00106 };
+<a name="l00107"></a>00107 
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110 <span class="preprocessor">#endif</span>
+</pre></div></div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<hr class="footer"/><address style="text-align: right;"><small>Généré le Sun Jun 3 15:08:51 2012 pour PolyPeer par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
+</body>
+</html>

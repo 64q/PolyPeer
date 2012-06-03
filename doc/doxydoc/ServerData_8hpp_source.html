@@ -1,0 +1,175 @@
+<!-- This comment will put IE 6, 7 and 8 in quirks mode -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PolyPeer:  Fichier source de datamanager/include/ServerData.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javaScript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Généré par Doxygen 1.6.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+--></script>
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&nbsp;associées</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <img id="MSearchSelect" src="search/search.png"
+             onmouseover="return searchBox.OnSearchSelectShow()"
+             onmouseout="return searchBox.OnSearchSelectHide()"
+             alt=""/>
+        <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+             onfocus="searchBox.OnSearchFieldFocus(true)" 
+             onblur="searchBox.OnSearchFieldFocus(false)" 
+             onkeyup="searchBox.OnSearchFieldChange(event)"/>
+        <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="files.html"><span>Liste&nbsp;des&nbsp;fichiers</span></a></li>
+    </ul>
+  </div>
+<h1>datamanager/include/ServerData.hpp</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __H__SERVERDATA__</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define __H__SERVERDATA__</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;map&gt;</span>
+<a name="l00007"></a>00007 <span class="preprocessor">#include &lt;list&gt;</span>
+<a name="l00008"></a>00008 
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;Entity.hpp&gt;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;Zone.hpp&gt;</span>
+<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;Host.hpp&gt;</span>
+<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;File.hpp&gt;</span>
+<a name="l00014"></a>00014 <span class="preprocessor">#include &lt;XMLTool.hpp&gt;</span>
+<a name="l00015"></a>00015 <span class="preprocessor">#include &lt;FileManager.hpp&gt;</span>
+<a name="l00016"></a>00016 <span class="preprocessor">#include &lt;ConnectionManager.hpp&gt;</span>
+<a name="l00017"></a>00017 <span class="preprocessor">#include &lt;Packet.hpp&gt;</span>
+<a name="l00018"></a>00018 <span class="preprocessor">#include &lt;Mutex.hpp&gt;</span>
+<a name="l00019"></a>00019 <span class="preprocessor">#include &lt;PolypeerServer.hpp&gt;</span>
+<a name="l00020"></a>00020 
+<a name="l00026"></a>00026 <span class="keyword">class </span><a class="code" href="classXMLTool.html">XMLTool</a>;
+<a name="l00027"></a>00027 
+<a name="l00028"></a><a class="code" href="classServerData.html">00028</a> <span class="keyword">class </span><a class="code" href="classServerData.html">ServerData</a>
+<a name="l00029"></a>00029 {
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 <span class="keyword">public</span> :
+<a name="l00032"></a>00032 
+<a name="l00038"></a>00038    <a class="code" href="classServerData.html#abe24736290c1c6585a9a229bd668fa41">ServerData</a>(<a class="code" href="structServerOptions.html">ServerOptions</a>* so);
+<a name="l00039"></a>00039    
+<a name="l00043"></a>00043    <a class="code" href="classServerData.html#a2b8dde9ec67f322222565ae64e676e40">~ServerData</a>();
+<a name="l00044"></a>00044 
+<a name="l00048"></a>00048    <a class="code" href="classXMLTool.html">XMLTool</a>* <a class="code" href="classServerData.html#a48e48b590437d9dcc0d90aabab4b55f9">getXMLTool</a>();
+<a name="l00049"></a>00049    
+<a name="l00053"></a>00053    map&lt;string, Entity*&gt;* <a class="code" href="classServerData.html#a503e814a1dbf7c28f712af5147486e24">getEntities</a>();
+<a name="l00054"></a>00054    
+<a name="l00059"></a>00059    vector&lt;File*&gt;* <a class="code" href="classServerData.html#a41f2317df37405ca80c706d564468089">getDeployFiles</a>();
+<a name="l00060"></a>00060    
+<a name="l00066"></a>00066    <a class="code" href="classFileManager.html">FileManager</a>* <a class="code" href="classServerData.html#a3cf064db96e4e43cce56d48d38d8cc18">addFile</a>(<a class="code" href="classFile.html">File</a>* f);
+<a name="l00067"></a>00067    
+<a name="l00073"></a>00073    <span class="keywordtype">void</span> <a class="code" href="classServerData.html#ae6da308f8523592108f780534262a93a">addFileToAll</a>(<a class="code" href="classFile.html">File</a>* f);
+<a name="l00074"></a>00074    
+<a name="l00078"></a>00078    <span class="keywordtype">int</span> <a class="code" href="classServerData.html#acd3fece1408d70137add02fcb2c5bfac">getCurrentId</a>();
+<a name="l00079"></a>00079 
+<a name="l00083"></a>00083    <a class="code" href="classMutex.html">Mutex</a>* <a class="code" href="classServerData.html#a0ed30760e745f220765a68848032f97e">getMutex</a>();
+<a name="l00084"></a>00084    
+<a name="l00085"></a>00085    
+<a name="l00092"></a>00092    <a class="code" href="classFile.html">File</a>* <a class="code" href="classServerData.html#adefdd982d2bce643305ac567c87b8e28">getFile</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>);
+<a name="l00093"></a>00093    
+<a name="l00101"></a>00101    <a class="code" href="classEntity.html">Entity</a>* <a class="code" href="classServerData.html#aed408710c2ab913aab688c1f424ccf8c">addHost</a>(<span class="keywordtype">string</span> name, <a class="code" href="classEntity.html">Entity</a>* parent,<span class="keywordtype">int</span> networkCapacity, <span class="keywordtype">string</span> address, <span class="keywordtype">string</span> mac);
+<a name="l00102"></a>00102    
+<a name="l00107"></a>00107    <span class="keywordtype">void</span> <a class="code" href="classServerData.html#ad76717fe7042ceec03c4d4e789b0ecee">deleteFile</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>);
+<a name="l00108"></a>00108    
+<a name="l00112"></a>00112    vector&lt;Entity*&gt;* <a class="code" href="classServerData.html#a953dc11d0ba00b180c0b75484a487f37">getHosts</a>();
+<a name="l00113"></a>00113    
+<a name="l00119"></a>00119    <a class="code" href="classEntity.html">Entity</a>* <a class="code" href="classServerData.html#a3e1229fef659cbd3053025a8c175e23f">getHostByName</a>(<span class="keywordtype">string</span> name);
+<a name="l00120"></a>00120    
+<a name="l00126"></a>00126    <a class="code" href="classEntity.html">Entity</a>* <a class="code" href="classServerData.html#a7dc1b2b57bcc5ddbe78817726747b204">getHostByAddress</a>(<span class="keywordtype">string</span> address);
+<a name="l00127"></a>00127    
+<a name="l00134"></a>00134    <a class="code" href="classFileManager.html">FileManager</a>* <a class="code" href="classServerData.html#aabe17565329ae53cb951362199ffd010">getFileManager</a>(<span class="keywordtype">int</span> fileID);
+<a name="l00135"></a>00135    
+<a name="l00139"></a>00139    <a class="code" href="classConnectionManager.html">ConnectionManager</a>* <a class="code" href="classServerData.html#a13009ac88a807e71eb296fd6469d6eaa">getConnectionManager</a>();
+<a name="l00140"></a>00140    
+<a name="l00151"></a>00151    <span class="keywordtype">void</span> <a class="code" href="classServerData.html#a2e3cb1c0bcf231b5552936c5728fcfc0">updateHost</a>(<span class="keywordtype">string</span> addressHost, <span class="keywordtype">int</span> fileID, <span class="keywordtype">int</span> nbChunk);
+<a name="l00152"></a>00152    
+<a name="l00163"></a>00163    <span class="keywordtype">void</span> <a class="code" href="classServerData.html#a2e3cb1c0bcf231b5552936c5728fcfc0">updateHost</a>(<span class="keywordtype">string</span> addressHost, <span class="keywordtype">int</span> fileID, HostDeployState s);
+<a name="l00164"></a>00164    
+<a name="l00173"></a>00173    <span class="keywordtype">void</span> <a class="code" href="classServerData.html#a2e3cb1c0bcf231b5552936c5728fcfc0">updateHost</a>(<span class="keywordtype">string</span> addressHost, HostState s);
+<a name="l00174"></a>00174    
+<a name="l00175"></a>00175    <span class="keywordtype">void</span> updateHostInit(<span class="keywordtype">string</span> addressHost);
+<a name="l00176"></a>00176    
+<a name="l00184"></a>00184    <span class="keywordtype">bool</span> <a class="code" href="classServerData.html#aeb7e060b8a9bd7b0933024153abdd954">updateNetworkCurrentBroadbandSpeed</a>(<a class="code" href="classEntity.html">Entity</a>* entity, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> packetWeightInOctet);
+<a name="l00185"></a>00185 
+<a name="l00195"></a>00195    <span class="keywordtype">bool</span> <a class="code" href="classServerData.html#aeb7e060b8a9bd7b0933024153abdd954">updateNetworkCurrentBroadbandSpeed</a>(<a class="code" href="classEntity.html">Entity</a>* entity1, <a class="code" href="classEntity.html">Entity</a>* entity2, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> packetWeightInOctet);
+<a name="l00196"></a>00196    
+<a name="l00204"></a>00204    <a class="code" href="classEntity.html">Entity</a>* <a class="code" href="classServerData.html#a86f5e90c0ba268a0d1d62b8c7b75b6d8">getCommonParent</a>(<a class="code" href="classEntity.html">Entity</a>* entity1, <a class="code" href="classEntity.html">Entity</a>* entity2);
+<a name="l00205"></a>00205    
+<a name="l00209"></a>00209    <span class="keywordtype">void</span> <a class="code" href="classServerData.html#a392490426972fe39a4ac27dd53bf2951">public_displayEntities</a>();
+<a name="l00210"></a>00210    
+<a name="l00216"></a>00216    <a class="code" href="classEntity.html">Entity</a>* <a class="code" href="classServerData.html#a5906327948c3eb06fede94fc4fa5b477">public_getEntity</a>(<span class="keywordtype">string</span> entityName);
+<a name="l00217"></a>00217    
+<a name="l00226"></a>00226    <span class="keywordtype">void</span> <a class="code" href="classServerData.html#a5e712a318b0b3ef9b1f1b1db0063d340">public_fillAddressList</a>(<span class="keywordtype">string</span> entityName, list&lt;string&gt; &amp;list);
+<a name="l00227"></a>00227    
+<a name="l00228"></a>00228    
+<a name="l00229"></a>00229    <span class="keywordtype">int</span> getClientPort() {<span class="keywordflow">return</span> <a class="code" href="classServerData.html#a3f8d8364a751d4e9277174eb142e247c">clientPort</a>;}
+<a name="l00230"></a>00230 
+<a name="l00231"></a>00231 <span class="keyword">protected</span> :
+<a name="l00236"></a><a class="code" href="classServerData.html#a65485f5d1eda7fe6ed113532eacd16ae">00236</a>    map&lt;string, Entity*&gt; <a class="code" href="classServerData.html#a65485f5d1eda7fe6ed113532eacd16ae">entities</a>;
+<a name="l00237"></a>00237    
+<a name="l00242"></a><a class="code" href="classServerData.html#ad7b064d2dc7096a30bf08fc3d1728b94">00242</a>    vector&lt;File*&gt; <a class="code" href="classServerData.html#ad7b064d2dc7096a30bf08fc3d1728b94">deployFiles</a>;
+<a name="l00243"></a>00243    
+<a name="l00247"></a><a class="code" href="classServerData.html#a1f45cb6d739b95a68fba4d17d6579027">00247</a>    vector&lt;Entity*&gt; <a class="code" href="classServerData.html#a1f45cb6d739b95a68fba4d17d6579027">hosts</a>;
+<a name="l00248"></a>00248    
+<a name="l00252"></a><a class="code" href="classServerData.html#a22a9a86f0860abb40d105c03877bd614">00252</a>    <a class="code" href="classConnectionManager.html">ConnectionManager</a>* <a class="code" href="classServerData.html#a22a9a86f0860abb40d105c03877bd614">cM</a>;
+<a name="l00253"></a>00253    
+<a name="l00257"></a><a class="code" href="classServerData.html#a3f8d8364a751d4e9277174eb142e247c">00257</a>    <span class="keywordtype">int</span> <a class="code" href="classServerData.html#a3f8d8364a751d4e9277174eb142e247c">clientPort</a>;
+<a name="l00258"></a>00258    
+<a name="l00262"></a><a class="code" href="classServerData.html#ae89918d83c78d6f534fa03eee49dd059">00262</a>    <a class="code" href="classXMLTool.html">XMLTool</a>* <a class="code" href="classServerData.html#ae89918d83c78d6f534fa03eee49dd059">xmlTool</a>;
+<a name="l00263"></a>00263 
+<a name="l00267"></a><a class="code" href="classServerData.html#af70a9b84c87c578dd8e05fbda18495b0">00267</a>    <a class="code" href="classMutex.html">Mutex</a> <a class="code" href="classServerData.html#af70a9b84c87c578dd8e05fbda18495b0">mutex_deployFiles</a>;
+<a name="l00268"></a>00268    
+<a name="l00269"></a>00269 <span class="keyword">private</span> :
+<a name="l00270"></a>00270 
+<a name="l00271"></a>00271    <span class="keywordtype">void</span> deleteMap(map&lt;string, Entity*&gt;* <a class="code" href="classServerData.html#a65485f5d1eda7fe6ed113532eacd16ae">entities</a>, vector&lt;string&gt; &amp;alreadyDelete);
+<a name="l00272"></a>00272    <span class="keywordtype">void</span> deleteDeployFiles();
+<a name="l00273"></a>00273    <span class="keywordtype">void</span> deleteHosts();
+<a name="l00274"></a>00274    <span class="keywordtype">void</span> displayEntities(map&lt;string, Entity*&gt;* <a class="code" href="classServerData.html#a65485f5d1eda7fe6ed113532eacd16ae">entities</a>, <span class="keywordtype">int</span> level = 0);
+<a name="l00275"></a>00275    <a class="code" href="classEntity.html">Entity</a>* getEntity(map&lt;string, Entity*&gt;* <a class="code" href="classServerData.html#a65485f5d1eda7fe6ed113532eacd16ae">entities</a>, <span class="keywordtype">string</span> entityName);
+<a name="l00276"></a>00276    <span class="keywordtype">void</span> fillAddressList(<a class="code" href="classEntity.html">Entity</a>* entity, list&lt;string&gt; &amp;list);
+<a name="l00277"></a>00277 
+<a name="l00278"></a>00278 };
+<a name="l00279"></a>00279 
+<a name="l00280"></a>00280 <span class="preprocessor">#endif</span>
+</pre></div></div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<hr class="footer"/><address style="text-align: right;"><small>Généré le Sun Jun 3 15:08:51 2012 pour PolyPeer par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
+</body>
+</html>

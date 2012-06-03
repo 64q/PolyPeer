@@ -1,0 +1,299 @@
+<!-- This comment will put IE 6, 7 and 8 in quirks mode -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PolyPeer: Référence de la classe Logger</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javaScript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Généré par Doxygen 1.6.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+--></script>
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&nbsp;associées</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <img id="MSearchSelect" src="search/search.png"
+             onmouseover="return searchBox.OnSearchSelectShow()"
+             onmouseout="return searchBox.OnSearchSelectHide()"
+             alt=""/>
+        <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+             onfocus="searchBox.OnSearchFieldFocus(true)" 
+             onblur="searchBox.OnSearchFieldFocus(false)" 
+             onkeyup="searchBox.OnSearchFieldChange(event)"/>
+        <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="annotated.html"><span>Liste&nbsp;des&nbsp;classes</span></a></li>
+      <li><a href="hierarchy.html"><span>Hiérarchie&nbsp;des&nbsp;classes</span></a></li>
+      <li><a href="functions.html"><span>Membres&nbsp;de&nbsp;classe</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="contents">
+<h1>Référence de la classe Logger</h1><!-- doxytag: class="Logger" -->
+<p><code>#include &lt;<a class="el" href="Logger_8hpp_source.html">Logger.hpp</a>&gt;</code></p>
+
+<p><a href="classLogger-members.html">Liste de tous les membres</a></p>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr><td colspan="2"><h2>Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#ae7e2b50eb9e77e42da9555120a14e7d6">Logger</a> (const std::string &amp;)  throw (OpenLoggerException)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#acb668a9e186a25fbaad2e4af6d1ed00a">~Logger</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#a1a8ce5270711915a9c22f3673016edf4">put</a> (const std::string &amp;type, const std::string &amp;content)</td></tr>
+<tr><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classLogger.html">Logger</a> &amp;&nbsp;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classLogger.html#ab198ac364f5b372ccf52d313c0aefd77">operator&lt;&lt;</a> (const T &amp;value)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classLogger.html">Logger</a> &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#a503901ee3daed5df867bb193b6687c9f">operator&lt;&lt;</a> (const ELogAction logAct)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classLogger.html">Logger</a> &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#a60ce18a23a0c3de5b196b26cc94f5469">operator&lt;&lt;</a> (const ELogImportance logType)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#a3ab6e397ae2a4d888ebcddfe347848df">getType</a> (const ELogImportance logType)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#a80e01cc1d2a365f3c99d94745d50fb9c">setVerboseMode</a> (bool mode)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogger.html#aea91a12477216578638d63b3761806cd">getVerboseMode</a> () const </td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Le logger permet d'enregistrer dans un fichier toute trace textuelle émise par les serveurs afin de pouvoir traiter les éventuelles erreurs/informations. </p>
+<hr/><h2>Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="ae7e2b50eb9e77e42da9555120a14e7d6"></a><!-- doxytag: member="Logger::Logger" ref="ae7e2b50eb9e77e42da9555120a14e7d6" args="(const std::string &amp;)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Logger::Logger </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>path</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td>  throw (<a class="el" href="classOpenLoggerException.html">OpenLoggerException</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Constructeur de logger </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>char*</em>&nbsp;</td><td>chemin vers le fichier de log (créé s'il n'existe pas, sinon il écrit à la suite dedans) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="acb668a9e186a25fbaad2e4af6d1ed00a"></a><!-- doxytag: member="Logger::~Logger" ref="acb668a9e186a25fbaad2e4af6d1ed00a" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Logger::~Logger </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Destructeur de logger (ferme le fichier) </p>
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions membres</h2>
+<a class="anchor" id="a3ab6e397ae2a4d888ebcddfe347848df"></a><!-- doxytag: member="Logger::getType" ref="a3ab6e397ae2a4d888ebcddfe347848df" args="(const ELogImportance logType)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string Logger::getType </td>
+          <td>(</td>
+          <td class="paramtype">const ELogImportance&nbsp;</td>
+          <td class="paramname"> <em>logType</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Récupérer la chaine de caracteres correspondant au type </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>LogLevel</em>&nbsp;</td><td>niveau de la ligne de log </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>string la chaine associé au niveau </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aea91a12477216578638d63b3761806cd"></a><!-- doxytag: member="Logger::getVerboseMode" ref="aea91a12477216578638d63b3761806cd" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Logger::getVerboseMode </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Retourne l'état du mode d'affichage </p>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>bool le mode d'affichage </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a60ce18a23a0c3de5b196b26cc94f5469"></a><!-- doxytag: member="Logger::operator&lt;&lt;" ref="a60ce18a23a0c3de5b196b26cc94f5469" args="(const ELogImportance logType)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classLogger.html">Logger</a> &amp; Logger::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">const ELogImportance&nbsp;</td>
+          <td class="paramname"> <em>logType</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Type de log </p>
+
+</div>
+</div>
+<a class="anchor" id="a503901ee3daed5df867bb193b6687c9f"></a><!-- doxytag: member="Logger::operator&lt;&lt;" ref="a503901ee3daed5df867bb193b6687c9f" args="(const ELogAction logAct)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classLogger.html">Logger</a> &amp; Logger::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">const ELogAction&nbsp;</td>
+          <td class="paramname"> <em>logAct</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Actions spéciales sur le flux logger </p>
+
+</div>
+</div>
+<a class="anchor" id="ab198ac364f5b372ccf52d313c0aefd77"></a><!-- doxytag: member="Logger::operator&lt;&lt;" ref="ab198ac364f5b372ccf52d313c0aefd77" args="(const T &amp;value)" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classLogger.html">Logger</a>&amp; Logger::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&nbsp;</td>
+          <td class="paramname"> <em>value</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Insertion par flux dans le logger </p>
+
+</div>
+</div>
+<a class="anchor" id="a1a8ce5270711915a9c22f3673016edf4"></a><!-- doxytag: member="Logger::put" ref="a1a8ce5270711915a9c22f3673016edf4" args="(const std::string &amp;type, const std::string &amp;content)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Logger::put </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>content</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Insère une ligne dans le logger </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>char*</em>&nbsp;</td><td>le type de message a enregister (error, notice, ...) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>char*</em>&nbsp;</td><td>le contenu à enregister </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a80e01cc1d2a365f3c99d94745d50fb9c"></a><!-- doxytag: member="Logger::setVerboseMode" ref="a80e01cc1d2a365f3c99d94745d50fb9c" args="(bool mode)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Logger::setVerboseMode </td>
+          <td>(</td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>mode</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Gère le mode d'output </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>bool</em>&nbsp;</td><td>le mode d'affichage (true = cout + fichier, false = fichier) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir des fichiers suivants :<ul>
+<li>logger/include/<a class="el" href="Logger_8hpp_source.html">Logger.hpp</a></li>
+<li>logger/src/Logger.cpp</li>
+</ul>
+</div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<hr class="footer"/><address style="text-align: right;"><small>Généré le Sun Jun 3 15:08:52 2012 pour PolyPeer par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
+</body>
+</html>

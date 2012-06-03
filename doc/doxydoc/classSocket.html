@@ -1,0 +1,364 @@
+<!-- This comment will put IE 6, 7 and 8 in quirks mode -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PolyPeer: Référence de la classe Socket</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javaScript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Généré par Doxygen 1.6.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+--></script>
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&nbsp;associées</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <img id="MSearchSelect" src="search/search.png"
+             onmouseover="return searchBox.OnSearchSelectShow()"
+             onmouseout="return searchBox.OnSearchSelectHide()"
+             alt=""/>
+        <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+             onfocus="searchBox.OnSearchFieldFocus(true)" 
+             onblur="searchBox.OnSearchFieldFocus(false)" 
+             onkeyup="searchBox.OnSearchFieldChange(event)"/>
+        <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="annotated.html"><span>Liste&nbsp;des&nbsp;classes</span></a></li>
+      <li><a href="hierarchy.html"><span>Hiérarchie&nbsp;des&nbsp;classes</span></a></li>
+      <li><a href="functions.html"><span>Membres&nbsp;de&nbsp;classe</span></a></li>
+    </ul>
+  </div>
+</div>
+<div class="contents">
+<h1>Référence de la classe Socket</h1><!-- doxytag: class="Socket" --><!-- doxytag: inherits="BaseSocket" -->
+<p><code>#include &lt;<a class="el" href="Socket_8hpp_source.html">Socket.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Graphe d'héritage de Socket:</div>
+<div class="dynsection">
+ <div class="center">
+  <img src="classSocket.png" usemap="#Socket_map" alt=""/>
+  <map id="Socket_map" name="Socket_map">
+<area href="classBaseSocket.html" alt="BaseSocket" shape="rect" coords="0,0,78,24"/>
+</map>
+ </div>
+</div>
+
+<p><a href="classSocket-members.html">Liste de tous les membres</a></p>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr><td colspan="2"><h2>Fonctions membres publiques</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSocket.html#a7c3256c4fc6e2c603df73201049fae5a">Socket</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSocket.html#a1ddb758cc1c3b48e3f7ce43f9d938c78">Socket</a> (std::string adress, int port)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSocket.html#abf240dd74e6a44be2019ef3bdf1eb5a1">Socket</a> (int <a class="el" href="classBaseSocket.html#accb8192f3012a5a7c2fc02d52643a28e">descripteur</a>, std::string ipAdress)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSocket.html#aeac4eb6379a543d38ed88977d3b6630a">~Socket</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSocket.html#a0c176a06c189958f1951689291501096">connect</a> (std::string address, int port)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSocket.html#a8f4b48bd61456ef23af546998c9c6ed9">send</a> (const char *data, int size)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSocket.html#aef74848da699ecd96decf444a68dd3cd">send</a> (const <a class="el" href="classData.html">Data</a> &amp;data)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSocket.html#a8e15050a97154a0f4a005594b92ef7b7">read</a> (char *buffer, int sizeBuffer)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3fde162f82a3c1036bc0c025af5260e9"></a><!-- doxytag: member="Socket::getIpAdress" ref="a3fde162f82a3c1036bc0c025af5260e9" args="()" -->
+std::string&nbsp;</td><td class="memItemRight" valign="bottom"><b>getIpAdress</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8a53dbb7c3200e377c94f24477961d7"></a><!-- doxytag: member="Socket::manageWaitingTimeWithPacketState" ref="aa8a53dbb7c3200e377c94f24477961d7" args="(bool stateValid)" -->
+void&nbsp;</td><td class="memItemRight" valign="bottom"><b>manageWaitingTimeWithPacketState</b> (bool stateValid)</td></tr>
+<tr><td colspan="2"><h2>Attributs protégés</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0bdcf17f442f764d6dc9ad2b1affeab6"></a><!-- doxytag: member="Socket::ipAdress" ref="a0bdcf17f442f764d6dc9ad2b1affeab6" args="" -->
+std::string&nbsp;</td><td class="memItemRight" valign="bottom"><b>ipAdress</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a159bc86166dd28c7bf714027a69c549d"></a><!-- doxytag: member="Socket::timeWaitForMTUInMc" ref="a159bc86166dd28c7bf714027a69c549d" args="" -->
+unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><b>timeWaitForMTUInMc</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a36a26294f91c0ab5aaaf3ac9e7a3f752"></a><!-- doxytag: member="Socket::numberPacketInvalid" ref="a36a26294f91c0ab5aaaf3ac9e7a3f752" args="" -->
+unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><b>numberPacketInvalid</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad92530438fe9d5aa3e417f7a42249938"></a><!-- doxytag: member="Socket::numberPacketValid" ref="ad92530438fe9d5aa3e417f7a42249938" args="" -->
+unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><b>numberPacketValid</b></td></tr>
+</table>
+<hr/><a name="_details"></a><h2>Description détaillée</h2>
+<p>Classe <a class="el" href="classSocket.html">Socket</a> Permet de se connecter à un serveur tcp pour communiquer. Hérite de <a class="el" href="classBaseSocket.html">BaseSocket</a> </p>
+<hr/><h2>Documentation des constructeurs et destructeur</h2>
+<a class="anchor" id="a7c3256c4fc6e2c603df73201049fae5a"></a><!-- doxytag: member="Socket::Socket" ref="a7c3256c4fc6e2c603df73201049fae5a" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Socket::Socket </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Constructeur d'une <a class="el" href="classSocket.html">Socket</a> vierge qu'il faudra connecter avec la méthode <a class="el" href="classSocket.html#a0c176a06c189958f1951689291501096">connect()</a> </p>
+
+</div>
+</div>
+<a class="anchor" id="a1ddb758cc1c3b48e3f7ce43f9d938c78"></a><!-- doxytag: member="Socket::Socket" ref="a1ddb758cc1c3b48e3f7ce43f9d938c78" args="(std::string adress, int port)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Socket::Socket </td>
+          <td>(</td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>adress</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>port</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Constructeur qui connecte automatiquement à l'adresse ip et au port concerné </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>char*</em>&nbsp;</td><td>addresse ip de la machine cible forma: "192.168.1.1" </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>int</em>&nbsp;</td><td>port sur lequel la socket va essayer de se connecter </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl><dt><b>Exceptions:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em><a class="el" href="classHostNotFoundException.html">HostNotFoundException</a>,<a class="el" href="classConnectionException.html">ConnectionException</a></em>&nbsp;</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="abf240dd74e6a44be2019ef3bdf1eb5a1"></a><!-- doxytag: member="Socket::Socket" ref="abf240dd74e6a44be2019ef3bdf1eb5a1" args="(int descripteur, std::string ipAdress)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Socket::Socket </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>descripteur</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>ipAdress</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Contructeur d'une socket déjà connecté grâce à l'identifiant (système) de cette socket </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>int</em>&nbsp;</td><td>identifiant de la socket dont on veut créer un objet <a class="el" href="classSocket.html">Socket</a> </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>std::string</em>&nbsp;</td><td>adresse ip de la <a class="el" href="classSocket.html">Socket</a> sous forme de chaîne de cractère </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aeac4eb6379a543d38ed88977d3b6630a"></a><!-- doxytag: member="Socket::~Socket" ref="aeac4eb6379a543d38ed88977d3b6630a" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Socket::~Socket </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Destructeur de <a class="el" href="classSocket.html">Socket</a> Déconnecte la socket (voir destructeur <a class="el" href="classBaseSocket.html">BaseSocket</a>) </p>
+
+</div>
+</div>
+<hr/><h2>Documentation des fonctions membres</h2>
+<a class="anchor" id="a0c176a06c189958f1951689291501096"></a><!-- doxytag: member="Socket::connect" ref="a0c176a06c189958f1951689291501096" args="(std::string address, int port)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Socket::connect </td>
+          <td>(</td>
+          <td class="paramtype">std::string&nbsp;</td>
+          <td class="paramname"> <em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>port</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Permet de se connecrer à une cible si cele n'a pas té fait à la création ou si on veut changer de cible (penser à utiliser <a class="el" href="classBaseSocket.html#acb8b6c3b38698f9ccfb9fb85e66bbc56">close()</a> avant pour le dernier cas) </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>char*</em>&nbsp;</td><td>addresse ip de la machine cible forma: "192.168.1.1" </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>int</em>&nbsp;</td><td>port sur lequel la socket va essayer de se connecter </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl><dt><b>Exceptions:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em><a class="el" href="classHostNotFoundException.html">HostNotFoundException</a>,<a class="el" href="classConnectionException.html">ConnectionException</a></em>&nbsp;</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a8e15050a97154a0f4a005594b92ef7b7"></a><!-- doxytag: member="Socket::read" ref="a8e15050a97154a0f4a005594b92ef7b7" args="(char *buffer, int sizeBuffer)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Socket::read </td>
+          <td>(</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>sizeBuffer</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Permet de lire des données reçues. Fonction bloquante. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>char*</em>&nbsp;</td><td>tableau de caractère déjà alloué de taille sizeBuffer qui va recevoir les données envoyé par l'entité connectée. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>int</em>&nbsp;</td><td>taille maximal de donnée à lire (taille du tableau allouer en 1er paramètre) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>int taille de la chaîne de caractères lue. -1 si la lecture s'est mal passée. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aef74848da699ecd96decf444a68dd3cd"></a><!-- doxytag: member="Socket::send" ref="aef74848da699ecd96decf444a68dd3cd" args="(const Data &amp;data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Socket::send </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classData.html">Data</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>data</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Pour envoyer des données par la <a class="el" href="classSocket.html">Socket</a>. La <a class="el" href="classSocket.html">Socket</a> doit être connecté avant. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>const</em>&nbsp;</td><td><a class="el" href="classData.html">Data</a>&amp; <a class="el" href="classData.html">Data</a> contenant les données à envoyer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>bool true si l'envoie s'est bien passé, false sinon </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a8f4b48bd61456ef23af546998c9c6ed9"></a><!-- doxytag: member="Socket::send" ref="a8f4b48bd61456ef23af546998c9c6ed9" args="(const char *data, int size)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Socket::send </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>size</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Pour envoyer des données par la <a class="el" href="classSocket.html">Socket</a>. La <a class="el" href="classSocket.html">Socket</a> doit être connecté avant. </p>
+<dl><dt><b>Paramètres:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>char*</em>&nbsp;</td><td>chaîne de caractères à envoyer à la cible </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>int</em>&nbsp;</td><td>taille de la chaine de caractère </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Renvoie:</b></dt><dd>bool true si l'envoie s'est bien passé, false sinon </dd></dl>
+
+</div>
+</div>
+<hr/>La documentation de cette classe a été générée à partir des fichiers suivants :<ul>
+<li>tcp/include/<a class="el" href="Socket_8hpp_source.html">Socket.hpp</a></li>
+<li>tcp/src/Socket.cpp</li>
+</ul>
+</div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<hr class="footer"/><address style="text-align: right;"><small>Généré le Sun Jun 3 15:08:52 2012 pour PolyPeer par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
+</body>
+</html>

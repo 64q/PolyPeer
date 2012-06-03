@@ -1,0 +1,131 @@
+<!-- This comment will put IE 6, 7 and 8 in quirks mode -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PolyPeer:  Fichier source de webserver/include/WebServer.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javaScript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Généré par Doxygen 1.6.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+--></script>
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&nbsp;associées</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <img id="MSearchSelect" src="search/search.png"
+             onmouseover="return searchBox.OnSearchSelectShow()"
+             onmouseout="return searchBox.OnSearchSelectHide()"
+             alt=""/>
+        <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+             onfocus="searchBox.OnSearchFieldFocus(true)" 
+             onblur="searchBox.OnSearchFieldFocus(false)" 
+             onkeyup="searchBox.OnSearchFieldChange(event)"/>
+        <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="files.html"><span>Liste&nbsp;des&nbsp;fichiers</span></a></li>
+    </ul>
+  </div>
+<h1>webserver/include/WebServer.hpp</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<a name="l00002"></a>00002 <span class="comment"> * Fichier du WebServer, contient un package de gestion entre l&#39;ihm</span>
+<a name="l00003"></a>00003 <span class="comment"> * et le serveur PolyPeer</span>
+<a name="l00004"></a>00004 <span class="comment"> * Quentin Lebourgeois - 2012</span>
+<a name="l00005"></a>00005 <span class="comment"> */</span>
+<a name="l00006"></a>00006 
+<a name="l00007"></a>00007 <span class="preprocessor">#ifndef __H__WEBSERVER__</span>
+<a name="l00008"></a>00008 <span class="preprocessor"></span><span class="preprocessor">#define __H__WEBSERVER__</span>
+<a name="l00009"></a>00009 <span class="preprocessor"></span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;map&gt;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;vector&gt;</span>
+<a name="l00012"></a>00012 
+<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;mongoose.h&gt;</span>
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015 <span class="preprocessor">#include &lt;BaseServer.hpp&gt;</span>
+<a name="l00016"></a>00016 <span class="preprocessor">#include &lt;Logger.hpp&gt;</span>
+<a name="l00017"></a>00017 
+<a name="l00018"></a>00018 <span class="comment">/*</span>
+<a name="l00019"></a>00019 <span class="comment"> * PORT DU SERVEUR WEB à EDITER</span>
+<a name="l00020"></a>00020 <span class="comment"> */</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#define WB_PORT &quot;8889&quot;</span>
+<a name="l00022"></a>00022 <span class="preprocessor"></span>
+<a name="l00026"></a>00026 <span class="keyword">typedef</span> void (*route_handler)(<a class="code" href="structmg__connection.html">mg_connection</a>*, <span class="keyword">const</span> <a class="code" href="structmg__request__info.html">mg_request_info</a>*);
+<a name="l00027"></a>00027 
+<a name="l00031"></a><a class="code" href="structWebServerConfig.html">00031</a> <span class="keyword">struct </span><a class="code" href="structWebServerConfig.html">WebServerConfig</a> {
+<a name="l00032"></a>00032    <span class="keywordtype">int</span> port;
+<a name="l00033"></a>00033    <span class="keywordtype">int</span> nthreads;
+<a name="l00034"></a>00034    std::string root;
+<a name="l00035"></a>00035    std::string pwfile;
+<a name="l00036"></a>00036    std::string domain;
+<a name="l00037"></a>00037 };
+<a name="l00038"></a>00038 
+<a name="l00044"></a><a class="code" href="classWebServer.html">00044</a> <span class="keyword">class </span><a class="code" href="classWebServer.html">WebServer</a> : <span class="keyword">public</span> <a class="code" href="classBaseServer.html">BaseServer</a>
+<a name="l00045"></a>00045 {
+<a name="l00046"></a>00046 <span class="keyword">public</span>:
+<a name="l00050"></a>00050    <span class="keywordtype">void</span> <a class="code" href="classWebServer.html#aa11a807dd663199f91cc3571a22fc936">start</a>();
+<a name="l00051"></a>00051 
+<a name="l00055"></a>00055    <span class="keywordtype">void</span> <a class="code" href="classWebServer.html#ab432937d4b1c5d665653319e545292ab">stop</a>();
+<a name="l00056"></a>00056    
+<a name="l00060"></a>00060    <span class="keywordtype">void</span> <a class="code" href="classWebServer.html#a34e9f3356ce00f3d817233d2392cc4b1">restart</a>();
+<a name="l00061"></a>00061    
+<a name="l00065"></a>00065    <span class="keywordtype">void</span> <a class="code" href="classWebServer.html#aea9cd7397f49af4336cdf8b9f60ebc8e">setConfig</a>(<a class="code" href="structWebServerConfig.html">WebServerConfig</a>* opt);
+<a name="l00066"></a>00066    
+<a name="l00070"></a>00070    <span class="keywordtype">void</span> <a class="code" href="classWebServer.html#a9fd4a18b1858d2aea5aa0b31efec09df">toggleDebug</a>();
+<a name="l00071"></a>00071    
+<a name="l00077"></a>00077    <span class="keywordtype">bool</span> <a class="code" href="classWebServer.html#ad5d01d89b5de31dbddb1d956726e7732">isDebug</a>();
+<a name="l00078"></a>00078    
+<a name="l00082"></a>00082    <span class="keyword">static</span> <a class="code" href="classWebServer.html">WebServer</a>* <a class="code" href="classWebServer.html#acec349097a1a0e368474e40ee772b7a8">getInstance</a>();
+<a name="l00083"></a>00083    
+<a name="l00087"></a>00087    <a class="code" href="classWebServer.html#a1a0a29895986ab3558a638bc75f41259">~WebServer</a>();
+<a name="l00088"></a>00088    
+<a name="l00089"></a>00089 <span class="keyword">protected</span>:
+<a name="l00093"></a>00093    <a class="code" href="classWebServer.html#ad053f4e1808a3c10c7522d0dbbbc031a">WebServer</a>();
+<a name="l00094"></a>00094    
+<a name="l00098"></a>00098    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classWebServer.html#a0879d889c9d1071060e868b9149a20c6">run</a>();
+<a name="l00099"></a>00099    
+<a name="l00103"></a><a class="code" href="classWebServer.html#ac117fcd70c12c6cc1eef730a1048505b">00103</a>    <a class="code" href="structmg__context.html">mg_context</a>* <a class="code" href="classWebServer.html#ac117fcd70c12c6cc1eef730a1048505b">context</a>;
+<a name="l00104"></a>00104    
+<a name="l00108"></a><a class="code" href="classWebServer.html#aa0566a72f7ac942dd87ba34a8c7103b7">00108</a>    std::map&lt;std::string, route_handler&gt; <a class="code" href="classWebServer.html#aa0566a72f7ac942dd87ba34a8c7103b7">routes</a>;
+<a name="l00109"></a>00109    
+<a name="l00113"></a><a class="code" href="classWebServer.html#a7ebcb72bb331c6cda99664f5a691fecd">00113</a>    <span class="keyword">static</span> <a class="code" href="classWebServer.html">WebServer</a>* <a class="code" href="classWebServer.html#a7ebcb72bb331c6cda99664f5a691fecd">instance</a>;
+<a name="l00114"></a>00114 
+<a name="l00118"></a>00118    <span class="keyword">friend</span> <span class="keywordtype">void</span>* <a class="code" href="classWebServer.html#a10ab4ce2d5ed1bcade96a1a54fe47e3c">eventHandler</a>(mg_event, <a class="code" href="structmg__connection.html">mg_connection</a>*, <span class="keyword">const</span> <a class="code" href="structmg__request__info.html">mg_request_info</a>*);
+<a name="l00119"></a>00119 };
+<a name="l00120"></a>00120 
+<a name="l00134"></a>00134 <span class="keywordtype">void</span>* eventHandler(mg_event event, <a class="code" href="structmg__connection.html">mg_connection</a> *conn, <span class="keyword">const</span> <a class="code" href="structmg__request__info.html">mg_request_info</a> *request_info);
+<a name="l00135"></a>00135 
+<a name="l00136"></a>00136 <span class="preprocessor">#endif</span>
+</pre></div></div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<hr class="footer"/><address style="text-align: right;"><small>Généré le Sun Jun 3 15:08:52 2012 pour PolyPeer par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
+</body>
+</html>

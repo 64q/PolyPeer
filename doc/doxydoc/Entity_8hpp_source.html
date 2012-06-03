@@ -1,0 +1,143 @@
+<!-- This comment will put IE 6, 7 and 8 in quirks mode -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>PolyPeer:  Fichier source de datamanager/include/Entity.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javaScript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body onload='searchBox.OnSelectItem(0);'>
+<!-- Généré par Doxygen 1.6.3 -->
+<script type="text/javascript"><!--
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+--></script>
+<div class="navigation" id="top">
+  <div class="tabs">
+    <ul>
+      <li><a href="index.html"><span>Page&nbsp;principale</span></a></li>
+      <li><a href="pages.html"><span>Pages&nbsp;associées</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <img id="MSearchSelect" src="search/search.png"
+             onmouseover="return searchBox.OnSearchSelectShow()"
+             onmouseout="return searchBox.OnSearchSelectHide()"
+             alt=""/>
+        <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+             onfocus="searchBox.OnSearchFieldFocus(true)" 
+             onblur="searchBox.OnSearchFieldFocus(false)" 
+             onkeyup="searchBox.OnSearchFieldChange(event)"/>
+        <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="tabs">
+    <ul>
+      <li><a href="files.html"><span>Liste&nbsp;des&nbsp;fichiers</span></a></li>
+    </ul>
+  </div>
+<h1>datamanager/include/Entity.hpp</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __H_ENTITY__</span>
+<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define __H_ENTITY__</span>
+<a name="l00003"></a>00003 <span class="preprocessor"></span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;map&gt;</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;vector&gt;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00007"></a>00007 <span class="preprocessor">#include &lt;ctime&gt;</span>
+<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;sys/time.h&gt;</span>
+<a name="l00009"></a>00009 
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;<a class="code" href="DeploymentState_8hpp.html">DeploymentState.hpp</a>&gt;</span>
+<a name="l00011"></a>00011 <span class="preprocessor">#include &lt;State.hpp&gt;</span>
+<a name="l00012"></a>00012 <span class="preprocessor">#include &lt;File.hpp&gt;</span>
+<a name="l00013"></a>00013 
+<a name="l00014"></a>00014 <span class="keyword">class </span><a class="code" href="classDeploymentState.html">DeploymentState</a>;
+<a name="l00015"></a>00015 <span class="keyword">class </span><a class="code" href="classFile.html">File</a>;
+<a name="l00016"></a>00016 
+<a name="l00021"></a>00021 <span class="keyword">enum</span> EntityType { HOST = 0, ZONE };
+<a name="l00022"></a>00022 
+<a name="l00023"></a><a class="code" href="classEntity.html">00023</a> <span class="keyword">class </span><a class="code" href="classEntity.html">Entity</a>
+<a name="l00024"></a>00024 {
+<a name="l00025"></a>00025 <span class="keyword">public</span>:
+<a name="l00026"></a>00026 
+<a name="l00036"></a>00036    <a class="code" href="classEntity.html#a957b3995e844dbf7d0be453b1ccf0379">Entity</a>(<span class="keyword">const</span> std::string&amp; <a class="code" href="classEntity.html#a931b21fbdebb1a5963b4bcab5df128f5">name</a>, <a class="code" href="classEntity.html">Entity</a>* <a class="code" href="classEntity.html#ac15a54cec580aaf79218140f2f073af7">parent</a>, <span class="keywordtype">int</span> <a class="code" href="classEntity.html#a20d23dbaef7017442e2b9e64204b5a98">networkCapacity</a>);
+<a name="l00037"></a>00037    
+<a name="l00041"></a>00041    <a class="code" href="classEntity.html#adf6d3f7cb1b2ba029b6b048a395cc8ae">~Entity</a>();
+<a name="l00042"></a>00042    
+<a name="l00046"></a>00046    std::string <a class="code" href="classEntity.html#ab824e4f163924eb4f136d3e2ff759897">getName</a>();
+<a name="l00047"></a>00047    
+<a name="l00051"></a>00051    <a class="code" href="classEntity.html">Entity</a>* <a class="code" href="classEntity.html#a6485d6af764cf54bb6723fe57bec91fa">getParent</a>();
+<a name="l00052"></a>00052    
+<a name="l00056"></a>00056    <span class="keywordtype">int</span> <a class="code" href="classEntity.html#a2afdcd98097bb76d690e8073a1f22410">getCurrentBroadbandSpeed</a>();
+<a name="l00057"></a>00057    
+<a name="l00064"></a>00064    <span class="keywordtype">bool</span> <a class="code" href="classEntity.html#a074fd6de324c2b4c2c16dab637fa15c9">setCurrentBroadbandSpeed</a>(<span class="keywordtype">int</span> bbs);
+<a name="l00065"></a>00065    
+<a name="l00069"></a>00069    <span class="keywordtype">int</span> <a class="code" href="classEntity.html#a1edd2f416a2406e46d1be2714300bb93">getNetworkCapacity</a>();
+<a name="l00070"></a>00070    
+<a name="l00075"></a>00075    <span class="keywordtype">void</span> <a class="code" href="classEntity.html#a20fe1be344274a62510224c6ce0582d9">calculNewTimerSpeed</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> packetSizeInOctet);
+<a name="l00076"></a>00076    
+<a name="l00084"></a>00084    <span class="keywordtype">void</span> <a class="code" href="classEntity.html#a3700dcd57d4eea18218f31b5b961c35d">setTimerSpeed</a>(<span class="keywordtype">int</span> seconds, <span class="keywordtype">int</span> microseconds);
+<a name="l00085"></a>00085    
+<a name="l00089"></a>00089    <span class="keywordtype">bool</span> <a class="code" href="classEntity.html#a973cea75ca341a917239d63dcf2de89c">getTimerSpeed</a>();
+<a name="l00090"></a>00090    
+<a name="l00094"></a>00094    EntityType <a class="code" href="classEntity.html#ab3a2d08c8cf0a01210e2ece8ff721174">getType</a>();
+<a name="l00095"></a>00095 
+<a name="l00099"></a>00099    <span class="keyword">virtual</span> std::map&lt;std::string, Entity*&gt;* <a class="code" href="classEntity.html#a439ccfa07997b869345e16cac3803937">getEntities</a>() = 0;
+<a name="l00100"></a>00100    
+<a name="l00104"></a>00104    <span class="keyword">virtual</span> std::vector&lt;DeploymentState&gt;* <a class="code" href="classEntity.html#a7513e2e6c448e595ff3d7b8e30298fd8">getDeploys</a>() = 0;
+<a name="l00105"></a>00105    
+<a name="l00109"></a>00109    <span class="keyword">virtual</span> std::string <a class="code" href="classEntity.html#ac479f4508cf02a86c52367b63fc888f4">getIP</a>() = 0;
+<a name="l00110"></a>00110    
+<a name="l00114"></a>00114    <span class="keyword">virtual</span> std::string <a class="code" href="classEntity.html#adbd3055b2b33a77eb1de7fb50dad702d">getMac</a>() = 0;
+<a name="l00115"></a>00115    
+<a name="l00125"></a>00125    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classEntity.html#ab19ab88069dc816db9be0f5097e0328a">addDeploymentState</a>(<span class="keyword">const</span> <span class="keywordtype">int</span> cid, <a class="code" href="classFile.html">File</a>* f, HostDeployState s) = 0;
+<a name="l00126"></a>00126    
+<a name="l00132"></a>00132    <span class="keyword">virtual</span> <a class="code" href="classDeploymentState.html">DeploymentState</a>* <a class="code" href="classEntity.html#ad3efc3dfd4cf6444db2883c76ee449fa">getDeploymentState</a>(<span class="keywordtype">int</span> idFile) = 0;
+<a name="l00133"></a>00133    
+<a name="l00137"></a>00137    <span class="keyword">virtual</span> HostState <a class="code" href="classEntity.html#a08bf7dc036e3b85be3d903050310ebce">getHostState</a>() = 0;
+<a name="l00138"></a>00138    
+<a name="l00144"></a>00144    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classEntity.html#a05cdc39858cdf326f107254416fd2c90">setHostState</a>(HostState hs) = 0;
+<a name="l00145"></a>00145    
+<a name="l00149"></a>00149    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classEntity.html#a1e28b9aa781114bb2b3bb610974b06a0">setTimerState</a>() = 0;
+<a name="l00150"></a>00150    
+<a name="l00154"></a>00154    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classEntity.html#a4e5035a3bd4d77107d2611015959feb0">getTimerState</a>() = 0;
+<a name="l00155"></a>00155 
+<a name="l00156"></a>00156    
+<a name="l00157"></a>00157 <span class="keyword">protected</span>:
+<a name="l00161"></a><a class="code" href="classEntity.html#a931b21fbdebb1a5963b4bcab5df128f5">00161</a>    std::string name;
+<a name="l00162"></a>00162    
+<a name="l00166"></a><a class="code" href="classEntity.html#ac15a54cec580aaf79218140f2f073af7">00166</a>    <a class="code" href="classEntity.html">Entity</a>* parent;
+<a name="l00167"></a>00167    
+<a name="l00171"></a><a class="code" href="classEntity.html#a07c3272d99e0e977a0c80b843fe8495b">00171</a>    <span class="keywordtype">int</span> <a class="code" href="classEntity.html#a07c3272d99e0e977a0c80b843fe8495b">currentBroadbandSpeed</a>;
+<a name="l00172"></a>00172    
+<a name="l00176"></a><a class="code" href="classEntity.html#aa762869330dcc74128dfdb771d50ba41">00176</a>    timeval <a class="code" href="classEntity.html#aa762869330dcc74128dfdb771d50ba41">timerSpeed</a>;
+<a name="l00177"></a>00177    
+<a name="l00181"></a><a class="code" href="classEntity.html#a20d23dbaef7017442e2b9e64204b5a98">00181</a>    <span class="keywordtype">int</span> networkCapacity;
+<a name="l00182"></a>00182    
+<a name="l00186"></a><a class="code" href="classEntity.html#a4bc4656e671f86ebd33eaa78d1855ea9">00186</a>    EntityType <a class="code" href="classEntity.html#a4bc4656e671f86ebd33eaa78d1855ea9">type</a>;
+<a name="l00187"></a>00187 };
+<a name="l00188"></a>00188 
+<a name="l00189"></a>00189 <span class="preprocessor">#endif</span>
+</pre></div></div>
+<!--- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Énumérations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Amis</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<hr class="footer"/><address style="text-align: right;"><small>Généré le Sun Jun 3 15:08:51 2012 pour PolyPeer par&nbsp;
+<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
+</body>
+</html>
