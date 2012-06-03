@@ -1,3 +1,8 @@
+/*
+ * Fichier contenant les routes pour gérer les appels clients web
+ * Quentin Lebourgeois - 2012
+ */
+ 
 #include <exception>
 
 using namespace std;

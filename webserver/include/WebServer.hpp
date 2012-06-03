@@ -1,7 +1,11 @@
+/*
+ * Fichier contenant les routes pour gérer les appels clients web
+ * Quentin Lebourgeois - 2012
+ */
+
 #ifndef __H__WEBSERVER__
 #define __H__WEBSERVER__
 
-// Spécifique map
 #include <map>
 #include <vector>
 
