@@ -40,9 +40,24 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-I../filemanager/include/" />
+					<Add option="-I../packet/include/" />
+					<Add option="-I../connection/include/" />
+					<Add option="-I../tcp/include/" />
+					<Add option="-I../datamanager/include/" />
+					<Add option="-I../datamanager/include/tinyxml/" />
+					<Add option="-I../logger/include/" />
+					<Add option="-I../data/include/" />
+					<Add option="-I../callback/include/" />
+					<Add option="-I../tcp/include/Exceptions/" />
+					<Add option="-I../baseserver/include/" />
+					<Add option="-I../mutex/include/" />
+					<Add option="-Iinclude/" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-lpthread" />
+					<Add option="-lws2_32" />
 				</Linker>
 			</Target>
 		</Build>
