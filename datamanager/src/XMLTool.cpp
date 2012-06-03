@@ -222,9 +222,19 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 
 void XMLTool::writeFileIntoDeployments(File* file)
 {
+
+	if (!DOMDeployments.LoadFile())
+	{
+		TiXmlDocument tmp;
+		TiXmlElement deployments ("deployments");
+		tmp.InsertEndChild(deployments);
+		DOMDeployments = tmp;
+	}
+	
 	//Positionnement sur au niveau des balises File
 	TiXmlElement *f = DOMDeployments.FirstChildElement();
 	TiXmlElement newFile ("file");
+	
 	if (file->getFileManager() != NULL)
 	{
 		newFile.SetAttribute("id", (file->getFileManager())->getIdFile());
@@ -243,65 +253,74 @@ void XMLTool::writeFileIntoDeployments(File* file)
 
 void XMLTool::writeEntityIntoFile(int fileId, Entity* entity)
 {
-	bool find = false;
-	int id;
-	TiXmlHandle hdl(&DOMDeployments);
-	TiXmlElement *file = hdl.FirstChildElement().FirstChildElement().Element();
-	
-	if (entity != NULL)
+
+	if (!DOMDeployments.LoadFile())
 	{
-		//Parcours pour trouver si le File dans lequel ajouter les entité 
+		bool find = false;
+		int id;
+		TiXmlHandle hdl(&DOMDeployments);
+	
+		TiXmlElement *file = hdl.FirstChildElement().FirstChildElement().Element();
+
+		if (entity != NULL)
+		{
+			//Parcours pour trouver si le File dans lequel ajouter les entité 
+			while(file && !find)
+			{
+				file->QueryIntAttribute("id", &id);
+				if(id == fileId)
+				{
+					find = true;
+					if (entity->getType() == HOST)
+					{
+						TiXmlElement newEntity ("host");
+						newEntity.SetAttribute("ref", entity->getName());				
+						file->InsertEndChild(newEntity);
+					} else
+					{
+						TiXmlElement newEntity ("zone");
+						newEntity.SetAttribute("ref", entity->getName());				
+						file->InsertEndChild(newEntity);
+					}
+				}
+				// Nous passons à la balise File suivante
+				file = file->NextSiblingElement();
+			}
+
+			DOMDeployments.SaveFile(deploymentsFile);
+		}
+	}
+
+}
+	
+void XMLTool::removeDeployment(int fileId)
+{
+
+	if (DOMDeployments.LoadFile())
+	{
+		bool find = false;
+		int id;
+		TiXmlHandle hdl(&DOMDeployments);
+		TiXmlElement *file = hdl.FirstChildElement().FirstChildElement().Element();
+
 		while(file && !find)
 		{
 			file->QueryIntAttribute("id", &id);
 			if(id == fileId)
 			{
 				find = true;
-				if (entity->getType() == HOST)
-				{
-					TiXmlElement newEntity ("host");
-					newEntity.SetAttribute("ref", entity->getName());				
-					file->InsertEndChild(newEntity);
-				} else
-				{
-					TiXmlElement newEntity ("zone");
-					newEntity.SetAttribute("ref", entity->getName());				
-					file->InsertEndChild(newEntity);
-				}
+			} else 
+			{
+				file = file->NextSiblingElement();
 			}
-			// Nous passons à la balise File suivante
-			file = file->NextSiblingElement();
 		}
 
-		DOMDeployments.SaveFile(deploymentsFile);
-	} 
-
-}
-	
-void XMLTool::removeDeployment(int fileId)
-{
-	bool find = false;
-	int id;
-	TiXmlHandle hdl(&DOMDeployments);
-	TiXmlElement *file = hdl.FirstChildElement().FirstChildElement().Element();
-
-	while(file && !find)
-	{
-		file->QueryIntAttribute("id", &id);
-		if(id == fileId)
+		if (find)
 		{
-			find = true;
-		} else 
-		{
-			file = file->NextSiblingElement();
+			TiXmlElement *f = DOMDeployments.FirstChildElement();
+			f->RemoveChild(file);
+			DOMDeployments.SaveFile(deploymentsFile);
 		}
-	}
-
-	if (find)
-	{
-		TiXmlElement *f = DOMDeployments.FirstChildElement();
-		f->RemoveChild(file);
-		DOMDeployments.SaveFile(deploymentsFile);
 	}
 }
 

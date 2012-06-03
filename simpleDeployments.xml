@@ -1,0 +1,5 @@
+<deployments>
+	<file id="1" name="D1" serverPath="file/example.png" clientPath="file/example.png" chunkSize="3000" state="ready" date="0">
+        <host ref="PC11" />
+    </file>
+</deployments>
