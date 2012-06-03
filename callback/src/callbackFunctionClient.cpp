@@ -128,7 +128,7 @@ int callbackSendChunk(Packet& p)
 	return 1;
 }
 
-/*int callbackRemoveHost(Packet& p)
+int callbackRemoveHost(Packet& p)
 {
 	PacketRemoveHost pp(p);
 
@@ -139,7 +139,7 @@ int callbackSendChunk(Packet& p)
 	cm->removeConnection(pp.getIpAddress());
 
 	return 1;
-}*/
+}
 
 int callbackPacketInvalid(Packet& p)
 {
