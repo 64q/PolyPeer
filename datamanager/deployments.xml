@@ -5,4 +5,5 @@
         <host ref="PC8" />
         <host ref="PC11" />
     </file>
+    <file id="2" name="D4" serverPath="file/truc2d.png" clientPath="file/truc2d.png" chunkSize="10000" state="ready" date="1338728123" />
 </deployments>
