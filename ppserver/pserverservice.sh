@@ -20,9 +20,7 @@ PCLIENTDEST=5555
 
 #Repertoire racine pour le démon -> bien vérifier que les 
 #config soit dans le repertoire sinon le serveur ne se lance pas
-CHROOTDOS=`pwd`
-#Repertoire qui contient le programme executable 'ppserver'
-PWDPPSERVER=`pwd`
+CHROOTDOS="/etc/ppserver" #`pwd`
 
 
 start() {
@@ -32,7 +30,7 @@ res=`ps -p $PID | grep ppserver`
 if [ "$res" != "" ]; then
 	echo "PolyPeer server is already running"
 else
-	$PWDPPSERVER/ppserver -d -r $CHROOTDOS -s $PSERVERLISTEN -c $PCLIENTDEST #-w $PWEBSERVER
+	ppserver -d -r $CHROOTDOS -s $PSERVERLISTEN -c $PCLIENTDEST #-w $PWEBSERVER
 	echo "PolyPeer server start..."
 	
 fi

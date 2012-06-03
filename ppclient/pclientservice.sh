@@ -16,9 +16,8 @@ PSERVERDEST=6666
 #Port d'écoute du server PolyPeer
 ADDRSERVER="192.168.0.14"
 #Repertoire racine pour le démon
-CHROOTDOS=`pwd`
-#Repertoire qui contient le programme executable 'ppclient'
-PWDPCLIENT=`pwd`
+CHROOTDOS="/etc/ppclient"
+
 
 
 start() {
@@ -28,7 +27,7 @@ res=`ps -p $PID | grep ppclient`
 if [ "$res" != "" ]; then
 	echo "PolyPeer client is already running"
 else
-	$PWDPCLIENT/ppclient -d -r $CHROOTDOS -c $PCLIENTLISTEN -p $PSERVERDEST  -s $ADDRSERVER
+	ppclient -d -r $CHROOTDOS -c $PCLIENTLISTEN -p $PSERVERDEST  -s $ADDRSERVER
 	echo "PolyPeer client start..."
 fi
 

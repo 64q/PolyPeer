@@ -14,7 +14,8 @@ Un fichier de topologie est fourni avec l'executable pour vous montrer comment c
 		    <zone name="batiment_C" networkCapacity="100000" >
 			    <zone name="C_07" networkCapacity="10000">
 				    <host name="PC2" address="172.34.67.3" 
-				            mac="08:00:27:a1:9e:61" networkCapacity="100"/>
+				            mac="08:00:27:a1:9e:61" mask="255.255.255.255" 
+				            	networkCapacity="100"/>
 			    </zone>	
 		    </zone>
 	    </real>
@@ -38,11 +39,16 @@ Un fichier de topologie est fourni avec l'executable pour vous montrer comment c
 * &lt;virtual&gt; permet de déclarer une zone dite virtuelle
 * &lt;host ref="host1" /&gt; permet de déclarer une référence sur un hote créé dans une zone physique (real)
 
+* les attributs mac et mask des hosts sont utilisés pour faire du wake on lan. Le masque est important pour 
+cibler correctement le réseau.
+
 Création du fichier de déploiement
 -------------------------------------
 
 Un fichier de déploiements est fourni avec l'executable pour vous montrer comment configurer la gestion
 des déploiements sur le réseau.
+Ce fichier peut être rempli à partir de l'interface web pour éviter toute erreur et pour avoir une sélection
+facile des hosts ou zones concernés.
 
     <deployments>
 	    <file id="1" name="D1" serverPath="file/example.png" 

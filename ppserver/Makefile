@@ -396,6 +396,7 @@ $(EXEC): main.o PolypeerServer.o $(BaseServ) $(MainStruct) $(LibXML) $(Mutex) $(
 
 install: all
 	cp $(EXEC) /usr/bin
+	cp pserverservice.sh /etc/init.d/
 	mkdir /etc/ppserver
 	cp deployments.xml /etc/ppserver
 	cp topology.xml /etc/ppserver
