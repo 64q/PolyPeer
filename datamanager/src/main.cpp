@@ -135,7 +135,6 @@ int main()
      double t2=tim.tv_sec+(tim.tv_usec/1000000.0);
      printf("%.6lf seconds elapsed\n", t2-t1);
 	
-	logger << notice << "Le serveur web a été arrêté." << endlog;
 	
 	delete sData;
 
