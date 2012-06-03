@@ -1,9 +1,8 @@
 <deployments>
-    <file id="1" name="D4" serverPath="file/truc2d.png" clientPath="file/truc2d.png" chunkSize="10000" state="ready" date="1338727939">
+    <file id="1" name="D4" serverPath="file/truc2d.png" clientPath="file/truc2d.png" chunkSize="7200" state="ready" date="1338738076">
         <host ref="PC6" />
         <host ref="PC7" />
         <host ref="PC8" />
         <host ref="PC11" />
     </file>
-    <file id="2" name="D4" serverPath="file/truc2d.png" clientPath="file/truc2d.png" chunkSize="10000" state="ready" date="1338728123" />
 </deployments>

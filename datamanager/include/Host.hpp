@@ -27,14 +27,17 @@ public:
 	 *	 adresse ip du client
 	 * @param mac
 	 *	 adresse mac du client
+	 * @param mask
+	 * masque de sous réseau
 	 */
-	Host(const std::string& name, Entity* parent, int networkCapacity, const std::string& ip, const std::string& mac);
+	Host(const std::string& name, Entity* parent, int networkCapacity, const std::string& ip, const std::string& mac, const std::string& mask);
 	~Host();
 	void addDeploymentState(const int cid, File* file, HostDeployState hds);
 	DeploymentState* getDeploymentState(int idFile);
 	std::vector<DeploymentState>* getDeploys();
 	std::string getIP();
 	std::string getMac();
+	std::string getMask();
 	HostState getHostState();
 	void setHostState(HostState);
 	std::map<std::string, Entity*>* getEntities();
@@ -62,6 +65,11 @@ private:
 	 * Adresse mac du client
 	 */
 	std::string mac;
+	
+	/**
+	 * Masque de sous réseau
+	 */
+	std::string mask;
 	
 	/**
 	 * Structure contenant l'ensemble des informations relatives à chaque fichier que doit télécharger

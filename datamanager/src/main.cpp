@@ -37,6 +37,7 @@ int main()
 		
 	try{
 		File* fileTest = new File(sData->getCurrentId()+1,"D4","file/truc2d.png", "file/truc2d.png");
+				cout << "lol" << endl;
 		fileTest->addEntity(sData->public_getEntity("batiment_D"));
 		sData->addFileToAll(fileTest);
 	} catch (CreateFileException)

@@ -234,9 +234,9 @@ void ServerData::deleteFile(int id)
 	
 }
 
-Entity* ServerData::addHost(string name, Entity* parent, int networkCapacity, string address, string mac)
+Entity* ServerData::addHost(string name, Entity* parent, int networkCapacity, string address, string mac, string mask)
 {
-	Entity* host = new Host(name, parent, networkCapacity, address, mac);
+	Entity* host = new Host(name, parent, networkCapacity, address, mac, mask);
 	hosts.push_back(host);
 	return host;
 }

@@ -45,6 +45,11 @@ std::string Zone::getMac()
 	return string("");
 }
 
+std::string Zone::getMask()
+{
+	return string("");
+}
+
 HostState Zone::getHostState()
 {
 	return OFFLINE;

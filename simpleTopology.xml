@@ -3,7 +3,7 @@
 	<real>
 		<zone name="batiment_C" networkCapacity="100000" >
 			<zone name="C_07" networkCapacity="10000">
-				<host name="PC2" address="172.34.67.3" mac="08:00:27:a1:9e:61" networkCapacity="100"/>
+				<host name="PC2" address="172.34.67.3" mac="08:00:27:a1:9e:61" networkCapacity="100" mask="255.255.255.0"/>
 			</zone>	
 		</zone>
 	</real>
