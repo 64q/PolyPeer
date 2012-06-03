@@ -178,7 +178,7 @@ Membres du projet :
 
 * Blin Oliver : Algorithme de déploiement et gestion du protocole de communication
 * Daumont Charles : Implémentation des structures de données du projet
-* Lebourgeois Quentin : Réalisation de l'interface homme-machine et structuration du projet
+* Lebourgeois Quentin : Réalisation de l'interface homme-machine et structuration du projet, fichiers d'aide, de config et d'installation
 * Matrat Erwan : gestion des fichiers et wrapping des objets pour compilation cross-platform
 
 Document rédigé par Quentin Lebourgeois
