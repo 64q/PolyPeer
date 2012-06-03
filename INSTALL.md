@@ -27,7 +27,7 @@ dans /etc/ppserver ou /etc/ppclient et l'executable ajouté dans /usr/bin.
 Lancement du serveur
 -----------------------
 
-Veillez tout d'abord a être positionné dans le dossier contenant le dossier html/ et le fichier passwd.
+Veillez tout d'abord a être positionné dans le dossier contenant le dossier html/ et le fichier passwd et les fichiers deployments.xml et topology.xml.
 
 Vérifiez également que vous avez les droits nécessaires pour lire/écrire dans le dit dossier.
 
