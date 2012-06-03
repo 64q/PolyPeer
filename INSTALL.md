@@ -24,6 +24,9 @@ souhaitez aussi supprimer l'executable.
 Si vous souhaitez installer votre serveur, tapez `make install`. Les fichiers seront copiés
 dans /etc/ppserver ou /etc/ppclient et l'executable ajouté dans /usr/bin.
 
+**Compilation du client sous Windows :** ouvrez simplement le fichier .cbp avec Code::Blocks
+et lancez la compilation pour construire l'executable.
+
 Lancement du serveur
 -----------------------
 
