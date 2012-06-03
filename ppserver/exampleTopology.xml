@@ -4,30 +4,30 @@
 		<zone name="batiment_C" networkCapacity="100000" >
 			<zone name="C_07" networkCapacity="10000">
 				<zone name="C_02" networkCapacity="10000">
-					<host name="IRC007-05" address="172.34.67.4" mac="08:00:27:a1:9e:61" networkCapacity="100" mask="255.255.255.0"/>
-					<host name="PC4" address="172.34.67.5" mac="08:00:27:a1:9e:61" networkCapacity="100" mask="255.255.255.0"/>
-					<host name="PC5" address="172.34.67.6" mac="08:00:27:a1:9e:61" networkCapacity="100" mask="255.255.255.0"/>
+					<host name="IRC007-05" address="172.34.67.4" mac="08:00:27:a1:9e:61" networkCapacity="1500" mask="172.34.255.255"/>
+					<host name="PC4" address="172.34.67.5" mac="08:00:27:a1:9e:61" networkCapacity="1500" mask="172.34.255.255"/>
+					<host name="PC5" address="172.34.67.6" mac="08:00:27:a1:9e:61" networkCapacity="1500" mask="172.34.255.255"/>
 				</zone>
-				<host name="IRC007-04" address="172.34.67.1" mac="08:00:27:a1:9e:61" networkCapacity="100" mask="255.255.255.0"/>
-				<host name="PC1" address="172.34.67.2" mac="08:00:27:a1:9e:61" networkCapacity="100" mask="255.255.255.0"/>
-				<host name="PC2" address="172.34.67.3" mac="08:00:27:a1:9e:61" networkCapacity="100" mask="255.255.255.0"/>
+				<host name="IRC007-04" address="172.34.67.1" mac="08:00:27:a1:9e:61" networkCapacity="1500" mask="172.34.255.255"/>
+				<host name="PC1" address="172.34.67.2" mac="08:00:27:a1:9e:61" networkCapacity="1500" mask="172.34.255.255"/>
+				<host name="PC2" address="172.34.67.3" mac="08:00:27:a1:9e:61" networkCapacity="1500" mask="172.34.255.255"/>
 			</zone>
 			
 		</zone>
 		
 		<zone name="batiment_D" networkCapacity="100000">
 			<zone name="D_07" networkCapacity="10000">
-				<host name="PC6" address="132.34.67.7" mac="08:00:27:a1:9e:61" networkCapacity="100" mask="255.255.255.0"/>
-				<host name="PC7" address="132.34.67.8" mac="08:00:27:a1:9e:61" networkCapacity="100" mask="255.255.255.0"/>
-				<host name="PC8" address="132.34.67.9" mac="08:00:27:a1:9e:61" networkCapacity="100" mask="255.255.255.0"/>
+				<host name="PC6" address="132.34.67.7" mac="08:00:27:a1:9e:61" networkCapacity="1500" mask="132.34.67.255"/>
+				<host name="PC7" address="132.34.67.8" mac="08:00:27:a1:9e:61" networkCapacity="1500" mask="132.34.67.255"/>
+				<host name="PC8" address="132.34.67.9" mac="08:00:27:a1:9e:61" networkCapacity="1500" mask="132.34.67.255"/>
 			</zone>
 			<zone name="D_08" networkCapacity="10000">
-				<host name="PC11" address="132.34.67.10" mac="08:00:27:a1:9e:61" networkCapacity="100" mask="255.255.255.0"/>
+				<host name="PC11" address="132.34.67.10" mac="08:00:27:a1:9e:61" networkCapacity="1500" mask="132.34.67.255"/>
 			</zone>
 		</zone>
 		
-		<host name="PC9" address="132.34.67.11" mac="08:00:27:a1:9e:61" networkCapacity="100" mask="255.255.255.0"/>
-		<host name="PC10" address="132.34.67.12" mac="08:00:27:a1:9e:61" networkCapacity="100" mask="255.255.255.0"/>
+		<host name="PC9" address="132.34.67.11" mac="08:00:27:a1:9e:61" networkCapacity="1500" mask="132.34.67.255"/>
+		<host name="PC10" address="132.34.67.12" mac="08:00:27:a1:9e:61" networkCapacity="1500" mask="132.34.67.255"/>
 		
 	</real>
 	
