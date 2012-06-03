@@ -22,7 +22,7 @@
 		var zone = document.createElement('div');
 		
 		zone.innerHTML += '<h3>Zone &laquo; ' + item.name + ' &raquo; \
-			<small>Capacité : ' + item.cbbs + '/' + item.nc + '</small></h3>';
+			<small>Capacité : ' + item.nc + ' ko/s</small></h3>';
 		
 		var table = document.createElement('table');
 		var tbody = document.createElement('tbody');
