@@ -29,6 +29,8 @@ Le cahier des charges est disponible sur le wiki du projet : https://github.com/
 Développement de PolyPeer
 -------------------------
 
+La documentation générée par Doxygen est disponible dans doc/doxydoc (ouvrez alors le fichier index.html).
+
 **Arboresence du projet**
 
 Chaque sous projet doit être placé à la racine du projet principal.
