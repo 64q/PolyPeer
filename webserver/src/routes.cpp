@@ -59,7 +59,6 @@ void deployments_route(mg_connection* conn, const mg_request_info* request_info)
 			struct tm * timeinfo;
 			time_t rawtime = (time_t)((*it)->getDate());
 			char buffer[80];
-			time (&rawtime);
 			timeinfo = localtime(&rawtime);
 			strftime (buffer,80,"%c",timeinfo);
 			
