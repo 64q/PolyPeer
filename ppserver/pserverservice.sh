@@ -13,8 +13,11 @@
 PSERVERLISTEN=6666
 #Port d'écoute des clients PolyPeer
 PCLIENTDEST=5555
+
 #Port du server WEB -> ne peut pas etre changé actuellement
-PWEBSERVER=6969
+# pour le modifier -> changer le define dans WebServer.hpp et recompiler le projet.
+#PWEBSERVER=8889
+
 #Repertoire racine pour le démon -> bien vérifier que les 
 #config soit dans le repertoire sinon le serveur ne se lance pas
 CHROOTDOS=`pwd`
@@ -29,7 +32,7 @@ res=`ps -p $PID | grep ppserver`
 if [ "$res" != "" ]; then
 	echo "PolyPeer server is already running"
 else
-	`$PWDPPSERVER/ppserver -d -r $CHROOTDOS -s $PSERVERLISTEN -c $PCLIENTDEST -w $PWEBSERVER`
+	$PWDPPSERVER/ppserver -d -r $CHROOTDOS -s $PSERVERLISTEN -c $PCLIENTDEST #-w $PWEBSERVER
 	echo "PolyPeer server start..."
 	
 fi
