@@ -79,6 +79,8 @@
 		// Récupération des infos du déploiement cible
 		pp.Ajax('/ajax/deployment', type + '=' + ref, function(content) {
 			if (!pp.hasChanged) {
+				$('#deployment-state').text(printFileState(content.state));
+				
 				var result = '';
 				for (var i = 0; i < content.hosts.length; i++) {
 					var width = (content.hosts[i].current / content.hosts[i].total) * 100;

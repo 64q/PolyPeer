@@ -47,6 +47,7 @@
 			pp.Ajax('/ajax/pause_deployments', null, function(content) {
 				if (content.state == "done") {
 					notifySuccess("Les déploiements ont été mis en pause");
+					pp.HashNav.onChange();
 				} else {
 					notifyError("Le serveur n'a pas pu mettre les déploiements en pause");
 				}
