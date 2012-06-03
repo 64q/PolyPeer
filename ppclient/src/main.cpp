@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
 		cout << "Fichier de log     : log/client.log" << endl;
 		cout << "Serveur PolyPeer   : " << opt.ip << ":" << opt.serverPort << endl;
 		cout << "Port écoute client : " << opt.clientPort << endl;
-		cout << "PID             : " << getpid() << endl;
+		cout << "PID                : " << getpid() << endl;
 
 		// Lancement
 		ppc->start();
