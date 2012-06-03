@@ -1,9 +1,16 @@
+/*
+ * Logger
+ * Blin Olivier - Lebourgeois Quentin - 2012
+ */
+
 #ifndef __H_LOGGER__
 #define __H_LOGGER__
 
 // Library header
 #include <sstream>
 #include <fstream>
+
+#include <OpenLoggerException.hpp>
 
 /**
  * Les terminaisons de ligne pour l'insertion par flux
@@ -40,7 +47,7 @@ public:
 	 * 	chemin vers le fichier de log (créé s'il n'existe pas, sinon
 	 * 	il écrit à la suite dedans)
 	 */
-	Logger(const std::string&);
+	Logger(const std::string&) throw(OpenLoggerException);
 	
 	/**
 	 * Destructeur de logger (ferme le fichier)

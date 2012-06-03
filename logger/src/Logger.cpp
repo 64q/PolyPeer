@@ -1,3 +1,8 @@
+/*
+ * Logger
+ * Blin Olivier - Lebourgeois Quentin - 2012
+ */
+
 // Class header
 #include <Logger.hpp>
 
@@ -19,7 +24,7 @@
 #include <sys/types.h>
 
 // Project header
-#include <OpenFileException.hpp>
+#include <OpenLoggerException.hpp>
 
 using namespace std;
 
@@ -29,8 +34,8 @@ void createDir(string pathDirectory, string currentPath)
 	//on découpe la chaîne par le séparateur / ou \ pour pouvoir créer dosier par dossier en caas d'imbrication
 	int ind = pathDirectory.find_first_of("/\\");
 
-	//si il y a un séparateur de dossier c'est qu'il faut en crée un
-	if(ind>0)
+	// si il y a un séparateur de dossier c'est qu'il faut en crée un
+	if (ind > 0)
 	{
 		string tmp = currentPath + pathDirectory.substr(0,ind);
 	 #ifdef WIN32
@@ -42,7 +47,7 @@ void createDir(string pathDirectory, string currentPath)
 	}
 }
 
-Logger::Logger(const string& path) : stringSave(""), typeSave(normal), verbose(false)
+Logger::Logger(const string& path) throw(OpenLoggerException) : stringSave(""), typeSave(normal), verbose(false)
 {
 	this->file.open(path.c_str(), fstream::app);
 
@@ -54,7 +59,7 @@ Logger::Logger(const string& path) : stringSave(""), typeSave(normal), verbose(f
 
 		if (!this->file.is_open()) // Seconde ouverture en echec
 		{
-			throw OpenFileException();
+			throw OpenLoggerException();
 		}
 	}
 }
