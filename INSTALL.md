@@ -64,6 +64,18 @@ Le client suit le même standard de lancement, une liste des paramètres est dis
 Une fois le client lancé, vous devriez pouvoir visualiser son état sur l'interface web, si biensûr
 vous avez correctement configuré votre fichier de topologie.
 
+**Lancer le client au démarrage du système**
+
+Pour cela, il faut éditer le fichier /etc/rc.local du système sous Linux ou ajouter un service sous windows.
+
+Sous linux, ouvrez le fichier rc.local et copiez y ces deux lignes :
+
+    cd /etc/ppclient
+    ppclient -d # Lancez en deamon au minimum
+    
+Vous aurez alors un démon qui se lance au démarrage.
+
+
 Plus d'informations
 -------------------
 
