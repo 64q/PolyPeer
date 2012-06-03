@@ -62,3 +62,5 @@ Attention, l'id doit être unique. Chaque déploiement est constitué de refére
 
 Pour configurer le port du webserver, vous devrez changer la variable WB_PORT dans le fichier WebServer.hpp se trouvant dans le dossier du
 webserver, une recompilation sera nécessaire.
+
+Document rédigé par Quentin Lebourgeois

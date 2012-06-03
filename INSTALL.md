@@ -69,3 +69,4 @@ Plus d'informations
 
 De plus amples informations sont renseignées directement sur l'interface web.
 
+Document rédigé par Quentin Lebourgeois
