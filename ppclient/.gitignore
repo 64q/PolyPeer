@@ -1,2 +1,5 @@
 ppclient
 *.o
+*.pid
+*.log
+file/
