@@ -49,7 +49,7 @@ void display_help(int argc, char* argv[]);
 int main(int argc, char* argv[])
 {
 	// variables
-	ServerOptions opt = {6666, 5555, 8588, false, "/tmp"};
+	ServerOptions opt = {6666, 5555, 8889, false, "/tmp"};
 	int pid;
 	int result = args(argc, argv, &opt);
 	
