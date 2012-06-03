@@ -164,10 +164,11 @@ void* thread_initConnection(void* data)
 		//(PolypeerServer::instance)->getLogger()<<"Connection to " << myHost->getIP() << " failed" <<endlog;
 
 
-		/*A tester en condition réelle!!
+		/*A tester en condition réelle!!*/
+		//si on n'arrive pas à se connecter au client on essaye de l'allumer
 
-		ConnectionManager::WOL(myHost->getMAC(), myHost->getMask());
-		*/
+		ConnectionManager::WOL(myHost->getMac().c_str(), myHost->getMask().c_str());
+		
 	}
 
 
