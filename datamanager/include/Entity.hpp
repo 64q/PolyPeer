@@ -114,6 +114,11 @@ public:
 	virtual std::string getMac() = 0;
 	
 	/**
+	 * Retourne le masque de sous réseau d'un Host
+	 */
+	virtual std::string getMask() = 0;
+	
+	/**
 	 * permet d'ajouter un nouveau déploiement dans la structure d'un Host
 	 * @param cid
 	 *	 numéro du chunk courant

@@ -26,6 +26,7 @@ public:
 	std::vector<DeploymentState>* getDeploys();
 	std::string getIP();
 	std::string getMac();
+	std::string getMask();
 	HostState getHostState();
 	void setHostState(HostState);
 	void setTimerState();

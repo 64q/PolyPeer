@@ -6,11 +6,12 @@
 
 using namespace std;
 
-Host::Host(const std::string& name, Entity* parent, int networkCapacity, const std::string& ip, const std::string& mac):
+Host::Host(const std::string& name, Entity* parent, int networkCapacity, const std::string& ip, const std::string& mac, const std::string& mask):
 	Entity(name, parent, networkCapacity), 
 	hostState(OFFLINE),
 	ip(ip),
-	mac(mac)
+	mac(mac),
+	mask(mask)
 {
 	setTimerState();
 	this->type = HOST;
@@ -55,6 +56,11 @@ std::string Host::getIP()
 std::string Host::getMac()
 {
 	return mac;
+}
+
+std::string Host::getMask()
+{
+	return mask;
 }
 
 map<std::string, Entity*>* Host::getEntities()

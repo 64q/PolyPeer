@@ -11,7 +11,7 @@ Socket::Socket(std::string address, int port) :
 	timeWaitForMTUInMc(50),
 	numberPacketInvalid(0),
 	numberPacketValid(0)
-	
+
 {
 	connect(address, port);
 }
@@ -35,9 +35,6 @@ Socket::Socket() :
 
 Socket::~Socket()
 {
-
-	cout<<"client closed"<<endl;
-
 }
 
 void Socket::connect(std::string address, int port)
@@ -96,10 +93,10 @@ int Socket::read(char* buffer, int sizeBuffer)
 
 		 while(!complete)
 		 {
-			 // Surveiller stdin (fd 0) en attente d'entrées
+
 			 FD_ZERO(&rfds);
 			 FD_SET(descripteur, &rfds);
-			 // Pendant 0 secondes maxi
+
 			 tv.tv_sec = 0;
 			 tv.tv_usec = timeWaitForMTUInMc;
 
@@ -116,7 +113,7 @@ int Socket::read(char* buffer, int sizeBuffer)
 				 	int sizeTmp = recv(descripteur, buffTmp, 20000, 0);
 					if(size+sizeTmp < 20000 && sizeTmp>0)
 					{
-						cout << "reconstruction nouvelle taille "<<size+sizeTmp<<" ("<<size<<"+"<<sizeTmp<<")"<<endl;
+						//cout << "reconstruction nouvelle taille "<<size+sizeTmp<<" ("<<size<<"+"<<sizeTmp<<")"<<endl;
 						for(int i = size; i < size+sizeTmp; i++)
 						{
 							buffer[i] = buffTmp[i-size];
@@ -124,7 +121,7 @@ int Socket::read(char* buffer, int sizeBuffer)
 						size+=sizeTmp;
 					}else
 					{
-						cout << "reconstruction incorrecte"<<endl;
+						//cout << "reconstruction incorrecte"<<endl;
 						complete = true;
 						return size;
 					}

@@ -7,10 +7,8 @@ using namespace std;
 int main()
 {
 
-	//Socket sock("192.168.0.14",6666);
-	ServerSocket s(6666);
-	cout << "en attente" << endl;
-	s.accept();
+	Socket sock("localhost",5555);
+    while(1);
 
 	return 0;
 }

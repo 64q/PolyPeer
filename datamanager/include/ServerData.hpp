@@ -93,12 +93,20 @@ public :
 	
   /**
 	* Création et ajout d'un Host dans hosts et retourne un pointeur vers ce nouvel objet
-	* @param name
-	*	nom de l'Host à creer
-	* @param address
-	*	adress de l'Host à creer
+	 * @param name
+	 *	 nom du client
+	 * @param parent
+	 *	 pointeur vers l'entité qui contient le client
+	 * @param networkCapacity
+	 *	 capacité réseau entre le client et son père
+	 * @param ip
+	 *	 adresse ip du client
+	 * @param mac
+	 *	 adresse mac du client
+	 * @param mask
+	 * masque de sous réseau
 	*/	
-	Entity* addHost(string name, Entity* parent,int networkCapacity, string address, string mac);
+	Entity* addHost(string name, Entity* parent,int networkCapacity, string address, string mac, string mask);
 	
   /**
 	* Supprime de la mémoire et du fichier XML le déploiement d'id passé en paramètre, si son 

@@ -89,7 +89,7 @@ void XMLTool::readTopology(ServerData* sData, TiXmlNode* node, map<string, Entit
 				{
 					//Dans le cas contraire nous créons l'Host à partir des informations contenues dans la balise et l'ajoutons à la structure
 					elem->QueryIntAttribute("networkCapacity", &capacity);
-					entity = sData->addHost(elem->Attribute("name"), parent, capacity, elem->Attribute("address"), elem->Attribute("mac"));
+					entity = sData->addHost(elem->Attribute("name"), parent, capacity, elem->Attribute("address"), elem->Attribute("mac"), elem->Attribute("mask"));
 					entities->insert(make_pair(elem->Attribute("name"), entity));
 				}
 			}
@@ -254,48 +254,47 @@ void XMLTool::writeFileIntoDeployments(File* file)
 void XMLTool::writeEntityIntoFile(int fileId, Entity* entity)
 {
 
-	if (!DOMDeployments.LoadFile())
+	bool find = false;
+	int id;
+	TiXmlHandle hdl(&DOMDeployments);
+
+	TiXmlElement *file = hdl.FirstChildElement().FirstChildElement().Element();
+
+	if (entity != NULL)
 	{
-		bool find = false;
-		int id;
-		TiXmlHandle hdl(&DOMDeployments);
-	
-		TiXmlElement *file = hdl.FirstChildElement().FirstChildElement().Element();
-
-		if (entity != NULL)
+		//Parcours pour trouver si le File dans lequel ajouter les entité 
+		while(file && !find)
 		{
-			//Parcours pour trouver si le File dans lequel ajouter les entité 
-			while(file && !find)
+			file->QueryIntAttribute("id", &id);
+			if(id == fileId)
 			{
-				file->QueryIntAttribute("id", &id);
-				if(id == fileId)
+				find = true;
+				if (entity->getType() == HOST)
 				{
-					find = true;
-					if (entity->getType() == HOST)
-					{
-						TiXmlElement newEntity ("host");
-						newEntity.SetAttribute("ref", entity->getName());				
-						file->InsertEndChild(newEntity);
-					} else
-					{
-						TiXmlElement newEntity ("zone");
-						newEntity.SetAttribute("ref", entity->getName());				
-						file->InsertEndChild(newEntity);
-					}
+					TiXmlElement newEntity ("host");
+					newEntity.SetAttribute("ref", entity->getName());				
+					file->InsertEndChild(newEntity);
+				} else
+				{
+					TiXmlElement newEntity ("zone");
+					newEntity.SetAttribute("ref", entity->getName());				
+					file->InsertEndChild(newEntity);
 				}
-				// Nous passons à la balise File suivante
-				file = file->NextSiblingElement();
 			}
-
-			DOMDeployments.SaveFile(deploymentsFile);
+			// Nous passons à la balise File suivante
+			file = file->NextSiblingElement();
 		}
+
+		DOMDeployments.SaveFile(deploymentsFile);
 	}
+	
 
 }
 	
 void XMLTool::removeDeployment(int fileId)
 {
 
+	// Si le fichier n'est pas présent nousle créons
 	if (DOMDeployments.LoadFile())
 	{
 		bool find = false;

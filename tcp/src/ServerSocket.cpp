@@ -26,7 +26,7 @@ ServerSocket::ServerSocket(int port) :
 	// On permet la connexion avec un nombre illimité de socket (sinon changer le deuxième paramètre de listen() )
 	if (listen(descripteur, 0) == SOCKET_ERROR)
 	{
-		cout <<"listen()" << endl;
+//		cout <<"listen()" << endl;
 		exit(errno);
 	}
 }
@@ -39,7 +39,6 @@ ServerSocket::~ServerSocket()
 
 Socket* ServerSocket::accept()
 {
-
 
 	SOCKADDR_IN csin = {0};
 	SOCKET csock;
@@ -59,7 +58,6 @@ Socket* ServerSocket::accept()
 		return new Socket(csock, inet_ntoa(csin.sin_addr));
 	}
 }
-
 
 
 

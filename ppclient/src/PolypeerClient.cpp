@@ -94,11 +94,15 @@ void PolypeerClient::run()
 {
 	// propre à l'instance client polypeer
 	PolypeerClient::getInstance()->getClientData()->getConnectionManager()->wait();
-	cout << "client terminé"<<endl;
 }
 
 void PolypeerClient::stop()
 {
 	this->running = false;
-	delete cData;
+	if(cData!=NULL)
+	{
+	    delete cData;
+        cData = NULL;
+	}
+
 }

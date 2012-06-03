@@ -73,6 +73,7 @@ int main()
 					entity2 = (*vEntity)[j];
 					cout << "     nom host : " << entity2->getName() << " | ";
 					cout << "address : " << entity2->getIP() << " | ";
+					cout << "mask : " << entity2->getMask() << " | ";
 					if (entity2->getParent()!=NULL)
 						cout << "parent : " << (entity2->getParent())->getName() << endl;
 					deploys = entity2->getDeploys();

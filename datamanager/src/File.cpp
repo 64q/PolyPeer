@@ -123,7 +123,6 @@ void File::deleteSortedHost(vector<vector<Entity*>* >* entities)
 void File::addEntity(Entity* entity)
 {
 	map<string, Entity*>* entities;
-
 	if (entity != NULL)
 	{
 		entities = entity->getEntities();
