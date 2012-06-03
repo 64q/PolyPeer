@@ -124,8 +124,9 @@ bool WebServer::isDebug()
 
 void* eventHandler(mg_event event, mg_connection *conn, const mg_request_info *request_info)
 {
-	const void *processed = "yes";
-
+	const void *processed = "yes"; // Nécessaire pour que mongoose sache si on a répondu nous même
+	// a la requête du client
+	
 	WebServer* webserver	= WebServer::getInstance();
 	
 	if (event == MG_NEW_REQUEST) {

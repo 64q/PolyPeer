@@ -120,12 +120,16 @@ protected:
 
 /**
  * Fonction d'handle des events sur le serveur web
+ * pour faire simple, si cette fonction ne retourne pas null
+ *	cela veut dire que la requête a été traité par nous même, si elle retourne null
+ *	on laisse mongoose la gérer (il va alors tenter d'y répondre lui même
  * @param mg_event
  * 	evenement déclenché par une requête
  * @param mg_connection*
  * 	connexion courante
  * @param mg_request*
  * 	contient tous les paramètres de la requête reçue
+ * @return processed requête prise en charge ou non
  */
 void* eventHandler(mg_event event, mg_connection *conn, const mg_request_info *request_info);
 
