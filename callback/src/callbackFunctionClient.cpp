@@ -18,7 +18,7 @@ int callbackNewFile(Packet& p)
 {
 	PacketNewFile pp (p);
 
-	cout << "callbackNewFile" << endl;
+	//cout << "callbackNewFile" << endl;
 
 
 	Packet pReturn;
@@ -34,11 +34,11 @@ int callbackNewFile(Packet& p)
 		{
 			fm = new FileManager(pp.getFileName().c_str(), pp.getFileSize(), pp.getChunkSize(), pp.getIdFile());
 			cd->addFileManager(fm);
-			cout << "ajout du fichier dans la structure de donnée"<<endl;
+			//cout << "ajout du fichier dans la structure de donnée"<<endl;
 		} catch (DiskFullException e)
 		{
 			// Création du paquet d'erreur
-			cout << "full"<<endl;
+			//cout << "full"<<endl;
 			pReturn = PacketDiskFull (pp.getIdFile());
 			cd->getConnectionManager()->sendTo(cd->getAddressServ(), pReturn);
 			return 0;
@@ -47,10 +47,10 @@ int callbackNewFile(Packet& p)
 
 	// -> récuppérer le chunk courant
 	pReturn = PacketReady (pp.getIdFile(), fm->getCurrentNumberChunk());
-	cout << "chunk désiré n° " << fm->getCurrentNumberChunk() << endl;
+	//cout << "chunk désiré n° " << fm->getCurrentNumberChunk() << endl;
 	// -> créer le nouveau paquet PacketReady
 	cd->getConnectionManager()->sendTo(cd->getAddressServ(), pReturn);
-	cout << "réponse au sendChunk envoyé"<<endl;
+	//cout << "réponse au sendChunk envoyé"<<endl;
 
 	return 1;
 }
@@ -59,7 +59,7 @@ int callbackSendOperation(Packet& p)
 {
 	PacketSendOperation pp (p);
 
-	cout << "callbackSendOperation" << endl;
+	//cout << "callbackSendOperation" << endl;
 
 	// récupérer singleton serveur
 	ClientData* cd = PolypeerClient::getInstance()->getClientData();
@@ -68,31 +68,31 @@ int callbackSendOperation(Packet& p)
 	// --
 	FileManager* fm = cd->getFileManager(pp.getIdFile());
 
-	cout <<" on demande a envoyé le "<<pp.getNumChunk()<<" du fichier "<< pp.getIdFile() <<endl;
+	//cout <<" on demande a envoyé le "<<pp.getNumChunk()<<" du fichier "<< pp.getIdFile() <<endl;
 
 	if(fm!=NULL)
 	{
 		Chunk* c = fm->getChunk((long)pp.getNumChunk());
 		if(c !=NULL)
 		{
-			cout << "Chunk prêt à envoyer n°" << c->getNumber()<<endl;
+			//cout << "Chunk prêt à envoyer n°" << c->getNumber()<<endl;
 			// envoie à la cible
 			cd->getConnectionManager()->sendTo(pp.getTarget(), PacketSendChunk(*c));
-			cout << "Chunk envoyé"<<endl;
+			//cout << "Chunk envoyé"<<endl;
 			// réponse au serveur du travail effectué
 			cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketSendOperationFinished());
-			cout << "serveur prévenu"<<endl;
+			//cout << "serveur prévenu"<<endl;
 
 		}else
 		{
-			cout << "ce Chunk n'est pas dispo"<<endl;
+			//cout << "ce Chunk n'est pas dispo"<<endl;
 		}
 
 
 	}else
 	{
 
-		cout << "Ce fichier n'existe pas"<<endl;
+		//cout << "Ce fichier n'existe pas"<<endl;
 	}
 
 
@@ -103,11 +103,11 @@ int callbackSendChunk(Packet& p)
 {
 	PacketSendChunk pp (p);
 
-	cout << "callbackSendChunk" << endl;
+	//cout << "callbackSendChunk" << endl;
 
 	// récupérer singleton serveur
 	ClientData* cd = PolypeerClient::getInstance()->getClientData();
-	cout << "ici"<<endl;
+
 	Chunk* tmp = pp.getChunk();
 
 	if(tmp->isIntegrate())
@@ -120,8 +120,8 @@ int callbackSendChunk(Packet& p)
     }
     else
     {
-        cout << "erreur du Chunk reçu :";
-        cout << tmp->getNumber()<<endl;
+        //cout << "erreur du Chunk reçu :";
+        //cout << tmp->getNumber()<<endl;
         cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketMd5Error(tmp->getIdFile(), tmp->getNumber()));
     }
 	delete tmp;
@@ -132,11 +132,16 @@ int callbackRemoveHost(Packet& p)
 {
 	PacketRemoveHost pp(p);
 
-	cout << "callbackRemoveHost" << endl;
+	//cout << "callbackRemoveHost" << endl;
 
 	ClientData* cd = PolypeerClient::getInstance()->getClientData();
-	ConnectionManager* cm = cd->getConnectionManager();
-	cm->removeConnection(pp.getIpAddress());
+	if(cd!=NULL)
+	{
+	    ConnectionManager* cm = cd->getConnectionManager();
+        //cout <<"getCM"<<endl;
+        cm->removeConnection(pp.getIpAddress());
+
+	}
 
 	return 1;
 }
@@ -144,7 +149,7 @@ int callbackRemoveHost(Packet& p)
 int callbackPacketInvalid(Packet& p)
 {
 	ClientData* cd = PolypeerClient::getInstance()->getClientData();
-	cout << "callbackPacketInvalid" << endl;
+	//cout << "callbackPacketInvalid" << endl;
 	cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketMd5Error(-1, -1));
 	return 1;
 }

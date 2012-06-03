@@ -5,8 +5,8 @@
 
 
 #include <ConnectionManager.hpp>
-#include <signal.h>
 
+#include <vector>
 
 ConnectionManager::ConnectionManager(int port)
 {
@@ -32,7 +32,6 @@ ConnectionManager::ConnectionManager(int port)
 
 ConnectionManager::~ConnectionManager()
 {
-	cout << "CM detruit"<<endl<<flush;
 	stop();
 }
 
@@ -57,18 +56,25 @@ Connection* ConnectionManager::getConnection(std::string name)
 
 void* runFct(void* connectionManager)
 {
-	ConnectionManager* connectionManagerTmp = (ConnectionManager*)connectionManager;
-	connectionManagerTmp->run = true;
-	Socket* sockTmp;
-	while(connectionManagerTmp->run )
-	{
-		//cout << "en attente "<<endl;
-		sockTmp = connectionManagerTmp->serverSocket->accept();
-		//cout << "connexion "<< sockTmp->getIpAdress()<< endl;
+    try
+    {
 
-		connectionManagerTmp->addConnection(sockTmp->getIpAdress(), sockTmp);
+        ConnectionManager* connectionManagerTmp = (ConnectionManager*)connectionManager;
+        connectionManagerTmp->run = true;
+        Socket* sockTmp;
+        while(connectionManagerTmp->run )
+        {
 
-	}
+            sockTmp = connectionManagerTmp->serverSocket->accept();
+
+            connectionManagerTmp->addConnection(sockTmp->getIpAdress(), sockTmp);
+
+        }
+    }catch(AcceptException e)
+    {
+
+    }
+
 	return NULL;
 
 }
@@ -82,18 +88,32 @@ void ConnectionManager::start()
 
 void ConnectionManager::stop()
 {
-	cout << "CM stop"<<endl<<flush;
-	run = false;
 
+	run = false;
+    mutex.lock();
 	std::map<std::string, Connection*>::const_iterator itr;
+
+	std::vector<Connection*> ipAdress;
 	for(itr = listConnections.begin(); itr!=listConnections.end(); ++itr)
 	{
-		delete itr->second;
+	    ipAdress.push_back(itr->second);
+	}
+    mutex.unlock();
+	std::vector<Connection*>::const_iterator itrV;
+    for(itrV = ipAdress.begin(); itrV!=ipAdress.end(); ++itrV)
+	{
+	    (*itrV)->stop();
 	}
 
+
+
+
+
+
+//    cout <<"fin destruction"<<endl;
 	serverSocket->close();
-//	kill(thread, 9);
-	cout << "serverSocketClose"<<endl;
+
+
 }
 
 void ConnectionManager::sendTo(std::string dest, Packet packet)
@@ -101,21 +121,21 @@ void ConnectionManager::sendTo(std::string dest, Packet packet)
 	mutex.lock();
 	Connection* connection = listConnections[dest];
 	mutex.unlock();
-	cout << "envoie à " << dest << " de "<< packet.getType()<<endl;
+	//cout << "envoie à " << dest << " de "<< packet.getType()<<endl;
 
 	if(connection != NULL)
 	{
 		connection->getSocket()->send(packet.serialize());
 	}else
 	{
-		//cout << "l'adresse ip est inconnu dans le ConnectionManager, tentative de connexion..." << endl;
+
 
 		try
 		{
 			Socket* sock = new Socket(dest, 5555);
 			sleep(5);
 			addConnection(dest, sock);
-		}catch(HostNotFoundException){ cout << "host not found"<<endl;}
+		}catch(HostNotFoundException){}
 		catch(ConnectionException){}
 
 	}
@@ -124,13 +144,15 @@ void ConnectionManager::sendTo(std::string dest, Packet packet)
 void ConnectionManager::wait()
 {
 	pthread_join(thread, NULL);
-	cout << "ok"<<endl;
+
 }
 
 void ConnectionManager::removeConnection(std::string ip)
 {
+
 	mutex.lock();
 	Connection* connec = listConnections[ip];
+
 	if(connec != NULL)
 	{
 		listConnections.erase(ip);

@@ -17,7 +17,7 @@ BaseSocket::BaseSocket()
 		int err = WSAStartup(MAKEWORD(2, 2), &wsa);
 		if (err < 0)
 		{
-			cout << "WSAStartup failed !" << endl;
+			//cout << "WSAStartup failed !" << endl;
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -28,7 +28,7 @@ BaseSocket::BaseSocket()
 	descripteur = socket(AF_INET, SOCK_STREAM, 0);
 	if (descripteur == (int)INVALID_SOCKET)
 	{
-		cout << "socket()" << endl;
+		//cout << "socket()" << endl;
 		exit(EXIT_FAILURE);
 	}
 
@@ -50,5 +50,8 @@ BaseSocket::~BaseSocket()
 void BaseSocket::close()
 {
 	//fermeture propre de la socket
+	shutdown(descripteur, 0);
 	closesocket(descripteur);
+
+
 }

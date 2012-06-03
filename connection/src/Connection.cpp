@@ -13,6 +13,7 @@ Connection::Connection(Socket* socket): socket(socket)
 
 Connection::~Connection()
 {
+    //cout << "connect stop"<<endl;
 	stop();
 }
 
@@ -31,16 +32,16 @@ void* listenSocket(void* connection)
 		//cout << "size "<<size<<endl<<flush;
 		if (size > 0)
 		{
-			cout << "size du paquet "<<size<<endl;
+			//cout << "size du paquet "<<size<<endl;
 			Packet tmp(buffer, size);
 
 			//on ajoute l'adresse ip d'où provient le paquet
 			tmp.setAddress(connectionTmp->socket->getIpAdress());
-			
+
 			// On envoie au socket l'état du packet (si il est intègre)
 			// pour qu'il adapte son dans d'attente si besoin
 			connectionTmp->socket->manageWaitingTimeWithPacketState(tmp.isValid());
-			
+
 			//cout << "------>" << connectionTmp->socket->getIpAdress() << endl;
 			//on agit suivant le paquet
 			PacketCallback::getPacketCallback()->packetOperation(tmp);
@@ -48,7 +49,7 @@ void* listenSocket(void* connection)
 		}
 		else
 		{
-
+            //cout << "il veut stopper"<<endl;
 			connectionTmp->stop();
 		}
 	}

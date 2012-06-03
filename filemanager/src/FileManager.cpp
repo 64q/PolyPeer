@@ -164,7 +164,7 @@ Chunk* FileManager::getChunk(long number)
 		}
 	}else
 	{
-		cout << "dépassement de chunk" << endl;
+//		cout << "dépassement de chunk" << endl;
 		return NULL;
 	}
 }
