@@ -222,9 +222,19 @@ void XMLTool::readDeployments(ServerData* sData, TiXmlNode* node)
 
 void XMLTool::writeFileIntoDeployments(File* file)
 {
+
+	if (!DOMDeployments.LoadFile())
+	{
+		TiXmlDocument tmp;
+		TiXmlElement deployments ("deployments");
+		tmp.InsertEndChild(deployments);
+		DOMDeployments = tmp;
+	}
+	
 	//Positionnement sur au niveau des balises File
 	TiXmlElement *f = DOMDeployments.FirstChildElement();
 	TiXmlElement newFile ("file");
+	
 	if (file->getFileManager() != NULL)
 	{
 		newFile.SetAttribute("id", (file->getFileManager())->getIdFile());
@@ -246,8 +256,9 @@ void XMLTool::writeEntityIntoFile(int fileId, Entity* entity)
 	bool find = false;
 	int id;
 	TiXmlHandle hdl(&DOMDeployments);
-	TiXmlElement *file = hdl.FirstChildElement().FirstChildElement().Element();
 	
+	TiXmlElement *file = hdl.FirstChildElement().FirstChildElement().Element();
+
 	if (entity != NULL)
 	{
 		//Parcours pour trouver si le File dans lequel ajouter les entité 

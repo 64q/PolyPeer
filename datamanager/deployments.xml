@@ -1,15 +1,5 @@
 <deployments>
-    <file id="23" name="D1" serverPath="file/truc.png" clientPath="file/text.png" chunkSize="3000" state="ready" date="0">
-        <zone ref="batiment_C" />
-        <host ref="PC11" />
-    </file>
-    <file id="24" name="D2" serverPath="file/truc.png" clientPath="file/truc.png" chunkSize="13000" state="ready" date="0">
-        <zone ref="virtual" />
-    </file>
-    <file id="25" name="D3" serverPath="file/truc2.png" clientPath="file/truc2.png" chunkSize="13000" state="finished" date="0">
-        <zone ref="PC2" />
-    </file>
-    <file id="26" name="D4" serverPath="file/truc2d.png" clientPath="file/truc2d.png" chunkSize="10000" state="ready" date="1338627701">
+    <file id="1" name="D4" serverPath="file/truc2d.png" clientPath="file/truc2d.png" chunkSize="10000" state="ready" date="1338727939">
         <host ref="PC6" />
         <host ref="PC7" />
         <host ref="PC8" />
