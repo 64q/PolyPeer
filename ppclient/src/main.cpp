@@ -1,3 +1,8 @@
+/*
+ * Main du client
+ * Olivier Blin - Matrat Erwan - Quentin Lebourgeois - 2012
+ */
+
 #include <iostream>
 #include <string>
 #include <cstdlib>
