@@ -57,7 +57,6 @@
 				if (content.state == "done") {
 					pp.hasChanged = true;
 					window.location = "#!/deployments";
-					notifySuccess('Le déploiement a été supprimé avec succès.');
 					return;
 				} else {
 					notifyError('Le déploiement n\'a pas pu être mis en pause.');
