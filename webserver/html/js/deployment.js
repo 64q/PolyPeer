@@ -51,6 +51,19 @@
 		}
 	});
 	
+	$('#delete-button').addEventListener('click', function() {
+		if (confirm('Êtes-vous sûr de vouloir supprimer le déploiement ?')) {
+			pp.Ajax('/ajax/delete_deployment', args[0] + '=' + args[1], function(content) {
+				if (content.state == "done") {
+					window.location = "#!/deployments";
+					notifySuccess('Le déploiement a été supprimé avec succès.');
+				} else {
+					notifyError('Le déploiement n\'a pas pu être mis en pause.');
+				}
+			});
+		}
+	});
+	
 	$('#pause-button').addEventListener('click', function() {
 		if (confirm('Êtes-vous sûr de vouloir mettre le déploiement en pause ?')) {
 			pp.Ajax('/ajax/pause_deployment', args[0] + '=' + args[1], function(content) {
