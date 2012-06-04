@@ -56,13 +56,13 @@ void Entity::calculNewTimerSpeed(unsigned int packetSizeInOctet)
 	unsigned int neededTimeMc = (packetSizeInOctet*1000)/capacite; 
 	// mise en place du temps d'attente pour l'envoi du prochain paquet
 	this->setTimerSpeed(neededTimeMc/conversionStoMc, neededTimeMc%conversionStoMc);
-	cout<< "time needed : " << neededTimeMc << endl;
 }
 
 void Entity::setTimerSpeed(int seconds, int microseconds)
 {
-	// remise à jour du time
-	gettimeofday(&timerSpeed, NULL);
+	// courrant
+	timeval currentTime;
+	gettimeofday(&currentTime, NULL);
 	
 	// récupération du time en paramètre
 	timeval givenTime;
@@ -70,7 +70,7 @@ void Entity::setTimerSpeed(int seconds, int microseconds)
 	givenTime.tv_usec = microseconds;
 	
 	// addition
-	timeradd(&timerSpeed, &givenTime, &timerSpeed);
+	timeradd(&currentTime, &givenTime, &timerSpeed);
 }
 
 bool Entity::getTimerSpeed()
