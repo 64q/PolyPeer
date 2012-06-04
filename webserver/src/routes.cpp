@@ -369,11 +369,8 @@ void delete_deployment_route(mg_connection* conn, const mg_request_info* request
 	
 	if (file != NULL) 
 	{
-		if (file->getFileState() != FINISH) 
-		{
-			file->setFileState(FINISH);
-			data.deleteFile(id);
-		}
+		data.deleteFile(id);
+		
 		mg_printf(conn, "{\"state\":\"done\"}");
 	} 
 	else 
