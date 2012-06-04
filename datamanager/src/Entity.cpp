@@ -50,10 +50,13 @@ void Entity::calculNewTimerSpeed(unsigned int packetSizeInOctet)
 	unsigned int conversionStoMc = 1000000; // pour faire le découpage dans le set (sec, mc)
 	// la taille du packet est en otets
 	unsigned int capacite = this->getNetworkCapacity(); // en Ko pas sec
+	if(capacite <= 0)
+		capacite = 10;
 	// temps nécessaire pour envoyer le paquet en microseconde
 	unsigned int neededTimeMc = (packetSizeInOctet*1000)/capacite; 
 	// mise en place du temps d'attente pour l'envoi du prochain paquet
 	this->setTimerSpeed(neededTimeMc/conversionStoMc, neededTimeMc%conversionStoMc);
+	cout<< "time needed : " << neededTimeMc << endl;
 }
 
 void Entity::setTimerSpeed(int seconds, int microseconds)

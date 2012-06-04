@@ -208,7 +208,7 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 					// gestion du débit 
 					// pour la taille exact du paquet on peut utiliser pSC.getSize() mais très lourd.
 					// file->getFileManager()->getChunkSize()+60 donne la taille a 20 octets près
-					if(sData->updateNetworkCurrentBroadbandSpeed(entity, file->getFileManager()->getChunkSize()+60))
+					if(sData->updateNetworkCurrentBroadbandSpeed(entity, file->getFileManager()->getChunkSize()+45))
 					{
 						sData->getConnectionManager()->sendTo((entity->getIP()), pSC);
 						entity->setHostState(DOWNLOAD);
@@ -250,7 +250,7 @@ bool ShareDeployment::sendOperationOnHosts(Entity* entitySrc, Entity* entityDst,
 				Packet pSOP = PacketSendOperation(entityDst->getIP(), idFile, numNeededChunk);
 				
 				// gestion du débit on connait la taille du chunk mais pas la taille exact du paquet
-				if(sData->updateNetworkCurrentBroadbandSpeed(entitySrc, entityDst, file->getFileManager()->getChunkSize()+60))
+				if(sData->updateNetworkCurrentBroadbandSpeed(entitySrc, entityDst, file->getFileManager()->getChunkSize()+45))
 				{
 					sData->getConnectionManager()->sendTo(entitySrc->getIP(), pSOP);
 					entitySrc->setHostState(DOWNLOAD);

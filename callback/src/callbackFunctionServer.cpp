@@ -59,7 +59,7 @@ int callbackPacketDiskFull(Packet& p)
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
 	
 	string src = p.getAddress();
-	cout << "callbackPacketDiskFullError : " << src << endl;
+	//cout << "callbackPacketDiskFullError : " << src << endl;
 	sd.updateHost(src, pp.getIdFile(), HDS_DISKFULL);
 
 	return 1;
@@ -86,7 +86,7 @@ int callBackAddHost(Packet& p)
 	
 	//PolypeerServer::getInstance()->multiSleep(2500);
 	
-	cout << "PacketAddHost" << pp.getIpAddress() << endl;
+	//cout << "PacketAddHost" << pp.getIpAddress() << endl;
 	sd.updateHost(pp.getIpAddress(), WAIT);
 	
 	return 1;
@@ -101,7 +101,7 @@ int callbackRemoveHost(Packet& p)
 	ConnectionManager* cm = sd.getConnectionManager();
 	cm->removeConnection(pp.getIpAddress());
 	
-	cout << "callbackRemoveHost" << pp.getIpAddress() << endl;
+	//cout << "callbackRemoveHost" << pp.getIpAddress() << endl;
 	
 	sd.updateHostInit(pp.getIpAddress());
 	
