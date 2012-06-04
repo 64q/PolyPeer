@@ -352,7 +352,34 @@ void pause_deployments_route(mg_connection* conn, const mg_request_info* request
 
 void delete_deployment_route(mg_connection* conn, const mg_request_info* request_info)
 {
-	// TODO
+	char qid[32];
+	int id;
+	
+	get_qsvar(request_info, "id", qid, sizeof(qid));
+	
+	std::istringstream iss(qid);
+	iss >> id;
+	
+	PolypeerServer* server = PolypeerServer::getInstance();
+	ServerData& data = server->getServerData();
+	
+	File* file = data.getFile(id);
+	
+	mg_printf(conn, "%s", ajax_reply_start);
+	
+	if (file != NULL) 
+	{
+		if (file->getFileState() != FINISH) 
+		{
+			file->setFileState(FINISH);
+			data.deleteFile(id);
+		}
+		mg_printf(conn, "{\"state\":\"done\"}");
+	} 
+	else 
+	{
+		mg_printf(conn, "{\"state\":\"error\"}");
+	}
 }
 
 void pause_deployment_route(mg_connection* conn, const mg_request_info* request_info)
