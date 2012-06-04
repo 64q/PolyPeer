@@ -45,7 +45,7 @@ WebServer::WebServer() :
 	routes.insert(pair<string, route_handler>("/ajax/deployments", deployments_route));
 	routes.insert(pair<string, route_handler>("/ajax/network", network_route));
 	routes.insert(pair<string, route_handler>("/ajax/new_deployment", new_deployment_route));
-	routes.insert(pair<string, route_handler>("/ajax/pause_deployments", pause_deployments_route));
+	routes.insert(pair<string, route_handler>("/ajax/delete_deployment", delete_deployment_route));
 	routes.insert(pair<string, route_handler>("/ajax/pause_deployment", pause_deployment_route));
 	routes.insert(pair<string, route_handler>("/ajax/unpause_deployment", unpause_deployment_route));
 	routes.insert(pair<string, route_handler>("/ajax/get_log", log_route));
