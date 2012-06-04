@@ -209,6 +209,8 @@ File* ServerData::getFile(int id)
 
 void ServerData::deleteFile(int id)
 {
+	mutex_deployFiles.lock();
+	
 	File* f = getFile(id);
 	vector<File*>::iterator
 	vit (deployFiles.begin()),
@@ -231,6 +233,8 @@ void ServerData::deleteFile(int id)
 			}
 		}
 	}
+	
+	mutex_deployFiles.unlock();
 	
 }
 
