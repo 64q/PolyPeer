@@ -139,7 +139,12 @@ int callbackRemoveHost(Packet& p)
 	{
 	    ConnectionManager* cm = cd->getConnectionManager();
         //cout <<"getCM"<<endl;
-        cm->removeConnection(pp.getIpAddress());
+        if(cm!=NULL)
+        {
+				cm->removeConnection(pp.getIpAddress());
+        }
+    
+        
 
 	}
 
