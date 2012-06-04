@@ -27,6 +27,7 @@
  * Classe de gestion des fichiers à déployer
  * Permet de récupérer les morceaux de fichier sous forme de Chunk
  * @see Chunk
+ * Par Erwan
  */
 
 

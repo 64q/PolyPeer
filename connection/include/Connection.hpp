@@ -11,6 +11,7 @@
  * dans la WaitingPacket. Les Connection sont gérées par de le ConnectionManager.
  * @see WaitingPacket
  * @see ConnectionManager
+ * Par Erwan
  */
 
 

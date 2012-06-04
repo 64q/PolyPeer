@@ -5,6 +5,7 @@
 
 /**
  * Enveloppe des mutex de pthread.
+ * Par Erwan
  */
 
 class Mutex
