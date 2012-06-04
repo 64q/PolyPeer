@@ -97,13 +97,21 @@ int callbackRemoveHost(Packet& p)
 	PacketRemoveHost pp(p);
 	
 	ServerData& sd = PolypeerServer::getInstance()->getServerData();
+	if(sd!=NULL)
+	{
+		ConnectionManager* cm = sd.getConnectionManager();
+		if(cm!=NULL)
+		{
+			cm->removeConnection(pp.getIpAddress());
+			sd.updateHostInit(pp.getIpAddress());
+		}
 	
-	ConnectionManager* cm = sd.getConnectionManager();
-	cm->removeConnection(pp.getIpAddress());
+	}
+	
 	
 	cout << "callbackRemoveHost" << pp.getIpAddress() << endl;
 	
-	sd.updateHostInit(pp.getIpAddress());
+	
 	
 	return 1;
 }
