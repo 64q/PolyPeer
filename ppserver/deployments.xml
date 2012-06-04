@@ -1,27 +1,5 @@
 <deployments>
     <file id="24" name="ED_HD" serverPath="file/ED_HD.avi" clientPath="file/ED_HD.avi" chunkSize="18000" state="deployment" date="0">
-        <host ref="Erwan" />
-        <host ref="Windows" />
-        <host ref="debianServ" />
-    </file>
-    <file id="25" name="text" serverPath="file/text.txt" clientPath="file/textclient.txt" chunkSize="15000" state="ready" date="1338504476">
-        <host ref="Erwan" />
-        <host ref="Windows" />
-        <host ref="debianServ" />
-    </file>
-    <file id="26" name="video" serverPath="file/daemon.mp4" clientPath="file/demon.mp4" chunkSize="10000" state="ready" date="1338637342">
-        <host ref="Erwan" />
-        <host ref="Windows" />
-        <host ref="debianServ" />
-    </file>
-    <file id="27" name="tyrael" serverPath="file/tyrael_1920x1080.jpg" clientPath="file/haha/hihi/hoho/titi.jpg" chunkSize="10000" state="ready" date="1338646754">
-        <host ref="Erwan" />
-        <host ref="Windows" />
-        <host ref="debianServ" />
-    </file>
-    <file id="28" name="got" serverPath="file/gof.mkv" clientPath="file/goo.mkv" chunkSize="7200" state="ready" date="1338675586">
-        <host ref="Erwan" />
-        <host ref="Windows" />
-        <host ref="debianServ" />
+        <zone ref="C007" />
     </file>
 </deployments>

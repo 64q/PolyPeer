@@ -161,7 +161,7 @@ void Socket::manageWaitingTimeWithPacketState(bool stateValid)
 	}
 	// le troisieme paquet invalide ca devient inquietant
 	// donc on augmante le temps
-	if (numberPacketInvalid > 2)
+	if (numberPacketInvalid > 4)
 	{
 		// on reparametre le temps d'attente
 		timeWaitForMTUInMc += 25;
@@ -171,14 +171,14 @@ void Socket::manageWaitingTimeWithPacketState(bool stateValid)
 	}
 	// si on a beacoup de paquets valide on tente une diminution du temps
 	// permet de réaugmenter le débit
-	if (numberPacketValid > 1000)
+	/*if (numberPacketValid > 1000)
 	{
 		// on reparametre le temps d'attente
 		timeWaitForMTUInMc -= 1;
 		// init des compteurs
 		numberPacketValid = 0;
 		numberPacketInvalid = 0;
-	}
+	}*/
 	// valeurs extremes tolérées
 	if(timeWaitForMTUInMc > 12000)
 		timeWaitForMTUInMc = 12000;

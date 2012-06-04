@@ -1,22 +1,22 @@
 <network>
 	<real>
-		<zone name="C007" networkCapacity="5000" >
-			<host name="PC1" address="192.168.0.1" mac="mac1" mask="255.255.255.255" networkCapacity="500"/>
-			<host name="PC2" address="192.168.0.2" mac="mac1" mask="255.255.255.255" networkCapacity="500"/>
-			<host name="PC3" address="192.168.0.3" mac="mac1" mask="255.255.255.255" networkCapacity="500"/>
-			<host name="PC4" address="192.168.0.4" mac="mac1" mask="255.255.255.255"networkCapacity="500"/>
-			<host name="PC5" address="192.168.0.5" mac="mac1" mask="255.255.255.255" networkCapacity="500"/>
-			<host name="PC6" address="192.168.0.6" mac="mac1" mask="255.255.255.255" networkCapacity="500"/>
-			<host name="PC7" address="192.168.0.7" mac="mac1" mask="255.255.255.255" networkCapacity="500"/>
-			<host name="PC8" address="192.168.0.8" mac="mac1" mask="255.255.255.255" networkCapacity="500"/>
-			<host name="PC9" address="192.168.0.9" mac="mac1" mask="255.255.255.255" networkCapacity="500"/>
-			<host name="PC10" address="192.168.0.10" mac="mac1" mask="255.255.255.255" networkCapacity="500"/>
-			<host name="PC11" address="192.168.0.11" mac="mac1" mask="255.255.255.255" networkCapacity="500"/>
-			<host name="PC12" address="192.168.0.12" mac="mac1" mask="255.255.255.255" networkCapacity="500"/>
-			<host name="PC13" address="192.168.0.13" mac="mac1" mask="255.255.255.255" networkCapacity="500"/>
-			<host name="PC14" address="192.168.0.14" mac="mac1" mask="255.255.255.255" networkCapacity="500"/>
-			<host name="PC15" address="192.168.0.15" mac="mac1" mask="255.255.255.255" networkCapacity="500"/>
-			<host name="PC16" address="192.168.0.16" mac="mac1" mask="255.255.255.255" networkCapacity="500"/>
+		<zone name="C007" networkCapacity="30000" >
+			<host name="PC1" address="192.168.0.1" mac="mac1" mask="255.255.255.255" networkCapacity="3000"/>
+			<host name="PC2" address="192.168.0.2" mac="mac1" mask="255.255.255.255" networkCapacity="3000"/>
+			<host name="PC3" address="192.168.0.3" mac="mac1" mask="255.255.255.255" networkCapacity="3000"/>
+			<host name="PC4" address="192.168.0.4" mac="mac1" mask="255.255.255.255"networkCapacity="3000"/>
+			<host name="PC5" address="192.168.0.5" mac="mac1" mask="255.255.255.255" networkCapacity="3000"/>
+			<host name="PC6" address="192.168.0.6" mac="mac1" mask="255.255.255.255" networkCapacity="3000"/>
+			<host name="PC7" address="192.168.0.7" mac="mac1" mask="255.255.255.255" networkCapacity="3000"/>
+			<host name="PC8" address="192.168.0.8" mac="mac1" mask="255.255.255.255" networkCapacity="3000"/>
+			<host name="PC9" address="192.168.0.9" mac="mac1" mask="255.255.255.255" networkCapacity="3000"/>
+			<host name="PC10" address="192.168.0.10" mac="mac1" mask="255.255.255.255" networkCapacity="3000"/>
+			<host name="PC11" address="192.168.0.11" mac="mac1" mask="255.255.255.255" networkCapacity="3000"/>
+			<host name="PC12" address="192.168.0.12" mac="mac1" mask="255.255.255.255" networkCapacity="3000"/>
+			<host name="PC13" address="192.168.0.13" mac="mac1" mask="255.255.255.255" networkCapacity="3000"/>
+			<host name="PC14" address="192.168.0.14" mac="mac1" mask="255.255.255.255" networkCapacity="3000"/>
+			<host name="PC15" address="192.168.0.15" mac="mac1" mask="255.255.255.255" networkCapacity="3000"/>
+			<host name="PC16" address="192.168.0.16" mac="mac1" mask="255.255.255.255" networkCapacity="3000"/>
 		</zone>
 	</real>
 </network>
