@@ -11,6 +11,7 @@
  * Classe Socket
  * Permet de se connecter à un serveur tcp pour communiquer.
  * Hérite de BaseSocket
+ * Par Erwan
  */
 class Socket: public BaseSocket
 {
@@ -46,7 +47,7 @@ public:
 	~Socket();
 
 	/**
-	 * Permet de se connecrer à une cible si cele n'a pas té fait à la création ou si on veut changer de cible (penser à utiliser close() avant pour le dernier cas)
+	 * Permet de se connecter à une cible si cele n'a pas té fait à la création ou si on veut changer de cible (penser à utiliser close() avant pour le dernier cas)
 	 * @param char*
 	 * addresse ip de la machine cible forma: "192.168.1.1"
 	 * @param int

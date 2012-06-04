@@ -37,6 +37,7 @@ typedef struct in_addr IN_ADDR;
 /**
  * Classe de base des sockets.
  * Ne peut pas être instancié.
+ * Par Erwan
 **/
 
 class BaseSocket

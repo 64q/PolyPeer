@@ -19,6 +19,7 @@ struct ClientOptions
 /**
  * Client de Polypeer.
  * gère le lancement de tous les threads de traitement
+ * Par Erwan
  */
 class PolypeerClient : public BaseServer
 {

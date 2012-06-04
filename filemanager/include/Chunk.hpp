@@ -10,6 +10,7 @@
  * Les Chunks sont crées par le FileManager du fichier correspondant.
  * Les Chunks sont serialisables pour permettre l'envoi par socket.
  * @see FileManager
+ * Par Erwan
  */
 
 

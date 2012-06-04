@@ -10,6 +10,7 @@
  * grace à la fonction accept() qui va renvoyer une socket permettant de communiquer avec l'ordinateur connecté.
  *
  * Hérite de BaseSocket.
+ * Par Erwan
 **/
 
 class ServerSocket : public BaseSocket
