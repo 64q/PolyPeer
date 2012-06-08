@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstring>
+#include <cmath>
 
 #include <BaseSocket.hpp>
 #include <Socket.hpp>
@@ -83,8 +84,40 @@ int Socket::read(char* buffer, int sizeBuffer)
 	//essayer avec MSG_WAITALL à la place de 0
 	size = recv(descripteur, buffer, sizeBuffer, 0);
 
+
 	if(size>0)
 	{
+
+		if(size > 4)
+		{
+			unsigned int sizePacket = 0;
+			for (unsigned int cpt = 0; cpt < 32; cpt++)
+			{
+				if(buffer[31-cpt] == '1')
+					sizePacket += pow(2,cpt);
+			}
+
+
+			if(sizePacket>0)
+			{
+				char* bufferTmp = new char[sizeBuffer];
+				int sizeTmp = 0;
+				while(size < sizePacket && sizeTmp < sizeBuffer)
+				{
+					sizeTmp = recv(descripteur, bufferTmp, sizeBuffer, 0);
+					if(sizeTmp > 0 && sizeTmp + size < sizeBuffer)
+					{
+						memcpy(buffer+size, bufferTmp, sizeTmp);
+					}
+					else
+					{
+						return -1;
+					}
+				}
+			}
+
+		}
+		/*
 	 //On vérifie qu'il n'y a plus rien à lire
 		fd_set rfds;
 		 struct timeval tv;
@@ -139,6 +172,7 @@ int Socket::read(char* buffer, int sizeBuffer)
 				complete = true;
 			}
 		}
+		*/
 	}
 
 	return size;

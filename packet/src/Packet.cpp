@@ -43,10 +43,28 @@ Data Packet::serialize ()
 	Data data;
 	// espace pour insérer la taille du paquet -> 32 bits
 	// on le fait en caractere pour simplifier (trop de pb avec le décalage de bit)
+
 	for(int j = 0; j < 32;j++)
 		data << '0';
-	// taille du tableau pour vérif
+	taille du tableau pour vérif
 	data << typeToString(myListData.size());
+
+	//essai new Methode
+	/*
+	for(int j = 0; j < 4;j++)
+		data << '0';
+	unsigned int sizeTmp = myListData.size();
+	unsigned char dataTmp[4];
+	for(int oct=0; oct < 4; oct++)
+    {
+    	dataTmp[oct] = (sizeTmp%256);
+		sizeTmp/=256;
+
+    }
+	data.add(data, 4);
+	*/
+
+
 	data << '/';
 	// type de paquet
 	data << typeToString(int(myType));
@@ -58,10 +76,10 @@ Data Packet::serialize ()
 		data << '/';
 		data << myListData[i];
 	}
-	
+
 	// récupération de la taille du paquet
 	int size = data.getSize();
-	
+
 	// écriture de la taille sur les 32 premiers octets
 	for (unsigned int cpt = 0; cpt < 32; cpt++)
 	{
@@ -76,7 +94,7 @@ Data Packet::serialize ()
 			data[31-cpt] = '0';
 		size=size/2;
 	}
-	
+
 	return data;
 }
 
@@ -96,7 +114,7 @@ int Packet::unserialize (const Data& d)
 		if(d[31-cpt] == '1')
 			packetSize += pow(2,cpt);
 	}
-	
+
 	if(d.getSize() != packetSize)
 	{
 		valid = false;
@@ -107,7 +125,7 @@ int Packet::unserialize (const Data& d)
 	// EXTRACTION DES DONNEES
 	myReadingPosition = 0;
 	myListData.clear ();
-	
+
 	// var
 	string extractString; // extraction de valeur
 	unsigned int posInData = 32;
@@ -115,12 +133,12 @@ int Packet::unserialize (const Data& d)
 	int nbData;
 	int size;
 	int tmpVal;
-	
+
 	// extraction de la premiere valeur qui correspond au nombre de parametre
 	extractString = extract (posInData, d);
 	posInData += (extractString.size()+1);
 	nbData = stringToType<int>(extractString);
-	
+
 	// extraction du type de paquet
 	extractString = extract (posInData, d);
 	posInData += (extractString.size()+1);
@@ -137,14 +155,14 @@ int Packet::unserialize (const Data& d)
 	while (posInData < d.getSize())
 	{
 		extractString = extract (posInData, d);
-		
+
 		posInData += (extractString.size()+1);
 		nbExtraction++;
 		size = stringToType<int>(extractString);
 		myListData.push_back (Data (d.c_str()+posInData, size));
 		posInData += size;
 	}
-	
+
 	if (nbExtraction != nbData)
 	{
 		valid = false;
@@ -155,7 +173,7 @@ int Packet::unserialize (const Data& d)
 		valid = true;
 		return 1;
 	}
-		
+
 }
 
 PacketType Packet::getType ()
@@ -226,7 +244,7 @@ string Packet::extract (unsigned int startPos, const Data& d)
 {
 	string tmp;
 	unsigned int pos = startPos;
-	
+
 	while ((pos < d.getSize()) && (d[pos] != '/'))
 	{
 		tmp.push_back (d[pos]);
