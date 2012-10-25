@@ -46,7 +46,7 @@ Data Packet::serialize ()
 
 	for(int j = 0; j < 32;j++)
 		data << '0';
-	taille du tableau pour vérif
+//	taille du tableau pour vérif
 	data << typeToString(myListData.size());
 
 	//essai new Methode
