@@ -17,7 +17,6 @@ using namespace std;
 ShareDeployment::ShareDeployment(PolypeerServer* pps, ServerData* sd) :
 	ppServer(pps),
 	sData(sd),
-	loopNumber(0),
 	packetIsSend(false)
 {
 
@@ -148,6 +147,7 @@ void ShareDeployment::nextStep()
 		}
 	}
 	
+	/*
 	if(loopNumber > 10)
 	{
 		PolypeerServer::getInstance()->multiSleep(6);
@@ -160,9 +160,15 @@ void ShareDeployment::nextStep()
 	
 	if(makePause())
 		PolypeerServer::getInstance()->multiSleep(750);
-	
+	*/
+
 	// On rend le mutex	
 	sData->getMutex()->unlock();
+
+	// En attente de nouvelles actions
+	sData->getSemaphore()->wait();
+
+	// /!\ attention au risque de blocage à cause de la gestion du débit
 }
 
 bool ShareDeployment::makePause()

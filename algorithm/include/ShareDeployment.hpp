@@ -56,12 +56,6 @@ private:
 	ServerData* sData;
 	
 	/**
-	 * Pour gérer les cycles de sommeil
-	 * Seul moyen trouvé pour éviter les pertes de débits
-	 */
-	int loopNumber;
-	
-	/**
 	 * booleen pour savoir si on a envoyé sur un tour de boucle
 	 */
 	 bool packetIsSend;

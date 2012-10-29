@@ -16,6 +16,7 @@
 #include <ConnectionManager.hpp>
 #include <Packet.hpp>
 #include <Mutex.hpp>
+#include <Semaphore.hpp>
 #include <PolypeerServer.hpp>
 
 	/**
@@ -81,6 +82,11 @@ public :
 	* Renvoi l'id courante qui sert lors de la création d'un nouveau déploiement
 	*/
 	Mutex* getMutex();
+
+	/**
+	* Semaphore de gestion des ressources de l'algo
+	*/
+	Semaphore* getSemaphore();
 	
 	
   /**
@@ -273,7 +279,12 @@ protected :
 	* Mutex limitant l'accès à deployFiles
 	*/
 	Mutex mutex_deployFiles;
-	
+
+	/**
+	* Semaphore pour gérer l'utilisation des ressources processeur
+	*/
+	Semaphore sem_algo;
+
 private :
 
 	void deleteMap(map<string, Entity*>* entities, vector<string> &alreadyDelete);

@@ -34,7 +34,7 @@ SRC=src/
 INC=include/
 
 # Flag pour le linker
-LDFLAGS=-lpthread -pthread -ldl -g
+LDFLAGS=-lpthread -pthread -ldl -g -lrt
 # Flag préprocessing et compilation
 CFLAGS=-Wall -I$(INC) -I$(FM)$(INC) -I$(PACKET)$(INC) -I$(MUTEX)$(INC) -I$(DATA)$(INC) -I$(CB)$(INC) -I$(CONNECT)$(INC) -I$(ALGO)$(INC) -I$(TCP)$(INC) -I$(LOG)$(INC) -I$(XML)$(INC) -I$(WEB)$(INC) -I$(TCPEXCEPT) -I$(TinyXML) -I$(BASESERVER)$(INC) -D TIXML_USE_STL
 
@@ -366,10 +366,15 @@ Logger.o:  $(LOG)$(SRC)Logger.cpp
 #
 ############################
 
-Mutex=Mutex.o
+Mutex=Mutex.o Semaphore.o
 
-# Compilation du Logger
+# Compilation de l'enveloppe mutex
 Mutex.o:  $(MUTEX)$(SRC)Mutex.cpp
+	@echo $^
+	@$(CC) -c $^ $(CFLAGS)
+
+# Compilation de l'enveloppe semaphore
+Semaphore.o:  $(MUTEX)$(SRC)Semaphore.cpp
 	@echo $^
 	@$(CC) -c $^ $(CFLAGS)
 

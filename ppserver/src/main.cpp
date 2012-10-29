@@ -36,7 +36,7 @@ bool daemon_conf(string& root);
  */
 int args(int argc, char* argv[], ServerOptions* opt);
 
-/** 
+/**
  * Affichage l'utilisation de l'executable
  */
 void display_usage(int argc, char* argv[]);
@@ -85,6 +85,7 @@ int main(int argc, char* argv[])
 	
 		cout << "Serveur Polypeer terminé" << endl;
 	
+		// vidage mémoire
 		delete server;
 	}
 	else if (result == 1)
@@ -118,6 +119,7 @@ int main(int argc, char* argv[])
 			server->setConfig(&opt);
 			server->start();
 		
+
 			// vidage mémoire
 			delete server;
 		}

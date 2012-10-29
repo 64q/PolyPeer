@@ -88,31 +88,30 @@ void ConnectionManager::start()
 
 void ConnectionManager::stop()
 {
-
 	run = false;
     mutex.lock();
+
 	std::map<std::string, Connection*>::const_iterator itr;
 
 	std::vector<Connection*> ipAdress;
+
 	for(itr = listConnections.begin(); itr!=listConnections.end(); ++itr)
 	{
 	    ipAdress.push_back(itr->second);
 	}
+
     mutex.unlock();
 	std::vector<Connection*>::const_iterator itrV;
+
     for(itrV = ipAdress.begin(); itrV!=ipAdress.end(); ++itrV)
 	{
-	    (*itrV)->stop();
+		if (*itrV != NULL)
+	    	(*itrV)->stop();
 	}
-
-
-
-
 
 
 //    cout <<"fin destruction"<<endl;
 	serverSocket->close();
-
 
 }
 

@@ -112,6 +112,8 @@ void PolypeerServer::run()
 void PolypeerServer::stop()
 {
 	webserver->stop();
+	// liberation de la sem de l'algo pour qu'il s'arrete
+	sData->getSemaphore()->free();
 	(PolypeerServer::instance)->getLogger()<<"Le serveur a été arrêté." <<endlog;
 	this->running = false;
 }

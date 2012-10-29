@@ -20,7 +20,6 @@ ServerData::~ServerData()
 	deleteDeployFiles();
 	deleteHosts();
 	//deleteMap(this->getEntities(), &alreadyDelete);
-
 }
 
 /*void ServerData::deleteMap(map<string, Entity*>* entities, vector<string> &alreadyDelete)
@@ -92,6 +91,11 @@ Mutex* ServerData::getMutex()
 	return &mutex_deployFiles;
 }
 
+Semaphore* ServerData::getSemaphore()
+{
+	return &sem_algo;
+}
+
 void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
 {
 	Entity* host = getHostByAddress(addressHost);
@@ -114,6 +118,9 @@ void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
 		}
 		// l'host a fini son operation
 		host->setHostState(WAIT);
+
+		// Réveil de l'algo
+		sem_algo.free();
 	}
 	
 }
@@ -128,6 +135,9 @@ void ServerData::updateHost(string addressHost, int fileID, HostDeployState s)
 		// Actualiser l'état du fichier POUR L'Host
 		if(host->getDeploymentState(fileID) != NULL)
 			host->getDeploymentState(fileID)->setCurrentState(HDS_DISKFULL);
+
+		// Réveil de l'algo
+		sem_algo.free();
 	}
 }
 
@@ -136,7 +146,12 @@ void ServerData::updateHost(string addressHost, HostState s)
 {
 	Entity* host = getHostByAddress(addressHost);
 	if(host != NULL)
+	{
 		host->setHostState(s);
+
+		// Réveil de l'algo
+		sem_algo.free();
+	}
 }
 
 
@@ -150,6 +165,9 @@ void ServerData::updateHostInit(string addressHost)
 		{
 			(*itDeploy).setCurrentState(HDS_INIT);
 		}
+
+		// Réveil de l'algo
+		sem_algo.free();
 	}
 }
 
