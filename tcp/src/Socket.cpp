@@ -102,7 +102,7 @@ int Socket::read(char* buffer, int sizeBuffer)
 			{
 				char* bufferTmp = new char[sizeBuffer];
 				int sizeTmp = 0;
-				while(size < sizePacket && sizeTmp < sizeBuffer)
+				while((unsigned int)size < sizePacket && sizeTmp < sizeBuffer)
 				{
 					sizeTmp = recv(descripteur, bufferTmp, sizeBuffer, 0);
 					if(sizeTmp > 0 && sizeTmp + size < sizeBuffer)
@@ -115,7 +115,6 @@ int Socket::read(char* buffer, int sizeBuffer)
 					}
 				}
 			}
-
 		}
 		/*
 	 //On vérifie qu'il n'y a plus rien à lire
