@@ -23,6 +23,9 @@ int callbackReady(Packet& p)
 	//cout << "callbackReady : " << src << " Num : " << pp.getChunkNumber() << endl;
 	sd.updateHost (src, pp.getIdFile(), pp.getChunkNumber());
 	
+	// Réveil de l'algo
+	sd.getSemaphore()->free();
+
 	return 1;
 }
 
@@ -36,6 +39,9 @@ int callbackChunkReceived(Packet& p)
 	//cout << "callbackChunkReceived : " << src << endl;
 	sd.updateHost(src, pp.getIdFile(), pp.getChunkNumber());
 
+	// Réveil de l'algo
+	sd.getSemaphore()->free();
+	
 	return 1;
 }
 
@@ -49,6 +55,9 @@ int callbackMd5Error(Packet& p)
 	//cout << "callbackMd5Error : " << src << endl;
 	sd.updateHost(src, WAIT);
 
+	// Réveil de l'algo
+	sd.getSemaphore()->free();
+	
 	return 1;
 }
 
@@ -62,6 +71,9 @@ int callbackPacketDiskFull(Packet& p)
 	//cout << "callbackPacketDiskFullError : " << src << endl;
 	sd.updateHost(src, pp.getIdFile(), HDS_DISKFULL);
 
+	// Réveil de l'algo
+	sd.getSemaphore()->free();
+	
 	return 1;
 }
 
@@ -75,6 +87,9 @@ int callbackPacketSendOperationFinished(Packet& p)
 	//cout << "callbackPacketSendOperationFinished : " << src << endl;
 	sd.updateHost(src, WAIT);
 
+	// Réveil de l'algo
+	sd.getSemaphore()->free();
+	
 	return 1;
 }
 
@@ -88,6 +103,9 @@ int callBackAddHost(Packet& p)
 	
 	//cout << "PacketAddHost" << pp.getIpAddress() << endl;
 	sd.updateHost(pp.getIpAddress(), WAIT);
+	
+	// Réveil de l'algo
+	sd.getSemaphore()->free();
 	
 	return 1;
 }
@@ -108,6 +126,9 @@ int callbackRemoveHost(Packet& p)
 	
 	//cout << "callbackRemoveHost" << pp.getIpAddress() << endl;
 	
+	
+	// Réveil de l'algo
+	sd.getSemaphore()->free();
 	
 	
 	return 1;

@@ -39,21 +39,6 @@
         <host ref="PC9" />
     </file>
     <file id="27" name="compteur" serverPath="file/tt.txt" clientPath="file/compteur.txt" chunkSize="7200" state="deployment" date="1351525660">
-        <host ref="PC1" />
-        <host ref="PC10" />
-        <host ref="PC11" />
-        <host ref="PC12" />
-        <host ref="PC13" />
-        <host ref="PC14" />
-        <host ref="PC15" />
-        <host ref="PC16" />
-        <host ref="PC2" />
-        <host ref="PC3" />
-        <host ref="PC4" />
-        <host ref="PC5" />
-        <host ref="PC6" />
-        <host ref="PC7" />
-        <host ref="PC8" />
-        <host ref="PC9" />
+        <zone ref="olivier" />
     </file>
 </deployments>

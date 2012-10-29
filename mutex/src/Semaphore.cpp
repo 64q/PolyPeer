@@ -2,7 +2,7 @@
 
 Semaphore::Semaphore()
 {
-    sem_init(&semaphore, 0, 5);
+    sem_init(&semaphore, 0, 10);
 }
 
 Semaphore::Semaphore(int value)

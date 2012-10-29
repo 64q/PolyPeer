@@ -80,7 +80,6 @@ void ShareDeployment::nextStep()
 					// si il n'y a pas de master, c'est qu'aucun Host n'est dispo
 					if(hostMaster != NULL)
 					{
-
 						// si il y a plus d'un host sur la zone
 						if((*itZone)->size() > 1)
 						{
@@ -133,6 +132,7 @@ void ShareDeployment::nextStep()
 						}
 					}
 				}
+
 				// désallocation
 				File::deleteSortedHost(entities);
 				break;
@@ -198,7 +198,6 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 		int idFile = file->getFileManager()->getIdFile();
 		if((entity->getHostState() == WAIT) && (entity->getDeploymentState(idFile)->getCurrentState() != HDS_FINISH))
 		{
-		
 			// vérif du num du chunk (dépassement)
 			int numChunk = entity->getDeploymentState(idFile)->getCurrentIdChunk();
 			if(numChunk <= file->getFileManager()->getNumberChunk())
@@ -210,7 +209,6 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 				{
 					// création du paquet
 					Packet pSC = PacketSendChunk((*chunk));
-		
 					// gestion du débit 
 					// pour la taille exact du paquet on peut utiliser pSC.getSize() mais très lourd.
 					// file->getFileManager()->getChunkSize()+60 donne la taille a 20 octets près

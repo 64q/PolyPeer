@@ -49,7 +49,7 @@ public:
 	 *  -> 5 * 1480 = 7400
 	 *  -> on doit avoir des paquets inférieurs a 7400 donc on garde une marge de 200 octets
 	 */
-	FileManager(const char* path, int idFile, long sizeChunk=7200);
+	FileManager(const char* path, int idFile, long sizeChunk=1400);
 
 	/**
 	 * Constructeur pour un fichier incomplet ou dont on ignore l'état.

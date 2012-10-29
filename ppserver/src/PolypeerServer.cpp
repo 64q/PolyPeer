@@ -92,18 +92,17 @@ void PolypeerServer::run()
 	// Algorithme de déploiment
 	DeploymentAlgorithm* algo = new ShareDeployment(server, &data);
 
+	// wake up
+	pthread_t myThread;
+	pthread_create(&myThread, NULL, thread_wakeup, NULL);
 
 	PolypeerServer::getInstance()->logger<< "waiting 2 seconds to bind socket..." << endlog;
 	PolypeerServer::getInstance()->multiSleep(2000);
 
 	while (server->running)
 	{
-
 		// Execution d'une étape de l'algo
 		algo->nextStep();
-
-		// waiting time
-		//PolypeerServer::getInstance()->multiSleep(100);
 	}
 
 	delete algo;
@@ -151,6 +150,10 @@ void  PolypeerServer::initConnections()
 	}
 }
 
+bool PolypeerServer::isRunnig()
+{
+	return this->running;
+}
 
 void* thread_initConnection(void* data)
 {
@@ -177,5 +180,16 @@ void* thread_initConnection(void* data)
 	return NULL;
 }
 
+void* thread_wakeup(void* data)
+{
+	PolypeerServer* server = PolypeerServer::getInstance();
+	
 
+	while(server->isRunnig())
+	{
+		server->multiSleep(5000);
+		server->getServerData().getSemaphore()->free();
+	}
 
+	return NULL;
+}

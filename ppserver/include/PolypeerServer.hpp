@@ -46,6 +46,9 @@ public:
 	inline ServerData& getServerData() { return *(this->sData); }
 	
 	void setConfig(ServerOptions* opt);
+
+	bool isRunnig();
+
 	
 	/**
 	 * Destructeur de PolypeerServer
@@ -96,6 +99,8 @@ private:
 
 // Fonction thread
 void* thread_initConnection(void* data);
+// reveil de l'algo
+void* thread_wakeup(void* data);
 
 
 #endif //POLYPEERSERVER_H

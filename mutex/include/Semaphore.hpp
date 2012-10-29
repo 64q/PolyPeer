@@ -13,7 +13,7 @@ class Semaphore
 {
     public:
         /**
-         * Constructeur initialisant la semaphore (val par defaut : 5).
+         * Constructeur initialisant la semaphore (val par defaut : 10).
          */
         Semaphore();
 
