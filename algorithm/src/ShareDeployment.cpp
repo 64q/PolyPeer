@@ -166,7 +166,7 @@ void ShareDeployment::nextStep()
 	sData->getMutex()->unlock();
 
 	// En attente de nouvelles actions
-	//sData->getSemaphore()->wait();
+	sData->getSemaphore()->wait();
 
 	// /!\ attention au risque de blocage à cause de la gestion du débit
 }
