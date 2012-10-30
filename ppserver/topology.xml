@@ -18,8 +18,8 @@
 			<host name="PC15" address="192.168.0.15" mac="mac1" mask="255.255.255.255" networkCapacity="5000"/>
 			<host name="PC16" address="192.168.0.16" mac="mac1" mask="255.255.255.255" networkCapacity="5000"/>
 		</zone>
-		<zone name="olivier" networkCapacity="12000" >
-			<host name="olivserv" address="192.168.0.50" mac="mac1" mask="255.255.255.255" networkCapacity="12000"/>
+		<zone name="olivier" networkCapacity="15000" >
+			<host name="olivserv" address="192.168.0.50" mac="mac1" mask="255.255.255.255" networkCapacity="15000"/>
 
 		</zone>
 	</real>
