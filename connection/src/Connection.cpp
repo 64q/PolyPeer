@@ -22,14 +22,14 @@ void* listenSocket(void* connection)
 
 	Connection* connectionTmp = (Connection*)connection;
 	connectionTmp->run = true;
-	char buffer [20000];
+	char buffer [16000];
 	int size;
     Data d;
 	while(connectionTmp->run)
 	{
 
-		size = connectionTmp->socket->read(buffer, 50);
-		cout << "taille" << size << endl;
+		size = connectionTmp->socket->read(buffer, 16000);
+
 		//cout << "size "<<size<<endl<<flush;
 		if (size > 0)
 		{
@@ -40,7 +40,7 @@ void* listenSocket(void* connection)
 			Packet tmp(d);
 			if(tmp.isValid())
 			{
-			    cout << "valide"<<endl;
+
 			    //on ajoute l'adresse ip d'où provient le paquet
                 tmp.setAddress(connectionTmp->socket->getIpAdress());
 
@@ -52,9 +52,7 @@ void* listenSocket(void* connection)
                 //on agit suivant le paquet
                 PacketCallback::getPacketCallback()->packetOperation(tmp);
                 d.clear();
-			}else{
-                 cout << "invalide"<<endl;
-            }
+			}
 
 
 
