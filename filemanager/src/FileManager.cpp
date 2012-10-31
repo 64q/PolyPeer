@@ -131,13 +131,22 @@ void FileManager::reserveFile(const char* path, long size)
 {
 	ofstream create(path, ios::out|ios::app);
 
-	//on remplie le fichier avec des '6' => un caractère = 1 octet
-	for (int i = 0; i < size; i++)
+
+	int blocSize = 10000;
+	char* tab = (char*)calloc(blocSize, sizeof(char));
+	int cursor = 0;
+
+	while(blocSize < size-cursor)
 	{
-		create<<'6';
+	    create.write(tab, blocSize);
+
+	    cursor+=blocSize;
 	}
 
-	create.close();
+
+	create.write(tab, size-cursor);
+    free(tab);
+    create.close();
 }
 
 FileManager::~FileManager()
