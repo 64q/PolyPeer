@@ -25,7 +25,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	// Options client par défaut
-	ClientOptions opt = {"192.168.0.14", 5555, 6666};
+	ClientOptions opt = {"192.168.1.21", 5555, 6666};
 
 	// Récupération des valeurs
 	int result = args(argc, argv, &opt);
