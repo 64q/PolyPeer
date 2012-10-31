@@ -1,5 +1,14 @@
 <network>
 	<real>
+		<zone name="Erwan" networkCapacity="20000" >
+			<host name="olivserv" address="192.168.1.34" mac="mac1" mask="255.255.255.255" networkCapacity="20000"/>
+			<host name="erwan" address="192.168.1.42" mac="mac1" mask="255.255.255.255" networkCapacity="20000"/>
+
+		</zone>
+		<zone name="olivier" networkCapacity="15000" >
+			<host name="olivserv" address="192.168.0.50" mac="mac1" mask="255.255.255.255" networkCapacity="15000"/>
+
+		</zone>
 		<zone name="C007" networkCapacity="10000" >
 			<host name="PC1" address="192.168.0.1" mac="mac1" mask="255.255.255.255" networkCapacity="5000"/>
 			<host name="PC2" address="192.168.0.2" mac="00:1a:a0:da:54:8e" mask="255.255.255.255" networkCapacity="5000"/>
@@ -17,10 +26,6 @@
 			<host name="PC14" address="192.168.0.14" mac="mac1" mask="255.255.255.255" networkCapacity="5000"/>
 			<host name="PC15" address="192.168.0.15" mac="mac1" mask="255.255.255.255" networkCapacity="5000"/>
 			<host name="PC16" address="192.168.0.16" mac="mac1" mask="255.255.255.255" networkCapacity="5000"/>
-		</zone>
-		<zone name="olivier" networkCapacity="15000" >
-			<host name="olivserv" address="192.168.0.50" mac="mac1" mask="255.255.255.255" networkCapacity="15000"/>
-
 		</zone>
 	</real>
 </network>

@@ -17,6 +17,10 @@ ServerSocket::ServerSocket(int port) :
 	// On écoute le port défini en paramètre
 	sin.sin_port = htons(port);
 
+	int opval = 1;
+
+	setsockopt (descripteur, SOL_SOCKET, SO_REUSEADDR, &opval, sizeof(opval));
+
 	// liaison avec le port
 	if (bind (descripteur, (SOCKADDR *) &sin, sizeof sin) == SOCKET_ERROR)
 	{

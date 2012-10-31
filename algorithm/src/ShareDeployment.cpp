@@ -60,7 +60,7 @@ void ShareDeployment::nextStep()
 				entities = (*itFile)->getSortedHosts();
 
 				// Repasser un host en status WAIT (pret) si il	est bloqué plus d'un certain temps
-				resetBreakHost(entities);	
+				resetBreakHost(entities);
 								
 				// Faire un scan du réseau pour MAJ -> envoie du paquet d'initialisation si besoin
 				networkScan(entities, (*itFile));
@@ -212,7 +212,7 @@ bool ShareDeployment::sendOnMaster(Entity* entity, File* file)
 					// gestion du débit 
 					// pour la taille exact du paquet on peut utiliser pSC.getSize() mais très lourd.
 					// file->getFileManager()->getChunkSize()+60 donne la taille a 20 octets près
-					if(sData->updateNetworkCurrentBroadbandSpeed(entity, file->getFileManager()->getChunkSize()+45))
+					if(sData->updateNetworkCurrentBroadbandSpeed(entity, file->getFileManager()->getChunkSize()+70))
 					{
 						sData->getConnectionManager()->sendTo((entity->getIP()), pSC);
 						entity->setHostState(DOWNLOAD);
@@ -282,7 +282,7 @@ void ShareDeployment::resetBreakHost(vector<vector<Entity*>* >* entities)
 			if((*itHost)->getHostState() == DOWNLOAD)
 			{
 				// si on dépasse les 20 secondes en mode DOWNLOAD, il y a un pb
-				if((*itHost)->getTimerState() > 5.0)
+				if((*itHost)->getTimerState() > 90.0)
 				{
 					(*itHost)->setHostState(WAIT);
 				}

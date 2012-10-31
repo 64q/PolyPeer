@@ -109,7 +109,9 @@ void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
 			host->setHostState(WAIT);
 			// Actualiser l'état du fichier pour L'Host
 			if(nbChunk >= getFile(fileID)->getFileManager()->getNumberChunk())
+			{
 				host->getDeploymentState(fileID)->setCurrentState(HDS_FINISH);
+			}	
 			else
 				host->getDeploymentState(fileID)->setCurrentState(HDS_WAIT);
 		} else 
@@ -119,7 +121,6 @@ void ServerData::updateHost(string addressHost, int fileID, int nbChunk)
 		// l'host a fini son operation
 		host->setHostState(WAIT);
 	}
-	
 }
 
 void ServerData::updateHost(string addressHost, int fileID, HostDeployState s)
@@ -526,4 +527,3 @@ void ServerData::public_fillAddressList(string entityName, list<string> &list)
 	entity = getEntity(&entities, entityName);
 	fillAddressList(entity, list); 
 }
-
