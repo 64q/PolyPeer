@@ -18,7 +18,7 @@ int callbackNewFile(Packet& p)
 {
 	PacketNewFile pp (p);
 
-	cout << "callbackNewFile" ;
+	//cout << "callbackNewFile" ;
 
 
 	Packet pReturn;
@@ -49,7 +49,7 @@ int callbackNewFile(Packet& p)
 	pReturn = PacketReady (pp.getIdFile(), fm->getCurrentNumberChunk());
 	//cout << "chunk désiré n° " << fm->getCurrentNumberChunk() << endl;
 	// -> créer le nouveau paquet PacketReady
-	cout << "envoie du paquet Ready!"<<endl;
+
 	cd->getConnectionManager()->sendTo(cd->getAddressServ(), pReturn);
 	//cout << "réponse au sendChunk envoyé"<<endl;
 
@@ -60,7 +60,7 @@ int callbackSendOperation(Packet& p)
 {
 	PacketSendOperation pp (p);
 
-	cout << "callbackSendOperation" << endl;
+	//cout << "callbackSendOperation" << endl;
 
 	// récupérer singleton serveur
 	ClientData* cd = PolypeerClient::getInstance()->getClientData();
@@ -104,7 +104,7 @@ int callbackSendChunk(Packet& p)
 {
 	PacketSendChunk pp (p);
 
-	cout << "callbackSendChunk";
+	//cout << "callbackSendChunk";
 
 	// récupérer singleton serveur
 	ClientData* cd = PolypeerClient::getInstance()->getClientData();
@@ -133,7 +133,7 @@ int callbackRemoveHost(Packet& p)
 {
 	PacketRemoveHost pp(p);
 
-	cout << "callbackRemoveHost" << endl;
+	//cout << "callbackRemoveHost" << endl;
 
 	ClientData* cd = PolypeerClient::getInstance()->getClientData();
 	if(cd!=NULL)
@@ -155,7 +155,7 @@ int callbackRemoveHost(Packet& p)
 int callbackPacketInvalid(Packet& p)
 {
 	ClientData* cd = PolypeerClient::getInstance()->getClientData();
-	cout << "callbackPacketInvalid" << endl;
+	//cout << "callbackPacketInvalid" << endl;
 	cd->getConnectionManager()->sendTo(cd->getAddressServ(), PacketMd5Error(-1, -1));
 	return 1;
 }
