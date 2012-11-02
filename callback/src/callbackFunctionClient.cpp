@@ -18,7 +18,7 @@ int callbackNewFile(Packet& p)
 {
 	PacketNewFile pp (p);
 
-	//cout << "callbackNewFile" << endl;
+	//cout << "callbackNewFile" ;
 
 
 	Packet pReturn;
@@ -49,6 +49,7 @@ int callbackNewFile(Packet& p)
 	pReturn = PacketReady (pp.getIdFile(), fm->getCurrentNumberChunk());
 	//cout << "chunk désiré n° " << fm->getCurrentNumberChunk() << endl;
 	// -> créer le nouveau paquet PacketReady
+
 	cd->getConnectionManager()->sendTo(cd->getAddressServ(), pReturn);
 	//cout << "réponse au sendChunk envoyé"<<endl;
 
@@ -103,7 +104,7 @@ int callbackSendChunk(Packet& p)
 {
 	PacketSendChunk pp (p);
 
-	//cout << "callbackSendChunk" << endl;
+	//cout << "callbackSendChunk";
 
 	// récupérer singleton serveur
 	ClientData* cd = PolypeerClient::getInstance()->getClientData();
@@ -143,8 +144,8 @@ int callbackRemoveHost(Packet& p)
         {
 				cm->removeConnection(pp.getIpAddress());
         }
-    
-        
+
+
 
 	}
 

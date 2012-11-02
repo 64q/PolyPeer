@@ -22,22 +22,25 @@ void* listenSocket(void* connection)
 
 	Connection* connectionTmp = (Connection*)connection;
 	connectionTmp->run = true;
-	char buffer [20000];
+	char buffer [16000];
 	int size;
-
+    Data d;
 	while(connectionTmp->run)
 	{
 
-		size = connectionTmp->socket->read(buffer, 20000);
+		size = connectionTmp->socket->read(buffer, 16000);
+
 		//cout << "size "<<size<<endl<<flush;
 		if (size > 0)
 		{
-		    Data d;
+
+
 		    d.add(buffer, size);
 			//cout << "size du paquet "<<size<<endl;
 			Packet tmp(d);
 			if(tmp.isValid())
 			{
+
 			    //on ajoute l'adresse ip d'où provient le paquet
                 tmp.setAddress(connectionTmp->socket->getIpAdress());
 
